@@ -1,0 +1,19 @@
+[workspace]
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[dependencies]
+python = ">=3.10,<3.14"
+jax = "*"
+numpy = "*"
+scipy = "*"
+matplotlib = "*"
+pandas = "*"
+git = "*"
+
+[pypi-dependencies]
+together = ">=1.0"
+google-genai = ">=1.0"
+# pixwake: installed from playground clone (see setup.sh)
+# The benchmark uses the playground pixwake via PYTHONPATH.
+# The LLM's scripts also use it via PYTHONPATH.

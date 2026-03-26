@@ -1,0 +1,41 @@
+# pixwake clone (recreated by setup.sh)
+playground/pixwake/
+
+# Generated optimizer scripts (transient)
+playground/_generated_optimizer*.py
+playground/_gen_*.py
+playground/_tmp/
+
+# Pixi environment
+.pixi/
+
+# Temporary scorer files
+results/_*
+benchmarks/_tmp_*
+
+# Python
+__pycache__/
+*.pyc
+
+# Sweep artifacts (large, not needed for reproduction)
+sweep/
+sweep2/
+sweep2_test/
+sweep2_test2/
+sweep2_test3/
+sweep2_testA/
+
+# Intermediate/old results
+results2/
+results3/
+results_v2/
+results_agent_test/
+results_agent_test2/
+results_agent_session1/
+
+# Plots (regenerable)
+*.png
+
+# Misc
+.devcatrc
+vastai_setup.sh
