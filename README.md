@@ -9,13 +9,16 @@ assistant.
 ## Results
 
 The LLM-generated optimizer beats a 500 multi-start baseline by
-**+40 GWh** on the training farm and **+38 GWh** on the held-out
-validation farm (same polygon shape, different initial conditions).
+**+40 GWh** on the training farm (DEI, 50 turbines, IEA 15MW).
 
 | Case | Baseline (GWh) | LLM Best (GWh) | Gap |
 |------|---------------|-----------------|-----|
 | DEI farm 1 (train) | 5540.72 | **5580.95** | **+40.23** |
-| DEI farm 0 (validation) | 5542.14 | **5580.52** | **+38.38** |
+| ROWP (held-out test) | 4268.68 | *pending* | — |
+
+The ROWP held-out evaluation is wired up but hasn't been run yet
+with the updated agent (which now requires scripts to read turbine
+data from the problem JSON instead of hardcoding it).
 
 ### What the LLM discovered
 
@@ -54,20 +57,22 @@ Energy Island cluster, binned into 24 directional sectors.
 
 ## Benchmark cases
 
-The 10 DEI polygons in `benchmarks/dei_layout.py` are all the same shape
-(translated copies in UTM space that become identical after centering).
-Only two are used:
+| Case | Turbines | Turbine | Role |
+|------|----------|---------|------|
+| DEI farm 1 | 50 | IEA 15MW (D=240m) | **Training** |
+| ROWP irregular | 74 | IEA 10MW (D=198m) | **Held-out test** |
 
-| Case | Role | Notes |
-|------|------|-------|
-| DEI farm 1 | **Training** | LLM develops and tests here |
-| DEI farm 0 | **Validation** | Same polygon — LLM never sees it during prototyping |
+The LLM develops its optimizer on DEI farm 1 and never sees the ROWP
+case. After prototyping, the best optimizer is evaluated on ROWP to
+test generalization to a different turbine, polygon, and wind resource
+([IEA Wind 740-10 ROWP](https://github.com/IEAWindSystems/IEA-Wind-740-10-ROWP)).
 
-An additional held-out test case (IEA Wind 740-10 ROWP, 74 turbines,
-IEA 10MW, different polygon and Weibull wind resource) is defined in
-`results/problem_rowp.json` with a baseline in `results/baseline_rowp.json`,
-but has not yet been used for evaluation. It is intended for future
-generalization testing with a different turbine and site.
+The optimizer script must read all parameters (turbine curves, boundary,
+wind rose) from the problem JSON so the same script works on both farms.
+
+Note: the 10 DEI polygons in `benchmarks/dei_layout.py` are all the
+same shape (translated UTM copies, identical after centering), so only
+farm 1 is used.
 
 ## Baseline
 

@@ -163,7 +163,10 @@ def run_on_farm(code: str, farm_id: int, playground: Path, results_dir: Path,
     script_path.write_text(code)
 
     output_path = results_dir / f"_llm_farm{farm_id}.json"
+    # Support both "problem_farm1.json" and "problem_rowp.json" naming
     problem_path = results_dir / f"problem_farm{farm_id}.json"
+    if not problem_path.exists():
+        problem_path = results_dir / f"problem_{farm_id}.json"
     output_path.unlink(missing_ok=True)
 
     if not problem_path.exists():
@@ -464,22 +467,29 @@ Import penalty functions:
 ## Problem JSON schema
 
 The problem JSON (loaded from FUNWAKE_PROBLEM) has these keys:
-- `rotor_diameter`: float (e.g. 240.0)
-- `min_spacing_m`: float (e.g. 960.0)
+- `rotor_diameter`: float (240.0 for training, may differ for other farms)
+- `hub_height`: float (150.0 for training, may differ)
+- `min_spacing_m`: float (960.0 = 4×D)
 - `n_target`: int (number of turbines)
 - `boundary_vertices`: list of [x, y] pairs
 - `init_x`, `init_y`: lists of initial turbine positions
 - `wind_rose.directions_deg`: list of wind direction bins
 - `wind_rose.speeds_ms`: list of mean wind speeds per bin
 - `wind_rose.weights`: list of frequency weights per bin
+- `turbine.power_curve_ws`: list of wind speeds for power curve
+- `turbine.power_curve_kw`: list of power values in kW
+- `turbine.ct_curve_ws`: list of wind speeds for Ct curve
+- `turbine.ct_curve_ct`: list of thrust coefficient values
 
-Load it with: `with open(os.environ["FUNWAKE_PROBLEM"]) as f: info = json.load(f)`
+IMPORTANT: Your script will be evaluated on a DIFFERENT farm with a
+different turbine, boundary, and wind resource. You MUST read ALL
+parameters (including turbine curves) from the problem JSON. Do NOT
+hardcode turbine data.
 
 ## Working baseline template
 
-This COMPLETE script works and scores ~5527 GWh. Use it as your starting
-point. Do NOT change the import paths or constructor signatures — they are
-correct.
+This COMPLETE script works and scores ~5527 GWh. It reads ALL
+configuration from the problem JSON so it works on any farm.
 
 ```python
 import jax
@@ -495,12 +505,15 @@ with open(os.environ["FUNWAKE_PROBLEM"]) as f:
     info = json.load(f)
 
 D = info["rotor_diameter"]
-ws_arr = jnp.array([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25.0])
-power = jnp.array([0,0,2.399,209.258,689.198,1480.608,2661.238,4308.929,6501.057,9260.516,12081.404,13937.297,14705.016,14931.039,14985.209,14996.906,14999.343,14999.855,14999.966,14999.992,14999.998,14999.999,15000,15000,15000,15000.0])
-ct = jnp.array([0.889,0.889,0.889,0.8,0.8,0.8,0.8,0.8,0.8,0.793,0.735,0.61,0.476,0.37,0.292,0.234,0.191,0.158,0.132,0.112,0.096,0.083,0.072,0.063,0.055,0.049])
-turbine = Turbine(rotor_diameter=D, hub_height=150.0,
+hub_height = info.get("hub_height", 150.0)
+t = info["turbine"]
+ws_arr = jnp.array(t["power_curve_ws"], dtype=float)
+power = jnp.array(t["power_curve_kw"], dtype=float)
+ct_ws = jnp.array(t.get("ct_curve_ws", t["power_curve_ws"]), dtype=float)
+ct = jnp.array(t["ct_curve_ct"], dtype=float)
+turbine = Turbine(rotor_diameter=D, hub_height=hub_height,
                   power_curve=Curve(ws=ws_arr, values=power),
-                  ct_curve=Curve(ws=ws_arr, values=ct))
+                  ct_curve=Curve(ws=ct_ws, values=ct))
 sim = WakeSimulation(turbine, BastankhahGaussianDeficit(k=0.04))
 
 wd = jnp.array(info["wind_rose"]["directions_deg"])
@@ -737,42 +750,54 @@ def run_agent(provider: str, model: str, api_key: str,
     if not best_code and (out_dir / "best_optimizer.py").exists():
         best_code = (out_dir / "best_optimizer.py").read_text()
 
-    test_cases = [
-        (0, "DEI farm 0 (validation)"),
-    ]
-    # ROWP if problem file exists
-    rowp_path = results_dir / "problem_rowp.json"
-    if rowp_path.exists():
-        test_cases.append(("rowp", "ROWP (held-out test)"))
+    # ROWP is the held-out test case (different turbine, polygon, wind)
+    rowp_problem = results_dir / "problem_rowp.json"
+    rowp_baseline = results_dir / "baseline_rowp.json"
 
     if best_code:
         print(f"\n{'='*60}")
-        print("HELD-OUT EVALUATION")
+        print("HELD-OUT EVALUATION: ROWP (74 turbines, IEA 10MW)")
         print(f"{'='*60}")
 
-        for farm_id, label in test_cases:
-            print(f"\n  {label}:")
-            if farm_id == "rowp":
-                # Run via score-problem
-                script_path = playground / f"_generated_optimizer_{run_id}.py"
-                script_path.write_text(best_code)
-                # TODO: ROWP needs its own runner since different turbine
-                print(f"    (ROWP evaluation not yet wired — different turbine)")
-                continue
-
-            r = run_on_farm(best_code, farm_id, playground, results_dir,
-                           timeout_s, run_id)
+        if not rowp_problem.exists():
+            print("  ROWP problem file not found — skipping")
+        else:
+            # Run the LLM's optimizer on the ROWP problem
+            # The script should read turbine/boundary/wind from the JSON
+            print("  Running optimizer on ROWP...")
+            r = run_on_farm(best_code, "rowp", playground, results_dir,
+                            timeout_s, run_id)
             if "error" in r:
-                print(f"    ERROR: {str(r['error'])[:300]}")
-                continue
-            sc = score_layout({"x": r["x"], "y": r["y"]},
-                              farm_id, benchmark, wind_csv, playground)
-            if "error" in sc:
-                print(f"    Score error: {sc['error'][:300]}")
-                continue
-            test_bl = baselines.get(str(farm_id), {}).get("aep_gwh", 0)
-            print(f"    AEP: {sc['aep_gwh']:.2f} GWh "
-                  f"(baseline: {test_bl:.2f}, gap: {sc['aep_gwh'] - test_bl:+.2f})")
+                print(f"  RUN ERROR: {str(r['error'])[:500]}")
+                print("  (The optimizer likely hardcodes turbine data instead")
+                print("   of reading it from the problem JSON.)")
+            else:
+                # Score via ProblemBenchmark
+                sys.path.insert(0, str(benchmark.parent))
+                from dei_layout import ProblemBenchmark
+                bm = ProblemBenchmark(str(rowp_problem))
+                aep = bm.score(r["x"], r["y"])
+                feas = bm.check_feasibility(r["x"], r["y"])
+                feasible = feas["spacing_ok"] and feas["boundary_ok"]
+
+                rowp_bl = 0
+                if rowp_baseline.exists():
+                    with open(rowp_baseline) as f:
+                        rowp_bl = json.load(f).get("aep_gwh", 0)
+
+                print(f"  AEP:      {aep:.2f} GWh")
+                print(f"  Baseline: {rowp_bl:.2f} GWh")
+                print(f"  Gap:      {aep - rowp_bl:+.2f} GWh")
+                print(f"  Feasible: {feasible}")
+                if not feasible:
+                    print(f"  Details:  spacing_ok={feas['spacing_ok']} "
+                          f"(min_dist={feas['min_turbine_distance_m']:.1f}m), "
+                          f"boundary_ok={feas['boundary_ok']}")
+
+                history_extra = {
+                    "rowp_aep": aep, "rowp_baseline": rowp_bl,
+                    "rowp_feasible": feasible, "rowp_time": r["time"],
+                }
 
     # Save history
     history = {
@@ -785,6 +810,10 @@ def run_agent(provider: str, model: str, api_key: str,
         "model": model,
         "provider": provider,
     }
+    try:
+        history.update(history_extra)
+    except NameError:
+        pass  # ROWP eval didn't run or errored
     with open(out_dir / "history.json", "w") as f:
         json.dump(history, f, indent=2)
     print(f"\nHistory saved to {out_dir / 'history.json'}")

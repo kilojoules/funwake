@@ -6,8 +6,9 @@ a benchmark suite scores it, the score feeds back, the LLM refines.
 ## The experiment
 
 **Task**: Write a constrained optimizer that maximizes AEP for turbine
-layouts inside polygon boundaries. All farms share the same turbine
-(IEA 15 MW, D=240m) and 10-year DEI wind resource.
+layouts inside polygon boundaries. The optimizer must read all
+parameters (turbine, boundary, wind) from a problem JSON so it
+generalizes across different farms.
 
 **Train/test split**:
 - Training: DEI farm 1 (50 turbines, IEA 15 MW, D=240m). The LLM
@@ -15,7 +16,6 @@ layouts inside polygon boundaries. All farms share the same turbine
 - Test (held out): IEA Wind 740-10 ROWP irregular layout case
   (74 turbines, IEA 10 MW, D=198m, different polygon + Weibull wind).
   The LLM NEVER sees this. Problem: `results/problem_rowp.json`.
-- Validation: DEI farm 0 (same shape as farm 1). Quick sanity check.
 - Note: All 10 DEI polygons are the same centered shape, so only
   farm 1 is used for training.
 
@@ -40,21 +40,22 @@ bash setup.sh  # clones pixwake, runs baselines on all farms
 ## Run
 
 ```bash
-pixi run python agent.py \
+pixi run python agent_cli.py \
     --wind-csv ~/clusters/energy_island_10y_daily_av_wind.csv \
-    --n-iters 10
+    --provider gemini --model gemini-2.5-flash \
+    --time-budget 600
 ```
 
 ## Architecture
 
 ```
-agent.py           — multi-turn LLM loop (Together AI)
-  ↓ writes
-playground/        — LLM's pixwake clone (can read/modify)
-  ↓ runs script on training farms
+agent_cli.py       — agentic tool-use loop (Gemini function calling)
+  ↕ tools
+playground/        — LLM's pixwake clone (read-only via tools)
+  ↓ runs sandboxed script on training farm
 benchmarks/        — firewalled scorer (LLM can't touch)
   ↓
-AEP per farm       — fed back to LLM; test farm scored at end
+AEP score          — fed back to LLM; ROWP scored at end
 ```
 
 ## Benchmark cases
@@ -62,7 +63,6 @@ AEP per farm       — fed back to LLM; test farm scored at end
 | Case | Turbines | Turbine | Split |
 |------|----------|---------|-------|
 | DEI farm 1 | 50 | IEA 15MW (D=240m) | train |
-| DEI farm 0 | 50 | IEA 15MW (D=240m) | validation |
 | ROWP irregular | 74 | IEA 10MW (D=198m) | TEST (held out) |
 
 The ROWP case (from IEA Wind 740-10-ROWP) has a different polygon,
@@ -70,12 +70,14 @@ turbine, and Weibull wind resource — tests true generalization.
 
 ## Key files
 
-- `benchmarks/dei_layout.py` — 10-farm benchmark suite + baseline
-- `agent.py` — FunSearch multi-turn loop
+- `agent_cli.py` — agentic tool-use loop (main entry point)
+- `agent.py` — fixed-loop agent (earlier iteration)
+- `benchmarks/dei_layout.py` — benchmark suite + baseline runner
+- `benchmarks/build_rowp_problem.py` — builds ROWP test case
 - `playground/pixwake/` — LLM's pixwake clone (created by setup.sh)
-- `results/` — baselines, generated scripts, history
+- `results/` — baselines, problem definitions, generated scripts
 
 ## Cost
 
-Llama 3.3 70B Turbo via Together AI: ~$0.88/M tokens.
-10 iterations ≈ $0.10-0.50.
+Gemini 2.5 Flash: ~$0.05 per 10-minute session.
+Compute: ~20s per optimizer run on MacBook CPU.
