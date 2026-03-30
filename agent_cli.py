@@ -895,6 +895,9 @@ def run_agent(provider: str, model: str, api_key: str,
                 print("   of reading it from the problem JSON.)")
             else:
                 # Score via ProblemBenchmark
+                pixwake_src = str((playground / "pixwake" / "src").resolve())
+                if pixwake_src not in sys.path:
+                    sys.path.insert(0, pixwake_src)
                 sys.path.insert(0, str(benchmark.parent))
                 from dei_layout import ProblemBenchmark
                 bm = ProblemBenchmark(str(rowp_problem))
