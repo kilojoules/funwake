@@ -337,6 +337,93 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                     f"Feasible: {sc.get('feasible', 'unknown')}\n"
                     f"Best so far: {best['aep']:.2f} GWh (attempt {best['iter']})")
 
+        elif name == "test_generalization":
+            code = args["code"]
+            safe, reason = safety_check(code)
+            if not safe:
+                return f"REJECTED: {reason}"
+
+            # Build a small synthetic problem with DIFFERENT specs
+            # to verify the script reads everything from JSON
+            synthetic = {
+                "farm_id": "test",
+                "farm_name": "generalization test",
+                "n_target": 5,
+                "rotor_diameter": 100.0,  # NOT 240
+                "hub_height": 80.0,       # NOT 150
+                "min_spacing_m": 400.0,   # 4×100
+                "boundary_vertices": [
+                    [-2000, -2000], [2000, -2000], [2000, 2000],
+                    [-2000, 2000],
+                ],
+                "init_x": [-800, 0, 800, -400, 400],
+                "init_y": [-800, 0, 800, 800, -800],
+                "wind_rose": {
+                    "directions_deg": [0, 90, 180, 270],
+                    "speeds_ms": [8.0, 9.0, 7.0, 10.0],
+                    "weights": [0.25, 0.25, 0.25, 0.25],
+                },
+                "turbine": {
+                    "power_curve_ws": list(range(26)),
+                    "power_curve_kw": [
+                        0, 0, 0, 10, 50, 120, 250, 400, 600, 850,
+                        1100, 1350, 1500, 1500, 1500, 1500, 1500,
+                        1500, 1500, 1500, 1500, 1500, 1500, 1500,
+                        1500, 1500,
+                    ],
+                    "ct_curve_ws": list(range(26)),
+                    "ct_curve_ct": [
+                        0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,
+                        0.8, 0.75, 0.65, 0.55, 0.45, 0.35, 0.28,
+                        0.22, 0.18, 0.15, 0.12, 0.10, 0.09, 0.08,
+                        0.07, 0.06, 0.05, 0.05,
+                    ],
+                },
+            }
+
+            # Write synthetic problem
+            test_problem = results_dir / "problem_farmtest.json"
+            with open(test_problem, "w") as f:
+                json.dump(synthetic, f)
+
+            r = run_on_farm(code, "test", playground, results_dir, 60, run_id)
+
+            # Clean up
+            test_problem.unlink(missing_ok=True)
+            test_output = results_dir / "_llm_farmtest.json"
+            test_output.unlink(missing_ok=True)
+
+            if "error" in r:
+                err = r["error"][:2000]
+                checks = []
+                if "KeyError" in err and "turbine" in err:
+                    checks.append("FAIL: script does not read info['turbine'] from JSON")
+                if "hub_height" in err:
+                    checks.append("FAIL: script does not read info['hub_height'] from JSON")
+                if "hardcoded" in code.lower() or "150.0" in code:
+                    checks.append("WARNING: script may hardcode hub_height=150.0")
+                hint = "\n".join(checks) if checks else ""
+                return (f"GENERALIZATION TEST FAILED:\n{err}\n\n"
+                        f"{hint}\n\n"
+                        f"Your script must read ALL parameters from the problem "
+                        f"JSON, including turbine curves (info['turbine']"
+                        f"['power_curve_ws'], etc.) and hub_height.")
+            else:
+                n = len(r["x"])
+                expected_n = synthetic["n_target"]
+                issues = []
+                if n != expected_n:
+                    issues.append(f"WARNING: produced {n} turbines, expected {expected_n}")
+                if issues:
+                    return (f"GENERALIZATION TEST PARTIAL PASS:\n"
+                            f"Script ran but: {'; '.join(issues)}\n"
+                            f"Run time: {r['time']:.1f}s")
+                return (f"GENERALIZATION TEST PASSED!\n"
+                        f"Script correctly handled a different turbine "
+                        f"(D=100m, hub=80m), boundary, and wind rose.\n"
+                        f"Produced {n} turbine positions in {r['time']:.1f}s.\n"
+                        f"Your script generalizes across problem configurations.")
+
         elif name == "get_status":
             bl = baselines.get(str(train_farm), {}).get("aep_gwh", 0)
             return (f"Attempts: {attempt_count[0]}\n"
@@ -396,6 +483,26 @@ def get_tool_declarations():
                 properties={"code": types.Schema(
                     type="STRING",
                     description="Complete Python optimizer script",
+                )},
+                required=["code"],
+            ),
+        ),
+        types.FunctionDeclaration(
+            name="test_generalization",
+            description=(
+                "Test that your optimizer script generalizes to a DIFFERENT "
+                "farm configuration. Runs your script on a small synthetic "
+                "problem with a different turbine (D=100m, hub=80m), "
+                "different boundary, and different wind rose. Your script "
+                "MUST read turbine curves from info['turbine'] in the "
+                "problem JSON — hardcoded turbine data will fail this test. "
+                "Call this BEFORE run_optimizer to catch issues early."
+            ),
+            parameters=types.Schema(
+                type="OBJECT",
+                properties={"code": types.Schema(
+                    type="STRING",
+                    description="Complete Python optimizer script to test",
                 )},
                 required=["code"],
             ),
@@ -552,12 +659,23 @@ with open(os.environ["FUNWAKE_OUTPUT"], "w") as f:
 You have these tools:
 - `read_file(path)` — read pixwake source files to understand the API
 - `list_files(path)` — explore the codebase
+- `test_generalization(code)` — test your script on a DIFFERENT farm
+  with a different turbine, boundary, and wind rose. Call this FIRST
+  to make sure your script reads everything from the problem JSON.
+  If this fails, your script hardcodes something it shouldn't.
 - `run_optimizer(code)` — run a complete script on the training farm and
   get the AEP score back
 - `get_status()` — check your best AEP and gap vs baseline
 
-## Strategy ideas
+## Strategy
 
+1. Start from the working template above
+2. Call `test_generalization` to verify your script reads everything
+   from the problem JSON (turbine curves, hub_height, boundary, etc.)
+3. Call `run_optimizer` to get the AEP on the training farm
+4. Iterate to beat the baseline
+
+Strategy ideas:
 - **Multi-start**: run topfarm_sgd_solve from many random initial layouts,
   keep the best. The baseline uses 500 starts — can you do better with
   smarter initialization?
@@ -567,6 +685,10 @@ You have these tools:
 - **Hyperparameter tuning**: learning_rate, max_iter, ks_rho, beta1/beta2
 - **Custom optimizer**: write your own gradient-based optimizer using
   jax.grad and the objective/penalty functions directly
+
+CRITICAL: Your script will be evaluated on a HELD-OUT farm with a
+DIFFERENT turbine, boundary, and wind resource. Do NOT hardcode any
+turbine data, hub height, or boundary — read it all from the JSON.
 
 The script runs in playground/ with pixwake on PYTHONPATH.
 """
