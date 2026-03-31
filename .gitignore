@@ -5,6 +5,11 @@ playground/pixwake/
 playground/_generated_optimizer*.py
 playground/_gen_*.py
 playground/_tmp/
+# LLM-generated scripts in playground (from agent write_file calls)
+playground/*.py
+!playground/test_optimizer.py
+playground/*.json
+!playground/problem.json
 
 # Pixi environment
 .pixi/
@@ -17,25 +22,39 @@ benchmarks/_tmp_*
 __pycache__/
 *.pyc
 
-# Sweep artifacts (large, not needed for reproduction)
+# Old experiment artifacts
+agent2.py
+sweep.py
+sweep2.py
 sweep/
 sweep2/
-sweep2_test/
-sweep2_test2/
-sweep2_test3/
-sweep2_testA/
+extract_training_data.py
+lora_train.py
+plot_all.py
+plot_sweep.py
+results3_best_seed.py
+vastai_setup.sh
+.devcatrc
 
-# Intermediate/old results
+# Old results (superseded)
 results2/
 results3/
 results_v2/
 results_agent_test/
 results_agent_test2/
 results_agent_session1/
+results_agent_1hr/
+results_agent_1hr_v2/
+results_agent_1hr_v3/
+results_agent_1hr_v4/
+results_agent_1hr_v5/
+results_agent_1hr_v6/
+results_agent_2hr/
+results_gemini/
 
-# Plots (regenerable, except results we want to keep)
-# *.png
-
-# Misc
-.devcatrc
-vastai_setup.sh
+# Old results files in results/
+results/best_optimizer.py
+results/history.json
+results/iter_*.py
+results/problem_farm[2-9].json
+results/problem_farm0.json

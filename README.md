@@ -1,166 +1,153 @@
 # FunWake: Can an LLM Write a Better Wind Farm Optimizer?
 
-An experiment where an LLM agent autonomously writes wind farm layout
-optimization code, competing against a strong multi-start baseline.
-The agent has tools to explore the codebase, write optimizer scripts,
-run them, and iterate — similar to a developer using an AI coding
-assistant.
+An LLM agent autonomously writes wind farm layout optimization code,
+competing against a strong multi-start baseline. The agent explores a
+wake simulation codebase, writes optimizer scripts, runs unit tests, and
+iterates — with its best script evaluated on a held-out farm it never
+sees during development.
 
-## Results
+## Best LLM-Generated Optimizer
 
-The LLM-generated optimizer beats a 500 multi-start baseline by
-**+40 GWh** on the training farm (DEI, 50 turbines, IEA 15MW).
+The best script the agent produced
+([`results_agent_1hr_v7/best_optimizer.py`](results_agent_1hr_v7/best_optimizer.py))
+uses a **two-stage strategy**:
 
-| Case | Baseline (GWh) | LLM Best (GWh) | Gap |
-|------|---------------|-----------------|-----|
-| DEI farm 1 (train) | 5540.72 | **5580.95** | **+40.23** |
-| ROWP (held-out test) | 4268.68 | *pending* | — |
+**Stage 1 — Feasibility:** Run `topfarm_sgd_solve` with heavy constraint
+penalties (`spacing_weight=10, boundary_weight=10`) for 1000 iterations
+to get a feasible layout from the initial positions.
 
-The ROWP held-out evaluation is wired up but hasn't been run yet
-with the updated agent (which now requires scripts to read turbine
-data from the problem JSON instead of hardcoding it).
+**Stage 2 — AEP maximization:** From the feasible layout, run 10
+multi-start optimizations with small perturbations (`0.05×D`), each with
+4000 iterations at `learning_rate=30`. Keep the best.
 
-### What the LLM discovered
+```
+Training (DEI):    5542.71 GWh  (+2.0 vs 500-start baseline)
+Held-out (ROWP):   4269.61 GWh  (+0.9 vs 500-start baseline)  ✓ feasible
+```
 
-The winning optimizer (`results_agent_2hr/best_optimizer.py`) uses three
-ideas that the baseline lacks:
+The script reads all parameters (turbine, boundary, wind rose) from a
+problem JSON, so the same code works on both farms despite different
+turbine sizes (D=240m vs D=198m), turbine counts (50 vs 74), and wind
+resources.
 
-1. **Two-stage optimization** — First stage uses heavy constraint
-   penalties (spacing_weight=50, boundary_weight=50, ks_rho=750) to find
-   a feasible layout. Second stage optimizes AEP with relaxed penalties.
-   The baseline uses a single stage with default penalty weights.
+![Agent progress](results_agent_1hr_v7/progress.png)
 
-2. **Tuned Adam momentum** — beta1=0.95, beta2=0.99 (close to standard
-   Adam) outperforms TopFarm's defaults of beta1=0.1, beta2=0.2. This
-   was the biggest single improvement, discovered at turn 23 of the
-   2-hour session.
-
-3. **Hybrid multi-start** — 20 starts split between random grid-based
-   layouts (exploration) and perturbations of the current best
-   (exploitation). The baseline uses 500 pure random starts but still
-   loses because of (1) and (2).
-
-## Problem
-
-Optimize the placement of ~50 wind turbines (IEA 15 MW, D=240m) inside
-a convex polygon boundary to maximize Annual Energy Production (AEP).
-
-**Constraints:**
-- All turbines inside the polygon (`boundary_penalty < 1e-3`)
-- Minimum spacing 4×D = 960m between any pair
-
-**Wind resource:** 10-year daily-averaged timeseries from the Danish
-Energy Island cluster, binned into 24 directional sectors.
-
-**Wake model:** Bastankhah Gaussian deficit (k=0.04) via
-[pixwake](https://github.com/kilojoules/cluster-tradeoffs) (JAX).
-
-## Benchmark cases
-
-| Case | Turbines | Turbine | Role |
-|------|----------|---------|------|
-| DEI farm 1 | 50 | IEA 15MW (D=240m) | **Training** |
-| ROWP irregular | 74 | IEA 10MW (D=198m) | **Held-out test** |
-
-The LLM develops its optimizer on DEI farm 1 and never sees the ROWP
-case. After prototyping, the best optimizer is evaluated on ROWP to
-test generalization to a different turbine, polygon, and wind resource
-([IEA Wind 740-10 ROWP](https://github.com/IEAWindSystems/IEA-Wind-740-10-ROWP)).
-
-The optimizer script must read all parameters (turbine curves, boundary,
-wind rose) from the problem JSON so the same script works on both farms.
-
-Note: the 10 DEI polygons in `benchmarks/dei_layout.py` are all the
-same shape (translated UTM copies, identical after centering), so only
-farm 1 is used.
-
-## Baseline
-
-500 multi-start `topfarm_sgd_solve` with `max_iter=4000`,
-`additional_constant_lr_iterations=2000`, `learning_rate=50.0`.
-Best of 500 random initial layouts. Takes ~2.5 hours per farm.
-
-## Agent
+## How It Works
 
 The agent (`agent_cli.py`) is a tool-use loop powered by Gemini 2.5
-Flash via function calling. It has four tools:
+Flash. It gets a time budget and these tools:
 
 | Tool | Description |
 |------|-------------|
-| `read_file(path)` | Read pixwake source code (restricted to playground/) |
-| `list_files(path)` | Explore the codebase |
-| `run_optimizer(code)` | Run a complete optimizer script on the training farm, get AEP back |
-| `get_status()` | Check best AEP and gap vs baseline |
+| `read_file` | Read pixwake source code and the training problem JSON |
+| `list_files` | Explore the codebase |
+| `write_file` | Save scripts to the workspace |
+| `run_tests` | Unit tests: turbine count, boundary, spacing, AEP validity |
+| `test_generalization` | Run on a held-out farm — reports feasibility only, not AEP |
+| `run_optimizer` | Score on the training farm — returns AEP |
+| `get_status` | Check best AEP vs baseline |
+
+The agent can read the training problem definition, inspect the pixwake
+API, write scripts, validate them with unit tests, check they generalize
+to a different farm, and then score them. It never sees the held-out
+farm's AEP — only whether its script produces a feasible layout there.
+
+Every scored attempt is silently evaluated on the held-out farm in the
+background, producing paired (training, held-out) data for the progress
+plot.
 
 ### Sandbox
 
-Generated optimizer scripts run inside a security sandbox:
+Generated scripts run in a macOS sandbox:
+- Network access blocked (`sandbox-exec`)
+- Environment stripped to whitelisted vars only (no API keys)
+- Filesystem writes restricted to the workspace
+- Static blocklist for dangerous imports (subprocess, exec, etc.)
 
-- **macOS sandbox-exec** blocks all network access and restricts
-  filesystem writes
-- **Stripped environment** — only whitelisted env vars (no API keys)
-- **Static safety checker** — blocklist for subprocess, exec, network,
-  filesystem manipulation
-- **Restricted file access** — blocks .git, .env, binary files
+## Problem
 
-### Hot start
+Write a general wind farm layout optimizer that reads its configuration
+from a JSON file:
 
-The `--hot-start` flag seeds the agent with a known-good optimizer
-script so it skips API discovery and starts optimizing immediately.
-The 2-hour winning run used the best script from an earlier 5-iteration
-Gemini session as its seed.
+```
+rotor_diameter, hub_height, min_spacing_m, n_target,
+boundary_vertices, init_x, init_y,
+wind_rose (directions, speeds, weights),
+turbine (power_curve, ct_curve)
+```
+
+Constraints: all turbines inside the polygon, pairwise distance >=
+`min_spacing_m`. The optimizer must generalize — it's evaluated on a
+farm it was never trained on.
+
+### Benchmark Cases
+
+| Case | Turbines | Turbine | Baseline AEP | Role |
+|------|----------|---------|-------------|------|
+| DEI farm 1 | 50 | IEA 15MW, D=240m | 5540.72 GWh | Training |
+| [IEA ROWP](https://github.com/IEAWindSystems/IEA-Wind-740-10-ROWP) | 74 | IEA 10MW, D=198m | 4268.68 GWh | Held-out test |
+
+Baselines: 500 multi-start `topfarm_sgd_solve` (`max_iter=4000`,
+`additional_constant_lr_iterations=2000`).
 
 ## Reproduce
 
 ### Prerequisites
 
-- [pixi](https://pixi.sh) package manager
+- [pixi](https://pixi.sh)
 - Gemini API key in `~/.gem`
-- Wind resource CSV (contact authors or use your own)
+- Wind resource CSV (10-year Danish Energy Island daily averages)
 
 ### Setup
 
 ```bash
 pixi install
-bash setup.sh  # clones pixwake, runs 500-start baselines (~5 hours)
+bash setup.sh    # clones pixwake, computes baselines (~5 hours)
 ```
 
 ### Run the agent
 
 ```bash
-# 10-minute session with hot start
+# 1-hour session with hot start from the baseline template
 pixi run python agent_cli.py \
     --wind-csv ~/clusters/energy_island_10y_daily_av_wind.csv \
     --provider gemini --model gemini-2.5-flash \
-    --time-budget 600 \
-    --hot-start results_gemini/best_optimizer.py
+    --time-budget 3600 \
+    --hot-start results/seed_optimizer.py
 
-# 2-hour session (what produced the +40 GWh result)
-pixi run python agent_cli.py \
-    --wind-csv ~/clusters/energy_island_10y_daily_av_wind.csv \
-    --provider gemini --model gemini-2.5-flash \
-    --time-budget 7200 \
-    --hot-start results_gemini/best_optimizer.py \
-    --output-dir results_2hr
+# Plot progress
+pixi run python plot_progress.py results_agent/attempt_log.json
 ```
 
-## Key files
+### Run unit tests on a script
 
-| File | Description |
-|------|-------------|
-| `agent_cli.py` | Agentic tool-use loop (main entry point) |
-| `agent.py` | Fixed-loop agent (earlier iteration) |
-| `benchmarks/dei_layout.py` | Benchmark suite, baseline runner, scorer |
-| `benchmarks/build_rowp_problem.py` | Builds ROWP test case from IEA data |
-| `setup.sh` | Clones pixwake, computes baselines |
-| `results/baselines.json` | 500-start baseline (AEP + layouts, farms 0 & 1) |
-| `results/problem_farm{0,1}.json` | DEI problem definitions |
-| `results/problem_rowp.json` | ROWP test case (not yet evaluated) |
-| `results_gemini/best_optimizer.py` | Best from 5-iteration run (+37 GWh) |
-| `results_agent_2hr/best_optimizer.py` | Best from 2-hour session (+40 GWh) |
+```bash
+PYTHONPATH=playground/pixwake/src pixi run python \
+    playground/test_optimizer.py my_optimizer.py playground/problem.json
+```
 
-## Cost
+## Repository Structure
 
-- Gemini 2.5 Flash: ~$0.05 per 10-minute session
-- Compute: ~20s per optimizer run on MacBook CPU (M-series)
-- Baseline precompute: ~2.5 hours per farm (500 multi-starts)
+```
+agent_cli.py                  Agentic tool-use loop (main entry point)
+agent.py                      Fixed-loop agent (earlier iteration)
+benchmarks/
+  dei_layout.py               Benchmark suite + baseline runner
+  build_rowp_problem.py       Builds ROWP test case from IEA data
+playground/
+  problem.json                Training farm definition
+  test_optimizer.py           Unit test suite for optimizer scripts
+  pixwake/                    Wake simulation library (cloned by setup.sh)
+results/
+  baselines.json              500-start baseline results
+  baseline_rowp.json          ROWP baseline
+  problem_farm1.json          Training problem definition
+  problem_rowp.json           Held-out problem definition
+  seed_optimizer.py           Generic baseline template
+results_agent_1hr_v7/
+  best_optimizer.py           Best LLM-generated optimizer
+  attempt_log.json            Per-attempt training + held-out scores
+  progress.png                Progress plot
+plot_progress.py              Standalone plotting script
+setup.sh                      Setup: clone pixwake + compute baselines
+```
