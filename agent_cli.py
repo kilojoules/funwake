@@ -81,6 +81,7 @@ def safety_check(code: str) -> tuple[bool, str]:
                     if "os.environ" not in stripped and "os.getenv" not in stripped:
                         continue
             return False, f"Blocked: {token!r}"
+
     try:
         compile(code, "<generated>", "exec")
     except SyntaxError as e:
@@ -151,6 +152,12 @@ def _sandbox_profile(playground: Path, results_dir: Path) -> str:
 
 def run_on_farm(code: str, farm_id: int, playground: Path, results_dir: Path,
                 timeout_s: int = 300, run_id: str = "") -> dict:
+    """Run the LLM's optimize() function on a farm via the harness.
+
+    The LLM writes code defining optimize(sim, init_x, init_y, boundary,
+    min_spacing, wd, ws, weights) -> (opt_x, opt_y). The harness loads
+    the problem JSON, builds the WakeSimulation, and calls optimize().
+    """
     playground = playground.resolve()
     results_dir = results_dir.resolve()
 
@@ -158,9 +165,14 @@ def run_on_farm(code: str, farm_id: int, playground: Path, results_dir: Path,
     tmpdir = playground / "_tmp"
     tmpdir.mkdir(exist_ok=True)
 
+    # Write the LLM's optimizer module
     script_name = f"_generated_optimizer_{run_id}.py" if run_id else "_generated_optimizer.py"
     script_path = playground / script_name
     script_path.write_text(code)
+
+    harness_path = playground / "harness.py"
+    if not harness_path.exists():
+        return {"error": "harness.py not found in playground/"}
 
     output_path = results_dir / f"_llm_farm{farm_id}.json"
     # Support both "problem_farm1.json" and "problem_rowp.json" naming
@@ -178,10 +190,10 @@ def run_on_farm(code: str, farm_id: int, playground: Path, results_dir: Path,
     profile_path = tmpdir / "_sandbox.sb"
     profile_path.write_text(_sandbox_profile(playground, results_dir))
 
-    # Run inside macOS sandbox
+    # Run harness with the optimizer module as argument
     cmd = [
         "/usr/bin/sandbox-exec", "-f", str(profile_path),
-        sys.executable, str(script_path),
+        sys.executable, str(harness_path), str(script_path),
     ]
 
     t0 = time.time()
@@ -700,21 +712,39 @@ def build_system_prompt(baselines: dict, train_farm: int,
 
     return f"""\
 You are an optimization researcher with access to a wind farm layout
-optimization codebase (pixwake). Your goal: write a Python optimizer
-script that MAXIMIZES AEP (Annual Energy Production) and beats the
+optimization codebase (pixwake). Your goal: write an `optimize()`
+function that MAXIMIZES AEP (Annual Energy Production) and beats the
 baseline.
 
 ## Task
 
-Write a GENERAL wind farm layout optimizer. The script receives a
-problem definition (turbine specs, polygon boundary, wind resource)
-via a JSON file and must produce an optimized layout. It will be
-evaluated on multiple farms with different turbines, boundaries, and
-wind conditions.
+Write a Python module that defines:
 
-Constraints:
-- All turbines inside the polygon boundary
-- Minimum pairwise spacing >= `min_spacing_m` (from JSON, typically 4×D)
+```python
+def optimize(sim, init_x, init_y, boundary, min_spacing, wd, ws, weights):
+    \"\"\"Optimize turbine layout to maximize AEP.
+
+    Args:
+        sim: WakeSimulation object (pre-configured, DO NOT modify)
+        init_x: initial turbine x positions (jnp array, shape (n,))
+        init_y: initial turbine y positions (jnp array, shape (n,))
+        boundary: polygon vertices (jnp array, shape (n_verts, 2), convex CCW)
+        min_spacing: minimum turbine spacing in meters (float)
+        wd: wind directions in degrees (jnp array)
+        ws: wind speeds in m/s (jnp array)
+        weights: frequency weights per wind bin (jnp array)
+
+    Returns:
+        opt_x, opt_y: optimized turbine positions (jnp arrays)
+    \"\"\"
+```
+
+A harness handles loading the problem JSON, building the Turbine and
+WakeSimulation, and writing the output. You ONLY write the optimize()
+function. The wake model and turbine are fixed — you cannot change them.
+
+The function will be called on multiple farms with different turbines,
+boundaries, turbine counts, and wind conditions. It must generalize.
 
 ## Baseline to beat
 
@@ -724,123 +754,63 @@ max_iter=4000, additional_constant_lr_iterations=2000).
 ## Constraints (exact scorer thresholds)
 
 1. **Boundary**: `boundary_penalty(x, y, boundary) < 1e-3`
-2. **Spacing**: `min_pairwise_distance >= min_spacing_m * 0.99`
+2. **Spacing**: `min_pairwise_distance >= min_spacing * 0.99`
 
-## Your script must
-
-1. `import jax; jax.config.update("jax_enable_x64", True)` at the top
-2. Load the problem from `os.environ["FUNWAKE_PROBLEM"]` (a JSON file)
-3. Read ALL parameters from the JSON — turbine, boundary, wind, spacing
-4. Optimize the layout
-5. Write `{{"x": [...], "y": [...]}}` to `os.environ["FUNWAKE_OUTPUT"]`
-
-## Problem JSON schema
-
-```
-rotor_diameter        float     Rotor diameter in meters
-hub_height            float     Hub height in meters
-min_spacing_m         float     Minimum turbine spacing in meters
-n_target              int       Number of turbines
-boundary_vertices     [[x,y]]   Polygon vertices (convex, CCW)
-init_x, init_y        [float]   Initial turbine positions
-wind_rose.directions_deg  [float]   Wind direction bins (degrees)
-wind_rose.speeds_ms       [float]   Mean wind speed per bin (m/s)
-wind_rose.weights         [float]   Frequency weight per bin
-turbine.power_curve_ws    [float]   Wind speeds for power curve
-turbine.power_curve_kw    [float]   Power values in kW
-turbine.ct_curve_ws       [float]   Wind speeds for Ct curve
-turbine.ct_curve_ct       [float]   Thrust coefficient values
-```
-
-Every value varies between farms. Do NOT hardcode any of them.
-
-## Working baseline template
-
-This COMPLETE script works on any farm. Start from this.
+## Working baseline
 
 ```python
-import jax
-jax.config.update("jax_enable_x64", True)
-import os, json
 import jax.numpy as jnp
-import numpy as np
-from pixwake import Curve, Turbine, WakeSimulation
-from pixwake.deficit import BastankhahGaussianDeficit
 from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve
 
-with open(os.environ["FUNWAKE_PROBLEM"]) as f:
-    info = json.load(f)
+def optimize(sim, init_x, init_y, boundary, min_spacing, wd, ws, weights):
+    def objective(x, y):
+        r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
+        p = r.power()[:, :len(x)]
+        return -jnp.sum(p * weights[:, None]) * 8760 / 1e6
 
-D = info["rotor_diameter"]
-hub_height = info.get("hub_height", 150.0)
-t = info["turbine"]
-ws_arr = jnp.array(t["power_curve_ws"], dtype=float)
-power = jnp.array(t["power_curve_kw"], dtype=float)
-ct_ws = jnp.array(t.get("ct_curve_ws", t["power_curve_ws"]), dtype=float)
-ct = jnp.array(t["ct_curve_ct"], dtype=float)
-turbine = Turbine(rotor_diameter=D, hub_height=hub_height,
-                  power_curve=Curve(ws=ws_arr, values=power),
-                  ct_curve=Curve(ws=ct_ws, values=ct))
-sim = WakeSimulation(turbine, BastankhahGaussianDeficit(k=0.04))
-
-wd = jnp.array(info["wind_rose"]["directions_deg"])
-ws = jnp.array(info["wind_rose"]["speeds_ms"])
-weights = jnp.array(info["wind_rose"]["weights"])
-boundary = jnp.array(info["boundary_vertices"])
-init_x = jnp.array(info["init_x"])
-init_y = jnp.array(info["init_y"])
-min_spacing = info["min_spacing_m"]
-
-def objective(x, y):
-    r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
-    p = r.power()[:, :len(x)]
-    return -jnp.sum(p * weights[:, None]) * 8760 / 1e6
-
-settings = SGDSettings(learning_rate=50.0, max_iter=500,
-                       additional_constant_lr_iterations=500, tol=1e-6)
-opt_x, opt_y = topfarm_sgd_solve(objective, init_x, init_y,
-                                  boundary, min_spacing, settings)
-
-with open(os.environ["FUNWAKE_OUTPUT"], "w") as f:
-    json.dump({{"x": [float(v) for v in opt_x],
-               "y": [float(v) for v in opt_y]}}, f)
+    settings = SGDSettings(learning_rate=50.0, max_iter=4000,
+                           additional_constant_lr_iterations=2000, tol=1e-6)
+    opt_x, opt_y = topfarm_sgd_solve(objective, init_x, init_y,
+                                      boundary, min_spacing, settings)
+    return opt_x, opt_y
 ```
 
-## Key API facts (DO NOT deviate from these)
+## Key API
 
-- `WakeSimulation(turbine, deficit)` — exactly 2 positional args
-- `topfarm_sgd_solve(objective, init_x, init_y, boundary, min_spacing, settings)` — returns `(opt_x, opt_y)` (2 values, NOT 3)
+- `sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)` — run wake simulation
+- `sim(x, y, ...).power()` — returns power array, shape (n_conditions, n_turbines+)
+- `topfarm_sgd_solve(objective, init_x, init_y, boundary, min_spacing, settings)` — returns `(opt_x, opt_y)`
 - `SGDSettings(learning_rate=, max_iter=, additional_constant_lr_iterations=, tol=, ks_rho=, spacing_weight=, boundary_weight=, gamma_min_factor=, beta1=, beta2=)`
-- `objective(x, y)` must return a scalar (negative AEP)
 - `from pixwake.optim.sgd import boundary_penalty, spacing_penalty`
 
 ## Files in playground/
 
 - `problem.json` — the training farm problem definition. Read this to
-  understand the farm you're optimizing (boundary, turbine, wind rose).
-- `test_optimizer.py` — unit test suite for optimizer scripts.
+  understand the farm you're optimizing (boundary, wind rose, etc.).
+- `harness.py` — the runner that calls your optimize() function.
+  You should NOT modify this. Read it to understand the interface.
+- `test_optimizer.py` — unit test suite for optimizer modules.
 - `pixwake/` — the pixwake wake simulation library (source in `pixwake/src/`).
 
 ## Tools
 
-- `read_file(path)` — read files in playground/ (source code, problem.json, etc.)
+- `read_file(path)` — read files in playground/ (source, problem.json, harness.py)
 - `list_files(path)` — explore the codebase
-- `write_file(path, content)` — write a script to playground/
-- `run_tests(script_path, problem_path)` — run unit tests on your script:
+- `write_file(path, content)` — write your optimizer module to playground/
+- `run_tests(script_path, problem_path)` — run unit tests on your module:
   checks turbine count, boundary feasibility, spacing feasibility, and
   AEP validity. Use `problem_path="problem.json"` for the training farm.
 - `test_generalization(code)` — test on a HELD-OUT farm (different turbine,
   boundary, wind). Reports PASS/FAIL + feasibility, NOT the AEP score.
 - `run_optimizer(code)` — run on the training farm, get AEP score back.
-  This is the only way to get the actual AEP.
 - `get_status()` — check best AEP and gap vs baseline.
 
 ## Workflow
 
-1. Read `problem.json` to understand the training farm
-2. Read pixwake source to understand the API
-3. Write your optimizer script with `write_file`
-4. Run `run_tests` on the training problem to verify correctness
+1. Read `harness.py` to understand how your optimize() is called
+2. Read `problem.json` to understand the training farm
+3. Write your optimizer module with `write_file` (must define optimize())
+4. Run `run_tests` to verify correctness
 5. Call `test_generalization` to verify it works on a different farm
 6. Call `run_optimizer` to get the AEP score
 7. Iterate to beat the baseline
@@ -853,8 +823,6 @@ Ideas:
 
 Keep perturbation scales relative to `min_spacing` to generalize
 across farms with different turbine sizes and spacing requirements.
-
-The script runs in playground/ with pixwake on PYTHONPATH.
 """
 
 

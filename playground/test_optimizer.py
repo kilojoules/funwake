@@ -1,17 +1,17 @@
 #!/usr/bin/env python
-"""Unit tests for optimizer scripts.
+"""Unit tests for optimizer modules.
 
-Run against any problem JSON to verify an optimizer script:
-  - Loads all parameters from the JSON (no hardcoding)
-  - Produces the correct number of turbines
+Tests that an optimizer module:
+  - Defines an optimize() function
+  - Returns the correct number of turbines
   - Satisfies boundary and spacing constraints
   - Produces non-degenerate AEP
 
 Usage (from playground/):
-    python test_optimizer.py <script.py> <problem.json>
+    python test_optimizer.py <optimizer_module.py> <problem.json> [timeout]
 
-The script is run via subprocess with FUNWAKE_PROBLEM and FUNWAKE_OUTPUT
-set, then the output is validated.
+The module is loaded via the harness (harness.py), which builds the
+WakeSimulation and calls optimize().
 """
 
 import json
@@ -36,11 +36,12 @@ def load_problem(problem_path):
         return json.load(f)
 
 
-def run_script(script_path, problem_path, timeout=120):
-    """Run an optimizer script and return the output layout."""
+def run_via_harness(optimizer_path, problem_path, timeout=120):
+    """Run an optimizer module via the harness and return the output layout."""
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
         output_path = f.name
 
+    harness_path = os.path.join(os.path.dirname(__file__), "harness.py")
     pixwake_src = os.path.join(os.path.dirname(__file__), "pixwake", "src")
     env = {
         "PATH": os.environ.get("PATH", ""),
@@ -52,7 +53,7 @@ def run_script(script_path, problem_path, timeout=120):
 
     t0 = time.time()
     result = subprocess.run(
-        [sys.executable, script_path],
+        [sys.executable, harness_path, os.path.abspath(optimizer_path)],
         capture_output=True, text=True, timeout=timeout,
         cwd=os.path.dirname(__file__), env=env)
     elapsed = time.time() - t0
@@ -71,7 +72,7 @@ def run_script(script_path, problem_path, timeout=120):
 
 
 def check_layout(layout, info):
-    """Validate a layout against the problem definition. Returns list of (test_name, passed, detail)."""
+    """Validate a layout against the problem definition."""
     results = []
 
     # 1. Correct number of turbines
@@ -114,7 +115,7 @@ def check_layout(layout, info):
         f"min_dist={min_dist:.1f}m (need >= {threshold:.1f}m)",
     ))
 
-    # 4. Non-degenerate AEP (not zero or near-zero)
+    # 4. Non-degenerate AEP
     D = info["rotor_diameter"]
     hub_height = info.get("hub_height", 150.0)
     t = info["turbine"]
@@ -134,7 +135,6 @@ def check_layout(layout, info):
     p = r.power()[:, :len(x)]
     aep = float(jnp.sum(p * weights[:, None]) * 8760 / 1e6)
 
-    # AEP should be positive and reasonable (> 10% of n_turbines * rated)
     max_rated = float(jnp.max(power_arr))
     theoretical_max = n_got * max_rated * 8760 / 1e6
     results.append((
@@ -148,10 +148,10 @@ def check_layout(layout, info):
 
 def main():
     if len(sys.argv) < 3:
-        print(f"Usage: python {sys.argv[0]} <script.py> <problem.json>")
+        print(f"Usage: python {sys.argv[0]} <optimizer_module.py> <problem.json> [timeout]")
         sys.exit(1)
 
-    script_path = sys.argv[1]
+    optimizer_path = sys.argv[1]
     problem_path = sys.argv[2]
     timeout = int(sys.argv[3]) if len(sys.argv) > 3 else 120
 
@@ -162,15 +162,15 @@ def main():
     print(f"  {len(info['wind_rose']['directions_deg'])} wind sectors")
     print()
 
-    print(f"Running {script_path}...")
-    layout, error, elapsed = run_script(script_path, problem_path, timeout)
+    print(f"Running {optimizer_path} via harness...")
+    layout, error, elapsed = run_via_harness(optimizer_path, problem_path, timeout)
 
     if error:
         print(f"SCRIPT FAILED ({elapsed:.1f}s):")
         print(f"  {error[:500]}")
         sys.exit(1)
 
-    print(f"Script completed in {elapsed:.1f}s")
+    print(f"Completed in {elapsed:.1f}s")
     print()
 
     results = check_layout(layout, info)

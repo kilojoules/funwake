@@ -8,6 +8,7 @@ playground/_tmp/
 # LLM-generated scripts in playground (from agent write_file calls)
 playground/*.py
 !playground/test_optimizer.py
+!playground/harness.py
 playground/*.json
 !playground/problem.json
 
