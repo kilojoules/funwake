@@ -238,6 +238,35 @@ def score_layout(layout: dict, farm_id: int, benchmark_script: Path,
 
 # ── Tool definitions for the LLM ────────────────────────────────────────
 
+def _score_on_rowp(code: str, playground: Path, results_dir: Path,
+                   timeout_s: int, run_id: str) -> dict | None:
+    """Silently run optimizer on ROWP and score. Returns None on any failure."""
+    rowp_problem = results_dir / "problem_rowp.json"
+    if not rowp_problem.exists():
+        return None
+    r = run_on_farm(code, "rowp", playground, results_dir, timeout_s, run_id)
+    if "error" in r:
+        return {"error": r["error"][:500]}
+    try:
+        pixwake_src = str((playground / "pixwake" / "src").resolve())
+        if pixwake_src not in sys.path:
+            sys.path.insert(0, pixwake_src)
+        bench_dir = str(playground.parent / "benchmarks")
+        if bench_dir not in sys.path:
+            sys.path.insert(0, bench_dir)
+        from dei_layout import ProblemBenchmark
+        bm = ProblemBenchmark(str(rowp_problem))
+        aep = bm.score(r["x"], r["y"])
+        feas = bm.check_feasibility(r["x"], r["y"])
+        return {
+            "aep_gwh": aep,
+            "feasible": feas["spacing_ok"] and feas["boundary_ok"],
+            "time": r["time"],
+        }
+    except Exception as e:
+        return {"error": str(e)[:500]}
+
+
 def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                wind_csv: str, baselines: dict, train_farm: int,
                timeout_s: int, run_id: str, out_dir: Path):
@@ -245,6 +274,12 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
 
     best = {"aep": 0.0, "code": None, "iter": 0}
     attempt_count = [0]
+    # Log every attempt: training AEP + silent ROWP AEP (for progress plot)
+    attempt_log = []
+
+    def _save_log():
+        with open(out_dir / "attempt_log.json", "w") as f:
+            json.dump(attempt_log, f, indent=2)
 
     def _dispatch(name: str, args: dict) -> str:
         """Execute a tool call, return result as string."""
@@ -306,6 +341,12 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
 
             safe, reason = safety_check(code)
             if not safe:
+                attempt_log.append({
+                    "attempt": attempt_count[0],
+                    "timestamp": time.time(),
+                    "error": f"safety: {reason}",
+                })
+                _save_log()
                 return f"REJECTED: {reason}"
 
             # Save iteration
@@ -315,11 +356,23 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             r = run_on_farm(code, train_farm, playground, results_dir,
                            timeout_s, run_id)
             if "error" in r:
+                attempt_log.append({
+                    "attempt": attempt_count[0],
+                    "timestamp": time.time(),
+                    "error": r["error"][:500],
+                })
+                _save_log()
                 return f"ERROR: {r['error'][:2000]}"
 
             sc = score_layout({"x": r["x"], "y": r["y"]},
                               train_farm, benchmark, wind_csv, playground)
             if "error" in sc:
+                attempt_log.append({
+                    "attempt": attempt_count[0],
+                    "timestamp": time.time(),
+                    "error": f"score: {sc['error'][:300]}",
+                })
+                _save_log()
                 return f"Run OK but score error: {sc['error'][:500]}"
 
             aep = sc["aep_gwh"]
@@ -330,6 +383,27 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 best["code"] = code
                 best["iter"] = attempt_count[0]
                 (out_dir / "best_optimizer.py").write_text(code)
+
+            # Silently run on ROWP for progress tracking (LLM doesn't see this)
+            rowp_result = _score_on_rowp(code, playground, results_dir,
+                                         timeout_s, run_id)
+
+            entry = {
+                "attempt": attempt_count[0],
+                "timestamp": time.time(),
+                "train_aep": aep,
+                "train_feasible": sc.get("feasible", None),
+                "train_time": r["time"],
+                "train_baseline": bl,
+            }
+            if rowp_result and "error" not in rowp_result:
+                entry["rowp_aep"] = rowp_result["aep_gwh"]
+                entry["rowp_feasible"] = rowp_result["feasible"]
+                entry["rowp_time"] = rowp_result["time"]
+            elif rowp_result:
+                entry["rowp_error"] = rowp_result["error"][:200]
+            attempt_log.append(entry)
+            _save_log()
 
             return (f"AEP: {aep:.2f} GWh (baseline: {bl:.2f}, "
                     f"gap: {aep - bl:+.2f})\n"
@@ -434,7 +508,7 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
         else:
             return f"Unknown tool: {name}"
 
-    return _dispatch, best
+    return _dispatch, best, attempt_log
 
 
 def get_tool_declarations():
@@ -696,6 +770,54 @@ The script runs in playground/ with pixwake on PYTHONPATH.
 
 # ── Main agent loop ─────────────────────────────────────────────────────
 
+def plot_progress(attempt_log: list, out_dir: Path,
+                  train_baseline: float, rowp_baseline: float):
+    """Plot training AEP and ROWP AEP vs attempt number."""
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("  (matplotlib not available, skipping plot)")
+        return
+
+    successful = [e for e in attempt_log if "train_aep" in e]
+    if not successful:
+        return
+
+    attempts = [e["attempt"] for e in successful]
+    train_aeps = [e["train_aep"] for e in successful]
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(attempts, train_aeps, "o-", color="C0", label="Training (DEI farm 1)")
+    ax.axhline(train_baseline, color="C0", linestyle="--", alpha=0.5,
+               label=f"Train baseline ({train_baseline:.1f})")
+
+    # ROWP points (may have gaps where ROWP errored)
+    rowp_attempts = [e["attempt"] for e in successful if "rowp_aep" in e]
+    rowp_aeps = [e["rowp_aep"] for e in successful if "rowp_aep" in e]
+    if rowp_aeps:
+        ax2 = ax.twinx()
+        ax2.plot(rowp_attempts, rowp_aeps, "s-", color="C1",
+                 label="ROWP (held-out)")
+        ax2.axhline(rowp_baseline, color="C1", linestyle="--", alpha=0.5,
+                     label=f"ROWP baseline ({rowp_baseline:.1f})")
+        ax2.set_ylabel("ROWP AEP (GWh)", color="C1")
+        ax2.tick_params(axis="y", labelcolor="C1")
+        ax2.legend(loc="lower right")
+
+    ax.set_xlabel("Attempt")
+    ax.set_ylabel("Training AEP (GWh)", color="C0")
+    ax.tick_params(axis="y", labelcolor="C0")
+    ax.legend(loc="upper left")
+    ax.set_title("Agent Progress: Training vs Held-out AEP")
+    fig.tight_layout()
+    plot_path = out_dir / "progress.png"
+    fig.savefig(plot_path, dpi=150)
+    plt.close(fig)
+    print(f"  Progress plot saved to {plot_path}")
+
+
 def run_agent(provider: str, model: str, api_key: str,
               playground: Path, benchmark: Path, wind_csv: str,
               results_dir: Path, baselines: dict, train_farm: int,
@@ -705,7 +827,7 @@ def run_agent(provider: str, model: str, api_key: str,
 
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    dispatch, best = make_tools(
+    dispatch, best, attempt_log = make_tools(
         playground, results_dir, benchmark, wind_csv, baselines,
         train_farm, timeout_s, run_id, out_dir)
 
@@ -942,6 +1064,13 @@ def run_agent(provider: str, model: str, api_key: str,
     with open(out_dir / "history.json", "w") as f:
         json.dump(history, f, indent=2)
     print(f"\nHistory saved to {out_dir / 'history.json'}")
+
+    # Plot progress
+    rowp_bl = 0
+    if (results_dir / "baseline_rowp.json").exists():
+        with open(results_dir / "baseline_rowp.json") as f:
+            rowp_bl = json.load(f).get("aep_gwh", 0)
+    plot_progress(attempt_log, out_dir, bl_aep, rowp_bl)
 
 
 def main():
