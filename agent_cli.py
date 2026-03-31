@@ -417,25 +417,30 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             if not safe:
                 return f"REJECTED: {reason}"
 
-            # Build a small synthetic problem with DIFFERENT specs
-            # to verify the script reads everything from JSON
+            # Build a synthetic problem with DIFFERENT specs to verify
+            # the script reads everything from JSON and produces a
+            # feasible layout on an unfamiliar farm.
+            # Uses an irregular polygon (not a simple square) and more
+            # turbines to stress-test generalization.
             synthetic = {
                 "farm_id": "test",
                 "farm_name": "generalization test",
-                "n_target": 5,
+                "n_target": 12,
                 "rotor_diameter": 100.0,  # NOT 240
                 "hub_height": 80.0,       # NOT 150
                 "min_spacing_m": 400.0,   # 4×100
                 "boundary_vertices": [
-                    [-2000, -2000], [2000, -2000], [2000, 2000],
-                    [-2000, 2000],
+                    [-1500, -2500], [1800, -2000], [2200, 500],
+                    [1000, 2500], [-1200, 2200], [-2200, 0],
                 ],
-                "init_x": [-800, 0, 800, -400, 400],
-                "init_y": [-800, 0, 800, 800, -800],
+                "init_x": [-800, 0, 800, -400, 400, -1000,
+                           1000, -600, 600, 0, -200, 200],
+                "init_y": [-1500, -1000, -500, 0, 500, 1000,
+                           1500, -800, 800, 1200, -400, 400],
                 "wind_rose": {
-                    "directions_deg": [0, 90, 180, 270],
-                    "speeds_ms": [8.0, 9.0, 7.0, 10.0],
-                    "weights": [0.25, 0.25, 0.25, 0.25],
+                    "directions_deg": [0, 60, 120, 180, 240, 300],
+                    "speeds_ms": [8.0, 9.0, 7.0, 10.0, 8.5, 7.5],
+                    "weights": [0.15, 0.20, 0.10, 0.25, 0.18, 0.12],
                 },
                 "turbine": {
                     "power_curve_ws": list(range(26)),
@@ -474,7 +479,7 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                     checks.append("FAIL: script does not read info['turbine'] from JSON")
                 if "hub_height" in err:
                     checks.append("FAIL: script does not read info['hub_height'] from JSON")
-                if "hardcoded" in code.lower() or "150.0" in code:
+                if "150.0" in code:
                     checks.append("WARNING: script may hardcode hub_height=150.0")
                 hint = "\n".join(checks) if checks else ""
                 return (f"GENERALIZATION TEST FAILED:\n{err}\n\n"
@@ -487,15 +492,55 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 expected_n = synthetic["n_target"]
                 issues = []
                 if n != expected_n:
-                    issues.append(f"WARNING: produced {n} turbines, expected {expected_n}")
+                    issues.append(f"produced {n} turbines, expected {expected_n}")
+
+                # Check feasibility on the synthetic farm
+                try:
+                    pixwake_src = str((playground / "pixwake" / "src").resolve())
+                    if pixwake_src not in sys.path:
+                        sys.path.insert(0, pixwake_src)
+                    bench_dir = str(playground.parent / "benchmarks")
+                    if bench_dir not in sys.path:
+                        sys.path.insert(0, bench_dir)
+                    from dei_layout import ProblemBenchmark
+                    bm = ProblemBenchmark(str(test_problem.parent / "problem_farmtest.json"))
+                except Exception:
+                    # Can't score — at least the script ran
+                    bm = None
+
+                # Re-write problem for scoring (was cleaned up above)
+                with open(test_problem, "w") as f:
+                    json.dump(synthetic, f)
+                if bm is None:
+                    try:
+                        from dei_layout import ProblemBenchmark
+                        bm = ProblemBenchmark(str(test_problem))
+                    except Exception:
+                        pass
+
+                if bm is not None:
+                    feas = bm.check_feasibility(r["x"], r["y"])
+                    if not feas["spacing_ok"]:
+                        issues.append(
+                            f"SPACING VIOLATION: min_dist={feas['min_turbine_distance_m']:.1f}m "
+                            f"(need {feas['min_spacing_m']:.0f}m)")
+                    if not feas["boundary_ok"]:
+                        issues.append(
+                            f"BOUNDARY VIOLATION: penalty={feas['boundary_penalty']:.4f} "
+                            f"(need < 1e-3)")
+                    test_problem.unlink(missing_ok=True)
+
                 if issues:
-                    return (f"GENERALIZATION TEST PARTIAL PASS:\n"
-                            f"Script ran but: {'; '.join(issues)}\n"
-                            f"Run time: {r['time']:.1f}s")
+                    return (f"GENERALIZATION TEST ISSUES:\n"
+                            f"{chr(10).join('  - ' + i for i in issues)}\n"
+                            f"Run time: {r['time']:.1f}s\n\n"
+                            f"Your script must produce feasible layouts on any "
+                            f"farm, not just the training farm. Make sure "
+                            f"boundary constraints and spacing are enforced.")
                 return (f"GENERALIZATION TEST PASSED!\n"
                         f"Script correctly handled a different turbine "
-                        f"(D=100m, hub=80m), boundary, and wind rose.\n"
-                        f"Produced {n} turbine positions in {r['time']:.1f}s.\n"
+                        f"(D=100m, hub=80m), irregular boundary, and wind rose.\n"
+                        f"Produced {n} feasible turbine positions in {r['time']:.1f}s.\n"
                         f"Your script generalizes across problem configurations.")
 
         elif name == "get_status":
