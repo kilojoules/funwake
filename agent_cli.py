@@ -588,81 +588,65 @@ def build_system_prompt(baselines: dict, train_farm: int,
     bl = baselines.get(str(train_farm), {})
     bl_aep = bl.get("aep_gwh", 0)
 
-    # Load problem info
-    problem_path = results_dir / f"problem_farm{train_farm}.json"
-    problem_summary = ""
-    if problem_path.exists():
-        with open(problem_path) as f:
-            info = json.load(f)
-        bv = info["boundary_vertices"]
-        bv_str = ", ".join(f"({v[0]:.1f}, {v[1]:.1f})" for v in bv)
-        problem_summary = (
-            f"### Training farm {train_farm}\n"
-            f"  n_target: {info['n_target']} turbines\n"
-            f"  rotor_diameter: {info['rotor_diameter']}m\n"
-            f"  min_spacing: {info['min_spacing_m']}m (4×D)\n"
-            f"  boundary ({len(bv)} vertices): [{bv_str}]\n"
-        )
-
     return f"""\
 You are an optimization researcher with access to a wind farm layout
 optimization codebase (pixwake). Your goal: write a Python optimizer
-that MAXIMIZES AEP (Annual Energy Production) and beats the baseline.
+script that MAXIMIZES AEP (Annual Energy Production) and beats the
+baseline.
 
 ## Task
 
-Optimize the placement of ~50 turbines (IEA 15 MW, D=240m) inside a
-polygon boundary. Constraints: all turbines inside boundary, minimum
-spacing 4×D = 960m between any pair.
+Write a GENERAL wind farm layout optimizer. The script receives a
+problem definition (turbine specs, polygon boundary, wind resource)
+via a JSON file and must produce an optimized layout. It will be
+evaluated on multiple farms with different turbines, boundaries, and
+wind conditions.
+
+Constraints:
+- All turbines inside the polygon boundary
+- Minimum pairwise spacing >= `min_spacing_m` (from JSON, typically 4×D)
 
 ## Baseline to beat
 
-500 multi-start topfarm_sgd_solve: **{bl_aep:.2f} GWh**
-(max_iter=4000, additional_constant_lr_iterations=2000)
-
-{problem_summary}
+{bl_aep:.2f} GWh on the training farm (500 multi-start topfarm_sgd_solve,
+max_iter=4000, additional_constant_lr_iterations=2000).
 
 ## Constraints (exact scorer thresholds)
 
-1. **Boundary**: boundary_penalty(x, y, boundary) < 1e-3
-2. **Spacing**: min pairwise distance >= min_spacing × 0.99 = 950.4m
+1. **Boundary**: `boundary_penalty(x, y, boundary) < 1e-3`
+2. **Spacing**: `min_pairwise_distance >= min_spacing_m * 0.99`
 
-Import penalty functions:
-  from pixwake.optim.sgd import boundary_penalty, spacing_penalty
-
-## Your optimizer script must
+## Your script must
 
 1. `import jax; jax.config.update("jax_enable_x64", True)` at the top
-2. Load problem from `os.environ["FUNWAKE_PROBLEM"]`
-3. Optimize the layout
-4. Write {{"x": [...], "y": [...]}} to `os.environ["FUNWAKE_OUTPUT"]`
+2. Load the problem from `os.environ["FUNWAKE_PROBLEM"]` (a JSON file)
+3. Read ALL parameters from the JSON — turbine, boundary, wind, spacing
+4. Optimize the layout
+5. Write `{{"x": [...], "y": [...]}}` to `os.environ["FUNWAKE_OUTPUT"]`
 
 ## Problem JSON schema
 
-The problem JSON (loaded from FUNWAKE_PROBLEM) has these keys:
-- `rotor_diameter`: float (240.0 for training, may differ for other farms)
-- `hub_height`: float (150.0 for training, may differ)
-- `min_spacing_m`: float (960.0 = 4×D)
-- `n_target`: int (number of turbines)
-- `boundary_vertices`: list of [x, y] pairs
-- `init_x`, `init_y`: lists of initial turbine positions
-- `wind_rose.directions_deg`: list of wind direction bins
-- `wind_rose.speeds_ms`: list of mean wind speeds per bin
-- `wind_rose.weights`: list of frequency weights per bin
-- `turbine.power_curve_ws`: list of wind speeds for power curve
-- `turbine.power_curve_kw`: list of power values in kW
-- `turbine.ct_curve_ws`: list of wind speeds for Ct curve
-- `turbine.ct_curve_ct`: list of thrust coefficient values
+```
+rotor_diameter        float     Rotor diameter in meters
+hub_height            float     Hub height in meters
+min_spacing_m         float     Minimum turbine spacing in meters
+n_target              int       Number of turbines
+boundary_vertices     [[x,y]]   Polygon vertices (convex, CCW)
+init_x, init_y        [float]   Initial turbine positions
+wind_rose.directions_deg  [float]   Wind direction bins (degrees)
+wind_rose.speeds_ms       [float]   Mean wind speed per bin (m/s)
+wind_rose.weights         [float]   Frequency weight per bin
+turbine.power_curve_ws    [float]   Wind speeds for power curve
+turbine.power_curve_kw    [float]   Power values in kW
+turbine.ct_curve_ws       [float]   Wind speeds for Ct curve
+turbine.ct_curve_ct       [float]   Thrust coefficient values
+```
 
-IMPORTANT: Your script will be evaluated on a DIFFERENT farm with a
-different turbine, boundary, and wind resource. You MUST read ALL
-parameters (including turbine curves) from the problem JSON. Do NOT
-hardcode turbine data.
+Every value varies between farms. Do NOT hardcode any of them.
 
 ## Working baseline template
 
-This COMPLETE script works and scores ~5527 GWh. It reads ALL
-configuration from the problem JSON so it works on any farm.
+This COMPLETE script works on any farm. Start from this.
 
 ```python
 import jax
@@ -722,39 +706,30 @@ with open(os.environ["FUNWAKE_OUTPUT"], "w") as f:
 
 ## Tools
 
-You have these tools:
 - `read_file(path)` — read pixwake source files to understand the API
 - `list_files(path)` — explore the codebase
-- `test_generalization(code)` — test your script on a DIFFERENT farm
-  with a different turbine, boundary, and wind rose. Call this FIRST
-  to make sure your script reads everything from the problem JSON.
-  If this fails, your script hardcodes something it shouldn't.
-- `run_optimizer(code)` — run a complete script on the training farm and
-  get the AEP score back
-- `get_status()` — check your best AEP and gap vs baseline
+- `test_generalization(code)` — test your script on a DIFFERENT farm.
+  Reports PASS/FAIL with feasibility details but NOT the score.
+  Call this to verify your script works on farms with different
+  turbine counts, rotor diameters, and polygon shapes.
+- `run_optimizer(code)` — run on the training farm, get AEP score back
+- `get_status()` — check best AEP and gap vs baseline
 
 ## Strategy
 
-1. Start from the working template above
-2. Call `test_generalization` to verify your script reads everything
-   from the problem JSON (turbine curves, hub_height, boundary, etc.)
-3. Call `run_optimizer` to get the AEP on the training farm
+1. Start from the working template
+2. Call `test_generalization` to verify the script works on other farms
+3. Call `run_optimizer` to score on the training farm
 4. Iterate to beat the baseline
 
-Strategy ideas:
-- **Multi-start**: run topfarm_sgd_solve from many random initial layouts,
-  keep the best. The baseline uses 500 starts — can you do better with
-  smarter initialization?
-- **Two-stage**: first optimize for feasibility, then AEP
-- **Smart initial layouts**: generate grid points inside the polygon,
-  filter to inside boundary, use as starting positions
-- **Hyperparameter tuning**: learning_rate, max_iter, ks_rho, beta1/beta2
-- **Custom optimizer**: write your own gradient-based optimizer using
-  jax.grad and the objective/penalty functions directly
+Ideas:
+- Multi-start from random or grid-based initial layouts
+- Two-stage: feasibility first (heavy penalties), then AEP
+- Hyperparameter tuning: learning_rate, max_iter, beta1, beta2, ks_rho
+- Custom optimizer using jax.grad + penalty functions directly
 
-CRITICAL: Your script will be evaluated on a HELD-OUT farm with a
-DIFFERENT turbine, boundary, and wind resource. Do NOT hardcode any
-turbine data, hub height, or boundary — read it all from the JSON.
+Keep perturbation scales relative to `min_spacing` (not D) to
+generalize across farms with different turbine sizes.
 
 The script runs in playground/ with pixwake on PYTHONPATH.
 """
