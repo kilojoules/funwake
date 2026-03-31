@@ -488,6 +488,59 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                     f"Produced {n} turbine positions in {r['time']:.1f}s.\n"
                     f"Your script generalizes across problem configurations.")
 
+        elif name == "write_file":
+            path = args["path"]
+            content = args["content"]
+            # Restrict to playground, no path traversal
+            resolved = (playground / path).resolve()
+            if not str(resolved).startswith(str(playground.resolve())):
+                return "Error: path must be inside playground/"
+            if any(s in str(resolved) for s in [".git", ".env", ".ssh"]):
+                return "Error: cannot write to that path"
+            # Only allow .py and .json files
+            if not resolved.suffix in {".py", ".json", ".txt"}:
+                return f"Error: can only write .py, .json, .txt files"
+            resolved.parent.mkdir(parents=True, exist_ok=True)
+            resolved.write_text(content)
+            return f"Wrote {len(content)} bytes to {path}"
+
+        elif name == "run_tests":
+            script_path = args["script_path"]
+            problem_path = args.get("problem_path", "problem.json")
+            # Resolve paths relative to playground
+            script_resolved = (playground / script_path).resolve()
+            problem_resolved = (playground / problem_path).resolve()
+            if not str(script_resolved).startswith(str(playground.resolve())):
+                return "Error: script_path must be inside playground/"
+            if not str(problem_resolved).startswith(str(playground.resolve())):
+                return "Error: problem_path must be inside playground/"
+            if not script_resolved.exists():
+                return f"Error: {script_path} not found"
+            if not problem_resolved.exists():
+                return f"Error: {problem_path} not found"
+
+            test_runner = playground / "test_optimizer.py"
+            if not test_runner.exists():
+                return "Error: test_optimizer.py not found in playground/"
+
+            pixwake_src = str((playground / "pixwake" / "src").resolve())
+            env = _sandbox_env(playground, Path("/dev/null"), problem_resolved)
+            env["PYTHONPATH"] = pixwake_src
+
+            try:
+                result = subprocess.run(
+                    [sys.executable, str(test_runner),
+                     str(script_resolved), str(problem_resolved), "120"],
+                    capture_output=True, text=True, timeout=180,
+                    cwd=str(playground), env=env)
+                output = result.stdout[-3000:] if result.stdout else ""
+                if result.returncode != 0:
+                    stderr = result.stderr[-1000:] if result.stderr else ""
+                    return f"{output}\n{stderr}".strip()
+                return output.strip()
+            except subprocess.TimeoutExpired:
+                return "Tests timed out after 180s"
+
         elif name == "get_status":
             bl = baselines.get(str(train_farm), {}).get("aep_gwh", 0)
             return (f"Attempts: {attempt_count[0]}\n"
@@ -571,6 +624,53 @@ def get_tool_declarations():
                     description="Complete Python optimizer script to test",
                 )},
                 required=["code"],
+            ),
+        ),
+        types.FunctionDeclaration(
+            name="write_file",
+            description=(
+                "Write a file to the playground directory. Use to save "
+                "optimizer scripts you want to test, or other files. "
+                "Paths are relative to playground/."
+            ),
+            parameters=types.Schema(
+                type="OBJECT",
+                properties={
+                    "path": types.Schema(
+                        type="STRING",
+                        description="Relative path, e.g. 'my_optimizer.py'",
+                    ),
+                    "content": types.Schema(
+                        type="STRING",
+                        description="File content to write",
+                    ),
+                },
+                required=["path", "content"],
+            ),
+        ),
+        types.FunctionDeclaration(
+            name="run_tests",
+            description=(
+                "Run unit tests on an optimizer script against a problem JSON. "
+                "Tests: (1) script runs without error, (2) correct number of "
+                "turbines, (3) boundary constraint satisfied, (4) spacing "
+                "constraint satisfied, (5) AEP is positive and non-degenerate. "
+                "Use this to validate your script before run_optimizer. "
+                "The training problem is at 'problem.json'."
+            ),
+            parameters=types.Schema(
+                type="OBJECT",
+                properties={
+                    "script_path": types.Schema(
+                        type="STRING",
+                        description="Path to the optimizer script (relative to playground/)",
+                    ),
+                    "problem_path": types.Schema(
+                        type="STRING",
+                        description="Path to problem JSON (default: 'problem.json')",
+                    ),
+                },
+                required=["script_path"],
             ),
         ),
         types.FunctionDeclaration(
@@ -704,23 +804,36 @@ with open(os.environ["FUNWAKE_OUTPUT"], "w") as f:
 - `objective(x, y)` must return a scalar (negative AEP)
 - `from pixwake.optim.sgd import boundary_penalty, spacing_penalty`
 
+## Files in playground/
+
+- `problem.json` — the training farm problem definition. Read this to
+  understand the farm you're optimizing (boundary, turbine, wind rose).
+- `test_optimizer.py` — unit test suite for optimizer scripts.
+- `pixwake/` — the pixwake wake simulation library (source in `pixwake/src/`).
+
 ## Tools
 
-- `read_file(path)` — read pixwake source files to understand the API
+- `read_file(path)` — read files in playground/ (source code, problem.json, etc.)
 - `list_files(path)` — explore the codebase
-- `test_generalization(code)` — test your script on a DIFFERENT farm.
-  Reports PASS/FAIL with feasibility details but NOT the score.
-  Call this to verify your script works on farms with different
-  turbine counts, rotor diameters, and polygon shapes.
-- `run_optimizer(code)` — run on the training farm, get AEP score back
-- `get_status()` — check best AEP and gap vs baseline
+- `write_file(path, content)` — write a script to playground/
+- `run_tests(script_path, problem_path)` — run unit tests on your script:
+  checks turbine count, boundary feasibility, spacing feasibility, and
+  AEP validity. Use `problem_path="problem.json"` for the training farm.
+- `test_generalization(code)` — test on a HELD-OUT farm (different turbine,
+  boundary, wind). Reports PASS/FAIL + feasibility, NOT the AEP score.
+- `run_optimizer(code)` — run on the training farm, get AEP score back.
+  This is the only way to get the actual AEP.
+- `get_status()` — check best AEP and gap vs baseline.
 
-## Strategy
+## Workflow
 
-1. Start from the working template
-2. Call `test_generalization` to verify the script works on other farms
-3. Call `run_optimizer` to score on the training farm
-4. Iterate to beat the baseline
+1. Read `problem.json` to understand the training farm
+2. Read pixwake source to understand the API
+3. Write your optimizer script with `write_file`
+4. Run `run_tests` on the training problem to verify correctness
+5. Call `test_generalization` to verify it works on a different farm
+6. Call `run_optimizer` to get the AEP score
+7. Iterate to beat the baseline
 
 Ideas:
 - Multi-start from random or grid-based initial layouts
@@ -728,8 +841,8 @@ Ideas:
 - Hyperparameter tuning: learning_rate, max_iter, beta1, beta2, ks_rho
 - Custom optimizer using jax.grad + penalty functions directly
 
-Keep perturbation scales relative to `min_spacing` (not D) to
-generalize across farms with different turbine sizes.
+Keep perturbation scales relative to `min_spacing` to generalize
+across farms with different turbine sizes and spacing requirements.
 
 The script runs in playground/ with pixwake on PYTHONPATH.
 """
