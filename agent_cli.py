@@ -417,131 +417,76 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             if not safe:
                 return f"REJECTED: {reason}"
 
-            # Build a synthetic problem with DIFFERENT specs to verify
-            # the script reads everything from JSON and produces a
-            # feasible layout on an unfamiliar farm.
-            # Uses an irregular polygon (not a simple square) and more
-            # turbines to stress-test generalization.
-            synthetic = {
-                "farm_id": "test",
-                "farm_name": "generalization test",
-                "n_target": 12,
-                "rotor_diameter": 100.0,  # NOT 240
-                "hub_height": 80.0,       # NOT 150
-                "min_spacing_m": 400.0,   # 4×100
-                "boundary_vertices": [
-                    [-1500, -2500], [1800, -2000], [2200, 500],
-                    [1000, 2500], [-1200, 2200], [-2200, 0],
-                ],
-                "init_x": [-800, 0, 800, -400, 400, -1000,
-                           1000, -600, 600, 0, -200, 200],
-                "init_y": [-1500, -1000, -500, 0, 500, 1000,
-                           1500, -800, 800, 1200, -400, 400],
-                "wind_rose": {
-                    "directions_deg": [0, 60, 120, 180, 240, 300],
-                    "speeds_ms": [8.0, 9.0, 7.0, 10.0, 8.5, 7.5],
-                    "weights": [0.15, 0.20, 0.10, 0.25, 0.18, 0.12],
-                },
-                "turbine": {
-                    "power_curve_ws": list(range(26)),
-                    "power_curve_kw": [
-                        0, 0, 0, 10, 50, 120, 250, 400, 600, 850,
-                        1100, 1350, 1500, 1500, 1500, 1500, 1500,
-                        1500, 1500, 1500, 1500, 1500, 1500, 1500,
-                        1500, 1500,
-                    ],
-                    "ct_curve_ws": list(range(26)),
-                    "ct_curve_ct": [
-                        0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,
-                        0.8, 0.75, 0.65, 0.55, 0.45, 0.35, 0.28,
-                        0.22, 0.18, 0.15, 0.12, 0.10, 0.09, 0.08,
-                        0.07, 0.06, 0.05, 0.05,
-                    ],
-                },
-            }
+            # Run on the ROWP problem (held-out case) to check that
+            # the script generalizes. The LLM sees PASS/FAIL and
+            # feasibility details, but NOT the AEP score.
+            rowp_problem = results_dir / "problem_rowp.json"
+            if not rowp_problem.exists():
+                return ("GENERALIZATION TEST SKIPPED: "
+                        "no held-out problem file found.")
 
-            # Write synthetic problem
-            test_problem = results_dir / "problem_farmtest.json"
-            with open(test_problem, "w") as f:
-                json.dump(synthetic, f)
-
-            r = run_on_farm(code, "test", playground, results_dir, 60, run_id)
-
-            # Clean up
-            test_problem.unlink(missing_ok=True)
-            test_output = results_dir / "_llm_farmtest.json"
-            test_output.unlink(missing_ok=True)
+            r = run_on_farm(code, "rowp", playground, results_dir,
+                            timeout_s, run_id)
 
             if "error" in r:
                 err = r["error"][:2000]
-                checks = []
+                hints = []
                 if "KeyError" in err and "turbine" in err:
-                    checks.append("FAIL: script does not read info['turbine'] from JSON")
+                    hints.append("Script does not read info['turbine'] from JSON.")
                 if "hub_height" in err:
-                    checks.append("FAIL: script does not read info['hub_height'] from JSON")
-                if "150.0" in code:
-                    checks.append("WARNING: script may hardcode hub_height=150.0")
-                hint = "\n".join(checks) if checks else ""
-                return (f"GENERALIZATION TEST FAILED:\n{err}\n\n"
-                        f"{hint}\n\n"
+                    hints.append("Script does not read info['hub_height'] from JSON.")
+                return (f"GENERALIZATION TEST FAILED — script errored on a "
+                        f"different farm (74 turbines, D=198m, different polygon "
+                        f"and wind resource):\n{err}\n"
+                        f"{chr(10).join(hints)}\n\n"
                         f"Your script must read ALL parameters from the problem "
-                        f"JSON, including turbine curves (info['turbine']"
-                        f"['power_curve_ws'], etc.) and hub_height.")
-            else:
-                n = len(r["x"])
-                expected_n = synthetic["n_target"]
-                issues = []
+                        f"JSON. Do not hardcode turbine data, number of turbines, "
+                        f"or boundary-specific values.")
+
+            n = len(r["x"])
+            issues = []
+
+            # Check feasibility via ProblemBenchmark
+            try:
+                pixwake_src = str((playground / "pixwake" / "src").resolve())
+                if pixwake_src not in sys.path:
+                    sys.path.insert(0, pixwake_src)
+                bench_dir = str(playground.parent / "benchmarks")
+                if bench_dir not in sys.path:
+                    sys.path.insert(0, bench_dir)
+                from dei_layout import ProblemBenchmark
+                bm = ProblemBenchmark(str(rowp_problem))
+                expected_n = bm.n_target
+                feas = bm.check_feasibility(r["x"], r["y"])
                 if n != expected_n:
-                    issues.append(f"produced {n} turbines, expected {expected_n}")
+                    issues.append(
+                        f"WRONG TURBINE COUNT: produced {n}, expected {expected_n}")
+                if not feas["spacing_ok"]:
+                    issues.append(
+                        f"SPACING VIOLATION: min_dist={feas['min_turbine_distance_m']:.1f}m "
+                        f"(need {feas['min_spacing_m']:.0f}m). Your perturbation "
+                        f"or initialization may be too aggressive for this farm.")
+                if not feas["boundary_ok"]:
+                    issues.append(
+                        f"BOUNDARY VIOLATION: penalty={feas['boundary_penalty']:.4f} "
+                        f"(need < 1e-3)")
+            except Exception as e:
+                issues.append(f"Could not check feasibility: {e}")
 
-                # Check feasibility on the synthetic farm
-                try:
-                    pixwake_src = str((playground / "pixwake" / "src").resolve())
-                    if pixwake_src not in sys.path:
-                        sys.path.insert(0, pixwake_src)
-                    bench_dir = str(playground.parent / "benchmarks")
-                    if bench_dir not in sys.path:
-                        sys.path.insert(0, bench_dir)
-                    from dei_layout import ProblemBenchmark
-                    bm = ProblemBenchmark(str(test_problem.parent / "problem_farmtest.json"))
-                except Exception:
-                    # Can't score — at least the script ran
-                    bm = None
-
-                # Re-write problem for scoring (was cleaned up above)
-                with open(test_problem, "w") as f:
-                    json.dump(synthetic, f)
-                if bm is None:
-                    try:
-                        from dei_layout import ProblemBenchmark
-                        bm = ProblemBenchmark(str(test_problem))
-                    except Exception:
-                        pass
-
-                if bm is not None:
-                    feas = bm.check_feasibility(r["x"], r["y"])
-                    if not feas["spacing_ok"]:
-                        issues.append(
-                            f"SPACING VIOLATION: min_dist={feas['min_turbine_distance_m']:.1f}m "
-                            f"(need {feas['min_spacing_m']:.0f}m)")
-                    if not feas["boundary_ok"]:
-                        issues.append(
-                            f"BOUNDARY VIOLATION: penalty={feas['boundary_penalty']:.4f} "
-                            f"(need < 1e-3)")
-                    test_problem.unlink(missing_ok=True)
-
-                if issues:
-                    return (f"GENERALIZATION TEST ISSUES:\n"
-                            f"{chr(10).join('  - ' + i for i in issues)}\n"
-                            f"Run time: {r['time']:.1f}s\n\n"
-                            f"Your script must produce feasible layouts on any "
-                            f"farm, not just the training farm. Make sure "
-                            f"boundary constraints and spacing are enforced.")
-                return (f"GENERALIZATION TEST PASSED!\n"
-                        f"Script correctly handled a different turbine "
-                        f"(D=100m, hub=80m), irregular boundary, and wind rose.\n"
-                        f"Produced {n} feasible turbine positions in {r['time']:.1f}s.\n"
-                        f"Your script generalizes across problem configurations.")
+            if issues:
+                return (f"GENERALIZATION TEST FAILED on held-out farm "
+                        f"(74 turbines, D=198m, min_spacing=792m):\n"
+                        f"{chr(10).join('  - ' + i for i in issues)}\n"
+                        f"Run time: {r['time']:.1f}s\n\n"
+                        f"Your script must produce FEASIBLE layouts on any farm. "
+                        f"Avoid hardcoding perturbation scales as multiples of D "
+                        f"that are too large. Scale perturbations relative to "
+                        f"min_spacing or the polygon size, not D.")
+            return (f"GENERALIZATION TEST PASSED!\n"
+                    f"Script produced a feasible layout on a held-out farm "
+                    f"with 74 turbines, D=198m, different polygon and wind.\n"
+                    f"Produced {n} turbine positions in {r['time']:.1f}s.\n"
+                    f"Your script generalizes across problem configurations.")
 
         elif name == "get_status":
             bl = baselines.get(str(train_farm), {}).get("aep_gwh", 0)
@@ -610,12 +555,14 @@ def get_tool_declarations():
             name="test_generalization",
             description=(
                 "Test that your optimizer script generalizes to a DIFFERENT "
-                "farm configuration. Runs your script on a small synthetic "
-                "problem with a different turbine (D=100m, hub=80m), "
-                "different boundary, and different wind rose. Your script "
-                "MUST read turbine curves from info['turbine'] in the "
-                "problem JSON — hardcoded turbine data will fail this test. "
-                "Call this BEFORE run_optimizer to catch issues early."
+                "farm. Runs your script on a held-out farm with 74 turbines, "
+                "D=198m, different polygon and wind resource. Reports PASS/"
+                "FAIL and feasibility details, but NOT the AEP score. "
+                "Your script MUST read ALL parameters from the problem JSON "
+                "(turbine curves, hub_height, boundary, n_target). "
+                "Call this to verify your script doesn't hardcode values or "
+                "use perturbation scales that are too aggressive for "
+                "different farm sizes."
             ),
             parameters=types.Schema(
                 type="OBJECT",
