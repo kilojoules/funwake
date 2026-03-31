@@ -285,7 +285,9 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
         """Execute a tool call, return result as string."""
 
         if name == "read_file":
-            path = args["path"]
+            path = args.get("path")
+            if not path:
+                return "Error: 'path' argument is required"
             # Restrict to playground/pixwake/src only (source code)
             resolved = (playground / path).resolve()
             playground_abs = str(playground.resolve())
@@ -336,7 +338,9 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             return "\n".join(lines) if lines else "(empty directory)"
 
         elif name == "run_optimizer":
-            code = args["code"]
+            code = args.get("code", "")
+            if not code:
+                return "Error: 'code' argument is required"
             attempt_count[0] += 1
 
             safe, reason = safety_check(code)
@@ -412,7 +416,9 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                     f"Best so far: {best['aep']:.2f} GWh (attempt {best['iter']})")
 
         elif name == "test_generalization":
-            code = args["code"]
+            code = args.get("code", "")
+            if not code:
+                return "Error: 'code' argument is required"
             safe, reason = safety_check(code)
             if not safe:
                 return f"REJECTED: {reason}"
@@ -489,8 +495,10 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                     f"Your script generalizes across problem configurations.")
 
         elif name == "write_file":
-            path = args["path"]
-            content = args["content"]
+            path = args.get("path")
+            content = args.get("content", "")
+            if not path:
+                return "Error: 'path' argument is required for write_file"
             # Restrict to playground, no path traversal
             resolved = (playground / path).resolve()
             if not str(resolved).startswith(str(playground.resolve())):
@@ -505,7 +513,9 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             return f"Wrote {len(content)} bytes to {path}"
 
         elif name == "run_tests":
-            script_path = args["script_path"]
+            script_path = args.get("script_path")
+            if not script_path:
+                return "Error: 'script_path' argument is required"
             problem_path = args.get("problem_path", "problem.json")
             # Resolve paths relative to playground
             script_resolved = (playground / script_path).resolve()
