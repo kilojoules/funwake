@@ -1,0 +1,14 @@
+{
+  "time_budget": 3600.0,
+  "elapsed": 3763.931335926056,
+  "turns": 29,
+  "best_aep": 5542.71,
+  "best_iter": 11,
+  "baseline_aep": 5540.715370308549,
+  "model": "gemini-2.5-flash",
+  "provider": "gemini",
+  "rowp_aep": 4269.608943009923,
+  "rowp_baseline": 4268.683133300506,
+  "rowp_feasible": true,
+  "rowp_time": 157.00806832313538
+}
