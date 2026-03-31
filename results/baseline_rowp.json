@@ -3,8 +3,8 @@
   "farm_name": "IEA Wind 740-10 ROWP (irregular)",
   "n_target": 74,
   "aep_gwh": 4268.683133300506,
-  "elapsed_s": 9981.870874881744,
-  "n_starts": 500,
+  "elapsed_s": 18.64184880256653,
+  "n_starts": 1,
   "x": [
     4948.489215628184,
     -1758.3651572065387,

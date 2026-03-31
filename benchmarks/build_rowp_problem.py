@@ -20,7 +20,12 @@ boundary_y = [5732482.8, 5737534.4, 5731880.24, 5729155.3, 5715990.05, 5.72794e+
 # Center the boundary (translation-invariant for wake sim)
 cx = np.mean(boundary_x)
 cy = np.mean(boundary_y)
-boundary_vertices = [[x - cx, y - cy] for x, y in zip(boundary_x, boundary_y)]
+centered = np.array([[x - cx, y - cy] for x, y in zip(boundary_x, boundary_y)])
+
+# Convex hull in CCW order — boundary_penalty assumes convex CCW polygon
+from scipy.spatial import ConvexHull
+hull = ConvexHull(centered)
+boundary_vertices = centered[hull.vertices].tolist()
 
 # ── Initial turbine layout (from ROWP_Irregular.yaml, 74 turbines) ──
 init_x_raw = [
