@@ -381,8 +381,12 @@ class ProblemBenchmark:
         self.boundary_np = bv[hull.vertices]
         self.boundary = jnp.array(self.boundary_np)
 
-        self.init_x = jnp.array(info["init_x"])
-        self.init_y = jnp.array(info["init_y"])
+        if "init_x" in info:
+            self.init_x = jnp.array(info["init_x"])
+            self.init_y = jnp.array(info["init_y"])
+        else:
+            # Generate grid layout when no init positions provided
+            self.init_x, self.init_y = init_grid(self.boundary_np, self.n_target)
 
     def objective(self, x, y):
         r = self.sim(x, y, ws_amb=self.ws, wd_amb=self.wd, ti_amb=None)

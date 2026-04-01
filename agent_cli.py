@@ -454,8 +454,7 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 if "hub_height" in err:
                     hints.append("Script does not read info['hub_height'] from JSON.")
                 return (f"GENERALIZATION TEST FAILED — script errored on a "
-                        f"different farm (74 turbines, D=198m, different polygon "
-                        f"and wind resource):\n{err}\n"
+                        f"different farm:\n{err}\n"
                         f"{chr(10).join(hints)}\n\n"
                         f"Your script must read ALL parameters from the problem "
                         f"JSON. Do not hardcode turbine data, number of turbines, "
@@ -477,34 +476,24 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 expected_n = bm.n_target
                 feas = bm.check_feasibility(r["x"], r["y"])
                 if n != expected_n:
-                    issues.append(
-                        f"WRONG TURBINE COUNT: produced {n}, expected {expected_n}")
+                    issues.append("WRONG TURBINE COUNT")
                 if not feas["spacing_ok"]:
-                    issues.append(
-                        f"SPACING VIOLATION: min_dist={feas['min_turbine_distance_m']:.1f}m "
-                        f"(need {feas['min_spacing_m']:.0f}m). Your perturbation "
-                        f"or initialization may be too aggressive for this farm.")
+                    issues.append("SPACING VIOLATION")
                 if not feas["boundary_ok"]:
-                    issues.append(
-                        f"BOUNDARY VIOLATION: penalty={feas['boundary_penalty']:.4f} "
-                        f"(need < 1e-3)")
+                    issues.append("BOUNDARY VIOLATION")
             except Exception as e:
                 issues.append(f"Could not check feasibility: {e}")
 
             if issues:
-                return (f"GENERALIZATION TEST FAILED on held-out farm "
-                        f"(74 turbines, D=198m, min_spacing=792m):\n"
+                return (f"GENERALIZATION TEST FAILED on a held-out farm:\n"
                         f"{chr(10).join('  - ' + i for i in issues)}\n"
                         f"Run time: {r['time']:.1f}s\n\n"
                         f"Your script must produce FEASIBLE layouts on any farm. "
-                        f"Avoid hardcoding perturbation scales as multiples of D "
-                        f"that are too large. Scale perturbations relative to "
-                        f"min_spacing or the polygon size, not D.")
+                        f"Scale perturbations relative to min_spacing.")
             return (f"GENERALIZATION TEST PASSED!\n"
                     f"Script produced a feasible layout on a held-out farm "
-                    f"with 74 turbines, D=198m, different polygon and wind.\n"
-                    f"Produced {n} turbine positions in {r['time']:.1f}s.\n"
-                    f"Your script generalizes across problem configurations.")
+                    f"with a different turbine, polygon, and wind resource.\n"
+                    f"Run time: {r['time']:.1f}s.")
 
         elif name == "write_file":
             path = args.get("path")
@@ -629,15 +618,10 @@ def get_tool_declarations():
         types.FunctionDeclaration(
             name="test_generalization",
             description=(
-                "Test that your optimizer script generalizes to a DIFFERENT "
-                "farm. Runs your script on a held-out farm with 74 turbines, "
-                "D=198m, different polygon and wind resource. Reports PASS/"
-                "FAIL and feasibility details, but NOT the AEP score. "
-                "Your script MUST read ALL parameters from the problem JSON "
-                "(turbine curves, hub_height, boundary, n_target). "
-                "Call this to verify your script doesn't hardcode values or "
-                "use perturbation scales that are too aggressive for "
-                "different farm sizes."
+                "Test that your optimizer generalizes to a DIFFERENT farm "
+                "with a different turbine, polygon, and wind resource. "
+                "Reports PASS/FAIL but NOT the AEP score or farm details. "
+                "Call this to verify your script works on unseen farms."
             ),
             parameters=types.Schema(
                 type="OBJECT",
