@@ -79,15 +79,14 @@ def main():
     ws = jnp.array(info["wind_rose"]["speeds_ms"])
     weights = jnp.array(info["wind_rose"]["weights"])
     boundary = jnp.array(info["boundary_vertices"])
-    init_x = jnp.array(info["init_x"])
-    init_y = jnp.array(info["init_y"])
+    n_target = info["n_target"]
     min_spacing = info["min_spacing_m"]
 
     # Call the LLM's optimize function
+    # The LLM must generate its own initial layout
     opt_x, opt_y = mod.optimize(
         sim=sim,
-        init_x=init_x,
-        init_y=init_y,
+        n_target=n_target,
         boundary=boundary,
         min_spacing=min_spacing,
         wd=wd,

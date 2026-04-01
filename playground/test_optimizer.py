@@ -162,7 +162,7 @@ def main():
     print(f"  {len(info['wind_rose']['directions_deg'])} wind sectors")
     print()
 
-    print(f"Running {optimizer_path} via harness...")
+    print(f"Running {optimizer_path} via harness (no init_x/y — optimizer generates its own)...")
     layout, error, elapsed = run_via_harness(optimizer_path, problem_path, timeout)
 
     if error:

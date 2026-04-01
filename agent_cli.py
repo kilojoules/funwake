@@ -721,13 +721,12 @@ baseline.
 Write a Python module that defines:
 
 ```python
-def optimize(sim, init_x, init_y, boundary, min_spacing, wd, ws, weights):
+def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
     \"\"\"Optimize turbine layout to maximize AEP.
 
     Args:
         sim: WakeSimulation object (pre-configured, DO NOT modify)
-        init_x: initial turbine x positions (jnp array, shape (n,))
-        init_y: initial turbine y positions (jnp array, shape (n,))
+        n_target: number of turbines to place (int)
         boundary: polygon vertices (jnp array, shape (n_verts, 2), convex CCW)
         min_spacing: minimum turbine spacing in meters (float)
         wd: wind directions in degrees (jnp array)
@@ -735,13 +734,17 @@ def optimize(sim, init_x, init_y, boundary, min_spacing, wd, ws, weights):
         weights: frequency weights per wind bin (jnp array)
 
     Returns:
-        opt_x, opt_y: optimized turbine positions (jnp arrays)
+        opt_x, opt_y: optimized turbine positions (jnp arrays, each length n_target)
     \"\"\"
 ```
 
 A harness handles loading the problem JSON, building the Turbine and
 WakeSimulation, and writing the output. You ONLY write the optimize()
 function. The wake model and turbine are fixed — you cannot change them.
+
+You are NOT given initial turbine positions. Your function must generate
+its own initial layout (e.g. grid inside the polygon, random placement,
+etc.) and then optimize from there.
 
 The function will be called on multiple farms with different turbines,
 boundaries, turbine counts, and wind conditions. It must generalize.
@@ -759,10 +762,52 @@ max_iter=4000, additional_constant_lr_iterations=2000).
 ## Working baseline
 
 ```python
+import jax
 import jax.numpy as jnp
+import numpy as np
 from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve
 
-def optimize(sim, init_x, init_y, boundary, min_spacing, wd, ws, weights):
+def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
+    # Generate initial layout: grid inside the polygon
+    x_min, y_min = jnp.min(boundary, axis=0)
+    x_max, y_max = jnp.max(boundary, axis=0)
+
+    # Create a grid and filter to points inside the boundary
+    nx = int(jnp.ceil((x_max - x_min) / min_spacing))
+    ny = int(jnp.ceil((y_max - y_min) / min_spacing))
+    gx, gy = jnp.meshgrid(
+        jnp.linspace(x_min + min_spacing/2, x_max - min_spacing/2, nx),
+        jnp.linspace(y_min + min_spacing/2, y_max - min_spacing/2, ny))
+    candidates_x = gx.flatten()
+    candidates_y = gy.flatten()
+
+    # Simple inside-polygon check (convex): all edge distances positive
+    n_verts = boundary.shape[0]
+    def edge_dist(i):
+        x1, y1 = boundary[i]
+        x2, y2 = boundary[(i + 1) % n_verts]
+        edge_x, edge_y = x2 - x1, y2 - y1
+        edge_len = jnp.sqrt(edge_x**2 + edge_y**2) + 1e-10
+        nx, ny = -edge_y / edge_len, edge_x / edge_len
+        return (candidates_x - x1) * nx + (candidates_y - y1) * ny
+    all_dists = jax.vmap(edge_dist)(jnp.arange(n_verts))
+    inside = jnp.min(all_dists, axis=0) > 0
+
+    inside_x = candidates_x[inside]
+    inside_y = candidates_y[inside]
+
+    # Select n_target points (evenly spaced subset)
+    if len(inside_x) >= n_target:
+        idx = jnp.round(jnp.linspace(0, len(inside_x) - 1, n_target)).astype(int)
+        init_x = inside_x[idx]
+        init_y = inside_y[idx]
+    else:
+        # Fallback: random inside bounding box (optimizer will push inside)
+        key = jax.random.PRNGKey(0)
+        init_x = jax.random.uniform(key, (n_target,), minval=float(x_min), maxval=float(x_max))
+        key, _ = jax.random.split(key)
+        init_y = jax.random.uniform(key, (n_target,), minval=float(y_min), maxval=float(y_max))
+
     def objective(x, y):
         r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
         p = r.power()[:, :len(x)]
@@ -782,6 +827,8 @@ def optimize(sim, init_x, init_y, boundary, min_spacing, wd, ws, weights):
 - `topfarm_sgd_solve(objective, init_x, init_y, boundary, min_spacing, settings)` — returns `(opt_x, opt_y)`
 - `SGDSettings(learning_rate=, max_iter=, additional_constant_lr_iterations=, tol=, ks_rho=, spacing_weight=, boundary_weight=, gamma_min_factor=, beta1=, beta2=)`
 - `from pixwake.optim.sgd import boundary_penalty, spacing_penalty`
+- `boundary` is a jnp array of shape (n_vertices, 2), convex polygon in CCW order
+- You must generate your own initial layout — use the boundary and min_spacing to place n_target turbines inside the polygon
 
 ## Files in playground/
 
