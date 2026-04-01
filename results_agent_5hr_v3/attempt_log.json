@@ -1,0 +1,560 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1775009870.825388,
+    "train_aep": 5533.48,
+    "train_feasible": true,
+    "train_time": 27.86945390701294,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.683133300506,
+    "rowp_feasible": true,
+    "rowp_time": 20.69526481628418
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1775009953.8683,
+    "train_aep": 5533.51,
+    "train_feasible": true,
+    "train_time": 34.67075991630554,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.609572789979,
+    "rowp_feasible": true,
+    "rowp_time": 31.788210153579712
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1775010008.764383,
+    "train_aep": 5534.16,
+    "train_feasible": true,
+    "train_time": 25.231230974197388,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4260.203883253945,
+    "rowp_feasible": true,
+    "rowp_time": 20.04805088043213
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1775010078.179404,
+    "train_aep": 5534.71,
+    "train_feasible": true,
+    "train_time": 33.949909925460815,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4262.764010603316,
+    "rowp_feasible": true,
+    "rowp_time": 26.424282789230347
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1775010146.825887,
+    "train_aep": 5535.44,
+    "train_feasible": true,
+    "train_time": 32.91751003265381,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.634831453025,
+    "rowp_feasible": true,
+    "rowp_time": 26.440420866012573
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1775010214.341702,
+    "train_aep": 5534.98,
+    "train_feasible": true,
+    "train_time": 32.48236298561096,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.578217715885,
+    "rowp_feasible": true,
+    "rowp_time": 25.519012928009033
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1775010282.027169,
+    "train_aep": 5539.16,
+    "train_feasible": true,
+    "train_time": 31.822747945785522,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4264.99124430923,
+    "rowp_feasible": true,
+    "rowp_time": 26.334471225738525
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1775010347.9169312,
+    "train_aep": 5542.23,
+    "train_feasible": true,
+    "train_time": 31.338948011398315,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.366806661615,
+    "rowp_feasible": true,
+    "rowp_time": 26.03976821899414
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1775010672.7533,
+    "train_aep": 5543.36,
+    "train_feasible": true,
+    "train_time": 147.36493921279907,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.289755890891,
+    "rowp_feasible": true,
+    "rowp_time": 120.20847296714783
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1775011220.573942,
+    "train_aep": 5546.1,
+    "train_feasible": true,
+    "train_time": 286.519238948822,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.366806661615,
+    "rowp_feasible": true,
+    "rowp_time": 247.59385585784912
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1775011530.6034482,
+    "error": "Timeout after 300s"
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1775011840.603764,
+    "error": "Timeout after 300s"
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1775012245.44859,
+    "train_aep": 5546.1,
+    "train_feasible": true,
+    "train_time": 213.33681416511536,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.366806661615,
+    "rowp_feasible": true,
+    "rowp_time": 176.657142162323
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1775012975.8770502,
+    "train_aep": 5545.08,
+    "train_feasible": true,
+    "train_time": 275.92134308815,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4266.059602227639,
+    "rowp_feasible": false,
+    "rowp_time": 247.19424510002136
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1775013567.246101,
+    "train_aep": 5549.09,
+    "train_feasible": true,
+    "train_time": 243.19554805755615,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.354611915284,
+    "rowp_feasible": true,
+    "rowp_time": 193.37792301177979
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1775014254.079168,
+    "train_aep": 5549.09,
+    "train_feasible": true,
+    "train_time": 239.67559599876404,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.354611915284,
+    "rowp_feasible": true,
+    "rowp_time": 200.06808423995972
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1775014612.302216,
+    "train_aep": 5550.94,
+    "train_feasible": false,
+    "train_time": 184.12496709823608,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4266.86270506996,
+    "rowp_feasible": true,
+    "rowp_time": 152.04111409187317
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1775014963.535011,
+    "train_aep": 5551.54,
+    "train_feasible": false,
+    "train_time": 182.0554838180542,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.9616239072575,
+    "rowp_feasible": true,
+    "rowp_time": 147.48682618141174
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1775015297.723779,
+    "train_aep": 5547.24,
+    "train_feasible": false,
+    "train_time": 170.36112713813782,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.28420839913,
+    "rowp_feasible": true,
+    "rowp_time": 140.59312176704407
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1775015544.452611,
+    "train_aep": 5546.57,
+    "train_feasible": false,
+    "train_time": 119.72864890098572,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.104555830588,
+    "rowp_feasible": true,
+    "rowp_time": 95.23793196678162
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1775015996.661813,
+    "train_aep": 5547.66,
+    "train_feasible": true,
+    "train_time": 241.19478297233582,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.260967733293,
+    "rowp_feasible": true,
+    "rowp_time": 194.6895079612732
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1775016416.547769,
+    "train_aep": 5544.43,
+    "train_feasible": true,
+    "train_time": 220.857262134552,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4266.141298408191,
+    "rowp_feasible": true,
+    "rowp_time": 183.14355206489563
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1775016854.665216,
+    "train_aep": 5549.09,
+    "train_feasible": true,
+    "train_time": 227.1294388771057,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.354611915284,
+    "rowp_feasible": true,
+    "rowp_time": 189.00853490829468
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1775017327.788508,
+    "train_aep": 5549.46,
+    "train_feasible": true,
+    "train_time": 247.88659000396729,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.277226338758,
+    "rowp_feasible": true,
+    "rowp_time": 208.7070050239563
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1775017872.1506329,
+    "train_aep": 5549.46,
+    "train_feasible": true,
+    "train_time": 279.87008595466614,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.277226338758,
+    "rowp_feasible": true,
+    "rowp_time": 248.44013023376465
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1775018368.2916439,
+    "train_aep": 5547.41,
+    "train_feasible": true,
+    "train_time": 257.027419090271,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.277226338758,
+    "rowp_feasible": true,
+    "rowp_time": 221.86380887031555
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1775018848.318454,
+    "train_aep": 5548.48,
+    "train_feasible": true,
+    "train_time": 251.2241439819336,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.494416472693,
+    "rowp_feasible": true,
+    "rowp_time": 207.0057442188263
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1775019168.7836092,
+    "train_aep": 5547.13,
+    "train_feasible": true,
+    "train_time": 153.06404995918274,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4265.992927426684,
+    "rowp_feasible": true,
+    "rowp_time": 129.40537285804749
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1775019659.561012,
+    "train_aep": 5546.9,
+    "train_feasible": true,
+    "train_time": 244.57911491394043,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.064667635491,
+    "rowp_feasible": true,
+    "rowp_time": 219.823312997818
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1775020142.475544,
+    "train_aep": 5551.8,
+    "train_feasible": true,
+    "train_time": 257.8316979408264,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.547353452436,
+    "rowp_feasible": true,
+    "rowp_time": 205.496661901474
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1775020865.127261,
+    "train_aep": 5549.93,
+    "train_feasible": true,
+    "train_time": 238.8850600719452,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4266.372448302294,
+    "rowp_feasible": true,
+    "rowp_time": 218.07337188720703
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1775021202.88309,
+    "train_aep": 5549.37,
+    "train_feasible": true,
+    "train_time": 164.15278315544128,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.566683961933,
+    "rowp_feasible": true,
+    "rowp_time": 142.55144715309143
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1775021706.267637,
+    "train_aep": 5550.21,
+    "train_feasible": true,
+    "train_time": 257.2154870033264,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.441132214953,
+    "rowp_feasible": true,
+    "rowp_time": 221.4440369606018
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1775022234.360588,
+    "train_aep": 5551.8,
+    "train_feasible": true,
+    "train_time": 262.5133910179138,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.547353452436,
+    "rowp_feasible": true,
+    "rowp_time": 212.4325339794159
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1775022555.746028,
+    "error": "Timeout after 300s"
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1775023067.961143,
+    "train_aep": 5511.75,
+    "train_feasible": false,
+    "train_time": 226.2072398662567,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4201.867853601068,
+    "rowp_feasible": false,
+    "rowp_time": 267.54824781417847
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1775023396.854555,
+    "error": "Timeout after 300s"
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1775023650.0541482,
+    "train_aep": 5550.72,
+    "train_feasible": true,
+    "train_time": 141.35605120658875,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4273.018330153235,
+    "rowp_feasible": true,
+    "rowp_time": 94.77284288406372
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1775024061.1668758,
+    "train_aep": 5549.46,
+    "train_feasible": true,
+    "train_time": 209.92427706718445,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.2215801440125,
+    "rowp_feasible": true,
+    "rowp_time": 164.12090420722961
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1775024406.602446,
+    "train_aep": 5551.91,
+    "train_feasible": true,
+    "train_time": 171.78722620010376,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4265.921115848023,
+    "rowp_feasible": true,
+    "rowp_time": 152.79787588119507
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1775024725.1717482,
+    "train_aep": 5547.42,
+    "train_feasible": true,
+    "train_time": 66.32798790931702,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.844213497779,
+    "rowp_feasible": true,
+    "rowp_time": 50.37946915626526
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1775025067.158944,
+    "train_aep": 5552.28,
+    "train_feasible": true,
+    "train_time": 134.2826156616211,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4265.693644794246,
+    "rowp_feasible": true,
+    "rowp_time": 119.41907525062561
+  },
+  {
+    "attempt": 43,
+    "timestamp": 1775025438.682373,
+    "train_aep": 5551.18,
+    "train_feasible": false,
+    "train_time": 86.66048264503479,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4266.2302349166675,
+    "rowp_feasible": true,
+    "rowp_time": 71.78557205200195
+  },
+  {
+    "attempt": 44,
+    "timestamp": 1775025763.741916,
+    "train_aep": 5551.34,
+    "train_feasible": true,
+    "train_time": 130.2535629272461,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4267.05770506663,
+    "rowp_feasible": true,
+    "rowp_time": 111.1786699295044
+  },
+  {
+    "attempt": 45,
+    "timestamp": 1775026088.119623,
+    "error": "Timeout after 300s"
+  },
+  {
+    "attempt": 46,
+    "timestamp": 1775026343.4520152,
+    "train_aep": 5548.76,
+    "train_feasible": true,
+    "train_time": 117.96297788619995,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4271.0247003664845,
+    "rowp_feasible": true,
+    "rowp_time": 104.97712111473083
+  },
+  {
+    "attempt": 47,
+    "timestamp": 1775026619.747335,
+    "train_aep": 5553.77,
+    "train_feasible": true,
+    "train_time": 134.67087578773499,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4268.543565797253,
+    "rowp_feasible": true,
+    "rowp_time": 105.18115997314453
+  },
+  {
+    "attempt": 48,
+    "timestamp": 1775026650.5450518,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 107, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<6 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv3.py\", line 51, in optimiz"
+  },
+  {
+    "attempt": 49,
+    "timestamp": 1775026994.2885609,
+    "train_aep": 5555.18,
+    "train_feasible": true,
+    "train_time": 173.39990305900574,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.431979332011,
+    "rowp_feasible": true,
+    "rowp_time": 151.79587507247925
+  },
+  {
+    "attempt": 50,
+    "timestamp": 1775027071.881825,
+    "train_aep": 5479.5,
+    "train_feasible": true,
+    "train_time": 23.064101696014404,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4175.525841436292,
+    "rowp_feasible": false,
+    "rowp_time": 20.81349778175354
+  },
+  {
+    "attempt": 51,
+    "timestamp": 1775027295.649635,
+    "train_aep": 5549.77,
+    "train_feasible": true,
+    "train_time": 73.0833261013031,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4272.765736901996,
+    "rowp_feasible": true,
+    "rowp_time": 62.005714893341064
+  },
+  {
+    "attempt": 52,
+    "timestamp": 1775027701.329298,
+    "train_aep": 5555.18,
+    "train_feasible": true,
+    "train_time": 207.89528012275696,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4270.431979332011,
+    "rowp_feasible": true,
+    "rowp_time": 173.31652212142944
+  },
+  {
+    "attempt": 53,
+    "timestamp": 1775027828.734839,
+    "train_aep": 5495.0,
+    "train_feasible": true,
+    "train_time": 47.56800603866577,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4222.463768875967,
+    "rowp_feasible": false,
+    "rowp_time": 43.00452995300293
+  },
+  {
+    "attempt": 54,
+    "timestamp": 1775028219.546955,
+    "train_aep": 5554.11,
+    "train_feasible": true,
+    "train_time": 190.3636190891266,
+    "train_baseline": 5540.715370308549,
+    "rowp_aep": 4269.949716572185,
+    "rowp_feasible": true,
+    "rowp_time": 171.79711890220642
+  }
+]
