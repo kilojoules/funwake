@@ -2,19 +2,25 @@
 """Unit tests for optimizer modules.
 
 Tests that an optimizer module:
-  - Defines an optimize() function
+  - Defines optimize() with the correct signature
   - Returns the correct number of turbines
+  - Returns finite, non-NaN positions
   - Satisfies boundary and spacing constraints
   - Produces non-degenerate AEP
+  - Works on multiple problem sizes (quick check)
 
-Usage (from playground/):
-    python test_optimizer.py <optimizer_module.py> <problem.json> [timeout]
+Usage:
+    # Full test (runs optimizer, ~20-30s)
+    python test_optimizer.py <optimizer_module.py> <problem.json>
 
-The module is loaded via the harness (harness.py), which builds the
-WakeSimulation and calls optimize().
+    # Quick test (signature + import check only, <1s)
+    python test_optimizer.py <optimizer_module.py> --quick
 """
 
+import importlib.util
+import inspect
 import json
+import math
 import os
 import subprocess
 import sys
@@ -34,6 +40,79 @@ from pixwake.optim.sgd import boundary_penalty, spacing_penalty
 def load_problem(problem_path):
     with open(problem_path) as f:
         return json.load(f)
+
+
+def load_module(path):
+    """Import an optimizer module and return it."""
+    spec = importlib.util.spec_from_file_location("optimizer", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def check_signature(mod):
+    """Check that optimize() exists with the right parameters."""
+    results = []
+
+    if not hasattr(mod, "optimize"):
+        results.append(("has_optimize", False, "module has no optimize() function"))
+        return results
+    results.append(("has_optimize", True, "optimize() found"))
+
+    sig = inspect.signature(mod.optimize)
+    params = list(sig.parameters.keys())
+    expected = ["sim", "n_target", "boundary", "min_spacing", "wd", "ws", "weights"]
+
+    if params == expected:
+        results.append(("signature", True, f"params: {params}"))
+    else:
+        results.append(("signature", False,
+                        f"expected {expected}, got {params}"))
+
+    return results
+
+
+def check_quick_run(mod):
+    """Run optimize() on a tiny problem to catch crashes fast."""
+    results = []
+
+    # Tiny 3-turbine problem
+    D = 100.0
+    ws_arr = jnp.array([0, 5, 10, 15, 20, 25.0])
+    power = jnp.array([0, 100, 500, 800, 800, 800.0])
+    ct = jnp.array([0.8, 0.8, 0.7, 0.5, 0.3, 0.2])
+    turb = Turbine(rotor_diameter=D, hub_height=80.0,
+                   power_curve=Curve(ws=ws_arr, values=power),
+                   ct_curve=Curve(ws=ws_arr, values=ct))
+    sim = WakeSimulation(turb, BastankhahGaussianDeficit(k=0.04))
+
+    boundary = jnp.array([[-2000, -2000], [2000, -2000],
+                           [2000, 2000], [-2000, 2000.0]])
+    try:
+        opt_x, opt_y = mod.optimize(
+            sim=sim, n_target=3, boundary=boundary,
+            min_spacing=400.0,
+            wd=jnp.array([0, 90, 180, 270.0]),
+            ws=jnp.array([8, 9, 7, 10.0]),
+            weights=jnp.array([0.25, 0.25, 0.25, 0.25]),
+        )
+    except Exception as e:
+        results.append(("quick_run", False, f"crashed: {e}"))
+        return results
+
+    results.append(("quick_run", True, "ran without error"))
+
+    # Check output types
+    n = len(opt_x)
+    results.append(("quick_count", n == 3, f"returned {n} turbines, expected 3"))
+
+    # Check finite
+    x_finite = bool(jnp.all(jnp.isfinite(jnp.array(opt_x))))
+    y_finite = bool(jnp.all(jnp.isfinite(jnp.array(opt_y))))
+    results.append(("quick_finite", x_finite and y_finite,
+                    f"x_finite={x_finite}, y_finite={y_finite}"))
+
+    return results
 
 
 def run_via_harness(optimizer_path, problem_path, timeout=120):
@@ -75,47 +154,52 @@ def check_layout(layout, info):
     """Validate a layout against the problem definition."""
     results = []
 
-    # 1. Correct number of turbines
     n_expected = info["n_target"]
     n_got = len(layout.get("x", []))
-    results.append((
-        "turbine_count",
-        n_got == n_expected,
-        f"expected {n_expected}, got {n_got}",
-    ))
+    results.append(("turbine_count", n_got == n_expected,
+                    f"expected {n_expected}, got {n_got}"))
 
     if n_got == 0:
-        results.append(("boundary", False, "no turbines to check"))
-        results.append(("spacing", False, "no turbines to check"))
-        results.append(("aep_positive", False, "no turbines to check"))
+        for name in ["finite", "no_duplicates", "boundary", "spacing", "aep_positive"]:
+            results.append((name, False, "no turbines"))
         return results
 
     x = jnp.array(layout["x"])
     y = jnp.array(layout["y"])
-    boundary = jnp.array(info["boundary_vertices"])
-    min_spacing = info["min_spacing_m"]
 
-    # 2. Boundary constraint
-    bnd_pen = float(boundary_penalty(x, y, boundary))
-    results.append((
-        "boundary",
-        bnd_pen < 1e-3,
-        f"penalty={bnd_pen:.6f} (need < 1e-3)",
-    ))
+    # Finite values
+    finite = bool(jnp.all(jnp.isfinite(x)) and jnp.all(jnp.isfinite(y)))
+    results.append(("finite", finite,
+                    "all positions finite" if finite else "NaN or Inf detected"))
 
-    # 3. Spacing constraint
+    if not finite:
+        for name in ["no_duplicates", "boundary", "spacing", "aep_positive"]:
+            results.append((name, False, "non-finite positions"))
+        return results
+
+    # No duplicate positions (the spacing=0 bug)
     dx = x[:, None] - x[None, :]
     dy = y[:, None] - y[None, :]
     dist = jnp.sqrt(dx**2 + dy**2 + jnp.eye(len(x)) * 1e10)
     min_dist = float(jnp.min(dist))
-    threshold = min_spacing * 0.99
-    results.append((
-        "spacing",
-        min_dist >= threshold,
-        f"min_dist={min_dist:.1f}m (need >= {threshold:.1f}m)",
-    ))
+    results.append(("no_duplicates", min_dist > 1.0,
+                    f"min_dist={min_dist:.1f}m" if min_dist > 1.0
+                    else f"DUPLICATE POSITIONS: min_dist={min_dist:.1f}m"))
 
-    # 4. Non-degenerate AEP
+    boundary = jnp.array(info["boundary_vertices"])
+    min_spacing = info["min_spacing_m"]
+
+    # Boundary constraint
+    bnd_pen = float(boundary_penalty(x, y, boundary))
+    results.append(("boundary", bnd_pen < 1e-3,
+                    f"penalty={bnd_pen:.6f} (need < 1e-3)"))
+
+    # Spacing constraint
+    threshold = min_spacing * 0.99
+    results.append(("spacing", min_dist >= threshold,
+                    f"min_dist={min_dist:.1f}m (need >= {threshold:.1f}m)"))
+
+    # Non-degenerate AEP
     D = info["rotor_diameter"]
     hub_height = info.get("hub_height", 150.0)
     t = info["turbine"]
@@ -137,32 +221,73 @@ def check_layout(layout, info):
 
     max_rated = float(jnp.max(power_arr))
     theoretical_max = n_got * max_rated * 8760 / 1e6
-    results.append((
-        "aep_positive",
-        aep > theoretical_max * 0.05,
-        f"AEP={aep:.2f} GWh (theoretical max ~{theoretical_max:.0f})",
-    ))
+    results.append(("aep_positive", aep > theoretical_max * 0.05,
+                    f"AEP={aep:.2f} GWh (theoretical max ~{theoretical_max:.0f})"))
 
     return results
 
 
 def main():
-    if len(sys.argv) < 3:
-        print(f"Usage: python {sys.argv[0]} <optimizer_module.py> <problem.json> [timeout]")
+    if len(sys.argv) < 2:
+        print(f"Usage: python {sys.argv[0]} <optimizer.py> [problem.json] [timeout]")
+        print(f"       python {sys.argv[0]} <optimizer.py> --quick")
         sys.exit(1)
 
     optimizer_path = sys.argv[1]
+    quick_mode = "--quick" in sys.argv
+
+    # Always run signature and quick checks
+    print(f"Loading {optimizer_path}...")
+    try:
+        mod = load_module(os.path.abspath(optimizer_path))
+    except Exception as e:
+        print(f"IMPORT FAILED: {e}")
+        sys.exit(1)
+
+    print("\n=== Signature Check ===")
+    sig_results = check_signature(mod)
+    all_passed = True
+    for name, passed, detail in sig_results:
+        status = "PASS" if passed else "FAIL"
+        if not passed:
+            all_passed = False
+        print(f"  [{status}] {name}: {detail}")
+
+    if not all_passed:
+        print("\nSignature check failed — fix before running full tests.")
+        sys.exit(1)
+
+    print("\n=== Quick Run (3 turbines, tiny problem) ===")
+    quick_results = check_quick_run(mod)
+    for name, passed, detail in quick_results:
+        status = "PASS" if passed else "FAIL"
+        if not passed:
+            all_passed = False
+        print(f"  [{status}] {name}: {detail}")
+
+    if quick_mode:
+        print()
+        if all_passed:
+            print("QUICK TESTS PASSED")
+        else:
+            print("QUICK TESTS FAILED")
+            sys.exit(1)
+        return
+
+    # Full test requires a problem JSON
+    if len(sys.argv) < 3 or sys.argv[2] == "--quick":
+        print("\nQuick tests done. Provide a problem.json for full tests.")
+        return
+
     problem_path = sys.argv[2]
-    timeout = int(sys.argv[3]) if len(sys.argv) > 3 else 120
+    timeout = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3] != "--quick" else 120
 
     info = load_problem(problem_path)
-    print(f"Problem: {info.get('farm_name', problem_path)}")
+    print(f"\n=== Full Test: {info.get('farm_name', problem_path)} ===")
     print(f"  {info['n_target']} turbines, D={info['rotor_diameter']}m, "
           f"spacing={info['min_spacing_m']}m")
-    print(f"  {len(info['wind_rose']['directions_deg'])} wind sectors")
-    print()
 
-    print(f"Running {optimizer_path} via harness (no init_x/y — optimizer generates its own)...")
+    print(f"\nRunning via harness...")
     layout, error, elapsed = run_via_harness(optimizer_path, problem_path, timeout)
 
     if error:
@@ -170,12 +295,10 @@ def main():
         print(f"  {error[:500]}")
         sys.exit(1)
 
-    print(f"Completed in {elapsed:.1f}s")
-    print()
+    print(f"Completed in {elapsed:.1f}s\n")
 
-    results = check_layout(layout, info)
-    all_passed = True
-    for name, passed, detail in results:
+    layout_results = check_layout(layout, info)
+    for name, passed, detail in layout_results:
         status = "PASS" if passed else "FAIL"
         if not passed:
             all_passed = False

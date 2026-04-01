@@ -657,12 +657,13 @@ def get_tool_declarations():
         types.FunctionDeclaration(
             name="run_tests",
             description=(
-                "Run unit tests on an optimizer script against a problem JSON. "
-                "Tests: (1) script runs without error, (2) correct number of "
-                "turbines, (3) boundary constraint satisfied, (4) spacing "
-                "constraint satisfied, (5) AEP is positive and non-degenerate. "
-                "Use this to validate your script before run_optimizer. "
-                "The training problem is at 'problem.json'."
+                "Run unit tests on an optimizer module. "
+                "With problem_path: full test (~20-30s) — runs via harness, "
+                "checks signature, turbine count, boundary, spacing, no "
+                "duplicate positions, finite values, and AEP. "
+                "With problem_path='--quick': fast test (<5s) — checks "
+                "signature and runs on a tiny 3-turbine problem. "
+                "Use '--quick' for rapid iteration, full test before scoring."
             ),
             parameters=types.Schema(
                 type="OBJECT",
