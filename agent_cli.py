@@ -281,11 +281,13 @@ def _score_on_rowp(code: str, playground: Path, results_dir: Path,
 
 def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                wind_csv: str, baselines: dict, train_farm: int,
-               timeout_s: int, run_id: str, out_dir: Path):
+               timeout_s: int, run_id: str, out_dir: Path,
+               explore_timeout_s: int = 60):
     """Create tool declarations and dispatch function."""
 
     best = {"aep": 0.0, "code": None, "iter": 0}
     attempt_count = [0]
+    strategy_history = []  # Track "sgd_solve" vs "custom" for diversity nudge
     # Log every attempt: training AEP + silent ROWP AEP (for progress plot)
     attempt_log = []
 
@@ -369,8 +371,9 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             iter_path = out_dir / f"iter_{attempt_count[0]:03d}.py"
             iter_path.write_text(code)
 
+            # Use shorter explore timeout to prevent multi-start bloat
             r = run_on_farm(code, train_farm, playground, results_dir,
-                           timeout_s, run_id)
+                           explore_timeout_s, run_id)
             if "error" in r:
                 attempt_log.append({
                     "attempt": attempt_count[0],
@@ -400,10 +403,12 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 best["iter"] = attempt_count[0]
                 (out_dir / "best_optimizer.py").write_text(code)
 
-            # Silently run on ROWP for progress tracking (LLM doesn't see this)
-            rowp_result = _score_on_rowp(code, playground, results_dir,
-                                         timeout_s, run_id)
+            # Classify strategy for diversity tracking
+            uses_sgd_solve = "topfarm_sgd_solve" in code
+            strategy = "sgd_solve" if uses_sgd_solve else "custom"
+            strategy_history.append(strategy)
 
+            # Silently run on ROWP every 5th attempt (saves ~20s per attempt)
             entry = {
                 "attempt": attempt_count[0],
                 "timestamp": time.time(),
@@ -411,21 +416,41 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 "train_feasible": sc.get("feasible", None),
                 "train_time": r["time"],
                 "train_baseline": bl,
+                "strategy": strategy,
             }
-            if rowp_result and "error" not in rowp_result:
-                entry["rowp_aep"] = rowp_result["aep_gwh"]
-                entry["rowp_feasible"] = rowp_result["feasible"]
-                entry["rowp_time"] = rowp_result["time"]
-            elif rowp_result:
-                entry["rowp_error"] = rowp_result["error"][:200]
+            if attempt_count[0] % 5 == 0:
+                rowp_result = _score_on_rowp(code, playground, results_dir,
+                                             timeout_s, run_id)
+                if rowp_result and "error" not in rowp_result:
+                    entry["rowp_aep"] = rowp_result["aep_gwh"]
+                    entry["rowp_feasible"] = rowp_result["feasible"]
+                    entry["rowp_time"] = rowp_result["time"]
+                elif rowp_result:
+                    entry["rowp_error"] = rowp_result["error"][:200]
             attempt_log.append(entry)
             _save_log()
 
-            return (f"AEP: {aep:.2f} GWh (baseline: {bl:.2f}, "
-                    f"gap: {aep - bl:+.2f})\n"
-                    f"Run time: {r['time']:.1f}s\n"
-                    f"Feasible: {sc.get('feasible', 'unknown')}\n"
-                    f"Best so far: {best['aep']:.2f} GWh (attempt {best['iter']})")
+            # Build response with richer diagnostics
+            response = (
+                f"AEP: {aep:.2f} GWh (baseline: {bl:.2f}, "
+                f"gap: {aep - bl:+.2f})\n"
+                f"Run time: {r['time']:.1f}s\n"
+                f"Feasible: {sc.get('feasible', 'unknown')}\n"
+                f"Strategy: {'topfarm_sgd_solve wrapper' if uses_sgd_solve else 'custom optimizer'}\n"
+                f"Best so far: {best['aep']:.2f} GWh (attempt {best['iter']})"
+            )
+
+            # Diversity nudge: if last 5 are all sgd_solve, suggest alternatives
+            if (len(strategy_history) >= 5 and
+                    all(s == "sgd_solve" for s in strategy_history[-5:])):
+                response += (
+                    "\n\nNote: Your last 5 optimizers all wrap topfarm_sgd_solve. "
+                    "Consider a fundamentally different approach: custom gradient "
+                    "descent with jax.grad, evolutionary placement, simulated "
+                    "annealing, or wind-direction-aware initialization."
+                )
+
+            return response
 
         elif name == "test_generalization":
             code = args.get("code", "")
@@ -913,13 +938,15 @@ def run_agent(provider: str, model: str, api_key: str,
               results_dir: Path, baselines: dict, train_farm: int,
               timeout_s: int, time_budget: float, out_dir: Path,
               run_id: str, temperature: float,
-              hot_start: str | None = None):
+              hot_start: str | None = None,
+              explore_timeout_s: int = 60):
 
     out_dir.mkdir(parents=True, exist_ok=True)
 
     dispatch, best, attempt_log = make_tools(
         playground, results_dir, benchmark, wind_csv, baselines,
-        train_farm, timeout_s, run_id, out_dir)
+        train_farm, timeout_s, run_id, out_dir,
+        explore_timeout_s=explore_timeout_s)
 
     system = build_system_prompt(baselines, train_farm, results_dir, playground)
     tools = get_tool_declarations()
@@ -971,6 +998,32 @@ def run_agent(provider: str, model: str, api_key: str,
 
     t0 = time.time()
     turn = 0
+    phase2_triggered = False
+
+    PHASE2_TEMPLATE = """\
+import jax
+import jax.numpy as jnp
+from pixwake.optim.sgd import boundary_penalty, spacing_penalty
+
+def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
+    def aep_objective(x, y):
+        r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
+        p = r.power()[:, :len(x)]
+        return -jnp.sum(p * weights[:, None]) * 8760 / 1e6
+
+    def penalized_objective(x, y, alpha=1.0):
+        aep = aep_objective(x, y)
+        bnd = boundary_penalty(x, y, boundary)
+        spc = spacing_penalty(x, y, min_spacing)
+        return aep + alpha * (bnd + spc)
+
+    grad_fn = jax.grad(penalized_objective, argnums=(0, 1))
+
+    # TODO: implement your custom optimizer here
+    # You have grad_fn(x, y, alpha) -> (grad_x, grad_y)
+    # Use it to build ADAM, L-BFGS, simulated annealing, etc.
+    ...
+"""
 
     while True:
         elapsed = time.time() - t0
@@ -979,6 +1032,28 @@ def run_agent(provider: str, model: str, api_key: str,
         if remaining <= 0:
             print(f"\n[TIME'S UP] {elapsed:.0f}s elapsed")
             break
+
+        # Phase 2: after 30% of time, nudge toward novel approaches
+        if (not phase2_triggered and elapsed > time_budget * 0.3
+                and best["aep"] > 0):
+            phase2_triggered = True
+            print(f"\n[PHASE 2] Switching to exploration mode")
+            contents.append(types.Content(
+                role="user",
+                parts=[types.Part(text=(
+                    f"You have established a strong baseline using "
+                    f"topfarm_sgd_solve ({best['aep']:.2f} GWh). "
+                    f"For the remaining {remaining:.0f}s, try approaches "
+                    f"that do NOT call topfarm_sgd_solve. You have jax.grad, "
+                    f"boundary_penalty, and spacing_penalty available.\n\n"
+                    f"Consider: custom ADAM/SGD loop, simulated annealing "
+                    f"with gradient-informed moves, wind-direction-aware "
+                    f"initialization, evolutionary placement, or hybrid "
+                    f"approaches.\n\n"
+                    f"Here is a template for custom gradient-based optimization:"
+                    f"\n\n```python\n{PHASE2_TEMPLATE}```"
+                ))],
+            ))
 
         turn += 1
         print(f"\n── Turn {turn} ({elapsed:.0f}s / {time_budget:.0f}s) "
@@ -1175,7 +1250,9 @@ def main():
                    choices=["gemini"])
     p.add_argument("--train-farm", type=int, default=1)
     p.add_argument("--timeout", type=int, default=300,
-                   help="Per-farm script timeout in seconds")
+                   help="Per-farm script timeout for final eval (default: 300)")
+    p.add_argument("--explore-timeout", type=int, default=60,
+                   help="Per-farm script timeout during exploration (default: 60)")
     p.add_argument("--time-budget", type=float, default=600,
                    help="Total prototyping time budget in seconds (default: 600)")
     p.add_argument("--output-dir", default="results_agent")
@@ -1208,6 +1285,7 @@ def main():
         run_id=args.run_id,
         temperature=args.temperature,
         hot_start=args.hot_start,
+        explore_timeout_s=args.explore_timeout,
     )
 
 
