@@ -24,7 +24,12 @@ generalizes.
 The baseline is strong: 500 independent optimization runs, each with
 4000 gradient iterations plus 2000 constant-learning-rate iterations.
 
-## What the LLM Discovered
+## The LLM's Best Optimizer
+
+**[`results/best_optimizer.py`](results/best_optimizer.py)** — the best
+optimizer the LLM produced, ready to run on any farm. This was generated
+autonomously by Gemini 2.5 Flash after 50 iterations of writing,
+testing, and refining code.
 
 The winning strategy (developed over 5 hours, 99 attempts):
 
@@ -201,6 +206,7 @@ benchmarks/
   build_rowp_problem.py       ROWP test case from IEA data
 
 results/
+  best_optimizer.py           ★ LLM's best optimizer (wind-aware init)
   seed_optimizer.py           Baseline template (hot-start seed)
   baselines.json              500-start baseline results
   baseline_rowp.json          Held-out baseline

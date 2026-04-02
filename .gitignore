@@ -54,7 +54,7 @@ results_agent_2hr/
 results_gemini/
 
 # Old results files in results/
-results/best_optimizer.py
+# results/best_optimizer.py  # now tracked — the LLM's best result
 results/history.json
 results/iter_*.py
 results/problem_farm[2-9].json
