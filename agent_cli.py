@@ -408,7 +408,7 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             strategy = "sgd_solve" if uses_sgd_solve else "custom"
             strategy_history.append(strategy)
 
-            # Silently run on ROWP every 5th attempt (saves ~20s per attempt)
+            # Silently run on ROWP for progress tracking (LLM doesn't see this)
             entry = {
                 "attempt": attempt_count[0],
                 "timestamp": time.time(),
@@ -418,15 +418,14 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
                 "train_baseline": bl,
                 "strategy": strategy,
             }
-            if attempt_count[0] % 5 == 0:
-                rowp_result = _score_on_rowp(code, playground, results_dir,
-                                             timeout_s, run_id)
-                if rowp_result and "error" not in rowp_result:
-                    entry["rowp_aep"] = rowp_result["aep_gwh"]
-                    entry["rowp_feasible"] = rowp_result["feasible"]
-                    entry["rowp_time"] = rowp_result["time"]
-                elif rowp_result:
-                    entry["rowp_error"] = rowp_result["error"][:200]
+            rowp_result = _score_on_rowp(code, playground, results_dir,
+                                         timeout_s, run_id)
+            if rowp_result and "error" not in rowp_result:
+                entry["rowp_aep"] = rowp_result["aep_gwh"]
+                entry["rowp_feasible"] = rowp_result["feasible"]
+                entry["rowp_time"] = rowp_result["time"]
+            elif rowp_result:
+                entry["rowp_error"] = rowp_result["error"][:200]
             attempt_log.append(entry)
             _save_log()
 
