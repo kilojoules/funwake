@@ -587,7 +587,7 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
         else:
             return f"Unknown tool: {name}"
 
-    return _dispatch, best, attempt_log
+    return _dispatch, best, attempt_log, attempt_count, strategy_history
 
 
 def get_tool_declarations():
@@ -840,6 +840,13 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 - `boundary` is a jnp array of shape (n_vertices, 2), convex polygon in CCW order
 - You must generate your own initial layout — use the boundary and min_spacing to place n_target turbines inside the polygon
 
+## Time constraints
+
+- Each `run_optimizer` call has a **60-second timeout** during exploration.
+  Design your optimizer to finish within this budget. Use 1-2 multi-starts
+  or a single well-tuned run — NOT 10+ restarts.
+- The final held-out evaluation uses a 300-second timeout.
+
 ## Files in playground/
 
 - `problem.json` — the training farm problem definition. Read this to
@@ -943,7 +950,7 @@ def run_agent(provider: str, model: str, api_key: str,
 
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    dispatch, best, attempt_log = make_tools(
+    dispatch, best, attempt_log, attempt_count, strategy_history = make_tools(
         playground, results_dir, benchmark, wind_csv, baselines,
         train_farm, timeout_s, run_id, out_dir,
         explore_timeout_s=explore_timeout_s)
@@ -1006,23 +1013,60 @@ import jax.numpy as jnp
 from pixwake.optim.sgd import boundary_penalty, spacing_penalty
 
 def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
-    def aep_objective(x, y):
+    # --- Initial layout: grid inside polygon ---
+    x_min, y_min = jnp.min(boundary, axis=0)
+    x_max, y_max = jnp.max(boundary, axis=0)
+    nx = int(jnp.ceil((x_max - x_min) / min_spacing))
+    ny = int(jnp.ceil((y_max - y_min) / min_spacing))
+    gx, gy = jnp.meshgrid(
+        jnp.linspace(x_min + min_spacing/2, x_max - min_spacing/2, nx),
+        jnp.linspace(y_min + min_spacing/2, y_max - min_spacing/2, ny))
+    cx, cy = gx.flatten(), gy.flatten()
+    n_v = boundary.shape[0]
+    def edge_d(i):
+        x1, y1 = boundary[i]
+        x2, y2 = boundary[(i+1) % n_v]
+        ex, ey = x2-x1, y2-y1
+        el = jnp.sqrt(ex**2+ey**2)+1e-10
+        return (cx-x1)*(-ey/el) + (cy-y1)*(ex/el)
+    inside = jnp.min(jax.vmap(edge_d)(jnp.arange(n_v)), axis=0) > 0
+    ix, iy = cx[inside], cy[inside]
+    idx = jnp.round(jnp.linspace(0, len(ix)-1, n_target)).astype(int)
+    x, y = ix[idx], iy[idx]
+
+    # --- Penalized objective ---
+    def objective(x, y, alpha):
         r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
         p = r.power()[:, :len(x)]
-        return -jnp.sum(p * weights[:, None]) * 8760 / 1e6
+        aep = -jnp.sum(p * weights[:, None]) * 8760 / 1e6
+        return aep + alpha * (boundary_penalty(x, y, boundary)
+                              + spacing_penalty(x, y, min_spacing))
 
-    def penalized_objective(x, y, alpha=1.0):
-        aep = aep_objective(x, y)
-        bnd = boundary_penalty(x, y, boundary)
-        spc = spacing_penalty(x, y, min_spacing)
-        return aep + alpha * (bnd + spc)
+    grad_fn = jax.grad(objective, argnums=(0, 1))
 
-    grad_fn = jax.grad(penalized_objective, argnums=(0, 1))
+    # --- Adam optimizer ---
+    lr, b1, b2, eps = 50.0, 0.9, 0.999, 1e-8
+    mx, my = jnp.zeros_like(x), jnp.zeros_like(y)
+    vx, vy = jnp.zeros_like(x), jnp.zeros_like(y)
+    alpha = 10.0
 
-    # TODO: implement your custom optimizer here
-    # You have grad_fn(x, y, alpha) -> (grad_x, grad_y)
-    # Use it to build ADAM, L-BFGS, simulated annealing, etc.
-    ...
+    for step in range(2000):
+        gx, gy = grad_fn(x, y, alpha)
+        mx = b1*mx + (1-b1)*gx
+        my = b1*my + (1-b1)*gy
+        vx = b2*vx + (1-b2)*gx**2
+        vy = b2*vy + (1-b2)*gy**2
+        mxh = mx/(1-b1**(step+1))
+        myh = my/(1-b1**(step+1))
+        vxh = vx/(1-b2**(step+1))
+        vyh = vy/(1-b2**(step+1))
+        x = x - lr * mxh / (jnp.sqrt(vxh) + eps)
+        y = y - lr * myh / (jnp.sqrt(vyh) + eps)
+        # Ramp up penalty to enforce feasibility
+        if step % 500 == 499:
+            alpha *= 2.0
+
+    return x, y
 """
 
     while True:
@@ -1054,6 +1098,24 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
                     f"\n\n```python\n{PHASE2_TEMPLATE}```"
                 ))],
             ))
+
+        # Context window pruning: keep conversation manageable
+        MAX_CONTEXT_TURNS = 40
+        if len(contents) > MAX_CONTEXT_TURNS * 2 + 4:
+            bl_aep = baselines.get(str(train_farm), {}).get("aep_gwh", 0)
+            strategies_tried = sorted(set(strategy_history)) if hasattr(strategy_history, '__iter__') else []
+            summary = (
+                f"[Prior conversation compressed. {attempt_count[0]} attempts so far. "
+                f"Best AEP: {best['aep']:.2f} GWh (attempt {best['iter']}). "
+                f"Baseline: {bl_aep:.2f} GWh. "
+                f"Strategies tried: {strategies_tried}.]"
+            )
+            preserved_start = contents[:4]
+            preserved_end = contents[-MAX_CONTEXT_TURNS * 2:]
+            contents = preserved_start + [
+                types.Content(role="user", parts=[types.Part(text=summary)])
+            ] + preserved_end
+            print(f"  [context pruned: kept {len(contents)} messages]")
 
         turn += 1
         print(f"\n── Turn {turn} ({elapsed:.0f}s / {time_budget:.0f}s) "
