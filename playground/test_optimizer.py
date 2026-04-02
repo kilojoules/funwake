@@ -115,6 +115,83 @@ def check_quick_run(mod):
     return results
 
 
+def check_stressed_polygon(mod):
+    """Run on a tight, elongated polygon to stress-test constraint handling.
+
+    This catches optimizers that work on spacious polygons (DEI) but fail
+    when packing density is high and the boundary is narrow. A thin rhombus
+    with 25 turbines at 600m spacing leaves very little margin.
+    """
+    results = []
+
+    D = 150.0
+    ws_arr = jnp.array([0, 5, 10, 15, 20, 25.0])
+    power = jnp.array([0, 50, 300, 600, 600, 600.0])
+    ct = jnp.array([0.8, 0.8, 0.7, 0.5, 0.3, 0.2])
+    turb = Turbine(rotor_diameter=D, hub_height=100.0,
+                   power_curve=Curve(ws=ws_arr, values=power),
+                   ct_curve=Curve(ws=ws_arr, values=ct))
+    sim = WakeSimulation(turb, BastankhahGaussianDeficit(k=0.04))
+
+    # Thin rhombus: 16km long, 4km wide — tight packing
+    boundary = jnp.array([
+        [0.0, 0.0], [8000.0, -2000.0],
+        [16000.0, 0.0], [8000.0, 2000.0],
+    ])
+    n_target = 25
+    min_spacing = 600.0
+
+    try:
+        opt_x, opt_y = mod.optimize(
+            sim=sim, n_target=n_target, boundary=boundary,
+            min_spacing=min_spacing,
+            wd=jnp.array([0, 90, 180, 270.0]),
+            ws=jnp.array([9, 8, 9, 8.0]),
+            weights=jnp.array([0.25, 0.25, 0.25, 0.25]),
+        )
+    except Exception as e:
+        results.append(("stressed_run", False, f"crashed: {e}"))
+        return results
+
+    results.append(("stressed_run", True, "ran without error"))
+
+    n = len(opt_x)
+    results.append(("stressed_count", n == n_target,
+                    f"returned {n}, expected {n_target}"))
+
+    if n == 0:
+        results.append(("stressed_boundary", False, "no turbines"))
+        results.append(("stressed_spacing", False, "no turbines"))
+        return results
+
+    x = jnp.array(opt_x)
+    y = jnp.array(opt_y)
+
+    # Check finite
+    finite = bool(jnp.all(jnp.isfinite(x)) and jnp.all(jnp.isfinite(y)))
+    if not finite:
+        results.append(("stressed_finite", False, "NaN or Inf in output"))
+        results.append(("stressed_boundary", False, "non-finite positions"))
+        results.append(("stressed_spacing", False, "non-finite positions"))
+        return results
+
+    # Boundary feasibility
+    bnd_pen = float(boundary_penalty(x, y, boundary))
+    results.append(("stressed_boundary", bnd_pen < 1e-3,
+                    f"penalty={bnd_pen:.6f} (need < 1e-3)"))
+
+    # Spacing feasibility
+    dx = x[:, None] - x[None, :]
+    dy = y[:, None] - y[None, :]
+    dist = jnp.sqrt(dx**2 + dy**2 + jnp.eye(n) * 1e10)
+    min_dist = float(jnp.min(dist))
+    threshold = min_spacing * 0.99
+    results.append(("stressed_spacing", min_dist >= threshold,
+                    f"min_dist={min_dist:.1f}m (need >= {threshold:.1f}m)"))
+
+    return results
+
+
 def run_via_harness(optimizer_path, problem_path, timeout=120):
     """Run an optimizer module via the harness and return the output layout."""
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
@@ -260,6 +337,14 @@ def main():
     print("\n=== Quick Run (3 turbines, tiny problem) ===")
     quick_results = check_quick_run(mod)
     for name, passed, detail in quick_results:
+        status = "PASS" if passed else "FAIL"
+        if not passed:
+            all_passed = False
+        print(f"  [{status}] {name}: {detail}")
+
+    print("\n=== Stressed Polygon (25 turbines, thin rhombus) ===")
+    stressed_results = check_stressed_polygon(mod)
+    for name, passed, detail in stressed_results:
         status = "PASS" if passed else "FAIL"
         if not passed:
             all_passed = False

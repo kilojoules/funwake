@@ -708,8 +708,12 @@ def get_tool_declarations():
                 "With problem_path: full test (~20-30s) — runs via harness, "
                 "checks signature, turbine count, boundary, spacing, no "
                 "duplicate positions, finite values, and AEP. "
-                "With problem_path='--quick': fast test (<5s) — checks "
-                "signature and runs on a tiny 3-turbine problem. "
+                "With problem_path='--quick': fast tests (~10s) — checks "
+                "signature, runs on a tiny 3-turbine problem, AND runs on "
+                "a stressed thin-rhombus polygon (25 turbines, tight packing) "
+                "to verify constraint handling generalizes to hard cases. "
+                "If the stressed test fails, your constraint handling is too "
+                "weak for tight polygons. "
                 "Use '--quick' for rapid iteration, full test before scoring."
             ),
             parameters=types.Schema(
