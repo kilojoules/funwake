@@ -541,7 +541,30 @@ def make_tools(playground: Path, results_dir: Path, benchmark: Path,
             script_path = args.get("script_path")
             if not script_path:
                 return "Error: 'script_path' argument is required"
-            problem_path = args.get("problem_path", "problem.json")
+            problem_path = args.get("problem_path") or "problem.json"
+            # Handle --quick mode
+            if problem_path == "--quick":
+                # Run quick test (signature + tiny problem only)
+                test_runner = playground / "test_optimizer.py"
+                script_resolved = (playground / script_path).resolve()
+                if not script_resolved.exists():
+                    return f"Error: {script_path} not found"
+                pixwake_src = str((playground / "pixwake" / "src").resolve())
+                env = _sandbox_env(playground, Path("/dev/null"), Path("/dev/null"))
+                env["PYTHONPATH"] = pixwake_src
+                try:
+                    result = subprocess.run(
+                        [sys.executable, str(test_runner),
+                         str(script_resolved), "--quick"],
+                        capture_output=True, text=True, timeout=30,
+                        cwd=str(playground), env=env)
+                    output = result.stdout[-3000:] if result.stdout else ""
+                    if result.returncode != 0:
+                        stderr = result.stderr[-1000:] if result.stderr else ""
+                        return f"{output}\n{stderr}".strip()
+                    return output.strip()
+                except subprocess.TimeoutExpired:
+                    return "Quick tests timed out"
             # Resolve paths relative to playground
             script_resolved = (playground / script_path).resolve()
             problem_resolved = (playground / problem_path).resolve()
