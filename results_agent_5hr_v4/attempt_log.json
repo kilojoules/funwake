@@ -1,0 +1,910 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1775107100.879164,
+    "train_aep": 5524.87,
+    "train_feasible": true,
+    "train_time": 23.78546905517578,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4229.5036918929545,
+    "rowp_feasible": true,
+    "rowp_time": 17.885501861572266
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1775107200.8394969,
+    "train_aep": 5527.55,
+    "train_feasible": true,
+    "train_time": 48.940978050231934,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4230.606900232891,
+    "rowp_feasible": true,
+    "rowp_time": 40.24705982208252
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1775107312.766649,
+    "train_aep": 5527.55,
+    "train_feasible": true,
+    "train_time": 48.89274191856384,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4230.606900232891,
+    "rowp_feasible": true,
+    "rowp_time": 40.44092082977295
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1775107422.408912,
+    "train_aep": 5544.46,
+    "train_feasible": true,
+    "train_time": 47.33454608917236,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4253.777407076521,
+    "rowp_feasible": true,
+    "rowp_time": 40.7613582611084
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1775107543.177383,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1775107632.80774,
+    "train_aep": 5548.54,
+    "train_feasible": false,
+    "train_time": 50.33059787750244,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4254.764578137313,
+    "rowp_feasible": true,
+    "rowp_time": 42.06854701042175
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1775107753.332412,
+    "train_aep": 5547.46,
+    "train_feasible": false,
+    "train_time": 49.011993169784546,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4258.499666658542,
+    "rowp_feasible": false,
+    "rowp_time": 42.14259576797485
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1775107820.5259311,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 95, in optimiz"
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1775107906.455492,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1775107985.295535,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1775108064.766795,
+    "train_aep": 5537.72,
+    "train_feasible": true,
+    "train_time": 57.78543519973755,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4256.062155566209,
+    "rowp_feasible": true,
+    "rowp_time": 47.96416902542114
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1775108183.2037098,
+    "train_aep": 5544.46,
+    "train_feasible": true,
+    "train_time": 47.01541709899902,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4253.777407076521,
+    "rowp_feasible": true,
+    "rowp_time": 39.87979698181152
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1775108303.1234891,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1775108399.3988569,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1775108482.4464362,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1775108576.529206,
+    "train_aep": 5544.56,
+    "train_feasible": true,
+    "train_time": 48.17244482040405,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4253.777407076521,
+    "rowp_feasible": true,
+    "rowp_time": 39.69085502624512
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1775108720.42707,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1775108802.698167,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1775108900.9311202,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1775108977.008306,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 81, in optimiz"
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1775109024.106741,
+    "train_aep": 5518.55,
+    "train_feasible": true,
+    "train_time": 10.302296161651611,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4194.858508675195,
+    "rowp_feasible": true,
+    "rowp_time": 9.099179983139038
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1775109083.048021,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 90, in optimiz"
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1775109138.169649,
+    "train_aep": 5553.1,
+    "train_feasible": true,
+    "train_time": 31.593334913253784,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4257.850427389215,
+    "rowp_feasible": true,
+    "rowp_time": 27.192890167236328
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1775109209.078057,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 98, in optimiz"
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1775109304.33377,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1775109396.982429,
+    "train_aep": 5549.35,
+    "train_feasible": true,
+    "train_time": 35.11829614639282,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4264.025338937223,
+    "rowp_feasible": true,
+    "rowp_time": 30.593064069747925
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1775109533.970905,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1775109635.862248,
+    "train_aep": 5550.67,
+    "train_feasible": true,
+    "train_time": 35.600878953933716,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4258.129314581118,
+    "rowp_feasible": true,
+    "rowp_time": 30.005589962005615
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1775109767.238305,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1775109859.9209101,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1775109926.409747,
+    "train_aep": 5538.82,
+    "train_feasible": true,
+    "train_time": 26.071254014968872,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4257.688096475238,
+    "rowp_feasible": true,
+    "rowp_time": 21.7665913105011
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1775110005.566411,
+    "error": "safety: Blocked: 'eval('"
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1775110094.908334,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1775110199.646653,
+    "train_aep": 5550.16,
+    "train_feasible": true,
+    "train_time": 28.178436994552612,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4257.3733653126765,
+    "rowp_feasible": true,
+    "rowp_time": 23.862251043319702
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1775110265.9960089,
+    "train_aep": 5525.26,
+    "train_feasible": true,
+    "train_time": 13.077304601669312,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4145.977107764406,
+    "rowp_feasible": false,
+    "rowp_time": 11.339998960494995
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1775110375.8273332,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 101, in optimi"
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1775110423.166819,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 106, in optimi"
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1775110504.6399071,
+    "train_aep": 5554.45,
+    "train_feasible": false,
+    "train_time": 28.619748830795288,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4259.218442496911,
+    "rowp_feasible": true,
+    "rowp_time": 25.15383505821228
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1775110636.001611,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1775110700.5825841,
+    "train_aep": 5550.42,
+    "train_feasible": true,
+    "train_time": 23.288447856903076,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4262.833638376033,
+    "rowp_feasible": true,
+    "rowp_time": 20.280060052871704
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1775110792.430836,
+    "train_aep": 5545.33,
+    "train_feasible": false,
+    "train_time": 34.85318303108215,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4261.404151858957,
+    "rowp_feasible": true,
+    "rowp_time": 29.610668897628784
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1775110902.1682801,
+    "train_aep": 5536.61,
+    "train_feasible": true,
+    "train_time": 24.160293340682983,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4239.220472582245,
+    "rowp_feasible": true,
+    "rowp_time": 20.673927068710327
+  },
+  {
+    "attempt": 43,
+    "timestamp": 1775111201.768748,
+    "train_aep": 5553.1,
+    "train_feasible": true,
+    "train_time": 57.006014347076416,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4262.586658277212,
+    "rowp_feasible": true,
+    "rowp_time": 47.52665710449219
+  },
+  {
+    "attempt": 44,
+    "timestamp": 1775111292.503656,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 140, in optimi"
+  },
+  {
+    "attempt": 45,
+    "timestamp": 1775111357.3143628,
+    "train_aep": 5547.0,
+    "train_feasible": true,
+    "train_time": 33.37285304069519,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4258.042249790533,
+    "rowp_feasible": true,
+    "rowp_time": 28.726560831069946
+  },
+  {
+    "attempt": 46,
+    "timestamp": 1775111523.922776,
+    "train_aep": 5549.92,
+    "train_feasible": true,
+    "train_time": 41.74471187591553,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4251.063270563613,
+    "rowp_feasible": true,
+    "rowp_time": 41.53536105155945
+  },
+  {
+    "attempt": 47,
+    "timestamp": 1775111607.9679518,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 146, in optimi"
+  },
+  {
+    "attempt": 48,
+    "timestamp": 1775111656.619356,
+    "train_aep": 5523.62,
+    "train_feasible": true,
+    "train_time": 17.963243007659912,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4169.324091222314,
+    "rowp_feasible": true,
+    "rowp_time": 14.897970914840698
+  },
+  {
+    "attempt": 49,
+    "timestamp": 1775111780.192909,
+    "train_aep": 5531.06,
+    "train_feasible": true,
+    "train_time": 18.408206939697266,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4241.310021278295,
+    "rowp_feasible": true,
+    "rowp_time": 16.10308814048767
+  },
+  {
+    "attempt": 50,
+    "timestamp": 1775112102.9083729,
+    "train_aep": 5559.76,
+    "train_feasible": true,
+    "train_time": 58.179240226745605,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4262.0577563123425,
+    "rowp_feasible": true,
+    "rowp_time": 48.70994305610657
+  },
+  {
+    "attempt": 51,
+    "timestamp": 1775112244.649666,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 52,
+    "timestamp": 1775112335.513793,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 53,
+    "timestamp": 1775112584.7883751,
+    "train_aep": 5527.1,
+    "train_feasible": true,
+    "train_time": 21.15848708152771,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4088.466260035031,
+    "rowp_feasible": true,
+    "rowp_time": 18.605645895004272
+  },
+  {
+    "attempt": 54,
+    "timestamp": 1775112740.18238,
+    "train_aep": 5529.23,
+    "train_feasible": true,
+    "train_time": 46.56633496284485,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4056.643029464203,
+    "rowp_feasible": true,
+    "rowp_time": 40.72019600868225
+  },
+  {
+    "attempt": 55,
+    "timestamp": 1775112863.850945,
+    "train_aep": 5525.2,
+    "train_feasible": true,
+    "train_time": 23.58008909225464,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4094.2952129458236,
+    "rowp_feasible": true,
+    "rowp_time": 21.177082777023315
+  },
+  {
+    "attempt": 56,
+    "timestamp": 1775112957.4799511,
+    "train_aep": 5529.39,
+    "train_feasible": true,
+    "train_time": 24.959001064300537,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4105.513683298308,
+    "rowp_feasible": true,
+    "rowp_time": 22.79323172569275
+  },
+  {
+    "attempt": 57,
+    "timestamp": 1775113089.789273,
+    "train_aep": 5532.92,
+    "train_feasible": true,
+    "train_time": 56.6271870136261,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4076.7838226078443,
+    "rowp_feasible": true,
+    "rowp_time": 49.28215718269348
+  },
+  {
+    "attempt": 58,
+    "timestamp": 1775113195.476882,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 23.535884141921997,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 22.131650924682617
+  },
+  {
+    "attempt": 59,
+    "timestamp": 1775113251.183821,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 152, in optimi"
+  },
+  {
+    "attempt": 60,
+    "timestamp": 1775113308.49698,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 23.641210794448853,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 22.151109218597412
+  },
+  {
+    "attempt": 61,
+    "timestamp": 1775113366.412128,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 154, in optimi"
+  },
+  {
+    "attempt": 62,
+    "timestamp": 1775113540.160372,
+    "train_aep": 5563.49,
+    "train_feasible": true,
+    "train_time": 56.05247902870178,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4258.075200605107,
+    "rowp_feasible": true,
+    "rowp_time": 48.34547710418701
+  },
+  {
+    "attempt": 63,
+    "timestamp": 1775113678.27383,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 64,
+    "timestamp": 1775113776.433496,
+    "train_aep": 5554.52,
+    "train_feasible": true,
+    "train_time": 52.210816860198975,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4260.680256460422,
+    "rowp_feasible": true,
+    "rowp_time": 44.5983669757843
+  },
+  {
+    "attempt": 65,
+    "timestamp": 1775113914.2890189,
+    "train_aep": 5556.34,
+    "train_feasible": true,
+    "train_time": 56.40303707122803,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4260.737899380859,
+    "rowp_feasible": true,
+    "rowp_time": 48.7196569442749
+  },
+  {
+    "attempt": 66,
+    "timestamp": 1775114049.643133,
+    "train_aep": 5563.49,
+    "train_feasible": true,
+    "train_time": 55.52698588371277,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4258.075200605107,
+    "rowp_feasible": true,
+    "rowp_time": 48.676640033721924
+  },
+  {
+    "attempt": 67,
+    "timestamp": 1775114197.91749,
+    "train_aep": 5560.94,
+    "train_feasible": true,
+    "train_time": 56.67869591712952,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4260.404533584836,
+    "rowp_feasible": true,
+    "rowp_time": 49.08064579963684
+  },
+  {
+    "attempt": 68,
+    "timestamp": 1775114337.556035,
+    "train_aep": 5563.49,
+    "train_feasible": true,
+    "train_time": 55.324485063552856,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4258.075200605107,
+    "rowp_feasible": true,
+    "rowp_time": 48.16887092590332
+  },
+  {
+    "attempt": 69,
+    "timestamp": 1775114438.3955789,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 155, in optimi"
+  },
+  {
+    "attempt": 70,
+    "timestamp": 1775114499.587571,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 28.554476022720337,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 27.03048276901245
+  },
+  {
+    "attempt": 71,
+    "timestamp": 1775114639.5018592,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 72,
+    "timestamp": 1775114735.8652549,
+    "train_aep": 5549.4,
+    "train_feasible": true,
+    "train_time": 48.577564001083374,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4261.827752401522,
+    "rowp_feasible": true,
+    "rowp_time": 41.453333139419556
+  },
+  {
+    "attempt": 73,
+    "timestamp": 1775114844.028061,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 28.66998791694641,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 27.920196771621704
+  },
+  {
+    "attempt": 74,
+    "timestamp": 1775114942.509883,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 34.18580722808838,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 32.23831081390381
+  },
+  {
+    "attempt": 75,
+    "timestamp": 1775115045.1048,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 33.68629002571106,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 32.102612018585205
+  },
+  {
+    "attempt": 76,
+    "timestamp": 1775115198.105542,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 77,
+    "timestamp": 1775115293.813826,
+    "train_aep": 5536.06,
+    "train_feasible": true,
+    "train_time": 49.688852071762085,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4217.91031548238,
+    "rowp_feasible": true,
+    "rowp_time": 42.00207591056824
+  },
+  {
+    "attempt": 78,
+    "timestamp": 1775115436.5811331,
+    "train_aep": 5540.54,
+    "train_feasible": true,
+    "train_time": 53.0241801738739,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4225.809995295045,
+    "rowp_feasible": true,
+    "rowp_time": 45.3841290473938
+  },
+  {
+    "attempt": 79,
+    "timestamp": 1775115573.9668941,
+    "train_aep": 5538.85,
+    "train_feasible": true,
+    "train_time": 57.69546318054199,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4238.137498937193,
+    "rowp_feasible": true,
+    "rowp_time": 47.16878890991211
+  },
+  {
+    "attempt": 80,
+    "timestamp": 1775115652.574223,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 62, in optimiz"
+  },
+  {
+    "attempt": 81,
+    "timestamp": 1775115679.665149,
+    "error": "rc=1:\nTraceback (most recent call last):\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 106, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/funwake/playground/harness.py\", line 87, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/funwake/playground/_generated_optimizer_s5hrv4.py\", line 62, in optimiz"
+  },
+  {
+    "attempt": 82,
+    "timestamp": 1775115726.287796,
+    "train_aep": 5536.65,
+    "train_feasible": true,
+    "train_time": 17.1892511844635,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4211.842865675518,
+    "rowp_feasible": true,
+    "rowp_time": 14.930871725082397
+  },
+  {
+    "attempt": 83,
+    "timestamp": 1775115796.547529,
+    "train_aep": 5539.94,
+    "train_feasible": true,
+    "train_time": 26.088796854019165,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4222.468584408306,
+    "rowp_feasible": true,
+    "rowp_time": 22.23828101158142
+  },
+  {
+    "attempt": 84,
+    "timestamp": 1775115911.935353,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 85,
+    "timestamp": 1775115966.8937001,
+    "train_aep": 5599.97,
+    "train_feasible": false,
+    "train_time": 23.321129083633423,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4328.043406988876,
+    "rowp_feasible": false,
+    "rowp_time": 21.985728979110718
+  },
+  {
+    "attempt": 86,
+    "timestamp": 1775116115.1065862,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 87,
+    "timestamp": 1775116212.7955358,
+    "train_aep": 5538.76,
+    "train_feasible": true,
+    "train_time": 49.12472200393677,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4229.849278711455,
+    "rowp_feasible": true,
+    "rowp_time": 41.14893102645874
+  },
+  {
+    "attempt": 88,
+    "timestamp": 1775116819.6376479,
+    "train_aep": 5539.16,
+    "train_feasible": true,
+    "train_time": 57.7051682472229,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4214.756069945476,
+    "rowp_feasible": true,
+    "rowp_time": 47.98508286476135
+  },
+  {
+    "attempt": 89,
+    "timestamp": 1775117040.347615,
+    "train_aep": 5531.61,
+    "train_feasible": true,
+    "train_time": 57.451908111572266,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4222.671789900913,
+    "rowp_feasible": true,
+    "rowp_time": 48.378254890441895
+  },
+  {
+    "attempt": 90,
+    "timestamp": 1775117247.527006,
+    "train_aep": 5530.86,
+    "train_feasible": true,
+    "train_time": 58.09616208076477,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4215.457775986865,
+    "rowp_feasible": true,
+    "rowp_time": 48.19003176689148
+  },
+  {
+    "attempt": 91,
+    "timestamp": 1775117812.4335191,
+    "train_aep": 5530.84,
+    "train_feasible": true,
+    "train_time": 59.59623074531555,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4220.530615397505,
+    "rowp_feasible": true,
+    "rowp_time": 48.7757511138916
+  },
+  {
+    "attempt": 92,
+    "timestamp": 1775118426.52256,
+    "train_aep": 5541.78,
+    "train_feasible": true,
+    "train_time": 57.905750036239624,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4214.103256387846,
+    "rowp_feasible": true,
+    "rowp_time": 48.98402214050293
+  },
+  {
+    "attempt": 93,
+    "timestamp": 1775119230.99732,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 94,
+    "timestamp": 1775119386.834257,
+    "train_aep": 5527.94,
+    "train_feasible": true,
+    "train_time": 46.967844009399414,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4146.12068201555,
+    "rowp_feasible": true,
+    "rowp_time": 40.55103421211243
+  },
+  {
+    "attempt": 95,
+    "timestamp": 1775119722.837814,
+    "train_aep": 5525.34,
+    "train_feasible": true,
+    "train_time": 46.5790331363678,
+    "train_baseline": 5540.715370308549,
+    "strategy": "custom",
+    "rowp_aep": 4120.762807881064,
+    "rowp_feasible": true,
+    "rowp_time": 41.11971712112427
+  },
+  {
+    "attempt": 96,
+    "timestamp": 1775120672.519281,
+    "train_aep": 5536.17,
+    "train_feasible": true,
+    "train_time": 51.790822982788086,
+    "train_baseline": 5540.715370308549,
+    "strategy": "sgd_solve",
+    "rowp_aep": 4204.030636685829,
+    "rowp_feasible": true,
+    "rowp_time": 43.78830099105835
+  },
+  {
+    "attempt": 97,
+    "timestamp": 1775120877.620606,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 98,
+    "timestamp": 1775121076.350236,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 99,
+    "timestamp": 1775121643.106931,
+    "error": "Timeout after 60s"
+  }
+]
