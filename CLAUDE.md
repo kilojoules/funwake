@@ -1,5 +1,10 @@
 # FunWake — LLM-Generated Layout Optimizers
 
+## Git conventions
+
+Do NOT add `Co-Authored-By` lines to commit messages. Commits use the
+default git identity (from ssh/git config). No `--author` overrides.
+
 An LLM agent writes wind farm layout optimization code, competing
 against a 500 multi-start baseline.
 
