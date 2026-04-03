@@ -22,9 +22,10 @@ benchmarks/_tmp_*
 __pycache__/
 *.pyc
 
-# Old agents (superseded by agent_cli.py)
+# Old agents (superseded by runners/)
 agent.py
 agent2.py
+agent_cli_old.py
 
 # Old experiment artifacts
 sweep.py
