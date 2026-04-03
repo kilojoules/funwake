@@ -52,5 +52,5 @@ results/           — baselines, problem definitions
 - `playground/test_optimizer.py` — unit test suite
 - `playground/problem.json` — training farm definition
 - `results/seed_optimizer.py` — generic baseline template
-- `results_agent_1hr_v7/best_optimizer.py` — best LLM-generated optimizer
+- `results/best_optimizer.py` — best LLM-generated optimizer
 - `plot_progress.py` — progress visualization

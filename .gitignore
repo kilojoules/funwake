@@ -5,7 +5,6 @@ playground/pixwake/
 playground/_generated_optimizer*.py
 playground/_gen_*.py
 playground/_tmp/
-# LLM-generated scripts in playground (from agent write_file calls)
 playground/*.py
 !playground/test_optimizer.py
 !playground/harness.py
@@ -23,12 +22,19 @@ benchmarks/_tmp_*
 __pycache__/
 *.pyc
 
-# Old experiment artifacts
+# Old agents (superseded by agent_cli.py)
+agent.py
 agent2.py
+
+# Old experiment artifacts
 sweep.py
 sweep2.py
 sweep/
 sweep2/
+sweep2_test/
+sweep2_test2/
+sweep2_test3/
+sweep2_testA/
 extract_training_data.py
 lora_train.py
 plot_all.py
@@ -36,25 +42,36 @@ plot_sweep.py
 results3_best_seed.py
 vastai_setup.sh
 .devcatrc
+funwake_results.png
+sweep_results.png
 
-# Old results (superseded)
+# Old results (superseded by results_agent_5hr_v4)
 results2/
 results3/
 results_v2/
 results_agent_test/
 results_agent_test2/
 results_agent_session1/
+results_agent_smoke/
 results_agent_1hr/
 results_agent_1hr_v2/
 results_agent_1hr_v3/
 results_agent_1hr_v4/
 results_agent_1hr_v5/
 results_agent_1hr_v6/
+results_agent_1hr_v7/
 results_agent_2hr/
+results_agent_5hr/
+results_agent_5hr_v2/
+results_agent_5hr_v3/
+results_agent_5hr_v5/
+results_agent_5hr_v6/
+results_agent_5hr_noinit/
+results_agent_30min_check/
+results_agent_30min_v2/
 results_gemini/
 
-# Old results files in results/
-# results/best_optimizer.py  # now tracked — the LLM's best result
+# Old results files
 results/history.json
 results/iter_*.py
 results/problem_farm[2-9].json
