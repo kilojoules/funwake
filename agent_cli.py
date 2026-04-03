@@ -17,7 +17,7 @@ Usage:
 import argparse
 import sys
 
-from runners import RunConfig, GeminiRunner, ClaudeCodeRunner
+from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, VLLMRunner
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
 
     # Shared arguments
     p.add_argument("--provider", required=True,
-                   choices=["gemini", "claude-code"],
+                   choices=["gemini", "claude-code", "vllm"],
                    help="LLM backend to use")
     p.add_argument("--wind-csv", required=True,
                    help="Path to wind resource CSV")
@@ -40,9 +40,11 @@ def main():
     p.add_argument("--timeout-per-run", type=int, default=60,
                    help="Timeout per optimizer evaluation (default: 60s)")
 
-    # Gemini-specific
+    # Gemini/vLLM-specific
     p.add_argument("--model", default="gemini-2.5-flash",
-                   help="Gemini model name (default: gemini-2.5-flash)")
+                   help="Model name (default: gemini-2.5-flash)")
+    p.add_argument("--base-url", default="http://localhost:8000",
+                   help="vLLM server URL (default: http://localhost:8000)")
 
     # Claude Code-specific
     p.add_argument("--cc-max-turns", type=int, default=30,
@@ -70,6 +72,12 @@ def main():
             config,
             max_turns_per_iter=args.cc_max_turns,
             iterations=args.cc_iterations,
+        )
+    elif args.provider == "vllm":
+        runner = VLLMRunner(
+            config,
+            model=args.model,
+            base_url=args.base_url,
         )
     else:
         print(f"Unknown provider: {args.provider}", file=sys.stderr)
