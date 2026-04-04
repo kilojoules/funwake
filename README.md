@@ -1,19 +1,20 @@
 # FunWake: LLM-Generated Wind Farm Layout Optimizers
 
-An LLM agent (Gemini 2.5 Flash) autonomously writes wind farm layout
-optimization code, competing against a strong 500-multi-start gradient
-baseline. Given tools to explore a wake simulation codebase, write
-optimizer functions, run tests, and receive scores, the agent discovers
-**wind-direction-aware grid initialization** — a domain insight that
-aligns turbine rows perpendicular to the prevailing wind, reducing wake
-losses before optimization begins.
+LLM agents autonomously write wind farm layout optimization code,
+competing against a strong 500-multi-start gradient baseline. Given
+tools to explore a wake simulation codebase, write optimizer functions,
+run tests, and receive scores, the agents discover wind-direction-aware
+initialization and write **custom optimization algorithms** that beat
+the baseline by +59 GWh.
 
 ## Key Result
 
-|  | Training (DEI, 50 turbines) | Held-out (ROWP, 74 turbines) |
-|---|---|---|
-| **500-start baseline** | 5540.72 GWh | 4246.67 GWh |
-| **LLM best (feasible)** | **5563.49 GWh** (+22.8) | **4264.03 GWh** (+17.4) |
+| Run | Model | Training AEP | Gap | Strategy |
+|-----|-------|-------------|-----|----------|
+| Baseline (500-start SGD) | — | 5540.72 GWh | — | topfarm_sgd_solve |
+| **Claude Code 6hr** | **Claude** | **5600.0 GWh** | **+59.3** | **Custom vanilla SGD** |
+| Gemini 5hr | Gemini 2.5 Flash | 5563.5 GWh | +22.8 | Wind-aware init + tuned sgd_solve |
+| Claude Code 7hr | Claude | 5560.9 GWh | +20.2 | Hex grid + farthest-point |
 
 The held-out farm uses a different turbine (IEA 10 MW vs 15 MW), a
 different polygon, different turbine count (74 vs 50), and a different
@@ -26,33 +27,42 @@ The baseline is strong: 500 independent optimization runs, each with
 
 ## The LLM's Best Optimizer
 
-**[`results/best_optimizer.py`](results/best_optimizer.py)** — the best
-optimizer the LLM produced, generated autonomously by Gemini 2.5 Flash.
+**[`results_agent_claude_6hr/iter_010.py`](results_agent_claude_6hr/iter_010.py)**
+— the best optimizer, written autonomously by Claude in a 6-hour session.
+It scored +59.3 GWh over the 500-start baseline.
 
-The winning strategy combines three elements developed over 5 hours
-of autonomous iteration:
+The winning strategy is a **custom optimization algorithm** — not a
+wrapper around the existing solver:
 
-1. **Wind-direction-aware grid initialization.** Computes the
-   energy-weighted dominant wind direction, rotates the turbine
-   placement grid perpendicular to it. Turbines start in positions
-   that naturally minimize wake interference.
+1. **Vanilla SGD (no Adam momentum).** The LLM chose plain gradient
+   descent ("more stable with penalty switching"), removing the first
+   and second moment estimates that Adam uses.
 
-2. **Diverse multi-start pool.** Three initialization strategies —
-   wind-aware grid, standard grid, random — give the optimizer
-   different basins of attraction to explore.
+2. **Two-stage penalty annealing.** Stage 1 (4000 iters): alpha=250
+   for aggressive feasibility. Stage 2 (8000 iters): alpha=3 for AEP
+   refinement. 12000 total iterations via `jax.lax.fori_loop`.
 
-3. **High constraint penalties with tuned SGD.** `spacing_weight=75,
-   boundary_weight=75, ks_rho=80, learning_rate=150` — aggressive
-   penalties ensure feasibility while the high learning rate enables
-   large layout rearrangements.
+3. **Wind-direction-aware grid initialization.** Rotates the turbine
+   placement grid perpendicular to the energy-weighted dominant wind.
+
+4. **High initial learning rate (250).** Exponential decay at 0.999
+   per step.
+
+This is the first run where the LLM wrote a genuinely different
+algorithm — not just tuning hyperparameters of the existing solver.
 
 ## Progress Over Time
 
-![Agent progress](results_agent_5hr_v4/progress.png)
+### Claude Code 6hr (best run)
+![Claude Code 6hr](results_agent_claude_6hr/progress.png)
 
-99 attempts over 5 hours: 59 successful, 17 custom optimizer attempts
-(after a phase-2 exploration nudge), 40 errors. Training AEP climbs
-above the baseline; held-out ROWP tracks alongside.
+130 attempts over 6 hours. The custom optimizer at attempt 10 scored
+5600 GWh — never beaten by the 120 subsequent sgd_solve attempts.
+
+### Gemini 2.5 Flash 5hr (with held-out tracking)
+![Gemini 5hr](results_agent_5hr_v4/progress.png)
+
+99 attempts over 5 hours with paired training/held-out scoring.
 
 ## Key Findings
 
@@ -240,8 +250,17 @@ results/
   problem_farm1.json          Training problem definition
   problem_rowp.json           Held-out problem definition
 
+results_agent_claude_6hr/
+  iter_010.py                 ★ Best custom optimizer (+59.3 GWh)
+  attempt_log.json            130-attempt history
+  progress.png                Progress plot
+
+results_agent_claude_7hr/
+  attempt_log.json            127-attempt history
+  progress.png                Progress plot
+
 results_agent_5hr_v4/
-  best_optimizer.py           Best from 5-hour run
+  best_optimizer.py           Best from Gemini 5hr run
   iter_050.py                 Best feasible held-out result
   attempt_log.json            99-attempt history with paired scores
   progress.png                Training vs held-out AEP over time
