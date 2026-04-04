@@ -37,24 +37,22 @@ class ClaudeCodeRunner(BaseRunner):
             raise EnvironmentError("claude CLI not found. Install: npm install -g @anthropic-ai/claude-code")
 
     def _build_allowed_tools(self) -> list[str]:
-        """Build --allowedTools list scoping what Claude Code can do."""
+        """Build --allowedTools list scoping what Claude Code can do.
+
+        Note: Claude Code's path-scoped Write(dir/*) doesn't work
+        reliably. We use broad Read/Write and rely on CLAUDE.md
+        instructions + tool script sandboxing for safety.
+        """
         return [
-            # Read any file in playground/ and results/ (source code, problem JSONs)
-            "Read(playground/**)",
-            "Read(results/*.json)",
-            "Read(results/*.py)",
-            "Read(tools/*)",
-            # Read the memory/status file (scoped to this run's output dir)
-            f"Read({self.config.output_dir}/agent_memory.md)",
-            # Write only to the output directory and the generated optimizer path
-            f"Write({self.config.output_dir}/*)",
-            "Write(playground/_generated_opt.py)",
-            # Bash: only the tool scripts and python for inspection
+            "Read",
+            "Write",
             "Bash(python tools/run_tests.py *)",
             "Bash(python tools/run_optimizer.py *)",
             "Bash(python tools/test_generalization.py *)",
             "Bash(python tools/get_status.py *)",
-            # Allow reading source via grep/find (Claude Code's native tools)
+            "Bash(cat *)",
+            "Bash(ls *)",
+            "Bash(mkdir *)",
             "Grep",
             "Glob",
         ]
