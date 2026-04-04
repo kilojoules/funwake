@@ -44,8 +44,8 @@ class ClaudeCodeRunner(BaseRunner):
             "Read(results/*.json)",
             "Read(results/*.py)",
             "Read(tools/*)",
-            # Read the memory/status file we provide
-            "Read(agent_memory.md)",
+            # Read the memory/status file (scoped to this run's output dir)
+            f"Read({self.config.output_dir}/agent_memory.md)",
             # Write only to the output directory and the generated optimizer path
             f"Write({self.config.output_dir}/*)",
             "Write(playground/_generated_opt.py)",
@@ -89,7 +89,7 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 - `sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None).power()` → shape (n_findex, n_turbines)
 
 ## Workflow
-1. Read `agent_memory.md` for current status and history
+1. Read `{self.config.output_dir}/agent_memory.md` for current status and history
 2. Read pixwake source if needed (`playground/pixwake/src/pixwake/`)
 3. Write an optimizer script
 4. Run tests → fix if failing
@@ -102,44 +102,10 @@ PYTHONPATH includes `playground/pixwake/src`. JAX_ENABLE_X64=True is set.
 """
 
     def _write_memory_file(self):
-        """Write agent_memory.md with current status for Claude Code to read."""
-        memory = self.build_memory_context()
-
-        content = f"""\
-# Agent Memory — Updated {time.strftime('%H:%M:%S')}
-
-## Time Budget
-- Elapsed: {self.elapsed_minutes():.1f} min
-- Remaining: {self.time_remaining()/60:.1f} min
-- Budget: {self.config.time_budget/60:.0f} min total
-
-## Baseline
-{self._get_baseline_aep():.1f} GWh (500 multi-start SGD)
-
-{memory}
-"""
-        if self.in_phase2():
-            content += """
-## Phase 2 Suggestion
-You've been running for a while. Consider custom optimizers:
-- Wind-direction-aware grid initialization
-- Custom Adam/L-BFGS with jax.grad
-- Higher learning rates with aggressive constraint penalties
-- Diverse multi-start pools (wind-aware + standard + random)
-"""
-
-        # Check for diversity nudge
-        recent = self.attempts[-5:] if len(self.attempts) >= 5 else []
-        if recent and all(a.get("strategy") == "sgd_solve" for a in recent if "strategy" in a):
-            content += """
-## Diversity Nudge
-Last 5 attempts all used topfarm_sgd_solve. Try something different:
-- Custom gradient descent with Adam
-- Different initialization strategies
-- Adjusted constraint penalty parameters
-"""
-
-        Path("agent_memory.md").write_text(content)
+        """Write agent_memory.md to the run-scoped output dir."""
+        from .memory import render_agent_memory
+        content = render_agent_memory(self.session, self.history, self.attempts)
+        Path(self.memory_path).write_text(content)
 
     def _setup_claude_config(self):
         """Set up .claude/ directory with CLAUDE.md."""
@@ -202,6 +168,7 @@ Last 5 attempts all used topfarm_sgd_solve. Try something different:
     def run(self):
         """Main loop: repeated `claude -p` invocations with memory updates."""
         self.start_time = time.time()
+        self.session.start_time = self.start_time
         self._setup_claude_config()
 
         # Determine iteration count
@@ -226,15 +193,16 @@ Last 5 attempts all used topfarm_sgd_solve. Try something different:
             self._write_memory_file()
 
             # Build the prompt for this iteration
+            mem_path = self.memory_path  # run-scoped
             if i == 0:
                 prompt = (
-                    f"Read agent_memory.md for context. Explore the pixwake codebase "
+                    f"Read {mem_path} for context. Explore the pixwake codebase "
                     f"in playground/pixwake/src/, understand the API, then write and "
                     f"test an optimizer. Score it and test generalization.{seed_context}"
                 )
             else:
                 prompt = (
-                    f"Read agent_memory.md for your updated status and history. "
+                    f"Read {mem_path} for your updated status and history. "
                     f"You have {self.time_remaining()/60:.0f} minutes remaining. "
                     f"Write an improved optimizer based on what you've learned. "
                     f"Try a different strategy than your last attempt. "

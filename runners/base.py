@@ -84,7 +84,7 @@ class BaseRunner(ABC):
         os.makedirs(config.output_dir, exist_ok=True)
         self.log_path = os.path.join(config.output_dir, "attempt_log.json")
         self.session_path = os.path.join(config.output_dir, "session.json")
-        self.memory_path = "agent_memory.md"
+        self.memory_path = os.path.join(config.output_dir, "agent_memory.md")
 
         # Load existing log if resuming
         if os.path.exists(self.log_path):
