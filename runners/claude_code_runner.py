@@ -46,13 +46,12 @@ class ClaudeCodeRunner(BaseRunner):
         return [
             "Read",
             "Write",
+            # ONLY these tool scripts — no other Bash commands.
+            # This forces Claude Code through our scoring pipeline.
             "Bash(python tools/run_tests.py *)",
             "Bash(python tools/run_optimizer.py *)",
             "Bash(python tools/test_generalization.py *)",
             "Bash(python tools/get_status.py *)",
-            "Bash(cat *)",
-            "Bash(ls *)",
-            "Bash(mkdir *)",
             "Grep",
             "Glob",
         ]
@@ -67,13 +66,19 @@ maximize AEP (Annual Energy Production).
 
 ## Rules
 - Write optimizers to `{self.config.output_dir}/iter_NNN.py`
-- Also copy to `playground/_generated_opt.py` for the harness
-- Run tests before scoring: `python tools/run_tests.py <script> {self.config.train_problem}`
-- Score on training farm: `python tools/run_optimizer.py <script>`
+- You MUST score every optimizer by running: `python tools/run_optimizer.py <script>`
+- Run tests first: `python tools/run_tests.py <script> --quick`
 - Test generalization: `python tools/test_generalization.py <script>`
 - Check status: `python tools/get_status.py --log {self.log_path}`
 - You CANNOT modify files in `playground/pixwake/`, `benchmarks/`, or `tools/`
+- You CANNOT run Python directly — only through the tool scripts above
 - Baseline to beat: {self._get_baseline_aep():.1f} GWh
+
+## CRITICAL: Timeout constraint
+- Each optimizer run times out at {self.config.timeout_per_run}s
+- Your optimizer MUST complete within this budget
+- Use 1-3 multi-starts, NOT 10+
+- The seed optimizer (single start) runs in ~23s — that's your reference
 
 ## Function signature (MUST match exactly)
 ```python
