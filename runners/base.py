@@ -62,15 +62,29 @@ class BaseRunner(ABC):
     """Shared logic for the agent loop."""
 
     def __init__(self, config: RunConfig):
+        from .memory import SessionState, HistoryLog, TranscriptStore
+
         self.config = config
         self.attempts: list[AttemptResult] = []
         self.best_aep: float = -float("inf")
         self.best_script: Optional[str] = None
         self.start_time: float = 0
 
+        # Memory scaffolding
+        self.history = HistoryLog()
+        self.transcript = TranscriptStore()
+        self.session = SessionState(
+            session_id=f"{config.output_dir}_{int(time.time())}",
+            start_time=0,  # set in run()
+            time_budget=config.time_budget,
+            baseline_aep=self._get_baseline_aep(),
+        )
+
         # Setup output directory
         os.makedirs(config.output_dir, exist_ok=True)
         self.log_path = os.path.join(config.output_dir, "attempt_log.json")
+        self.session_path = os.path.join(config.output_dir, "session.json")
+        self.memory_path = "agent_memory.md"
 
         # Load existing log if resuming
         if os.path.exists(self.log_path):
@@ -93,22 +107,55 @@ class BaseRunner(ABC):
         return elapsed_frac > self.config.phase2_fraction
 
     def log_attempt(self, result: AttemptResult):
-        """Append to attempt log and save."""
+        """Append to attempt log, update session state and history."""
+        from .memory import save_session, render_agent_memory
+        from pathlib import Path
+
         self.attempts.append(result.to_dict())
+
+        # Update session state
+        self.session.attempts_total += 1
+        if result.error:
+            self.session.attempts_error += 1
+            self.history.add("error", f"Attempt {result.attempt} failed",
+                           result.error[:100])
+        else:
+            self.session.attempts_success += 1
+            if result.strategy:
+                self.session.strategies_tried.append(result.strategy)
+                if result.strategy == "sgd_solve":
+                    self.session.consecutive_sgd_solve += 1
+                else:
+                    self.session.consecutive_sgd_solve = 0
 
         if result.train_aep and result.train_aep > self.best_aep:
             self.best_aep = result.train_aep
+            self.session.best_aep = result.train_aep
+            self.session.best_iter = result.attempt
+            self.session.best_strategy = result.strategy or ""
+            self.history.add("milestone",
+                           f"New best: {result.train_aep:.1f} GWh",
+                           f"Attempt {result.attempt}, strategy: {result.strategy}")
             # Copy best script
-            if result.strategy:
-                best_path = os.path.join(self.config.output_dir, "best_optimizer.py")
-                src = os.path.join(self.config.output_dir,
-                                   f"iter_{result.attempt:03d}.py")
-                if os.path.exists(src):
-                    import shutil
-                    shutil.copy2(src, best_path)
+            best_path = os.path.join(self.config.output_dir, "best_optimizer.py")
+            src = os.path.join(self.config.output_dir,
+                               f"iter_{result.attempt:03d}.py")
+            if os.path.exists(src):
+                import shutil
+                shutil.copy2(src, best_path)
 
+        # Update phase
+        if self.in_phase2():
+            self.session.phase = "exploit"
+
+        # Persist everything
         with open(self.log_path, "w") as f:
             json.dump(self.attempts, f, indent=2)
+        save_session(self.session, Path(self.session_path))
+
+        # Refresh agent_memory.md for Claude Code
+        memory_md = render_agent_memory(self.session, self.history, self.attempts)
+        Path(self.memory_path).write_text(memory_md)
 
     def build_system_prompt(self) -> str:
         """Build the system prompt / CLAUDE.md content. Shared across backends."""
