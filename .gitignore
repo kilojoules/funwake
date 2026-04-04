@@ -8,6 +8,7 @@ playground/_tmp/
 playground/*.py
 !playground/test_optimizer.py
 !playground/harness.py
+!playground/skeleton.py
 playground/*.json
 !playground/problem.json
 

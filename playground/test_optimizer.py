@@ -54,26 +54,50 @@ def check_signature(mod):
     """Check that optimize() exists with the right parameters."""
     results = []
 
-    if not hasattr(mod, "optimize"):
-        results.append(("has_optimize", False, "module has no optimize() function"))
-        return results
-    results.append(("has_optimize", True, "optimize() found"))
-
-    sig = inspect.signature(mod.optimize)
-    params = list(sig.parameters.keys())
-    expected = ["sim", "n_target", "boundary", "min_spacing", "wd", "ws", "weights"]
-
-    if params == expected:
-        results.append(("signature", True, f"params: {params}"))
+    # Support two modes: optimize() or schedule_fn()
+    if hasattr(mod, "optimize"):
+        results.append(("has_function", True, "optimize() found"))
+        sig = inspect.signature(mod.optimize)
+        params = list(sig.parameters.keys())
+        expected = ["sim", "n_target", "boundary", "min_spacing", "wd", "ws", "weights"]
+        if params == expected:
+            results.append(("signature", True, f"params: {params}"))
+        else:
+            results.append(("signature", False,
+                            f"expected {expected}, got {params}"))
+    elif hasattr(mod, "schedule_fn"):
+        results.append(("has_function", True, "schedule_fn() found"))
+        sig = inspect.signature(mod.schedule_fn)
+        params = list(sig.parameters.keys())
+        expected = ["step", "total_steps", "lr0", "alpha0"]
+        if params == expected:
+            results.append(("signature", True, f"params: {params}"))
+        else:
+            results.append(("signature", False,
+                            f"expected {expected}, got {params}"))
     else:
-        results.append(("signature", False,
-                        f"expected {expected}, got {params}"))
+        results.append(("has_function", False,
+                        "module must define optimize() or schedule_fn()"))
+        return results
 
     return results
 
 
+def _call_optimizer(mod, sim, n_target, boundary, min_spacing, wd, ws, weights):
+    """Call the module's optimizer — either optimize() or schedule_fn via skeleton."""
+    if hasattr(mod, "optimize"):
+        return mod.optimize(sim=sim, n_target=n_target, boundary=boundary,
+                           min_spacing=min_spacing, wd=wd, ws=ws, weights=weights)
+    elif hasattr(mod, "schedule_fn"):
+        from skeleton import run_with_schedule
+        return run_with_schedule(mod.schedule_fn, sim, n_target, boundary,
+                                min_spacing, wd, ws, weights, total_steps=8000)
+    else:
+        raise ValueError("Module must define optimize() or schedule_fn()")
+
+
 def check_quick_run(mod):
-    """Run optimize() on a tiny problem to catch crashes fast."""
+    """Run optimizer on a tiny problem to catch crashes fast."""
     results = []
 
     # Tiny 3-turbine problem
@@ -89,12 +113,11 @@ def check_quick_run(mod):
     boundary = jnp.array([[-2000, -2000], [2000, -2000],
                            [2000, 2000], [-2000, 2000.0]])
     try:
-        opt_x, opt_y = mod.optimize(
-            sim=sim, n_target=3, boundary=boundary,
-            min_spacing=400.0,
-            wd=jnp.array([0, 90, 180, 270.0]),
-            ws=jnp.array([8, 9, 7, 10.0]),
-            weights=jnp.array([0.25, 0.25, 0.25, 0.25]),
+        opt_x, opt_y = _call_optimizer(
+            mod, sim, 3, boundary, 400.0,
+            jnp.array([0, 90, 180, 270.0]),
+            jnp.array([8, 9, 7, 10.0]),
+            jnp.array([0.25, 0.25, 0.25, 0.25]),
         )
     except Exception as e:
         results.append(("quick_run", False, f"crashed: {e}"))
@@ -142,12 +165,11 @@ def check_stressed_polygon(mod):
     min_spacing = 600.0
 
     try:
-        opt_x, opt_y = mod.optimize(
-            sim=sim, n_target=n_target, boundary=boundary,
-            min_spacing=min_spacing,
-            wd=jnp.array([0, 90, 180, 270.0]),
-            ws=jnp.array([9, 8, 9, 8.0]),
-            weights=jnp.array([0.25, 0.25, 0.25, 0.25]),
+        opt_x, opt_y = _call_optimizer(
+            mod, sim, n_target, boundary, min_spacing,
+            jnp.array([0, 90, 180, 270.0]),
+            jnp.array([9, 8, 9, 8.0]),
+            jnp.array([0.25, 0.25, 0.25, 0.25]),
         )
     except Exception as e:
         results.append(("stressed_run", False, f"crashed: {e}"))

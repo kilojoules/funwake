@@ -63,11 +63,6 @@ def main():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
 
-    if not hasattr(mod, "optimize"):
-        print("ERROR: optimizer module must define an optimize() function",
-              file=sys.stderr)
-        sys.exit(1)
-
     # Load problem
     info = load_problem(os.environ["FUNWAKE_PROBLEM"])
 
@@ -82,17 +77,29 @@ def main():
     n_target = info["n_target"]
     min_spacing = info["min_spacing_m"]
 
-    # Call the LLM's optimize function
-    # The LLM must generate its own initial layout
-    opt_x, opt_y = mod.optimize(
-        sim=sim,
-        n_target=n_target,
-        boundary=boundary,
-        min_spacing=min_spacing,
-        wd=wd,
-        ws=ws,
-        weights=weights,
-    )
+    # Support two modes:
+    # 1. Full optimizer: module defines optimize(sim, n_target, ...)
+    # 2. Schedule-only: module defines schedule_fn(step, total, lr0, alpha0)
+    if hasattr(mod, "optimize"):
+        opt_x, opt_y = mod.optimize(
+            sim=sim,
+            n_target=n_target,
+            boundary=boundary,
+            min_spacing=min_spacing,
+            wd=wd,
+            ws=ws,
+            weights=weights,
+        )
+    elif hasattr(mod, "schedule_fn"):
+        from skeleton import run_with_schedule
+        opt_x, opt_y = run_with_schedule(
+            mod.schedule_fn, sim, n_target, boundary,
+            min_spacing, wd, ws, weights,
+        )
+    else:
+        print("ERROR: module must define optimize() or schedule_fn()",
+              file=sys.stderr)
+        sys.exit(1)
 
     # Write output
     with open(os.environ["FUNWAKE_OUTPUT"], "w") as f:
