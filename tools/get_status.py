@@ -11,7 +11,8 @@ import os
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--log", default="results_agent/attempt_log.json")
+    p.add_argument("--log", default=None,
+                   help="Path to attempt_log.json (searches results_agent_* dirs if not set)")
     p.add_argument("--baselines", default="results/baselines.json")
     p.add_argument("--train-farm", default="1")
     args = p.parse_args()

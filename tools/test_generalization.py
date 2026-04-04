@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """Test optimizer on held-out farm. Reports PASS/FAIL only, no AEP.
+Also updates the last entry in attempt_log.json with ROWP feasibility.
 
 Usage:
-    python tools/test_generalization.py <optimizer.py> [--problem path.json] [--timeout 120]
+    python tools/test_generalization.py <optimizer.py> [--problem path.json] [--timeout 120] [--log path/attempt_log.json]
 
 Output JSON:
     {"passed": true, "feasible": true, "time_s": 45.2}
@@ -17,19 +18,46 @@ import tempfile
 import time
 
 
+def _update_last_log_entry(log_path, rowp_data):
+    """Update the last entry in attempt_log.json with ROWP results."""
+    if not log_path or not os.path.exists(log_path):
+        return
+    try:
+        with open(log_path) as f:
+            entries = json.load(f)
+        if entries:
+            entries[-1]["rowp_feasible"] = rowp_data.get("feasible")
+            entries[-1]["rowp_time"] = rowp_data.get("time_s")
+            with open(log_path, "w") as f:
+                json.dump(entries, f, indent=2)
+    except (json.JSONDecodeError, IOError, IndexError):
+        pass
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("script", help="Path to optimizer module")
     p.add_argument("--problem", default="results/problem_rowp.json")
     p.add_argument("--timeout", type=int, default=120)
+    p.add_argument("--log", default=None,
+                   help="Path to attempt_log.json (auto-detected from script path)")
     args = p.parse_args()
+
+    # Auto-detect log path
+    log_path = args.log
+    if not log_path:
+        script_dir = os.path.dirname(os.path.abspath(args.script))
+        candidate = os.path.join(script_dir, "attempt_log.json")
+        if "results_agent" in script_dir:
+            log_path = candidate
 
     project_root = os.path.join(os.path.dirname(__file__), "..")
     harness = os.path.join(project_root, "playground", "harness.py")
     pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
 
     if not os.path.exists(args.problem):
-        print(json.dumps({"passed": False, "issues": ["Held-out problem not found"]}))
+        result = {"passed": False, "issues": ["Held-out problem not found"]}
+        print(json.dumps(result))
         return
 
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
@@ -53,19 +81,23 @@ def main():
             cwd=os.path.join(project_root, "playground"), env=env)
     except subprocess.TimeoutExpired:
         os.unlink(output_path) if os.path.exists(output_path) else None
-        print(json.dumps({"passed": False, "issues": ["Timeout"]}))
+        out = {"passed": False, "issues": ["Timeout"]}
+        _update_last_log_entry(log_path, {"feasible": False, "time_s": args.timeout})
+        print(json.dumps(out))
         return
     elapsed = time.time() - t0
 
     if result.returncode != 0:
         os.unlink(output_path) if os.path.exists(output_path) else None
-        # Don't leak held-out details in error
-        print(json.dumps({"passed": False, "issues": ["Script errored on held-out farm"],
-                          "time_s": round(elapsed, 1)}))
+        out = {"passed": False, "issues": ["Script errored on held-out farm"],
+               "time_s": round(elapsed, 1)}
+        _update_last_log_entry(log_path, {"feasible": False, "time_s": round(elapsed, 1)})
+        print(json.dumps(out))
         return
 
     if not os.path.exists(output_path):
-        print(json.dumps({"passed": False, "issues": ["No output written"]}))
+        out = {"passed": False, "issues": ["No output written"]}
+        print(json.dumps(out))
         return
 
     # Check feasibility — no AEP reported
@@ -90,15 +122,19 @@ def main():
             issues.append("BOUNDARY VIOLATION")
 
         passed = len(issues) == 0
-        print(json.dumps({
+        out = {
             "passed": passed,
             "feasible": passed,
             "issues": issues if issues else None,
             "time_s": round(elapsed, 1),
-        }))
+        }
+
+        _update_last_log_entry(log_path, {"feasible": passed, "time_s": round(elapsed, 1)})
+        print(json.dumps(out))
     except Exception as e:
         os.unlink(output_path) if os.path.exists(output_path) else None
-        print(json.dumps({"passed": False, "issues": [str(e)[:200]]}))
+        out = {"passed": False, "issues": [str(e)[:200]]}
+        print(json.dumps(out))
 
 
 if __name__ == "__main__":
