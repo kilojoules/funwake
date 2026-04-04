@@ -25,7 +25,10 @@ class VLLMRunner(BaseRunner):
                  temperature: float = 0.7):
         super().__init__(config)
         self.model = model
-        self.base_url = base_url
+        # Normalize base URL: strip trailing /v1 if present (we add it ourselves)
+        self.base_url = base_url.rstrip("/")
+        if self.base_url.endswith("/v1"):
+            self.base_url = self.base_url[:-3]
         self.max_tokens = max_tokens
         self.temperature = temperature
 
