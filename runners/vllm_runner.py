@@ -21,7 +21,7 @@ class VLLMRunner(BaseRunner):
     def __init__(self, config: RunConfig,
                  model: str = "meta-llama/Meta-Llama-3.1-405B-Instruct-AWQ-INT4",
                  base_url: str = "http://localhost:8000",
-                 max_tokens: int = 8192,
+                 max_tokens: int = 16384,
                  temperature: float = 0.7):
         super().__init__(config)
         self.model = model
@@ -51,7 +51,12 @@ class VLLMRunner(BaseRunner):
         )
         resp.raise_for_status()
         data = resp.json()
-        return data["choices"][0]["message"]["content"]
+        msg = data["choices"][0]["message"]
+        # Some models (deepseek-r1) put output in "reasoning" with empty "content"
+        content = msg.get("content") or ""
+        if not content.strip() and msg.get("reasoning"):
+            content = msg["reasoning"]
+        return content
 
     def _parse_action(self, text: str) -> tuple[str, dict]:
         """Parse the LLM's structured action from its response.
