@@ -34,11 +34,11 @@ class VLLMRunner(BaseRunner):
 
         # Verify server is reachable
         try:
-            resp = requests.get(f"{base_url}/v1/models", timeout=10)
+            resp = requests.get(f"{self.base_url}/v1/models", timeout=10)
             models = resp.json().get("data", [])
-            print(f"[vLLM] Connected to {base_url}, models: {[m['id'] for m in models]}")
+            print(f"[vLLM] Connected to {self.base_url}, models: {[m['id'] for m in models]}")
         except Exception as e:
-            print(f"[vLLM] Warning: server not reachable at {base_url}: {e}")
+            print(f"[vLLM] Warning: server not reachable at {self.base_url}: {e}")
 
     def _chat(self, messages: list[dict]) -> str:
         """Send a chat completion request, return assistant text."""
@@ -50,7 +50,7 @@ class VLLMRunner(BaseRunner):
         }
         resp = requests.post(
             f"{self.base_url}/v1/chat/completions",
-            json=payload, timeout=600
+            json=payload, timeout=300
         )
         resp.raise_for_status()
         data = resp.json()
