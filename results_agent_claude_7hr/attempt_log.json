@@ -1,0 +1,1127 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1775290880.802304,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1775290961.510824,
+    "train_aep": 5524.87,
+    "train_feasible": true,
+    "train_time": 46.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1775291083.5200481,
+    "train_aep": 5538.06,
+    "train_feasible": true,
+    "train_time": 34.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1775291182.508518,
+    "train_aep": 5536.8,
+    "train_feasible": true,
+    "train_time": 33.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1775291296.5381792,
+    "train_aep": 5552.35,
+    "train_feasible": true,
+    "train_time": 48.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.8
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1775291432.894853,
+    "train_aep": 5551.81,
+    "train_feasible": true,
+    "train_time": 40.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1775291536.932032,
+    "train_aep": 5552.94,
+    "train_feasible": true,
+    "train_time": 38.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1775291581.7527192,
+    "train_aep": 5552.94,
+    "train_feasible": true,
+    "train_time": 32.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1775291680.196644,
+    "train_aep": 5552.94,
+    "train_feasible": true,
+    "train_time": 32.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1775291723.237866,
+    "train_aep": 5552.15,
+    "train_feasible": true,
+    "train_time": 31.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1775291821.1355462,
+    "train_aep": 5558.69,
+    "train_feasible": true,
+    "train_time": 43.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1775291931.912394,
+    "train_aep": 5553.63,
+    "train_feasible": true,
+    "train_time": 45.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1775291990.210329,
+    "train_aep": 5553.96,
+    "train_feasible": true,
+    "train_time": 44.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1775292085.258548,
+    "train_aep": 5558.57,
+    "train_feasible": true,
+    "train_time": 32.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1775292153.556843,
+    "train_aep": 5558.71,
+    "train_feasible": true,
+    "train_time": 52.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1775292268.116449,
+    "train_aep": 5553.21,
+    "train_feasible": true,
+    "train_time": 53.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1775292337.498882,
+    "train_aep": 5553.21,
+    "train_feasible": true,
+    "train_time": 54.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1775292467.431703,
+    "train_aep": 5558.65,
+    "train_feasible": false,
+    "train_time": 53.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1775292537.457373,
+    "train_aep": 5559.91,
+    "train_feasible": true,
+    "train_time": 53.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1775292914.3923619,
+    "train_aep": 5547.15,
+    "train_feasible": false,
+    "train_time": 43.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1775293038.451016,
+    "train_aep": 5540.29,
+    "train_feasible": true,
+    "train_time": 37.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1775293248.8184278,
+    "train_aep": 5552.08,
+    "train_feasible": true,
+    "train_time": 53.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1775293426.4832351,
+    "train_aep": 5547.3,
+    "train_feasible": true,
+    "train_time": 53.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1775293556.587677,
+    "train_aep": 5546.64,
+    "train_feasible": true,
+    "train_time": 54.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1775293754.752911,
+    "train_aep": 5559.44,
+    "train_feasible": true,
+    "train_time": 55.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1775294081.598013,
+    "train_aep": 5544.75,
+    "train_feasible": false,
+    "train_time": 37.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1775294470.095521,
+    "train_aep": 5547.46,
+    "train_feasible": true,
+    "train_time": 54.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1775294788.00853,
+    "train_aep": 5556.6,
+    "train_feasible": true,
+    "train_time": 56.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1775295028.89201,
+    "train_aep": 5559.8,
+    "train_feasible": true,
+    "train_time": 55.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1775295260.930468,
+    "train_aep": 5559.91,
+    "train_feasible": true,
+    "train_time": 54.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1775295703.9423602,
+    "train_aep": 5546.71,
+    "train_feasible": true,
+    "train_time": 49.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1775295829.8666291,
+    "train_aep": 5545.77,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1775295962.1250792,
+    "train_aep": 5546.99,
+    "train_feasible": true,
+    "train_time": 44.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1775296084.1569421,
+    "train_aep": 5559.85,
+    "train_feasible": true,
+    "train_time": 54.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1775296230.7535932,
+    "train_aep": 5553.59,
+    "train_feasible": true,
+    "train_time": 54.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1775296788.497827,
+    "train_aep": 5552.83,
+    "train_feasible": true,
+    "train_time": 30.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1775296883.284459,
+    "train_aep": 5549.64,
+    "train_feasible": true,
+    "train_time": 43.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1775297061.996125,
+    "train_aep": 5540.62,
+    "train_feasible": true,
+    "train_time": 54.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1775297152.6146529,
+    "train_aep": 5542.09,
+    "train_feasible": true,
+    "train_time": 42.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1775297258.242462,
+    "train_aep": 5549.08,
+    "train_feasible": true,
+    "train_time": 52.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1775297430.718155,
+    "train_aep": 5553.9,
+    "train_feasible": true,
+    "train_time": 53.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1775297530.698058,
+    "train_aep": 5559.32,
+    "train_feasible": false,
+    "train_time": 50.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 43,
+    "timestamp": 1775297767.8091671,
+    "train_aep": 5559.85,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 44,
+    "timestamp": 1775298110.6558669,
+    "train_aep": 5558.4,
+    "train_feasible": true,
+    "train_time": 52.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 45,
+    "timestamp": 1775298230.2682261,
+    "train_aep": 5558.33,
+    "train_feasible": true,
+    "train_time": 52.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 46,
+    "timestamp": 1775298612.324707,
+    "train_aep": 5553.86,
+    "train_feasible": true,
+    "train_time": 55.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 47,
+    "timestamp": 1775298950.2599318,
+    "train_aep": 5553.69,
+    "train_feasible": true,
+    "train_time": 53.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 48,
+    "timestamp": 1775299371.730856,
+    "train_aep": 5559.55,
+    "train_feasible": false,
+    "train_time": 43.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 49,
+    "timestamp": 1775299476.324118,
+    "train_aep": 5552.5,
+    "train_feasible": true,
+    "train_time": 38.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom"
+  },
+  {
+    "attempt": 50,
+    "timestamp": 1775299751.918043,
+    "train_aep": 5554.6,
+    "train_feasible": true,
+    "train_time": 36.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 51,
+    "timestamp": 1775299867.265818,
+    "train_aep": 5558.29,
+    "train_feasible": true,
+    "train_time": 58.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 52,
+    "timestamp": 1775299989.25806,
+    "train_aep": 5558.5,
+    "train_feasible": true,
+    "train_time": 60.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 53,
+    "timestamp": 1775300122.949992,
+    "train_aep": 5560.87,
+    "train_feasible": true,
+    "train_time": 57.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 47.7
+  },
+  {
+    "attempt": 54,
+    "timestamp": 1775300501.944989,
+    "train_aep": 5546.62,
+    "train_feasible": true,
+    "train_time": 21.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom"
+  },
+  {
+    "attempt": 55,
+    "timestamp": 1775300634.186343,
+    "train_aep": 5549.75,
+    "train_feasible": true,
+    "train_time": 58.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 56,
+    "timestamp": 1775300748.863914,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 57,
+    "timestamp": 1775300893.9133608,
+    "train_aep": 5545.72,
+    "train_feasible": true,
+    "train_time": 52.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 58,
+    "timestamp": 1775301013.932992,
+    "train_aep": 5549.76,
+    "train_feasible": true,
+    "train_time": 53.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 59,
+    "timestamp": 1775301120.7049322,
+    "train_aep": 5549.28,
+    "train_feasible": true,
+    "train_time": 53.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 60,
+    "timestamp": 1775301248.4797492,
+    "train_aep": 5554.04,
+    "train_feasible": true,
+    "train_time": 51.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 61,
+    "timestamp": 1775301314.714269,
+    "train_aep": 5549.08,
+    "train_feasible": true,
+    "train_time": 52.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 62,
+    "timestamp": 1775301451.604266,
+    "train_aep": 5550.51,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 63,
+    "timestamp": 1775301571.861739,
+    "train_aep": 5548.98,
+    "train_feasible": true,
+    "train_time": 50.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 64,
+    "timestamp": 1775302194.213017,
+    "train_aep": 5549.18,
+    "train_feasible": false,
+    "train_time": 49.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 65,
+    "timestamp": 1775302325.84145,
+    "train_aep": 5552.74,
+    "train_feasible": true,
+    "train_time": 57.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 66,
+    "timestamp": 1775302589.001317,
+    "train_aep": 5547.3,
+    "train_feasible": true,
+    "train_time": 33.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 67,
+    "timestamp": 1775302706.787481,
+    "train_aep": 5544.35,
+    "train_feasible": true,
+    "train_time": 50.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom"
+  },
+  {
+    "attempt": 68,
+    "timestamp": 1775302868.298103,
+    "train_aep": 5548.87,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 69,
+    "timestamp": 1775303005.6810381,
+    "train_aep": 5552.3,
+    "train_feasible": true,
+    "train_time": 52.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 70,
+    "timestamp": 1775303074.27755,
+    "train_aep": 5549.08,
+    "train_feasible": true,
+    "train_time": 53.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 71,
+    "timestamp": 1775303660.1485162,
+    "train_aep": 5553.07,
+    "train_feasible": true,
+    "train_time": 49.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 72,
+    "timestamp": 1775303784.410461,
+    "train_aep": 5550.42,
+    "train_feasible": true,
+    "train_time": 50.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 73,
+    "timestamp": 1775303902.142367,
+    "train_aep": 5548.39,
+    "train_feasible": true,
+    "train_time": 57.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 74,
+    "timestamp": 1775304063.018521,
+    "train_aep": 5550.46,
+    "train_feasible": true,
+    "train_time": 54.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 75,
+    "timestamp": 1775304294.817863,
+    "train_aep": 5550.12,
+    "train_feasible": true,
+    "train_time": 38.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 76,
+    "timestamp": 1775304455.4808261,
+    "train_aep": 5549.19,
+    "train_feasible": false,
+    "train_time": 50.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 77,
+    "timestamp": 1775305076.269393,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 78,
+    "timestamp": 1775305280.630953,
+    "train_aep": 5551.0,
+    "train_feasible": true,
+    "train_time": 47.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 79,
+    "timestamp": 1775305460.4362571,
+    "train_aep": 5552.88,
+    "train_feasible": true,
+    "train_time": 52.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 80,
+    "timestamp": 1775305567.392073,
+    "train_aep": 5548.87,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 81,
+    "timestamp": 1775305731.474777,
+    "train_aep": 5546.0,
+    "train_feasible": true,
+    "train_time": 45.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 82,
+    "timestamp": 1775305847.223109,
+    "train_aep": 5551.47,
+    "train_feasible": true,
+    "train_time": 52.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 83,
+    "timestamp": 1775306302.713407,
+    "train_aep": 5549.32,
+    "train_feasible": false,
+    "train_time": 42.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 84,
+    "timestamp": 1775306463.391944,
+    "train_aep": 5548.96,
+    "train_feasible": true,
+    "train_time": 40.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 85,
+    "timestamp": 1775306593.041975,
+    "train_aep": 5548.95,
+    "train_feasible": true,
+    "train_time": 53.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 86,
+    "timestamp": 1775306737.970111,
+    "train_aep": 5548.92,
+    "train_feasible": true,
+    "train_time": 52.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 87,
+    "timestamp": 1775306880.19646,
+    "train_aep": 5552.67,
+    "train_feasible": true,
+    "train_time": 52.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 41.5
+  },
+  {
+    "attempt": 88,
+    "timestamp": 1775307377.417067,
+    "train_aep": 5550.74,
+    "train_feasible": false,
+    "train_time": 51.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 89,
+    "timestamp": 1775307561.305294,
+    "train_aep": 5549.15,
+    "train_feasible": false,
+    "train_time": 56.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 90,
+    "timestamp": 1775307723.197029,
+    "train_aep": 5549.11,
+    "train_feasible": true,
+    "train_time": 52.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 91,
+    "timestamp": 1775307823.278721,
+    "train_aep": 5545.68,
+    "train_feasible": true,
+    "train_time": 41.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 92,
+    "timestamp": 1775307949.5777988,
+    "train_aep": 5551.12,
+    "train_feasible": true,
+    "train_time": 51.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 93,
+    "timestamp": 1775308532.001512,
+    "train_aep": 5549.85,
+    "train_feasible": true,
+    "train_time": 46.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 94,
+    "timestamp": 1775308651.273984,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 95,
+    "timestamp": 1775308742.445336,
+    "train_aep": 5549.53,
+    "train_feasible": true,
+    "train_time": 54.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 96,
+    "timestamp": 1775308976.632106,
+    "train_aep": 5549.79,
+    "train_feasible": true,
+    "train_time": 52.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 97,
+    "timestamp": 1775309371.21073,
+    "train_aep": 5548.64,
+    "train_feasible": true,
+    "train_time": 42.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 98,
+    "timestamp": 1775309516.089941,
+    "train_aep": 5553.21,
+    "train_feasible": true,
+    "train_time": 47.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 99,
+    "timestamp": 1775309685.6694841,
+    "train_aep": 5547.96,
+    "train_feasible": true,
+    "train_time": 52.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 100,
+    "timestamp": 1775309851.2466948,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 101,
+    "timestamp": 1775309985.2029572,
+    "train_aep": 5550.92,
+    "train_feasible": true,
+    "train_time": 52.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 102,
+    "timestamp": 1775310118.183265,
+    "train_aep": 5545.85,
+    "train_feasible": true,
+    "train_time": 52.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 103,
+    "timestamp": 1775310243.752146,
+    "train_aep": 5545.62,
+    "train_feasible": true,
+    "train_time": 54.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 104,
+    "timestamp": 1775310779.508456,
+    "train_aep": 5551.44,
+    "train_feasible": true,
+    "train_time": 49.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 105,
+    "timestamp": 1775310888.588075,
+    "train_aep": 5549.09,
+    "train_feasible": false,
+    "train_time": 57.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 106,
+    "timestamp": 1775311016.6712031,
+    "train_aep": 5550.51,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 107,
+    "timestamp": 1775311177.00179,
+    "train_aep": 5548.91,
+    "train_feasible": true,
+    "train_time": 52.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 108,
+    "timestamp": 1775311280.098368,
+    "train_aep": 5548.02,
+    "train_feasible": true,
+    "train_time": 52.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 109,
+    "timestamp": 1775311358.604961,
+    "train_aep": 5549.08,
+    "train_feasible": true,
+    "train_time": 52.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 110,
+    "timestamp": 1775311474.264568,
+    "train_aep": 5551.06,
+    "train_feasible": true,
+    "train_time": 48.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 111,
+    "timestamp": 1775311599.5425038,
+    "train_aep": 5549.08,
+    "train_feasible": true,
+    "train_time": 55.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 112,
+    "timestamp": 1775312042.910687,
+    "train_aep": 5551.21,
+    "train_feasible": true,
+    "train_time": 52.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 113,
+    "timestamp": 1775312261.3101592,
+    "train_aep": 5549.08,
+    "train_feasible": true,
+    "train_time": 53.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 114,
+    "timestamp": 1775312563.360049,
+    "train_aep": 5553.49,
+    "train_feasible": true,
+    "train_time": 54.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 115,
+    "timestamp": 1775312894.0600052,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 116,
+    "timestamp": 1775313477.06046,
+    "train_aep": 5549.29,
+    "train_feasible": true,
+    "train_time": 51.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 117,
+    "timestamp": 1775313658.522506,
+    "train_aep": 5545.45,
+    "train_feasible": true,
+    "train_time": 48.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 118,
+    "timestamp": 1775313799.3708758,
+    "train_aep": 5548.69,
+    "train_feasible": true,
+    "train_time": 53.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 119,
+    "timestamp": 1775313854.9716978,
+    "train_aep": 5546.39,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 120,
+    "timestamp": 1775314026.176109,
+    "train_aep": 5545.62,
+    "train_feasible": true,
+    "train_time": 52.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 121,
+    "timestamp": 1775314088.246141,
+    "train_aep": 5549.04,
+    "train_feasible": true,
+    "train_time": 58.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 122,
+    "timestamp": 1775314209.844756,
+    "train_aep": 5548.02,
+    "train_feasible": true,
+    "train_time": 51.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 123,
+    "timestamp": 1775314620.57352,
+    "train_aep": 5547.96,
+    "train_feasible": true,
+    "train_time": 52.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 124,
+    "timestamp": 1775315363.5432901,
+    "train_aep": 5551.66,
+    "train_feasible": true,
+    "train_time": 59.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 125,
+    "timestamp": 1775315464.597135,
+    "train_aep": 5549.93,
+    "train_feasible": true,
+    "train_time": 53.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 126,
+    "timestamp": 1775315571.710179,
+    "train_aep": 5549.8,
+    "train_feasible": true,
+    "train_time": 52.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  },
+  {
+    "attempt": 127,
+    "timestamp": 1775315901.11886,
+    "train_aep": 5546.17,
+    "train_feasible": true,
+    "train_time": 46.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve"
+  }
+]
