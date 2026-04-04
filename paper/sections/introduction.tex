@@ -1,0 +1,30 @@
+\section{Introduction}
+\label{sec:intro}
+
+Recent work has demonstrated that large language models (LLMs) can serve as algorithm designers---systems that write code to solve optimization problems, then iterate on that code based on evaluation feedback.
+FunSearch~\cite{fawzi2024funsearch} discovered new mathematical constructions for the cap set problem by evolving programs with an LLM.
+AlphaEvolve~\cite{deepmind2025alphaevolve} applied Gemini to improve algorithms across mathematics and computer science.
+ReEvo~\cite{ye2024reevo} framed LLMs as hyper-heuristics for combinatorial optimization, generating heuristic functions that outperform hand-designed alternatives on routing and bin-packing benchmarks.
+
+These results are striking, but they share a common evaluation pattern: the generated code is tested on instances drawn from the same distribution---or even the same instance---used during the search.
+For mathematical problems with provable properties (e.g., cap set bounds), this is not a limitation: correctness is correctness.
+But for engineering optimization problems, where the objective landscape changes with physical parameters, the distinction between training performance and generalization is critical.
+A layout optimizer that achieves high annual energy production (AEP) on one wind farm may fail silently on another with a different turbine, polygon shape, or wind resource.
+Without held-out evaluation, we cannot distinguish an LLM that discovers a generalizable algorithm from one that overfits hyperparameters to a single problem instance.
+
+We present an evaluation framework that addresses this gap.
+An LLM agent receives a differentiable wake simulation API, a single training wind farm, and a time budget.
+It writes Python functions that optimize turbine layouts inside polygon boundaries, receiving AEP scores on the training farm after each submission.
+A held-out farm---with a different turbine model, different polygon geometry, different number of turbines, and a different wind resource---is scored silently in the background.
+The LLM sees only a binary feasibility signal (PASS/FAIL) from the held-out farm, never its AEP.
+This design creates a clean separation: any improvement on the held-out farm must come from genuine algorithmic generalization, not from fitting to a specific landscape.
+
+We apply this framework to wind farm layout optimization, a non-convex constrained engineering problem of practical importance.
+Across runs with Gemini~2.5~Flash~\cite{gemini2025flash}, we find a consistent pattern:
+\begin{enumerate}[nosep]
+    \item \textbf{LLMs discover effective optimization strategies} --- wind-direction-aware grid initialization, diverse multi-start pools, and tuned constraint penalties --- that generalize to the held-out farm and improve over a strong 500-multi-start gradient baseline (+22.8~GWh on training, +17.4~GWh on held-out).
+    \item \textbf{LLMs do not produce novel optimization algorithms.} All winning solutions wrap the provided gradient solver (\texttt{topfarm\_sgd\_solve}) with different hyperparameters and initialization schemes. Custom gradient implementations, when attempted, score higher on training but violate constraints on the held-out farm.
+    \item \textbf{Constraint handling is the generalization bottleneck.} The existing solver uses adaptive penalty ramping (the penalty coefficient $\alpha$ increases as the learning rate decays), a mechanism no LLM-generated custom optimizer reproduces. A stressed-polygon unit test---a thin rhombus with tight packing---predicts held-out failure with high accuracy.
+\end{enumerate}
+
+Our contributions are: (1)~an evaluation framework for LLM-generated optimization code that separates strategy discovery from overfitting through held-out engineering problems with genuinely different physical parameters; (2)~a detailed empirical analysis of what LLMs actually discover (and fail to discover) when given access to a working solver; and (3)~evidence that the stressed-polygon unit test serves as an efficient proxy for held-out generalization, enabling faster iteration without leaking test information.

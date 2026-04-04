@@ -1,0 +1,94 @@
+\section{Application: Wind Farm Layout Optimization}
+\label{sec:application}
+
+\subsection{Wake Model}
+\label{sec:wake}
+
+We use the Bastankhah Gaussian wake deficit model~\cite{bastankhah2014new}, which describes the velocity deficit behind a wind turbine as a Gaussian profile:
+\begin{equation}
+\label{eq:deficit}
+    \frac{\Delta u}{u_\infty} = C(x, C_T) \cdot \exp\!\left( -\frac{r^2}{2\sigma(x)^2} \right)
+\end{equation}
+where $\Delta u$ is the velocity deficit at downstream distance $x$ and radial offset $r$, $u_\infty$ is the freestream wind speed, $C_T$ is the thrust coefficient, and $C(x, C_T)$ is the centerline deficit derived from momentum conservation.
+The wake width $\sigma$ grows linearly with downstream distance:
+\begin{equation}
+\label{eq:sigma}
+    \sigma(x) = k \, x + \epsilon_0 \, D
+\end{equation}
+where $k$ is the wake expansion coefficient (fixed at $k = 0.04$ for all experiments), $D$ is the rotor diameter, and $\epsilon_0$ is the near-wake expansion parameter derived from the thrust coefficient.
+
+The wake simulation is implemented in \texttt{pixwake}, a JAX-native wake model library that supports automatic differentiation through the entire power computation.
+Wake superposition uses a fixed-point iteration with a custom VJP (vector-Jacobian product) rule, enabling \texttt{jax.grad} to compute exact gradients of AEP with respect to turbine positions.
+The LLM's optimizer receives the simulation object and can compute gradients freely, but cannot modify the wake model parameters.
+
+\subsection{Training Farm: Danish Energy Island (DEI)}
+\label{sec:dei}
+
+The training farm is based on Danish Energy Island tender area farm~1~\cite{energinet2022dei}.
+Key parameters:
+\begin{itemize}[nosep]
+    \item $N = 50$ turbines, IEA 15\,MW reference turbine~\cite{gaertner2020iea15mw}, $D = 240$\,m, hub height 150\,m.
+    \item $s_{\min} = 960$\,m ($4D$).
+    \item 5-vertex convex polygon boundary ($\sim$20\,km $\times$ 35\,km).
+    \item 24-sector wind rose derived from 10 years of observed wind data (daily averages), with sector-specific mean wind speeds ranging from 7.3 to 11.5\,m/s.
+\end{itemize}
+The polygon is spacious relative to the turbine count: 50 turbines at 960\,m spacing occupy a small fraction of the available area.
+This means that boundary and spacing constraints are relatively easy to satisfy, a property that matters for understanding the constraint-handling failure mode we observe.
+
+\subsection{Held-Out Farm: IEA Wind ROWP}
+\label{sec:rowp}
+
+The held-out farm is the IEA Wind Task~37 Reference Offshore Wind Plant (ROWP) irregular layout case~\cite{borrassunyeriea2024rowp}.
+Key parameters:
+\begin{itemize}[nosep]
+    \item $N = 74$ turbines, IEA 10\,MW reference turbine~\cite{bortolotti2019iea10mw}, $D = 198$\,m, hub height 119\,m.
+    \item $s_{\min} = 792$\,m ($4D$).
+    \item 4-vertex convex polygon boundary ($\sim$19\,km $\times$ 16\,km), a parallelogram-like shape more constrained than the DEI polygon.
+    \item 12-sector Weibull wind rose with mean wind speeds from 7.2 to 11.3\,m/s.
+\end{itemize}
+
+The ROWP farm differs from the training farm along every axis that an optimizer might exploit: the turbine count is 48\% larger, the rotor diameter is 17.5\% smaller, the minimum spacing is 17.5\% tighter, the polygon has fewer vertices and a more elongated aspect ratio, and the wind rose has half as many sectors with a different frequency distribution.
+These differences are not artificial---they reflect real variation across offshore wind planning cases.
+
+\subsection{Constraint Handling in the Baseline Solver}
+\label{sec:constraints}
+
+The \texttt{topfarm\_sgd\_solve} optimizer handles constraints via differentiable penalty functions added to the objective.
+The augmented loss at iteration $t$ is:
+\begin{equation}
+\label{eq:augmented}
+    \mathcal{L}_t(\mathbf{x}, \mathbf{y}) = f(\mathbf{x}, \mathbf{y}) + \alpha_t \left[ w_b \cdot g_b(\mathbf{x}, \mathbf{y}) + w_s \cdot g_s(\mathbf{x}, \mathbf{y}) \right]
+\end{equation}
+where $f$ is the negative AEP objective, $g_b$ is the boundary penalty (sum of squared boundary violations), $g_s$ is the spacing penalty ($\sum \max(0, s_{\min}^2 - d_{ij}^2)$ for all pairs), and $w_b$, $w_s$ are user-specified penalty weights.
+
+The penalty multiplier $\alpha_t$ follows an adaptive schedule tied to the learning rate decay:
+\begin{equation}
+\label{eq:alpha}
+    \alpha_t = \alpha_0 \cdot \frac{\eta_0}{\eta_t}
+\end{equation}
+where $\alpha_0$ is initialized from the gradient magnitude at iteration 0 ($\alpha_0 = \overline{|\nabla f_0|} / \eta_0$), $\eta_0$ is the initial learning rate, and $\eta_t$ decays according to $\eta_t = \eta_{t-1} / (1 + \gamma \cdot t)$.
+As the learning rate decreases, the constraint penalty increases, ensuring that the optimizer converges to a feasible point.
+This mechanism is critical: it allows large infeasible moves early (when the learning rate is high) while enforcing feasibility as the optimizer settles.
+
+This adaptive ramping is the mechanism that no LLM-generated custom optimizer reproduces.
+Custom optimizers that use fixed penalties ($\alpha_t = \text{const}$) or decreasing penalties work on the spacious DEI farm but fail when the ROWP polygon leaves less margin for constraint violation.
+
+\subsection{Models and Compute}
+\label{sec:models}
+
+We report primary results using Gemini~2.5~Flash~\cite{gemini2025flash} through the Gemini API with function-calling mode.
+The agent architecture (Section~\ref{sec:agent}) is backend-agnostic: we additionally run experiments with Claude (via Claude Code CLI) and Llama~3.1~405B~\cite{dubey2024llama3} (self-hosted via vLLM~\cite{kwon2023vllm}).
+
+\paragraph{Time budget.}
+Each run has a 5-hour wall-clock time budget.
+Individual optimizer evaluations time out at 60 seconds during the iterative search phase and 300 seconds for the final evaluation.
+The 60-second timeout prevents multi-start strategies with large start counts from consuming the time budget during exploration.
+
+\paragraph{Hot-start.}
+All runs begin from the same seed optimizer: a single-start \texttt{topfarm\_sgd\_solve} with default hyperparameters (learning rate~$=50$, penalty weights~$=1.0$).
+This seed scores below the 500-start baseline, providing a working template without giving away the strategies that improve over it.
+
+\paragraph{Reproducibility.}
+Wake simulations are deterministic (JAX with 64-bit floating point).
+LLM sampling introduces stochasticity; we plan multiple seeds per model to report confidence intervals.
+All optimizer scripts are versioned, and the full attempt log with paired train/held-out scores is saved for post-hoc analysis.
