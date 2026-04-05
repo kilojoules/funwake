@@ -77,10 +77,23 @@ def main():
     n_target = info["n_target"]
     min_spacing = info["min_spacing_m"]
 
-    # Support two modes:
-    # 1. Full optimizer: module defines optimize(sim, n_target, ...)
-    # 2. Schedule-only: module defines schedule_fn(step, total, lr0, alpha0)
-    if hasattr(mod, "optimize"):
+    # Check for mode flag: --schedule-only forces schedule_fn mode
+    schedule_only = "--schedule-only" in sys.argv
+
+    if schedule_only:
+        if not hasattr(mod, "schedule_fn"):
+            print("ERROR: --schedule-only mode requires schedule_fn(), "
+                  "not optimize(). Write ONLY:\n"
+                  "  def schedule_fn(step, total_steps, lr0, alpha0):\n"
+                  "      return (lr, alpha, beta1, beta2)",
+                  file=sys.stderr)
+            sys.exit(1)
+        from skeleton import run_with_schedule
+        opt_x, opt_y = run_with_schedule(
+            mod.schedule_fn, sim, n_target, boundary,
+            min_spacing, wd, ws, weights,
+        )
+    elif hasattr(mod, "optimize"):
         opt_x, opt_y = mod.optimize(
             sim=sim,
             n_target=n_target,

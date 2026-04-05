@@ -51,6 +51,8 @@ def main():
                    help="Max turns per Claude Code invocation (default: 30)")
     p.add_argument("--cc-iterations", type=int, default=0,
                    help="Number of Claude Code invocations. 0=auto (default: 0)")
+    p.add_argument("--schedule-only", action="store_true",
+                   help="Constrain LLM to write only schedule_fn(), not optimize()")
 
     args = p.parse_args()
 
@@ -72,6 +74,7 @@ def main():
             config,
             max_turns_per_iter=args.cc_max_turns,
             iterations=args.cc_iterations,
+            schedule_only=args.schedule_only,
         )
     elif args.provider == "vllm":
         runner = VLLMRunner(

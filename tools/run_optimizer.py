@@ -55,6 +55,8 @@ def main():
     p.add_argument("--train-farm", default="1")
     p.add_argument("--log", default=None,
                    help="Path to attempt_log.json (auto-detected from script path if not set)")
+    p.add_argument("--schedule-only", action="store_true",
+                   help="Require schedule_fn() only — reject optimize()")
     args = p.parse_args()
 
     # Auto-detect log path from script directory
@@ -88,7 +90,8 @@ def main():
     t0 = time.time()
     try:
         result = subprocess.run(
-            [sys.executable, harness, os.path.abspath(args.script)],
+            [sys.executable, harness, os.path.abspath(args.script)]
+            + (["--schedule-only"] if args.schedule_only else []),
             capture_output=True, text=True, timeout=args.timeout,
             cwd=os.path.join(project_root, "playground"), env=env)
     except subprocess.TimeoutExpired:
