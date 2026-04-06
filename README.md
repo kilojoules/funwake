@@ -136,6 +136,16 @@ iterations and converged on this one.
 Each component was discovered independently and validated through
 empirical feedback before being combined in this final schedule.
 
+### Baseline vs LLM schedule
+
+![Schedule comparison](schedules.png)
+
+*All four optimizer parameters over optimization progress. Gray:
+TopFarm-style baseline (monotonic decay, low momentum). Red:
+LLM-discovered schedule (dual bumps, alpha dip, moderate momentum).
+The coordinated structure — bumps in LR with a dip in penalty —
+is the key innovation.*
+
 ### Schedule-only progress
 
 ![Schedule-only progress](results_agent_schedule_only_5hr/progress.png)
