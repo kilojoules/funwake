@@ -28,9 +28,9 @@ produces better results**.
 
 | Approach | Attempts | Custom | Best Train (GWh) | Best ROWP (GWh) | Key discovery |
 |----------|----------|--------|-------------------|------------------|---------------|
-| Full optimize (black box) | 121 in 7hr | 2% | 5560.9 (+20.1) | TBD | Hex grid + farthest-point init |
-| Full optimize (exposed seed) | 124 in 6hr | 4% | 5600.0 (+59.3) | TBD | Custom vanilla SGD, no Adam |
-| Suggested schedule seed | 96 in 6hr | 18% | 5600.0 (+59.3) | TBD | Custom Adam + momentum restarts |
+| Full optimize (black box) | 121 in 7hr | 2% | 5560.9 (+20.1) | 4267.0 (+20.3) | Hex grid + farthest-point init |
+| Full optimize (exposed seed) | 124 in 6hr | 4% | 5600.0 (+59.3) | 4268.5 (+21.8) | Custom vanilla SGD, no Adam |
+| Suggested schedule seed | 96 in 6hr | 18% | 5600.0 (+59.3) | 4267.8 (+21.1) | Custom Adam + momentum restarts |
 | **Enforced schedule-only** | **320 in 5hr** | **100%** | **5600.0 (+59.3)** | **4271.5 (+24.8)** | **Asymmetric cosine + Gaussian bump** |
 
 Baselines: Training 5540.72 GWh, ROWP 4246.67 GWh (both 500

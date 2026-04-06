@@ -28,7 +28,10 @@
     "train_feasible": true,
     "train_time": 39.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 27.9,
+    "rowp_aep": 4262.03
   },
   {
     "attempt": 4,
@@ -59,7 +62,10 @@
     "train_feasible": true,
     "train_time": 48.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 35.1,
+    "rowp_aep": 4262.45
   },
   {
     "attempt": 7,
@@ -68,7 +74,10 @@
     "train_feasible": true,
     "train_time": 37.4,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.8,
+    "rowp_aep": 4264.53
   },
   {
     "attempt": 8,
@@ -77,7 +86,10 @@
     "train_feasible": true,
     "train_time": 53.2,
     "train_baseline": 5540.72,
-    "strategy": "custom"
+    "strategy": "custom",
+    "rowp_feasible": true,
+    "rowp_time": 36.0,
+    "rowp_aep": 4262.45
   },
   {
     "attempt": 9,
@@ -86,7 +98,10 @@
     "train_feasible": true,
     "train_time": 50.2,
     "train_baseline": 5540.72,
-    "strategy": "custom"
+    "strategy": "custom",
+    "rowp_feasible": true,
+    "rowp_time": 32.2,
+    "rowp_aep": 4036.35
   },
   {
     "attempt": 10,
@@ -95,7 +110,9 @@
     "train_feasible": false,
     "train_time": 34.6,
     "train_baseline": 5540.72,
-    "strategy": "custom"
+    "strategy": "custom",
+    "rowp_feasible": false,
+    "rowp_time": 24.6
   },
   {
     "attempt": 11,
@@ -104,7 +121,10 @@
     "train_feasible": true,
     "train_time": 48.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 35.9,
+    "rowp_aep": 4219.49
   },
   {
     "attempt": 12,
@@ -113,7 +133,10 @@
     "train_feasible": true,
     "train_time": 40.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 34.7,
+    "rowp_aep": 4218.17
   },
   {
     "attempt": 13,
@@ -122,7 +145,9 @@
     "train_feasible": true,
     "train_time": 54.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 29.9
   },
   {
     "attempt": 14,
@@ -131,7 +156,9 @@
     "train_feasible": true,
     "train_time": 53.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 22.8
   },
   {
     "attempt": 15,
@@ -140,7 +167,9 @@
     "train_feasible": false,
     "train_time": 32.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 26.9
   },
   {
     "attempt": 16,
@@ -149,7 +178,10 @@
     "train_feasible": false,
     "train_time": 38.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 42.9,
+    "rowp_aep": 4220.03
   },
   {
     "attempt": 17,
@@ -158,7 +190,9 @@
     "train_feasible": true,
     "train_time": 42.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 27.0
   },
   {
     "attempt": 18,
@@ -167,7 +201,10 @@
     "train_feasible": true,
     "train_time": 35.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.2,
+    "rowp_aep": 4230.3
   },
   {
     "attempt": 19,
@@ -176,7 +213,10 @@
     "train_feasible": true,
     "train_time": 40.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.4,
+    "rowp_aep": 4262.96
   },
   {
     "attempt": 20,
@@ -185,7 +225,10 @@
     "train_feasible": true,
     "train_time": 46.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 36.7,
+    "rowp_aep": 4261.51
   },
   {
     "attempt": 21,
@@ -194,7 +237,9 @@
     "train_feasible": true,
     "train_time": 53.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 37.1
   },
   {
     "attempt": 22,
@@ -203,7 +248,9 @@
     "train_feasible": true,
     "train_time": 40.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 34.8
   },
   {
     "attempt": 23,
@@ -212,7 +259,10 @@
     "train_feasible": false,
     "train_time": 24.6,
     "train_baseline": 5540.72,
-    "strategy": "custom"
+    "strategy": "custom",
+    "rowp_feasible": true,
+    "rowp_time": 33.1,
+    "rowp_aep": 4263.1
   },
   {
     "attempt": 24,
@@ -221,7 +271,10 @@
     "train_feasible": true,
     "train_time": 35.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 34.3,
+    "rowp_aep": 4262.22
   },
   {
     "attempt": 25,
@@ -230,7 +283,10 @@
     "train_feasible": true,
     "train_time": 36.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 36.8,
+    "rowp_aep": 4248.39
   },
   {
     "attempt": 26,
@@ -239,7 +295,9 @@
     "train_feasible": true,
     "train_time": 36.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 37.9
   },
   {
     "attempt": 27,
@@ -248,7 +306,10 @@
     "train_feasible": true,
     "train_time": 34.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.5,
+    "rowp_aep": 4238.16
   },
   {
     "attempt": 28,
@@ -257,7 +318,9 @@
     "train_feasible": true,
     "train_time": 37.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 26.0
   },
   {
     "attempt": 29,
@@ -266,7 +329,9 @@
     "train_feasible": true,
     "train_time": 35.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 31.1
   },
   {
     "attempt": 30,
@@ -275,7 +340,9 @@
     "train_feasible": true,
     "train_time": 34.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 30.7
   },
   {
     "attempt": 31,
@@ -284,7 +351,10 @@
     "train_feasible": true,
     "train_time": 57.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 45.3,
+    "rowp_aep": 4237.98
   },
   {
     "attempt": 32,
@@ -293,7 +363,10 @@
     "train_feasible": true,
     "train_time": 48.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 28.4,
+    "rowp_aep": 4259.55
   },
   {
     "attempt": 33,
@@ -302,7 +375,10 @@
     "train_feasible": true,
     "train_time": 35.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 32.1,
+    "rowp_aep": 4260.58
   },
   {
     "attempt": 34,
@@ -311,7 +387,10 @@
     "train_feasible": true,
     "train_time": 38.4,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 32.1,
+    "rowp_aep": 4260.27
   },
   {
     "attempt": 35,
@@ -320,7 +399,10 @@
     "train_feasible": true,
     "train_time": 44.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 35.1,
+    "rowp_aep": 4267.52
   },
   {
     "attempt": 36,
@@ -329,7 +411,10 @@
     "train_feasible": true,
     "train_time": 48.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.0,
+    "rowp_aep": 4266.07
   },
   {
     "attempt": 37,
@@ -338,7 +423,10 @@
     "train_feasible": true,
     "train_time": 48.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 34.6,
+    "rowp_aep": 4266.66
   },
   {
     "attempt": 38,
@@ -347,7 +435,10 @@
     "train_feasible": true,
     "train_time": 49.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.5,
+    "rowp_aep": 4260.37
   },
   {
     "attempt": 39,
@@ -356,7 +447,10 @@
     "train_feasible": true,
     "train_time": 35.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.6,
+    "rowp_aep": 4260.25
   },
   {
     "attempt": 40,
@@ -365,7 +459,10 @@
     "train_feasible": true,
     "train_time": 36.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 55.3,
+    "rowp_aep": 4263.1
   },
   {
     "attempt": 41,
@@ -374,7 +471,10 @@
     "train_feasible": false,
     "train_time": 44.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 44.1,
+    "rowp_aep": 4263.2
   },
   {
     "attempt": 42,
@@ -383,7 +483,10 @@
     "train_feasible": true,
     "train_time": 36.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 32.5,
+    "rowp_aep": 4264.58
   },
   {
     "attempt": 43,
@@ -392,7 +495,10 @@
     "train_feasible": true,
     "train_time": 40.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.2,
+    "rowp_aep": 4230.93
   },
   {
     "attempt": 44,
@@ -401,7 +507,10 @@
     "train_feasible": true,
     "train_time": 42.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 53.0,
+    "rowp_aep": 4210.35
   },
   {
     "attempt": 45,
@@ -410,7 +519,10 @@
     "train_feasible": true,
     "train_time": 42.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 41.3,
+    "rowp_aep": 4229.37
   },
   {
     "attempt": 46,
@@ -419,7 +531,10 @@
     "train_feasible": true,
     "train_time": 44.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 45.0,
+    "rowp_aep": 4231.16
   },
   {
     "attempt": 47,
@@ -428,7 +543,10 @@
     "train_feasible": true,
     "train_time": 54.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.9,
+    "rowp_aep": 4258.9
   },
   {
     "attempt": 48,
@@ -437,7 +555,10 @@
     "train_feasible": true,
     "train_time": 53.4,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 37.3,
+    "rowp_aep": 4265.1
   },
   {
     "attempt": 49,
@@ -446,7 +567,10 @@
     "train_feasible": true,
     "train_time": 44.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 41.5,
+    "rowp_aep": 4268.51
   },
   {
     "attempt": 50,
@@ -455,7 +579,10 @@
     "train_feasible": true,
     "train_time": 47.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 38.8,
+    "rowp_aep": 4266.13
   },
   {
     "attempt": 51,
@@ -464,7 +591,10 @@
     "train_feasible": true,
     "train_time": 31.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.5,
+    "rowp_aep": 4259.67
   },
   {
     "attempt": 52,
@@ -473,7 +603,10 @@
     "train_feasible": true,
     "train_time": 34.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 41.4,
+    "rowp_aep": 4263.96
   },
   {
     "attempt": 53,
@@ -482,7 +615,10 @@
     "train_feasible": true,
     "train_time": 40.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 41.8,
+    "rowp_aep": 4249.39
   },
   {
     "attempt": 54,
@@ -491,7 +627,10 @@
     "train_feasible": true,
     "train_time": 34.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 48.4,
+    "rowp_aep": 4230.45
   },
   {
     "attempt": 55,
@@ -500,7 +639,10 @@
     "train_feasible": true,
     "train_time": 38.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 40.2,
+    "rowp_aep": 4233.15
   },
   {
     "attempt": 56,
@@ -509,7 +651,10 @@
     "train_feasible": true,
     "train_time": 26.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 43.1,
+    "rowp_aep": 4231.66
   },
   {
     "attempt": 57,
@@ -518,7 +663,10 @@
     "train_feasible": true,
     "train_time": 40.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 27.0,
+    "rowp_aep": 4242.7
   },
   {
     "attempt": 58,
@@ -527,7 +675,10 @@
     "train_feasible": true,
     "train_time": 40.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.7,
+    "rowp_aep": 4225.74
   },
   {
     "attempt": 59,
@@ -536,7 +687,10 @@
     "train_feasible": true,
     "train_time": 36.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 42.9,
+    "rowp_aep": 4235.46
   },
   {
     "attempt": 60,
@@ -545,7 +699,10 @@
     "train_feasible": true,
     "train_time": 33.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.2,
+    "rowp_aep": 4264.06
   },
   {
     "attempt": 61,
@@ -554,7 +711,10 @@
     "train_feasible": true,
     "train_time": 48.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 38.5,
+    "rowp_aep": 4230.06
   },
   {
     "attempt": 62,
@@ -563,7 +723,10 @@
     "train_feasible": true,
     "train_time": 52.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 22.9,
+    "rowp_aep": 4240.33
   },
   {
     "attempt": 63,
@@ -577,7 +740,10 @@
     "train_feasible": true,
     "train_time": 38.4,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 36.4,
+    "rowp_aep": 4229.56
   },
   {
     "attempt": 65,
@@ -586,7 +752,10 @@
     "train_feasible": true,
     "train_time": 37.9,
     "train_baseline": 5540.72,
-    "strategy": "custom"
+    "strategy": "custom",
+    "rowp_feasible": true,
+    "rowp_time": 32.8,
+    "rowp_aep": 4228.89
   },
   {
     "attempt": 66,
@@ -595,7 +764,10 @@
     "train_feasible": true,
     "train_time": 43.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 51.8,
+    "rowp_aep": 4240.84
   },
   {
     "attempt": 67,
@@ -604,7 +776,10 @@
     "train_feasible": true,
     "train_time": 42.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 30.7,
+    "rowp_aep": 4246.22
   },
   {
     "attempt": 68,
@@ -613,7 +788,10 @@
     "train_feasible": true,
     "train_time": 40.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 32.7,
+    "rowp_aep": 4195.39
   },
   {
     "attempt": 69,
@@ -622,7 +800,10 @@
     "train_feasible": true,
     "train_time": 34.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 37.3,
+    "rowp_aep": 4241.33
   },
   {
     "attempt": 70,
@@ -641,7 +822,10 @@
     "train_feasible": true,
     "train_time": 59.4,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 60.1,
+    "rowp_aep": 4247.35
   },
   {
     "attempt": 73,
@@ -650,7 +834,10 @@
     "train_feasible": true,
     "train_time": 51.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 54.8,
+    "rowp_aep": 4248.51
   },
   {
     "attempt": 74,
@@ -664,7 +851,10 @@
     "train_feasible": true,
     "train_time": 39.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 37.1,
+    "rowp_aep": 4233.1
   },
   {
     "attempt": 76,
@@ -673,7 +863,10 @@
     "train_feasible": true,
     "train_time": 50.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 38.6,
+    "rowp_aep": 4240.01
   },
   {
     "attempt": 77,
@@ -682,7 +875,10 @@
     "train_feasible": true,
     "train_time": 50.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 37.5,
+    "rowp_aep": 4250.12
   },
   {
     "attempt": 78,
@@ -691,7 +887,10 @@
     "train_feasible": true,
     "train_time": 36.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 27.9,
+    "rowp_aep": 4263.41
   },
   {
     "attempt": 79,
@@ -700,7 +899,10 @@
     "train_feasible": true,
     "train_time": 44.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 34.9,
+    "rowp_aep": 4264.59
   },
   {
     "attempt": 80,
@@ -720,7 +922,10 @@
     "train_feasible": true,
     "train_time": 52.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 43.1,
+    "rowp_aep": 4262.36
   },
   {
     "attempt": 82,
@@ -729,7 +934,10 @@
     "train_feasible": true,
     "train_time": 37.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 29.4,
+    "rowp_aep": 4232.01
   },
   {
     "attempt": 83,
@@ -738,7 +946,10 @@
     "train_feasible": true,
     "train_time": 35.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 30.1,
+    "rowp_aep": 4263.97
   },
   {
     "attempt": 84,
@@ -747,7 +958,10 @@
     "train_feasible": true,
     "train_time": 33.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 27.8,
+    "rowp_aep": 4263.41
   },
   {
     "attempt": 85,
@@ -756,7 +970,10 @@
     "train_feasible": true,
     "train_time": 39.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 30.4,
+    "rowp_aep": 4252.79
   },
   {
     "attempt": 86,
@@ -765,7 +982,10 @@
     "train_feasible": true,
     "train_time": 39.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 35.0,
+    "rowp_aep": 4232.43
   },
   {
     "attempt": 87,
@@ -774,7 +994,10 @@
     "train_feasible": true,
     "train_time": 43.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 35.1,
+    "rowp_aep": 4236.61
   },
   {
     "attempt": 88,
@@ -783,7 +1006,10 @@
     "train_feasible": true,
     "train_time": 44.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 38.4,
+    "rowp_aep": 4231.66
   },
   {
     "attempt": 89,
@@ -792,7 +1018,10 @@
     "train_feasible": true,
     "train_time": 40.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 36.3,
+    "rowp_aep": 4230.88
   },
   {
     "attempt": 90,
@@ -801,7 +1030,10 @@
     "train_feasible": true,
     "train_time": 33.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 29.2,
+    "rowp_aep": 4238.25
   },
   {
     "attempt": 91,
@@ -810,7 +1042,10 @@
     "train_feasible": true,
     "train_time": 50.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 43.3,
+    "rowp_aep": 4263.41
   },
   {
     "attempt": 92,
@@ -819,7 +1054,10 @@
     "train_feasible": true,
     "train_time": 41.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 36.0,
+    "rowp_aep": 4228.47
   },
   {
     "attempt": 93,
@@ -828,7 +1066,10 @@
     "train_feasible": true,
     "train_time": 33.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 28.8,
+    "rowp_aep": 4240.53
   },
   {
     "attempt": 94,
@@ -837,7 +1078,10 @@
     "train_feasible": true,
     "train_time": 44.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.1,
+    "rowp_aep": 4242.51
   },
   {
     "attempt": 95,
@@ -846,7 +1090,10 @@
     "train_feasible": true,
     "train_time": 45.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.9,
+    "rowp_aep": 4234.03
   },
   {
     "attempt": 96,
@@ -855,7 +1102,10 @@
     "train_feasible": true,
     "train_time": 44.5,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.1,
+    "rowp_aep": 4231.66
   },
   {
     "attempt": 97,
@@ -864,7 +1114,10 @@
     "train_feasible": true,
     "train_time": 33.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 28.9,
+    "rowp_aep": 4230.3
   },
   {
     "attempt": 98,
@@ -889,7 +1142,10 @@
     "train_feasible": true,
     "train_time": 32.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 27.9,
+    "rowp_aep": 4231.66
   },
   {
     "attempt": 101,
@@ -898,7 +1154,10 @@
     "train_feasible": true,
     "train_time": 36.7,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.1,
+    "rowp_aep": 4241.98
   },
   {
     "attempt": 102,
@@ -907,7 +1166,10 @@
     "train_feasible": true,
     "train_time": 40.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 36.8,
+    "rowp_aep": 4229.03
   },
   {
     "attempt": 103,
@@ -916,7 +1178,10 @@
     "train_feasible": true,
     "train_time": 41.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 37.1,
+    "rowp_aep": 4221.06
   },
   {
     "attempt": 104,
@@ -925,7 +1190,10 @@
     "train_feasible": true,
     "train_time": 38.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.4,
+    "rowp_aep": 4229.56
   },
   {
     "attempt": 105,
@@ -934,7 +1202,10 @@
     "train_feasible": true,
     "train_time": 33.2,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 43.5,
+    "rowp_aep": 4260.55
   },
   {
     "attempt": 106,
@@ -943,7 +1214,10 @@
     "train_feasible": true,
     "train_time": 50.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 40.8,
+    "rowp_aep": 4258.57
   },
   {
     "attempt": 107,
@@ -952,7 +1226,10 @@
     "train_feasible": true,
     "train_time": 50.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 43.8,
+    "rowp_aep": 4265.98
   },
   {
     "attempt": 108,
@@ -961,7 +1238,10 @@
     "train_feasible": true,
     "train_time": 54.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 42.8,
+    "rowp_aep": 4262.74
   },
   {
     "attempt": 109,
@@ -970,7 +1250,10 @@
     "train_feasible": true,
     "train_time": 51.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 32.7,
+    "rowp_aep": 4243.67
   },
   {
     "attempt": 110,
@@ -979,7 +1262,10 @@
     "train_feasible": true,
     "train_time": 42.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.7,
+    "rowp_aep": 4266.19
   },
   {
     "attempt": 111,
@@ -988,7 +1274,10 @@
     "train_feasible": true,
     "train_time": 41.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 30.5,
+    "rowp_aep": 4256.89
   },
   {
     "attempt": 112,
@@ -997,7 +1286,10 @@
     "train_feasible": true,
     "train_time": 37.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 40.3,
+    "rowp_aep": 4261.37
   },
   {
     "attempt": 113,
@@ -1015,7 +1307,10 @@
     "train_feasible": true,
     "train_time": 43.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 35.9,
+    "rowp_aep": 4229.75
   },
   {
     "attempt": 115,
@@ -1024,7 +1319,10 @@
     "train_feasible": true,
     "train_time": 39.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.2,
+    "rowp_aep": 4228.09
   },
   {
     "attempt": 116,
@@ -1033,7 +1331,10 @@
     "train_feasible": true,
     "train_time": 39.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 32.0,
+    "rowp_aep": 4217.17
   },
   {
     "attempt": 117,
@@ -1042,7 +1343,10 @@
     "train_feasible": true,
     "train_time": 47.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 31.8,
+    "rowp_aep": 4239.28
   },
   {
     "attempt": 118,
@@ -1051,7 +1355,10 @@
     "train_feasible": true,
     "train_time": 50.3,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 39.8,
+    "rowp_aep": 4234.51
   },
   {
     "attempt": 119,
@@ -1060,7 +1367,10 @@
     "train_feasible": true,
     "train_time": 39.4,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.4,
+    "rowp_aep": 4221.92
   },
   {
     "attempt": 120,
@@ -1069,7 +1379,9 @@
     "train_feasible": true,
     "train_time": 40.6,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": false,
+    "rowp_time": 45.1
   },
   {
     "attempt": 121,
@@ -1078,7 +1390,10 @@
     "train_feasible": true,
     "train_time": 38.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 30.5,
+    "rowp_aep": 4226.48
   },
   {
     "attempt": 122,
@@ -1087,7 +1402,10 @@
     "train_feasible": true,
     "train_time": 48.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 29.7,
+    "rowp_aep": 4232.04
   },
   {
     "attempt": 123,
@@ -1096,7 +1414,10 @@
     "train_feasible": true,
     "train_time": 40.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 38.9,
+    "rowp_aep": 4250.85
   },
   {
     "attempt": 124,
@@ -1105,7 +1426,10 @@
     "train_feasible": true,
     "train_time": 29.8,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 33.3,
+    "rowp_aep": 4229.56
   },
   {
     "attempt": 125,
@@ -1114,7 +1438,10 @@
     "train_feasible": true,
     "train_time": 35.0,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 23.8,
+    "rowp_aep": 4237.82
   },
   {
     "attempt": 126,
@@ -1123,7 +1450,10 @@
     "train_feasible": true,
     "train_time": 37.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 29.2,
+    "rowp_aep": 4230.3
   },
   {
     "attempt": 127,
@@ -1132,7 +1462,10 @@
     "train_feasible": true,
     "train_time": 52.9,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 45.3,
+    "rowp_aep": 4262.64
   },
   {
     "attempt": 128,
@@ -1157,6 +1490,9 @@
     "train_feasible": true,
     "train_time": 43.1,
     "train_baseline": 5540.72,
-    "strategy": "sgd_solve"
+    "strategy": "sgd_solve",
+    "rowp_feasible": true,
+    "rowp_time": 56.2,
+    "rowp_aep": 4263.86
   }
 ]
