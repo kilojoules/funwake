@@ -68,28 +68,27 @@ def running_best(entries, key):
 
 
 def deploy_line(entries):
-    """Compute the deploy line: running best on training AMONG scripts
-    that are feasible on the held-out farm. Returns (times, train_vals, rowp_vals)
-    — the same script tracked on both panels."""
+    """Compute the deploy line: running best on ROWP AEP among feasible
+    scripts. Returns (times, train_vals, rowp_vals) — the same script
+    tracked on both panels. We deploy based on held-out performance."""
     times_t, vals_t = [], []
     times_r, vals_r = [], []
-    best_train = -float("inf")
-    best_rowp = None
+    best_rowp = -float("inf")
+    best_train = None
     for e in entries:
         if e.get("train_aep") is None:
             continue
-        # Only consider scripts that are feasible on held-out
-        if not e.get("rowp_feasible"):
+        if not e.get("rowp_feasible") or not e.get("rowp_aep"):
             continue
         t = e["_time_min"]
-        if e["train_aep"] > best_train:
+        if e["rowp_aep"] > best_rowp:
+            best_rowp = e["rowp_aep"]
             best_train = e["train_aep"]
-            best_rowp = e.get("rowp_aep")
-        times_t.append(t)
-        vals_t.append(best_train)
-        if best_rowp is not None:
-            times_r.append(t)
-            vals_r.append(best_rowp)
+        times_r.append(t)
+        vals_r.append(best_rowp)
+        if best_train is not None:
+            times_t.append(t)
+            vals_t.append(best_train)
     return times_t, vals_t, times_r, vals_r
 
 
@@ -145,7 +144,7 @@ def main():
     ax_train.set_ylabel("Training AEP (GWh)")
     ax_train.legend(loc="lower right", fontsize=9)
     ax_train.set_title("Claude Code: Design Freedom vs Constrained Schedule")
-    ax_train.annotate("deploy line = best training AEP\namong held-out-feasible scripts",
+    ax_train.annotate("deploy line = script with best\nheld-out AEP (same script both panels)",
                       xy=(0.02, 0.95), xycoords="axes fraction",
                       fontsize=8, color="gray", va="top")
 
