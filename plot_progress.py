@@ -44,8 +44,13 @@ def plot(log_path, baselines_path="results/baselines.json",
         pass
 
     # Extract successful attempts with both train and ROWP scores
-    paired = [e for e in log if "train_aep" in e and "rowp_aep" in e]
-    train_only = [e for e in log if "train_aep" in e and "rowp_aep" not in e]
+    # Filter out entries where train_aep is suspiciously low (e.g. ROWP AEP
+    # accidentally logged as training AEP from backfill scoring)
+    min_train = train_bl * 0.9 if train_bl > 0 else 0
+    paired = [e for e in log if "train_aep" in e and "rowp_aep" in e
+              and e["train_aep"] > min_train]
+    train_only = [e for e in log if "train_aep" in e and "rowp_aep" not in e
+                  and e["train_aep"] > min_train]
     errors = [e for e in log if "error" in e]
 
     if not paired and not train_only:
