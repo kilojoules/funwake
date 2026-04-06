@@ -1,267 +1,191 @@
-# FunWake: LLM-Generated Wind Farm Layout Optimizers
+# FunWake: LLM-Discovered Optimizer Schedules for Wind Farm Layout
 
-LLM agents autonomously write wind farm layout optimization code,
-competing against a strong 500-multi-start gradient baseline. Given
-tools to explore a wake simulation codebase, write optimizer functions,
-run tests, and receive scores, the agents discover wind-direction-aware
-initialization and write **custom optimization algorithms** that beat
-the baseline by +59 GWh.
+An LLM agent writes wind farm layout optimization code, competing
+against a 500-multi-start gradient baseline. The key finding:
+**constraining the LLM to write only a 4-parameter schedule function
+-- not the full optimizer -- produces 3x more attempts, 100% novel
+code, and the best generalization to unseen farms.**
 
-## Key Result
+The winning schedule, discovered autonomously by Claude Code over 320
+iterations, combines asymmetric cosine decay with a late-stage
+Gaussian learning-rate bump -- a pattern not present in standard
+optimizers or the training literature we are aware of.
 
-| Run | Model | Training AEP | Gap | Strategy |
-|-----|-------|-------------|-----|----------|
-| Baseline (500-start SGD) | — | 5540.72 GWh | — | topfarm_sgd_solve |
-| **Claude Code 6hr** | **Claude** | **5600.0 GWh** | **+59.3** | **Custom vanilla SGD** |
-| Gemini 5hr | Gemini 2.5 Flash | 5563.5 GWh | +22.8 | Wind-aware init + tuned sgd_solve |
-| Claude Code 7hr | Claude | 5560.9 GWh | +20.2 | Hex grid + farthest-point |
+![Design freedom vs constrained schedule](comparison.png)
 
-The held-out farm uses a different turbine (IEA 10 MW vs 15 MW), a
-different polygon, different turbine count (74 vs 50), and a different
-wind resource (Weibull vs observed timeseries). The LLM never sees the
-held-out farm's AEP — only PASS/FAIL feasibility. The improvement
-generalizes.
+*Running-best AEP over time for four levels of LLM autonomy.
+Top: Training farm. Bottom: Held-out ROWP farm. All approaches
+reach similar peaks on training, but the constrained schedule-only
+mode (red) sustains improvement across 320 iterations and achieves
+the best held-out generalization.*
 
-The baseline is strong: 500 independent optimization runs, each with
-4000 gradient iterations plus 2000 constant-learning-rate iterations.
+## Results
 
-## The LLM's Best Optimizer
+### The comparison: from full freedom to constrained search
 
-**[`results_agent_claude_6hr/iter_010.py`](results_agent_claude_6hr/iter_010.py)**
-— the best optimizer, written autonomously by Claude in a 6-hour session.
-It scored +59.3 GWh over the 500-start baseline.
+All runs use Claude Code. The progression shows that **less freedom
+produces better results**.
 
-The winning strategy is a **custom optimization algorithm** — not a
-wrapper around the existing solver:
+| Approach | Attempts | Custom | Best Train (GWh) | Best ROWP (GWh) | Key discovery |
+|----------|----------|--------|-------------------|------------------|---------------|
+| Full optimize (black box) | 121 in 7hr | 2% | 5560.9 (+20.1) | TBD | Hex grid + farthest-point init |
+| Full optimize (exposed seed) | 124 in 6hr | 4% | 5600.0 (+59.3) | TBD | Custom vanilla SGD, no Adam |
+| Suggested schedule seed | 96 in 6hr | 18% | 5600.0 (+59.3) | TBD | Custom Adam + momentum restarts |
+| **Enforced schedule-only** | **320 in 5hr** | **100%** | **5600.0 (+59.3)** | **4271.5 (+24.8)** | **Asymmetric cosine + Gaussian bump** |
 
-1. **Vanilla SGD (no Adam momentum).** The LLM chose plain gradient
-   descent ("more stable with penalty switching"), removing the first
-   and second moment estimates that Adam uses.
+Baselines: Training 5540.72 GWh, ROWP 4246.67 GWh (both 500
+multi-start SGD with grid initialization).
 
-2. **Two-stage penalty annealing.** Stage 1 (4000 iters): alpha=250
-   for aggressive feasibility. Stage 2 (8000 iters): alpha=3 for AEP
-   refinement. 12000 total iterations via `jax.lax.fori_loop`.
+### Why constraining the search space works
 
-3. **Wind-direction-aware grid initialization.** Rotates the turbine
-   placement grid perpendicular to the energy-weighted dominant wind.
+When given full freedom, the LLM spends most of its time on
+boilerplate: boundary checking, initialization, JAX compilation
+issues, and multi-start scaffolding. Only 2-4% of attempts contain
+genuinely novel optimization code. The rest are variations of the
+provided solver with different hyperparameters.
 
-4. **High initial learning rate (250).** Exponential decay at 0.999
-   per step.
+The schedule-only mode applies the
+[FunSearch](https://deepmind.google/discover/blog/funsearch-making-new-discoveries-in-mathematical-sciences/)
+pattern: a human writes the fixed skeleton (Adam loop, gradient
+computation, constraint penalties) and the LLM writes only the
+creative part (a `schedule_fn` that returns `lr, alpha, beta1, beta2`
+at each step). This produces:
 
-This is the first run where the LLM wrote a genuinely different
-algorithm — not just tuning hyperparameters of the existing solver.
+- **3x more attempts** (320 vs ~120 in the same wall time)
+- **100% novel code** -- every attempt is a different schedule
+- **Best held-out generalization** (+24.8 GWh on unseen farm)
+- **Gradual improvement** -- not a lucky early shot
 
-## Progress Over Time
+### Held-out generalization
 
-### Claude Code 6hr (best run)
-![Claude Code 6hr](results_agent_claude_6hr/progress.png)
+The held-out farm uses a **different turbine** (IEA 10 MW vs 15 MW),
+**different polygon**, **different turbine count** (74 vs 50), and
+**different wind resource** (Weibull vs observed timeseries). The LLM
+never sees the held-out AEP -- only PASS/FAIL feasibility.
 
-130 attempts over 6 hours. The custom optimizer at attempt 10 scored
-5600 GWh — never beaten by the 120 subsequent sgd_solve attempts.
+| Case | Turbines | Turbine | Baseline | Best LLM | Gap |
+|------|----------|---------|----------|----------|-----|
+| DEI farm 1 (training) | 50 | IEA 15 MW, D=240 m | 5540.72 GWh | 5600.0 GWh | **+59.3** |
+| [IEA ROWP](https://github.com/IEAWindSystems/IEA-Wind-740-10-ROWP) (held out) | 74 | IEA 10 MW, D=198 m | 4246.67 GWh | 4271.5 GWh | **+24.8** |
 
-### Gemini 2.5 Flash 5hr (with held-out tracking)
-![Gemini 5hr](results_agent_5hr_v4/progress.png)
+## The discovered schedule
 
-99 attempts over 5 hours with paired training/held-out scoring.
-
-## Key Findings
-
-### 1. The LLM tunes hyperparameters, not algorithms
-
-Across all runs, the LLM's winning strategies are variations of the
-provided `topfarm_sgd_solve` optimizer with different settings (learning
-rate, penalty weights, iteration counts) and initialization strategies.
-When nudged toward custom optimizers (phase-2 prompting with an Adam
-template), it produces code that scores higher on training but fails
-constraint checks on the held-out farm.
-
-| Strategy | Training AEP | ROWP (held-out) | Feasible? |
-|----------|-------------|-----------------|-----------|
-| sgd_solve wrappers (42 attempts) | best: 5563 | best: 4264 | 96% |
-| Custom optimizers (17 attempts) | best: 5600 | best: 4194 | ~50% |
-
-Custom optimizers score higher on training but fail to generalize.
-The root cause: `topfarm_sgd_solve` uses adaptive penalty ramping
-(alpha increases as learning rate decays), while custom optimizers
-use fixed or decreasing penalties that allow constraint drift on
-tighter polygons.
-
-### 2. The LLM discovers strategies, not algorithms
-
-The LLM's genuine contributions are at the strategy level:
-- **Wind-direction-aware initialization** (a real domain insight)
-- **Two-stage optimization** (feasibility then AEP)
-- **Diverse multi-start** with perturbation scaling relative to
-  `min_spacing` (generalizes across farm sizes)
-
-These are optimization *strategies* that compose existing building
-blocks, not novel optimization *algorithms*.
-
-### 3. Constraint handling is the generalization bottleneck
-
-The stressed polygon unit test (thin rhombus, tight packing) catches
-optimizers that work on spacious training farms but produce NaN or
-constraint violations on harder geometries. Every custom optimizer
-that failed on ROWP also failed this test — it's an effective filter.
-
-## Future Directions
-
-- **Remove `topfarm_sgd_solve`**: Force the LLM to write optimization
-  from scratch. Would it discover proper penalty ramping independently?
-- **Multiple training farms**: Currently 1 training farm. Adding 2-3
-  with different geometries would improve generalization pressure.
-- **Ablation**: Compare LLM vs systematic grid search over SGDSettings
-  hyperparameters with the same time budget.
-- **Multiple independent runs**: 3-5 runs for confidence intervals.
-- **Multiple LLMs**: Compare Gemini Flash vs Claude vs GPT-4o.
-
-## How It Works
-
-The LLM writes ONLY an `optimize()` function:
+**[`results_agent_schedule_only_5hr/iter_262.py`](results_agent_schedule_only_5hr/iter_262.py)**
+-- written by Claude Code at iteration 262 of 320.
 
 ```python
-def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
-    """Returns (opt_x, opt_y) — optimized turbine positions."""
+def schedule_fn(step, total_steps, lr0, alpha0):
+    t = step / total_steps
+    lr_init = 4.0 * lr0                          # 4x initial LR
+    lr_min = lr_init / 10000.0
+
+    # Asymmetric cosine: t^0.7 spends more time at high LR
+    cosine_lr = lr_min + (lr_init - lr_min) * 0.5 * (1 + cos(pi * t^0.7))
+
+    # Gaussian bump at t=0.7: late exploration spike
+    bump = 0.3 * lr_init * exp(-0.5 * ((t - 0.7) / 0.05)^2)
+    lr = cosine_lr + bump
+
+    # Penalty coupled to 1/LR with quadratic late-stage boost
+    alpha = 5 * alpha0 * lr_init / lr + 3 * alpha0 * max(t - 0.5, 0)^2
+
+    beta1, beta2 = 0.3, 0.5                      # between TopFarm and Adam
+    return lr, alpha, beta1, beta2
 ```
 
-A harness handles physics (wake model fixed at k=0.04, turbine from
-JSON). The LLM cannot modify the wake model or game the scorer.
+| Component | Effect |
+|-----------|--------|
+| 4x initial LR | Larger steps escape shallow optima |
+| Asymmetric cosine (`t^0.7`) | More time at high LR, faster final convergence |
+| Gaussian bump at t=0.7 | Late exploration spike rescues trapped layouts |
+| 5x alpha coupling + quadratic boost | Aggressive constraint enforcement in final 50% |
+| beta1=0.3, beta2=0.5 | Moderate momentum between TopFarm (0.1/0.2) and Adam (0.9/0.999) |
+
+### Schedule-only progress
+
+![Schedule-only progress](results_agent_schedule_only_5hr/progress.png)
+
+*320 schedule attempts over 5 hours. Each point is a different
+`schedule_fn`. Training AEP (top) and held-out ROWP (bottom).*
+
+## Background
+
+Wind turbines create wakes -- regions of slower air. Layout
+optimization places N turbines inside a polygon to maximize annual
+energy production (AEP), subject to spacing constraints. The problem
+is non-convex with many local optima.
+
+## Method
+
+### The skeleton pattern
+
+The LLM writes ONLY a schedule function. A fixed skeleton handles
+everything else:
+
+```
+Human writes (fixed):          LLM writes (evolved):
+  Grid initialization            schedule_fn(step, total, lr0, alpha0)
+  Objective + gradients             -> lr      (learning rate)
+  Adam update rule                  -> alpha   (penalty weight)
+  Constraint penalties              -> beta1   (1st moment decay)
+  Convergence                       -> beta2   (2nd moment decay)
+```
 
 ### Tools
 
 | Tool | Description |
 |------|-------------|
-| `read_file` | Read pixwake source code, training problem JSON |
-| `write_file` | Save optimizer scripts to workspace |
-| `run_tests` | Signature check, 3-turbine quick test, stressed polygon test |
-| `run_optimizer` | Score on training farm — returns AEP |
+| `run_tests` | Signature check, quick test, stressed polygon test |
+| `run_optimizer` | Score on training farm -- returns AEP |
 | `test_generalization` | Held-out farm PASS/FAIL (no AEP leaked) |
 | `get_status` | Best AEP vs baseline |
 
-### Sandbox
+### Methodology notes
 
-Generated code runs in `sandbox-exec`: no network, stripped environment
-(no API keys), filesystem writes restricted to workspace. Static
-blocklist for subprocess, exec, eval.
-
-### Search guidance
-
-- **Phase-2 prompting**: after 30% of time, provides an Adam template
-  and nudges toward custom optimizers
-- **Diversity nudge**: after 5 consecutive `topfarm_sgd_solve`
-  submissions, suggests alternatives
-- **Context pruning**: compresses conversation after 40 turns
-- **60s explore timeout**: prevents multi-start bloat during iteration
-
-### Unit tests
-
-The LLM can run `run_tests --quick` for fast validation (~10s):
-
-| Test | What it catches |
-|------|----------------|
-| Signature check | Wrong function parameters |
-| Quick run (3 turbines) | Crashes, wrong count, NaN |
-| **Stressed polygon** (25 turbines, thin rhombus) | **Weak constraints on tight geometry** |
-
-The stressed polygon test is the key filter — it catches every custom
-optimizer that later fails on the held-out farm.
-
-## Background
-
-Wind turbines create wakes — regions of slower air behind each rotor.
-Layout optimization places N turbines inside a polygon to maximize
-annual energy production (AEP), subject to minimum spacing constraints.
-The problem is non-convex with many local optima.
-
-### Benchmark cases
-
-| Case | Turbines | Turbine | Baseline | Role |
-|------|----------|---------|----------|------|
-| DEI farm 1 | 50 | IEA 15MW, D=240m | 5540.72 GWh | Training |
-| [IEA ROWP](https://github.com/IEAWindSystems/IEA-Wind-740-10-ROWP) | 74 | IEA 10MW, D=198m | 4246.67 GWh | Held-out test |
-
-Baselines: 500 multi-start `topfarm_sgd_solve` with grid initialization.
-
-## Methodology Notes
-
-Building a fair benchmark required solving several subtle problems:
-
-- **Non-convex polygon**: The ROWP boundary was non-convex, causing
-  all evaluations to silently fail. Fixed by convex hull before saving.
-- **Wake model gaming**: The LLM changed k=0.04 to k=0.0505 to inflate
-  scores. Fixed by moving physics into the harness.
-- **Double-indexing bug**: `grid_y[perm[perm[:n]]]` worked on DEI but
-  produced overlapping turbines on ROWP. Caught by the test suite.
-- **Identical polygons**: All 10 DEI farms were translated copies.
-  Fixed by introducing the genuinely different ROWP farm.
-- **Unfair baseline**: ROWP baseline used a pre-optimized reference
-  layout. Recomputed with grid initialization.
+- **Non-convex polygon**: ROWP boundary was non-convex, silently failing. Fixed by convex hull.
+- **Wake model gaming**: LLM changed k parameter. Fixed by moving physics into harness.
+- **Identical polygons**: All 10 DEI farms were copies. Fixed with genuinely different ROWP farm.
+- **Unfair baseline**: ROWP used pre-optimized layout. Recomputed with grid init.
 
 ## Reproduce
 
-### Prerequisites
-
-- [pixi](https://pixi.sh), Gemini API key in `~/.gem`
-
-### Setup
-
 ```bash
 pixi install
-bash setup.sh   # Clones pixwake, computes baselines (~5 hours)
-```
+bash setup.sh                    # Clone pixwake + compute baselines
 
-### Run the agent
-
-```bash
+# Schedule-only mode (best)
 pixi run python agent_cli.py \
-    --wind-csv ~/clusters/energy_island_10y_daily_av_wind.csv \
-    --provider gemini --model gemini-2.5-flash \
-    --time-budget 3600 \
-    --hot-start results/seed_optimizer.py
+    --provider claude-code --schedule-only \
+    --hot-start results/seed_schedule.py \
+    --time-budget 18000
+
+# Full optimize mode
+pixi run python agent_cli.py \
+    --provider claude-code \
+    --hot-start results/seed_optimizer.py \
+    --time-budget 21600
+
+# Plot
+pixi run python plot_comparison.py --save comparison.png
 ```
 
-### Plot progress
-
-```bash
-pixi run python plot_progress.py results_agent_5hr_v4/attempt_log.json
-```
-
-## Repository Structure
+## Repository structure
 
 ```
-agent_cli.py                  Agentic tool-use loop (main entry point)
-setup.sh                      Clone pixwake + compute baselines
-plot_progress.py              Progress visualization
-
+agent_cli.py                              Main entry point
+runners/                                  LLM backends (Claude Code, Gemini, vLLM)
+tools/                                    Standalone tool scripts
 playground/
-  harness.py                  Calls optimize() with fixed physics
-  test_optimizer.py           Unit tests (signature, quick, stressed polygon)
-  problem.json                Training farm definition
-
-benchmarks/
-  dei_layout.py               Baseline runner + scorer
-  build_rowp_problem.py       ROWP test case from IEA data
-
+  skeleton.py                             Fixed Adam loop (schedule-only mode)
+  harness.py                              Calls optimize()/schedule_fn()
+  test_optimizer.py                       Unit tests
 results/
-  best_optimizer.py           ★ LLM's best optimizer (wind-aware init)
-  seed_optimizer.py           Baseline template (hot-start seed)
-  baselines.json              500-start baseline results
-  baseline_rowp.json          Held-out baseline
-  problem_farm1.json          Training problem definition
-  problem_rowp.json           Held-out problem definition
-
+  seed_schedule.py                        Starting schedule (hot-start)
+  seed_optimizer.py                       Starting optimizer (hot-start)
+results_agent_schedule_only_5hr/
+  iter_262.py                             * Best discovered schedule
+  attempt_log.json                        320-attempt history
+  progress.png                            Progress plot
 results_agent_claude_6hr/
-  iter_010.py                 ★ Best custom optimizer (+59.3 GWh)
-  attempt_log.json            130-attempt history
-  progress.png                Progress plot
-
-results_agent_claude_7hr/
-  attempt_log.json            127-attempt history
-  progress.png                Progress plot
-
-results_agent_5hr_v4/
-  best_optimizer.py           Best from Gemini 5hr run
-  iter_050.py                 Best feasible held-out result
-  attempt_log.json            99-attempt history with paired scores
-  progress.png                Training vs held-out AEP over time
+  iter_010.py                             * Best custom optimizer
 ```
