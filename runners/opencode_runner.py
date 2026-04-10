@@ -40,29 +40,19 @@ class OpenCodeRunner(BaseRunner):
             )
 
     def _write_opencode_config(self, vllm_model_id: str = None):
-        """Write opencode.json configuring vLLM as the model provider."""
+        """Write opencode.json pointing at vLLM via OpenAI-compatible env vars.
+
+        Uses the built-in openai provider with OPENAI_BASE_URL redirected
+        to the local vLLM server. No npm/Node.js required.
+        """
         if vllm_model_id is None:
             vllm_model_id = self.model.split("/", 1)[-1] if "/" in self.model else self.model
+        self._vllm_model_id = vllm_model_id
 
         config = {
             "$schema": "https://opencode.ai/config.json",
-            "provider": {
-                "vllm": {
-                    "npm": "@ai-sdk/openai-compatible",
-                    "name": "vLLM (local)",
-                    "options": {
-                        "baseURL": f"{self.base_url}/v1"
-                    },
-                    "models": {
-                        vllm_model_id: {
-                            "name": vllm_model_id,
-                            "max_tokens": 4096,
-                        }
-                    }
-                }
-            },
-            "model": f"vllm/{vllm_model_id}",
-            "small_model": f"vllm/{vllm_model_id}",
+            "model": f"openai/{vllm_model_id}",
+            "small_model": f"openai/{vllm_model_id}",
             "instructions": self._build_instructions(),
         }
 
@@ -136,6 +126,7 @@ that returns (lr, alpha, beta1, beta2).
         cmd = [
             "opencode", "run",
             "--dangerously-skip-permissions",
+            "-m", f"openai/{self._vllm_model_id}",
             prompt,
         ]
 
@@ -143,6 +134,9 @@ that returns (lr, alpha, beta1, beta2).
             **os.environ,
             "PYTHONPATH": self.config.pythonpath,
             "JAX_ENABLE_X64": "True",
+            # Redirect OpenAI provider to local vLLM server
+            "OPENAI_API_KEY": "dummy",
+            "OPENAI_BASE_URL": f"{self.base_url}/v1",
         }
 
         timeout = min(self.max_turns_per_iter * 120, int(self.time_remaining()) + 60)
