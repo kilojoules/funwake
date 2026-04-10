@@ -102,11 +102,8 @@ echo "Serving: $MODEL"
 
 OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
 
-# Use opencode (agentic CLI) if available, fallback to vllm (raw API)
-PROVIDER="vllm"
-if command -v opencode &> /dev/null; then
-    PROVIDER="opencode"
-fi
+# Provider: set via PROVIDER env var, default to vllm
+PROVIDER=${PROVIDER:-vllm}
 
 CLI_ARGS=(
     --provider "$PROVIDER"
