@@ -3,8 +3,10 @@
 # Run from a login node (has internet access).
 #
 # Usage:
+#   MODEL_PRESET=gemma4-26b bash lumi/download_model.sh
 #   MODEL_PRESET=qwen2.5-72b bash lumi/download_model.sh
-#   MODEL_PRESET=llama3.3-70b bash lumi/download_model.sh
+#
+# For gated models (Gemma, Llama), set HF_TOKEN or place it in ~/.hf_token
 
 set -e
 
@@ -23,7 +25,18 @@ echo "Downloading ${HF_ID} to ${MODEL_DIR}..."
 
 pip install --user huggingface-hub 2>/dev/null
 
-huggingface-cli download "$HF_ID" --local-dir "$MODEL_DIR"
+# Use HF token for gated models (Gemma, Llama)
+if [ -z "$HF_TOKEN" ] && [ -f ~/.hf_token ]; then
+    export HF_TOKEN=$(cat ~/.hf_token)
+fi
+
+HF_ARGS=""
+if [ -n "$HF_TOKEN" ]; then
+    HF_ARGS="--token $HF_TOKEN"
+    echo "Using HF token for authentication"
+fi
+
+huggingface-cli download "$HF_ID" --local-dir "$MODEL_DIR" $HF_ARGS
 
 echo "Done. Model at ${MODEL_DIR}"
 ls -lh "$MODEL_DIR"
