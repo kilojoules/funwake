@@ -23,9 +23,11 @@ class VLLMRunner(BaseRunner):
                  base_url: str = "http://localhost:8000",
                  max_tokens: int = 4096,
                  temperature: float = 0.7,
-                 api_key: str = None):
+                 api_key: str = None,
+                 schedule_only: bool = False):
         super().__init__(config)
         self.model = model
+        self.schedule_only = schedule_only
         # Normalize base URL: strip trailing /v1 if present (we add it ourselves)
         self.base_url = base_url.rstrip("/")
         if self.base_url.endswith("/v1"):
@@ -182,10 +184,11 @@ class VLLMRunner(BaseRunner):
             Path(gen_path).write_text(code)
 
             # Run tests first (generous timeout for first JAX compile on HPC)
+            sched_flag = ["--schedule-only"] if self.schedule_only else []
             try:
                 test_result = subprocess.run(
                     ["python", os.path.join(tools_dir, "run_tests.py"),
-                     iter_path, "--quick"],
+                     iter_path, "--quick"] + sched_flag,
                     capture_output=True, text=True, timeout=180, env=env,
                     cwd=project_root
                 )
@@ -205,7 +208,8 @@ class VLLMRunner(BaseRunner):
                     ["python", os.path.join(tools_dir, "run_optimizer.py"),
                      iter_path,
                      "--problem", os.path.join(project_root, self.config.train_problem),
-                     "--timeout", str(self.config.timeout_per_run + 60)],
+                     "--timeout", str(self.config.timeout_per_run + 60)]
+                    + sched_flag,
                     capture_output=True, text=True,
                     timeout=score_timeout, env=env,
                     cwd=project_root
@@ -287,12 +291,10 @@ For each turn, respond with ONE of:
    ACTION: read_file
    ARGS: {"path": "playground/pixwake/src/pixwake/optim/sgd.py"}
 
-2. Submit an optimizer (will be tested and scored automatically):
+2. Submit code (will be tested and scored automatically):
    CODE:
    ```python
-   def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
-       ...
-       return opt_x, opt_y
+   ...
    ```
 
 3. Check status:
@@ -300,12 +302,64 @@ For each turn, respond with ONE of:
 
 Always respond with exactly ONE action per turn.
 """
+
+        if self.schedule_only:
+            system_prompt = f"""\
+You are designing a learning rate and penalty schedule for a wind farm
+layout optimizer. A fixed skeleton handles initialization, gradients, and
+Adam updates. You control ONLY how four parameters change per step.
+
+Write a `schedule_fn` that returns (lr, alpha, beta1, beta2):
+
+```python
+import jax.numpy as jnp
+
+def schedule_fn(step, total_steps, lr0, alpha0):
+    # Returns (lr, alpha, beta1, beta2)
+    ...
+    return lr, alpha, beta1, beta2
+```
+
+## Constraints
+- Time budget: {self.config.time_budget // 60} minutes
+- Each run times out at {self.config.timeout_per_run}s
+- Baseline: {self._get_baseline_aep():.1f} GWh — beat this
+- Do NOT write optimize() — only schedule_fn()
+- Read `playground/skeleton.py` to understand the fixed optimizer
+
+## How to respond
+
+For each turn, respond with ONE of:
+
+1. Read a file:
+   ACTION: read_file
+   ARGS: {{"path": "playground/skeleton.py"}}
+
+2. Submit a schedule (will be tested and scored automatically):
+   CODE:
+   ```python
+   import jax.numpy as jnp
+
+   def schedule_fn(step, total_steps, lr0, alpha0):
+       ...
+       return lr, alpha, beta1, beta2
+   ```
+
+3. Check status:
+   ACTION: get_status
+
+Always respond with exactly ONE action per turn.
+"""
+
         messages = [
             {"role": "system", "content": system_prompt},
         ]
 
         # Hot-start
-        first_msg = "Begin optimizing. Read the problem and pixwake source, then write and submit optimizers."
+        if self.schedule_only:
+            first_msg = "Begin designing schedules. Read the skeleton and seed schedule, then write and submit schedule functions."
+        else:
+            first_msg = "Begin optimizing. Read the problem and pixwake source, then write and submit optimizers."
         if self.config.hot_start and os.path.exists(self.config.hot_start):
             seed = Path(self.config.hot_start).read_text()
             first_msg += f"\n\nSeed optimizer:\n```python\n{seed}\n```"

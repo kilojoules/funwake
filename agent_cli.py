@@ -116,6 +116,7 @@ def main():
             model=args.model,
             base_url=args.base_url,
             api_key=args.api_key,
+            schedule_only=args.schedule_only,
         )
     elif args.provider == "opencode":
         runner = OpenCodeRunner(
