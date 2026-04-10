@@ -23,7 +23,11 @@ import json
 import os
 import sys
 
-from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, GeminiCLIRunner, VLLMRunner
+from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, VLLMRunner
+try:
+    from runners import GeminiCLIRunner
+except ImportError:
+    GeminiCLIRunner = None
 
 
 def main():
