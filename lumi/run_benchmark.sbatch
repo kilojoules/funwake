@@ -105,6 +105,9 @@ OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
 # Provider: set via PROVIDER env var, default to vllm
 PROVIDER=${PROVIDER:-vllm}
 
+# Unbuffered Python output so we can see agent turns in the log
+export PYTHONUNBUFFERED=1
+
 CLI_ARGS=(
     --provider "$PROVIDER"
     --model "$MODEL"
