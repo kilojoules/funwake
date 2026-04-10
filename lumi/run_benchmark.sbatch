@@ -57,6 +57,11 @@ echo "Container: $SIF"
 export NCCL_SOCKET_IFNAME=hsn0,hsn1,hsn2,hsn3
 export NCCL_NET_GDR_LEVEL=3
 
+# AMD GPU visibility: LUMI uses ROCR but vLLM/Ray expects HIP
+if [ -n "$ROCR_VISIBLE_DEVICES" ]; then
+    export HIP_VISIBLE_DEVICES=$ROCR_VISIBLE_DEVICES
+fi
+
 VLLM_ARGS="--model $MODEL_DIR --tensor-parallel-size $NUM_GPUS --dtype $DTYPE --max-model-len $MAX_MODEL_LEN --port 8000 --host 0.0.0.0"
 if [ -n "$QUANT" ]; then
     VLLM_ARGS="$VLLM_ARGS --quantization $QUANT"
