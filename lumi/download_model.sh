@@ -23,20 +23,33 @@ MODEL_DIR="/scratch/project_465002609/models/${MODEL_PRESET}"
 
 echo "Downloading ${HF_ID} to ${MODEL_DIR}..."
 
-pip install --user huggingface-hub 2>/dev/null
-
 # Use HF token for gated models (Gemma, Llama)
 if [ -z "$HF_TOKEN" ] && [ -f ~/.hf_token ]; then
     export HF_TOKEN=$(cat ~/.hf_token)
 fi
 
-HF_ARGS=""
+TOKEN_ARG=""
 if [ -n "$HF_TOKEN" ]; then
-    HF_ARGS="--token $HF_TOKEN"
+    TOKEN_ARG="--token $HF_TOKEN"
     echo "Using HF token for authentication"
 fi
 
-huggingface-cli download "$HF_ID" --local-dir "$MODEL_DIR" $HF_ARGS
+# Use pixi python if available (LUMI), fallback to system
+if command -v pixi &> /dev/null && [ -f "$(dirname "$0")/../pixi.toml" ]; then
+    PYTHON="pixi run python"
+    cd "$(dirname "$0")/.."
+else
+    pip install --user huggingface-hub 2>/dev/null
+    PYTHON="python3"
+fi
+
+$PYTHON -c "
+from huggingface_hub import snapshot_download
+import os
+token = os.environ.get('HF_TOKEN')
+snapshot_download('$HF_ID', local_dir='$MODEL_DIR', token=token)
+print('Download complete')
+"
 
 echo "Done. Model at ${MODEL_DIR}"
 ls -lh "$MODEL_DIR"
