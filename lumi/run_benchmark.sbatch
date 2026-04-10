@@ -102,8 +102,14 @@ echo "Serving: $MODEL"
 
 OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
 
+# Use opencode (agentic CLI) if available, fallback to vllm (raw API)
+PROVIDER="vllm"
+if command -v opencode &> /dev/null; then
+    PROVIDER="opencode"
+fi
+
 CLI_ARGS=(
-    --provider vllm
+    --provider "$PROVIDER"
     --model "$MODEL"
     --base-url http://localhost:8000
     --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv

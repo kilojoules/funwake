@@ -23,7 +23,7 @@ import json
 import os
 import sys
 
-from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, VLLMRunner
+from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, VLLMRunner, OpenCodeRunner
 try:
     from runners import GeminiCLIRunner
 except ImportError:
@@ -37,7 +37,7 @@ def main():
 
     # Shared arguments
     p.add_argument("--provider", required=True,
-                   choices=["gemini", "claude-code", "gemini-cli", "vllm"],
+                   choices=["gemini", "claude-code", "gemini-cli", "vllm", "opencode"],
                    help="LLM backend to use")
     p.add_argument("--wind-csv", required=True,
                    help="Path to wind resource CSV")
@@ -116,6 +116,15 @@ def main():
             model=args.model,
             base_url=args.base_url,
             api_key=args.api_key,
+        )
+    elif args.provider == "opencode":
+        runner = OpenCodeRunner(
+            config,
+            model=args.model,
+            base_url=args.base_url,
+            max_turns_per_iter=args.cc_max_turns,
+            iterations=args.cc_iterations,
+            schedule_only=args.schedule_only,
         )
     else:
         print(f"Unknown provider: {args.provider}", file=sys.stderr)
