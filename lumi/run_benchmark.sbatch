@@ -1,37 +1,79 @@
 #!/bin/bash
-# Run the FunWake agent against a vLLM server on the same LUMI node.
+# Run a complete FunWake benchmark: vLLM server + agent on the same node.
 #
 # Usage:
-#   # First, submit the vLLM server job:
-#   MODEL_PRESET=qwen2.5-72b sbatch lumi/serve_vllm.sbatch
-#   # Then submit this job with dependency:
-#   MODEL_PRESET=qwen2.5-72b sbatch --dependency=after:<VLLM_JOBID> lumi/run_benchmark.sbatch
+#   MODEL_PRESET=gemma4-26b SEED=1 sbatch lumi/run_benchmark.sbatch
+#   MODEL_PRESET=gemma4-26b SEED=2 sbatch lumi/run_benchmark.sbatch
 #
-# Or set TIME_BUDGET (default 18000 = 5 hours):
-#   MODEL_PRESET=qwen2.5-72b TIME_BUDGET=3600 sbatch --dependency=after:<JOBID> lumi/run_benchmark.sbatch
+# The vLLM server runs in the background on the node's GPU(s).
+# The agent connects to localhost:8000 and runs the optimization loop.
 
-#SBATCH --job-name=funwake-agent
+#SBATCH --job-name=funwake
 #SBATCH --account=project_465002609
-#SBATCH --partition=small-g
-#SBATCH --gpus-per-node=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=7
-#SBATCH --mem=60G
-#SBATCH --time=06:00:00
-#SBATCH --output=lumi/logs/agent_%j.log
-#SBATCH --error=lumi/logs/agent_%j.err
+#SBATCH --time=07:00:00
+#SBATCH --output=lumi/logs/funwake_%j.log
+#SBATCH --error=lumi/logs/funwake_%j.err
+# Partition and GPUs are overridden by submit.sh based on model size
 
 set -e
-mkdir -p lumi/logs
 
-MODEL_PRESET=${MODEL_PRESET:-llama3.1-405b}
+MODEL_PRESET=${MODEL_PRESET:-gemma4-26b}
 TIME_BUDGET=${TIME_BUDGET:-18000}
+SEED=${SEED:-1}
 SCHEDULE_ONLY=${SCHEDULE_ONLY:-}
 
 cd /scratch/project_465002609/julian/funwake
+mkdir -p lumi/logs
 
-# Wait for vLLM server to be ready (up to 10 min)
-echo "Waiting for vLLM server on localhost:8000..."
+MODELS_JSON="$(pwd)/models.json"
+HF_ID=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['hf_id'])")
+NUM_GPUS=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['num_gpus'])")
+MAX_MODEL_LEN=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args']['max-model-len'])")
+DTYPE=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args']['dtype'])")
+QUANT=$(pixi run python -c "import json; q=json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args'].get('quantization'); print(q if q else '')")
+MODEL_DIR="/scratch/project_465002609/models/${MODEL_PRESET}"
+
+echo "=== FunWake Benchmark ==="
+echo "Model:  $MODEL_PRESET ($HF_ID)"
+echo "GPUs:   $NUM_GPUS"
+echo "Seed:   $SEED"
+echo "Budget: $((TIME_BUDGET / 60)) min"
+echo ""
+
+# ── Start vLLM server in background ──────────────────────────────────
+
+module purge
+module use /appl/local/laifs/modules
+module load lumi-aif-singularity-bindings
+
+export SIF=$(ls -t /appl/local/laifs/containers/lumi-multitorch-*/lumi-multitorch-full-*.sif 2>/dev/null | head -1)
+if [ -z "$SIF" ]; then
+    module load LUMI/24.03 partition/G
+    module load PyTorch/2.6.0-rocm-6.2.4-python-3.12-singularity-20250410
+    export SIF=$SINGULARITY_IMAGE
+fi
+echo "Container: $SIF"
+
+export NCCL_SOCKET_IFNAME=hsn0,hsn1,hsn2,hsn3
+export NCCL_NET_GDR_LEVEL=3
+
+VLLM_ARGS="--model $MODEL_DIR --tensor-parallel-size $NUM_GPUS --dtype $DTYPE --max-model-len $MAX_MODEL_LEN --port 8000 --host 0.0.0.0"
+if [ -n "$QUANT" ]; then
+    VLLM_ARGS="$VLLM_ARGS --quantization $QUANT"
+fi
+
+echo "Starting vLLM: $VLLM_ARGS"
+singularity exec $SIF \
+    python -m vllm.entrypoints.openai.api_server $VLLM_ARGS &
+VLLM_PID=$!
+echo "vLLM PID: $VLLM_PID"
+
+# Cleanup on exit
+trap "echo 'Stopping vLLM...'; kill $VLLM_PID 2>/dev/null; wait $VLLM_PID 2>/dev/null" EXIT
+
+# ── Wait for vLLM to be ready ────────────────────────────────────────
+
+echo "Waiting for vLLM server..."
 for i in $(seq 1 120); do
     if curl -s http://localhost:8000/v1/models > /dev/null 2>&1; then
         echo "Server ready after $((i * 5))s"
@@ -44,16 +86,14 @@ for i in $(seq 1 120); do
     sleep 5
 done
 
-# Get the served model ID
 MODEL=$(curl -s http://localhost:8000/v1/models | python3 -c \
     "import sys,json; print(json.load(sys.stdin)['data'][0]['id'])" 2>/dev/null || echo "unknown")
-echo "Model: $MODEL"
-echo "Preset: $MODEL_PRESET"
-echo "Time budget: $((TIME_BUDGET / 60)) min"
+echo "Serving: $MODEL"
 
-OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}"
+# ── Run the agent ────────────────────────────────────────────────────
 
-# Build CLI args
+OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
+
 CLI_ARGS=(
     --provider vllm
     --model "$MODEL"
@@ -69,7 +109,9 @@ if [ -n "$SCHEDULE_ONLY" ]; then
     CLI_ARGS+=(--schedule-only --hot-start results/seed_schedule.py)
 fi
 
-echo "Running: python agent_cli.py ${CLI_ARGS[*]}"
-python agent_cli.py "${CLI_ARGS[@]}"
+echo ""
+echo "Running: pixi run python agent_cli.py ${CLI_ARGS[*]}"
+pixi run python agent_cli.py "${CLI_ARGS[@]}"
 
+echo ""
 echo "Agent finished. Results in $OUTPUT_DIR/"
