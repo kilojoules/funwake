@@ -181,35 +181,44 @@ class VLLMRunner(BaseRunner):
             Path(iter_path).write_text(code)
             Path(gen_path).write_text(code)
 
-            # Run tests first
-            test_result = subprocess.run(
-                ["python", os.path.join(tools_dir, "run_tests.py"),
-                 iter_path, "--quick"],
-                capture_output=True, text=True, timeout=60, env=env,
-                cwd=project_root
-            )
+            # Run tests first (generous timeout for first JAX compile on HPC)
             try:
-                test_data = json.loads(test_result.stdout)
-                if not test_data.get("passed"):
-                    return f"Tests FAILED:\n{test_data.get('output', '')}"
-            except json.JSONDecodeError:
-                pass
+                test_result = subprocess.run(
+                    ["python", os.path.join(tools_dir, "run_tests.py"),
+                     iter_path, "--quick"],
+                    capture_output=True, text=True, timeout=180, env=env,
+                    cwd=project_root
+                )
+                try:
+                    test_data = json.loads(test_result.stdout)
+                    if not test_data.get("passed"):
+                        return f"Tests FAILED:\n{test_data.get('output', '')}"
+                except json.JSONDecodeError:
+                    pass
+            except subprocess.TimeoutExpired:
+                return "Tests TIMED OUT after 180s (JAX compilation may be slow on first run)"
 
-            # Score on training farm
-            score_result = subprocess.run(
-                ["python", os.path.join(tools_dir, "run_optimizer.py"),
-                 iter_path,
-                 "--problem", os.path.join(project_root, self.config.train_problem),
-                 "--timeout", str(self.config.timeout_per_run)],
-                capture_output=True, text=True,
-                timeout=self.config.timeout_per_run + 30, env=env,
-                cwd=project_root
-            )
-
+            # Score on training farm (extra time for first JAX compile)
+            score_timeout = self.config.timeout_per_run + 120
             try:
-                data = json.loads(score_result.stdout)
-            except json.JSONDecodeError:
-                data = {"error": score_result.stdout[:500]}
+                score_result = subprocess.run(
+                    ["python", os.path.join(tools_dir, "run_optimizer.py"),
+                     iter_path,
+                     "--problem", os.path.join(project_root, self.config.train_problem),
+                     "--timeout", str(self.config.timeout_per_run + 60)],
+                    capture_output=True, text=True,
+                    timeout=score_timeout, env=env,
+                    cwd=project_root
+                )
+            except subprocess.TimeoutExpired:
+                data = {"error": f"Scoring timed out after {score_timeout}s"}
+                score_result = None
+
+            if score_result is not None:
+                try:
+                    data = json.loads(score_result.stdout)
+                except json.JSONDecodeError:
+                    data = {"error": score_result.stdout[:500]}
 
             # Log attempt
             result = AttemptResult(
