@@ -62,9 +62,10 @@ if [ -n "$QUANT" ]; then
     VLLM_ARGS="$VLLM_ARGS --quantization $QUANT"
 fi
 
+# Use wrapper script that injects overlay packages (e.g. transformers>=5.5 for Gemma 4)
 echo "Starting vLLM: $VLLM_ARGS"
 singularity exec $SIF \
-    python -m vllm.entrypoints.openai.api_server $VLLM_ARGS &
+    python /scratch/project_465002609/julian/funwake/lumi/vllm_serve.py $VLLM_ARGS &
 VLLM_PID=$!
 echo "vLLM PID: $VLLM_PID"
 
