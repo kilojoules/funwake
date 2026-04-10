@@ -74,6 +74,22 @@ def main():
     harness = os.path.join(project_root, "playground", "harness.py")
     pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
 
+    # Safety check before execution
+    try:
+        sys.path.insert(0, project_root)
+        from sandbox import check_code_safety
+        with open(args.script) as f:
+            code = f.read()
+        safe, reason = check_code_safety(code)
+        if not safe:
+            entry = {"attempt": attempt_num, "timestamp": time.time(),
+                     "error": f"Sandbox blocked: {reason}"}
+            _append_to_log(log_path, entry)
+            print(json.dumps({"error": f"Sandbox blocked: {reason}"}))
+            return
+    except ImportError:
+        pass  # sandbox module not available
+
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
         output_path = f.name
 

@@ -58,6 +58,19 @@ def main():
 
     optimizer_path = sys.argv[1]
 
+    # Safety check before loading
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+        from sandbox import check_code_safety
+        with open(optimizer_path) as f:
+            code = f.read()
+        safe, reason = check_code_safety(code)
+        if not safe:
+            print(f"SANDBOX BLOCKED: {reason}", file=sys.stderr)
+            sys.exit(1)
+    except ImportError:
+        pass  # sandbox module not available — skip check
+
     # Load the optimizer module
     spec = importlib.util.spec_from_file_location("optimizer", optimizer_path)
     mod = importlib.util.module_from_spec(spec)

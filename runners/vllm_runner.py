@@ -22,7 +22,8 @@ class VLLMRunner(BaseRunner):
                  model: str = "meta-llama/Meta-Llama-3.1-405B-Instruct-AWQ-INT4",
                  base_url: str = "http://localhost:8000",
                  max_tokens: int = 16384,
-                 temperature: float = 0.7):
+                 temperature: float = 0.7,
+                 api_key: str = None):
         super().__init__(config)
         self.model = model
         # Normalize base URL: strip trailing /v1 if present (we add it ourselves)
@@ -31,35 +32,63 @@ class VLLMRunner(BaseRunner):
             self.base_url = self.base_url[:-3]
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.api_key = api_key
 
-        # Verify server is reachable
-        try:
-            resp = requests.get(f"{self.base_url}/v1/models", timeout=10)
-            models = resp.json().get("data", [])
-            print(f"[vLLM] Connected to {self.base_url}, models: {[m['id'] for m in models]}")
-        except Exception as e:
-            print(f"[vLLM] Warning: server not reachable at {self.base_url}: {e}")
+        # Verify server is reachable (with retry)
+        for attempt in range(5):
+            try:
+                resp = requests.get(f"{self.base_url}/v1/models",
+                                    timeout=10, headers=self._auth_headers())
+                models = resp.json().get("data", [])
+                print(f"[vLLM] Connected to {self.base_url}, models: {[m['id'] for m in models]}")
+                break
+            except Exception as e:
+                if attempt < 4:
+                    wait = 2 ** attempt
+                    print(f"[vLLM] Server not ready, retrying in {wait}s...")
+                    time.sleep(wait)
+                else:
+                    print(f"[vLLM] Warning: server not reachable at {self.base_url}: {e}")
+
+    def _auth_headers(self) -> dict:
+        """Return authorization headers if an API key is configured."""
+        if self.api_key:
+            return {"Authorization": f"Bearer {self.api_key}"}
+        return {}
 
     def _chat(self, messages: list[dict]) -> str:
-        """Send a chat completion request, return assistant text."""
+        """Send a chat completion request, return assistant text.
+
+        Retries with exponential backoff on transient failures.
+        """
         payload = {
             "model": self.model,
             "messages": messages,
             "max_tokens": self.max_tokens,
             "temperature": self.temperature,
         }
-        resp = requests.post(
-            f"{self.base_url}/v1/chat/completions",
-            json=payload, timeout=300
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        msg = data["choices"][0]["message"]
-        # Some models (deepseek-r1) put output in "reasoning" with empty "content"
-        content = msg.get("content") or ""
-        if not content.strip() and msg.get("reasoning"):
-            content = msg["reasoning"]
-        return content
+        last_err = None
+        for attempt in range(4):
+            try:
+                resp = requests.post(
+                    f"{self.base_url}/v1/chat/completions",
+                    json=payload, timeout=300,
+                    headers=self._auth_headers(),
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                msg = data["choices"][0]["message"]
+                # Some models (deepseek-r1) put output in "reasoning" with empty "content"
+                content = msg.get("content") or ""
+                if not content.strip() and msg.get("reasoning"):
+                    content = msg["reasoning"]
+                return content
+            except (requests.ConnectionError, requests.Timeout) as e:
+                last_err = e
+                wait = 2 ** attempt
+                print(f"[vLLM] Connection error, retrying in {wait}s: {e}")
+                time.sleep(wait)
+        raise last_err
 
     def _parse_action(self, text: str) -> tuple[str, dict]:
         """Parse the LLM's structured action from its response.
@@ -107,8 +136,17 @@ class VLLMRunner(BaseRunner):
 
     def _execute_tool(self, name: str, args: dict) -> str:
         """Execute a tool, return result string."""
-        env = {**os.environ, "PYTHONPATH": self.config.pythonpath,
-               "JAX_ENABLE_X64": "True"}
+        env = {
+            "PATH": os.environ.get("PATH", ""),
+            "PYTHONPATH": self.config.pythonpath,
+            "JAX_ENABLE_X64": "True",
+            "HOME": os.environ.get("HOME", ""),
+            "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
+        }
+        # Preserve GPU-related env vars for HPC (LUMI, CUDA)
+        for key in os.environ:
+            if key.startswith(("ROCR_", "HIP_", "CUDA_", "HSA_", "NCCL_")):
+                env[key] = os.environ[key]
         tools_dir = os.path.join(os.path.dirname(__file__), "..", "tools")
         project_root = os.path.join(os.path.dirname(__file__), "..")
 
@@ -126,6 +164,13 @@ class VLLMRunner(BaseRunner):
 
         elif name == "submit_code":
             code = args.get("code", "")
+
+            # Safety check before execution
+            from sandbox import check_code_safety
+            safe, reason = check_code_safety(code)
+            if not safe:
+                return f"BLOCKED: {reason}\nPlease fix and resubmit."
+
             attempt_num = len(self.attempts) + 1
 
             # Save to workspace

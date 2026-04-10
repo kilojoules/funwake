@@ -13,11 +13,17 @@ Usage:
   # Claude Code, single long session (more autonomous)
   python agent_cli.py --provider claude-code --cc-iterations 1 \\
       --cc-max-turns 100 --time-budget 3600
+
+  # Gemini CLI
+  python agent_cli.py --provider gemini-cli \\
+      --time-budget 3600 --hot-start results/seed_optimizer.py
 """
 import argparse
+import json
+import os
 import sys
 
-from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, VLLMRunner
+from runners import RunConfig, GeminiRunner, ClaudeCodeRunner, GeminiCLIRunner, VLLMRunner
 
 
 def main():
@@ -27,7 +33,7 @@ def main():
 
     # Shared arguments
     p.add_argument("--provider", required=True,
-                   choices=["gemini", "claude-code", "vllm"],
+                   choices=["gemini", "claude-code", "gemini-cli", "vllm"],
                    help="LLM backend to use")
     p.add_argument("--wind-csv", required=True,
                    help="Path to wind resource CSV")
@@ -43,8 +49,12 @@ def main():
     # Gemini/vLLM-specific
     p.add_argument("--model", default="gemini-2.5-flash",
                    help="Model name (default: gemini-2.5-flash)")
+    p.add_argument("--model-preset", default=None,
+                   help="Model preset from models.json (e.g. qwen2.5-72b, llama3.3-70b)")
     p.add_argument("--base-url", default="http://localhost:8000",
                    help="vLLM server URL (default: http://localhost:8000)")
+    p.add_argument("--api-key", default=None,
+                   help="API key for vLLM endpoint (if auth is required)")
 
     # Claude Code-specific
     p.add_argument("--cc-max-turns", type=int, default=30,
@@ -55,6 +65,19 @@ def main():
                    help="Constrain LLM to write only schedule_fn(), not optimize()")
 
     args = p.parse_args()
+
+    # Resolve model preset
+    if args.model_preset:
+        models_path = os.path.join(os.path.dirname(__file__), "models.json")
+        with open(models_path) as f:
+            presets = json.load(f)
+        if args.model_preset not in presets:
+            print(f"Unknown model preset: {args.model_preset}", file=sys.stderr)
+            print(f"Available: {', '.join(presets.keys())}", file=sys.stderr)
+            sys.exit(1)
+        preset = presets[args.model_preset]
+        if args.model == "gemini-2.5-flash":  # only override if user didn't set --model
+            args.model = preset["hf_id"]
 
     # Build config
     output_dir = args.output_dir or f"results_agent_{args.provider.replace('-', '_')}"
@@ -76,11 +99,19 @@ def main():
             iterations=args.cc_iterations,
             schedule_only=args.schedule_only,
         )
+    elif args.provider == "gemini-cli":
+        runner = GeminiCLIRunner(
+            config,
+            max_turns_per_iter=args.cc_max_turns,
+            iterations=args.cc_iterations,
+            schedule_only=args.schedule_only,
+        )
     elif args.provider == "vllm":
         runner = VLLMRunner(
             config,
             model=args.model,
             base_url=args.base_url,
+            api_key=args.api_key,
         )
     else:
         print(f"Unknown provider: {args.provider}", file=sys.stderr)
