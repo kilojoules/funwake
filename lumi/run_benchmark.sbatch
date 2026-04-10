@@ -100,7 +100,11 @@ echo "Serving: $MODEL"
 
 # ── Run the agent ────────────────────────────────────────────────────
 
-OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
+if [ -n "$SCHEDULE_ONLY" ]; then
+    OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_sched_s${SEED}"
+else
+    OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
+fi
 
 # Provider: set via PROVIDER env var, default to vllm
 PROVIDER=${PROVIDER:-vllm}
