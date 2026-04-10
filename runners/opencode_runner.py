@@ -39,26 +39,30 @@ class OpenCodeRunner(BaseRunner):
                 "opencode CLI not found. Install: curl -fsSL https://opencode.ai/install | bash"
             )
 
-    def _write_opencode_config(self):
+    def _write_opencode_config(self, vllm_model_id: str = None):
         """Write opencode.json configuring vLLM as the model provider."""
-        # The model ID vLLM serves (from /v1/models)
-        vllm_model_id = self.model.split("/", 1)[-1] if "/" in self.model else self.model
+        if vllm_model_id is None:
+            vllm_model_id = self.model.split("/", 1)[-1] if "/" in self.model else self.model
 
         config = {
+            "$schema": "https://opencode.ai/config.json",
             "provider": {
                 "vllm": {
                     "npm": "@ai-sdk/openai-compatible",
+                    "name": "vLLM (local)",
                     "options": {
                         "baseURL": f"{self.base_url}/v1"
                     },
                     "models": {
                         vllm_model_id: {
-                            "max_tokens": 4096
+                            "name": vllm_model_id,
+                            "max_tokens": 4096,
                         }
                     }
                 }
             },
             "model": f"vllm/{vllm_model_id}",
+            "small_model": f"vllm/{vllm_model_id}",
             "instructions": self._build_instructions(),
         }
 
@@ -131,7 +135,7 @@ that returns (lr, alpha, beta1, beta2).
         """Run a single `opencode run` invocation and return stdout."""
         cmd = [
             "opencode", "run",
-            "--format", "text",
+            "--dangerously-skip-permissions",
             prompt,
         ]
 
@@ -161,13 +165,28 @@ that returns (lr, alpha, beta1, beta2).
             print(f"[opencode run] Timed out after {timeout}s")
             return ""
 
+    def _get_vllm_model_id(self) -> str:
+        """Query the vLLM server for the actual served model ID."""
+        import requests
+        try:
+            resp = requests.get(f"{self.base_url}/v1/models", timeout=10)
+            models = resp.json().get("data", [])
+            if models:
+                return models[0]["id"]
+        except Exception:
+            pass
+        # Fallback to config model name
+        return self.model.split("/", 1)[-1] if "/" in self.model else self.model
+
     def run(self):
         """Main loop: repeated `opencode run` invocations with memory updates."""
         self.start_time = time.time()
         self.session.start_time = self.start_time
 
-        # Write OpenCode config pointing at vLLM
-        self._write_opencode_config()
+        # Query actual model ID from vLLM and write OpenCode config
+        vllm_model_id = self._get_vllm_model_id()
+        print(f"[opencode] vLLM serving: {vllm_model_id}")
+        self._write_opencode_config(vllm_model_id)
 
         # Determine iteration count
         if self.iterations > 0:
