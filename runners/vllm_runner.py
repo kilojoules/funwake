@@ -234,25 +234,10 @@ class VLLMRunner(BaseRunner):
                 result.train_baseline = data.get("baseline")
                 result.strategy = "sgd_solve" if "topfarm_sgd_solve" in code else "custom"
 
-                # Silent ROWP scoring
-                rowp_problem = os.path.join(project_root, self.config.rowp_problem)
-                if os.path.exists(rowp_problem):
-                    try:
-                        rowp_result = subprocess.run(
-                            ["python", os.path.join(tools_dir, "run_optimizer.py"),
-                             iter_path, "--problem", rowp_problem,
-                             "--timeout", str(self.config.timeout_per_run + 60)],
-                            capture_output=True, text=True,
-                            timeout=self.config.timeout_per_run + 90, env=env,
-                            cwd=project_root
-                        )
-                        rowp_data = json.loads(rowp_result.stdout)
-                        if "aep_gwh" in rowp_data:
-                            result.rowp_aep = rowp_data["aep_gwh"]
-                            result.rowp_feasible = rowp_data.get("feasible")
-                            result.rowp_time = rowp_data.get("time_s")
-                    except Exception:
-                        pass
+                # ROWP scoring is done in post-processing, NOT during the
+                # agent loop. This ensures the held-out farm's AEP is never
+                # available to the LLM — not in the process, not on disk,
+                # not anywhere the agent could access it.
 
             self.log_attempt(result)
 
