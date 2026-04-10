@@ -21,7 +21,7 @@ class VLLMRunner(BaseRunner):
     def __init__(self, config: RunConfig,
                  model: str = "meta-llama/Meta-Llama-3.1-405B-Instruct-AWQ-INT4",
                  base_url: str = "http://localhost:8000",
-                 max_tokens: int = 16384,
+                 max_tokens: int = 4096,
                  temperature: float = 0.7,
                  api_key: str = None):
         super().__init__(config)
