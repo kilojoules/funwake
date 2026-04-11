@@ -30,7 +30,7 @@
     "notes": "Strong code/instruction-following, fits single A100 80GB quantized"
   },
   "llama3.3-70b": {
-    "hf_id": "meta-llama/Llama-3.3-70B-Instruct-AWQ-INT4",
+    "hf_id": "ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4",
     "quantization": "awq",
     "num_gpus": 1,
     "gpu_ram_gb": 80,
