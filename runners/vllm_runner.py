@@ -304,6 +304,17 @@ Always respond with exactly ONE action per turn.
 """
 
         if self.schedule_only:
+            # Inject key source files so models have the same information
+            # as Claude Code (which reads these via its rich tool suite)
+            skeleton_src = ""
+            seed_sched_src = ""
+            project_root = os.path.join(os.path.dirname(__file__), "..")
+            try:
+                skeleton_src = Path(os.path.join(project_root, "playground", "skeleton.py")).read_text()
+                seed_sched_src = Path(os.path.join(project_root, "results", "seed_schedule.py")).read_text()
+            except FileNotFoundError:
+                pass
+
             system_prompt = f"""\
 You are designing a learning rate and penalty schedule for a wind farm
 layout optimizer. A fixed skeleton handles initialization, gradients, and
@@ -320,12 +331,28 @@ def schedule_fn(step, total_steps, lr0, alpha0):
     return lr, alpha, beta1, beta2
 ```
 
+## The fixed skeleton (you CANNOT change this, but study it carefully)
+
+```python
+{skeleton_src}
+```
+
+## Baseline schedule (this is what you're trying to beat)
+
+```python
+{seed_sched_src}
+```
+
+KEY INSIGHT from the baseline: alpha is coupled to 1/lr. As lr decays,
+alpha INCREASES. This ensures constraints are enforced at convergence.
+Your schedule MUST maintain high alpha in the final iterations or the
+layout will violate boundary/spacing constraints on unseen farms.
+
 ## Constraints
 - Time budget: {self.config.time_budget // 60} minutes
 - Each run times out at {self.config.timeout_per_run}s
 - Baseline: {self._get_baseline_aep():.1f} GWh — beat this
 - Do NOT write optimize() — only schedule_fn()
-- Read `playground/skeleton.py` to understand the fixed optimizer
 
 ## How to respond
 
