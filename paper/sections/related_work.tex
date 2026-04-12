@@ -2,30 +2,44 @@
 \label{sec:related}
 
 \paragraph{LLMs as algorithm designers.}
-FunSearch~\cite{fawzi2024funsearch} introduced the paradigm of using LLMs to evolve programs, discovering new mathematical constructions for the cap set and online bin-packing problems.
-AlphaEvolve~\cite{deepmind2025alphaevolve} scaled this approach with Gemini, improving algorithms in matrix multiplication, scheduling, and geometry.
-ReEvo~\cite{ye2024reevo} applied LLMs as hyper-heuristics for combinatorial optimization (TSP, CVRP, bin packing), generating operator heuristics that outperform hand-designed alternatives.
-EoH (Evolution of Heuristics)~\cite{liu2024eoh} similarly evolves heuristic functions using LLM-generated mutations.
-These works demonstrate that LLMs can produce functional optimization code, but evaluate generated programs on instances drawn from the same distribution used during search---a limitation when the goal is to assess algorithmic generalization rather than instance-specific tuning.
+FunSearch~\cite{fawzi2024funsearch} evolves programs with an LLM to
+discover mathematical constructions. AlphaEvolve~\cite{deepmind2025alphaevolve}
+scales this with Gemini across matrix multiplication, scheduling, and
+geometry. ReEvo~\cite{ye2024reevo} applies LLMs as hyper-heuristics
+for combinatorial optimization. EoH~\cite{liu2024eoh} co-evolves
+natural language ``thoughts'' with code. These systems evaluate
+generated code on instances from the same distribution used during
+search. Sim et al.~\cite{sim2025beyondhype} show that FunSearch
+heuristics for bin packing do not generalize to broader benchmark
+suites, motivating held-out evaluation. FunWake adopts the
+FunSearch pattern (LLM fills a function signature, fixed evaluation
+harness) but adds physics-based held-out evaluation.
 
-\paragraph{Benchmarks for LLM optimization agents.}
-HeuriGym~\cite{yao2025heurigym} provides a benchmark suite of combinatorial optimization problems for evaluating LLM-generated heuristics, spanning graph problems, scheduling, and packing.
-CO-Bench~\cite{cobench2025} standardizes evaluation across combinatorial optimization tasks with controlled difficulty levels.
-LLaMEA~\cite{llamea2024} proposes an evolutionary algorithm framework where LLMs generate and mutate algorithm components.
-These benchmarks focus on discrete combinatorial problems.
-None evaluate LLM-generated code on continuous constrained engineering optimization problems with held-out instances that differ in physical parameters (turbine specifications, domain geometry, environmental conditions).
+\paragraph{LLMs inside optimization loops.}
+OPRO~\cite{yang2024opro} uses LLMs to optimize by generating solution
+candidates from natural language descriptions of past performance.
+Augmented-GDA~\cite{augmentedgda2025} places an LLM inside a gradient
+descent loop, making real-time scoped interventions (learning rate,
+step direction). FunWake differs in that the LLM writes a schedule
+function \emph{offline}---the 8000-step optimization runs without
+LLM involvement, enabling cheap evaluation.
+
+\paragraph{Agentic coding benchmarks.}
+HeuriGym~\cite{yao2025heurigym} benchmarks LLM-generated heuristics
+across 9 combinatorial optimization problems.
+CO-Bench~\cite{cobench2025} evaluates on 36 combinatorial tasks with
+same-distribution held-out instances. Both are discrete-domain.
+FunWake evaluates on a continuous constrained optimization problem
+with held-out instances that differ in physical parameters (turbine
+model, polygon, wind resource), not just problem size.
 
 \paragraph{Wind farm layout optimization.}
-The wind farm layout optimization problem (WFLOP) places $N$ turbines inside a polygon to maximize annual energy production subject to minimum spacing and boundary constraints~\cite{mosetti1994optimization,grady2005placement}.
-The problem is non-convex with many local optima due to complex wake interactions.
-Gradient-based methods~\cite{thomas2023improving,quick2024design} exploit automatic differentiation through analytical wake models but are sensitive to initialization.
-Evolutionary approaches~\cite{chen2013wind,rios2023population} handle the multimodal landscape through population diversity but scale poorly.
-Hybrid methods combining gradient refinement with population-based search~\cite{stanley2019massive} represent the current state of the art for large farms.
-TopFarm~\cite{pedersen2019topfarm} provides an open-source framework with a constrained SGD solver that uses ADAM momentum and adaptive penalty ramping for boundary and spacing constraints.
-The SGD approach with differentiable wake models has been shown to be competitive with evolutionary methods at significantly lower computational cost~\cite{quick2024design}.
-
-\paragraph{The gap.}
-No prior work evaluates LLM-generated optimization code on engineering problems with a rigorous held-out test set where physical parameters differ from training.
-FunSearch and AlphaEvolve evaluate on the same problem class; ReEvo and HeuriGym use same-distribution test instances.
-For wind farm optimization specifically, there is no prior work on LLM-generated layout optimizers.
-Our framework is, to our knowledge, the first to evaluate whether LLM agents discover generalizable optimization algorithms versus overfit to a specific problem instance.
+The WFLOP places $N$ turbines to maximize energy production subject to
+boundary and spacing constraints~\cite{mosetti1994optimization}.
+Gradient methods exploit differentiable wake
+models~\cite{thomas2023improving,quick2024design}; evolutionary
+methods handle multimodality through population
+diversity~\cite{chen2013wind}. TopFarm~\cite{pedersen2019topfarm}
+provides the SGD solver whose internal schedule FunWake's agents
+aim to improve. No prior work applies LLMs to wind farm layout
+optimization.

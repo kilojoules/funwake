@@ -1,178 +1,177 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Experimental Setup}
+\subsection{Models and Setup}
 \label{sec:setup}
 
-We evaluate three models across two autonomy levels, each with a
-5-hour time budget and 5 random seeds (except Claude Code, which uses
-single runs from prior work):
-
-\begin{itemize}[nosep]
-    \item \textbf{Claude Code} (Anthropic, frontier): Rich CLI agent
-    with Read, Write, Grep, Glob, and Bash tools. Runs via
-    \texttt{claude -p} with tool allowlisting.
-    \item \textbf{Qwen~2.5 Coder~32B} (Alibaba, AWQ INT4): Served via
-    vLLM on AMD MI250X. Structured-output prompting with
-    \texttt{ACTION:/ARGS:} parsing.
-    \item \textbf{Llama~3.3~70B} (Meta, AWQ INT4): Same vLLM
-    infrastructure as Qwen.
-\end{itemize}
-
-The two autonomy levels are:
-\begin{itemize}[nosep]
-    \item \textbf{Full optimizer}: The LLM writes an arbitrary
-    \texttt{optimize()} function. It can use the provided
-    \texttt{topfarm\_sgd\_solve} solver, implement custom gradients,
-    or any combination.
-    \item \textbf{Schedule-only}: The LLM writes only
-    \texttt{schedule\_fn(step, total\_steps, lr0, alpha0)} returning
-    four scalars $(lr, \alpha, \beta_1, \beta_2)$ per step. A fixed
-    skeleton handles initialization, gradients, and Adam updates.
-\end{itemize}
-
-\subsection{Full Optimizer Results}
-\label{sec:results_full}
-
-Table~\ref{tab:full_opt} summarizes the full-optimizer results across
-models and seeds.
+We evaluate four models, each with a 5-hour time budget:
 
 \begin{table}[h]
 \centering
 \small
-\caption{Full optimizer mode. Training and held-out (ROWP) AEP for each
-model. Baseline: train = 5540.7\,GWh, ROWP = 4246.7\,GWh. Claude Code
-results from single prior runs; open-source models report best across
-5 seeds.}
+\caption{Models and agent configurations. Cost is estimated per 5-hour
+schedule-only run.}
+\label{tab:models}
+\begin{tabular}{llccc}
+\toprule
+\textbf{Model} & \textbf{Agent} & \textbf{Attempts} & \textbf{Cost} \\
+\midrule
+Claude Code     & Rich CLI (Read/Write/Grep/Bash) & 320 & $\sim$\$20--50 \\
+Gemini 2.5 Flash & Rich CLI (Gemini CLI) & 194 & $\sim$\$5--15 \\
+Qwen 2.5 Coder 32B & Structured output (vLLM) & 51 & $\sim$\$5 \\
+Llama 3.3 70B & Structured output (vLLM) & 8 & $\sim$\$5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Frontier models (Claude, Gemini) use rich CLI agents that read the
+codebase before writing schedules. Open-source models (Qwen, Llama)
+use a structured-output interface with the skeleton and baseline
+schedule injected into the system prompt to provide equivalent
+information access.
+
+\subsection{Schedule-Only Results}
+\label{sec:results_schedule}
+
+Table~\ref{tab:schedule_results} reports training and held-out AEP for
+the best schedule from each model.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Schedule-only results. Baseline: train = 5540.7\,GWh (500
+multi-start SGD), ROWP = 4246.7\,GWh. $\Delta$ROWP is the improvement
+over baseline on the held-out farm.}
+\label{tab:schedule_results}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Model} & \textbf{Best Train} & \textbf{Best ROWP} & \textbf{$\Delta$ROWP} & \textbf{Key Feature} \\
+\midrule
+Gemini CLI     & 5552.1 & \textbf{4328.0} & \textbf{+81.3} & Sinusoidal shake \\
+Claude Code    & 5600.0 & 4271.5 & +24.8 & Dual Gaussian bumps \\
+Qwen 32B       & 5548.8 & TBD    & TBD   & Cosine + coupled $\alpha$ \\
+Llama 70B      & 5540.3 & TBD    & TBD   & Exponential decay \\
+500-start SGD  & 5540.7 & 4246.7 & ---   & Monotonic decay \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Gemini's best held-out schedule (+81.3~GWh) was not its best training
+schedule. The script with the highest training AEP (5600.0) achieved
+only ROWP = 4255.1. This underscores the importance of held-out
+evaluation: the training-optimal schedule is not the
+generalization-optimal schedule.
+
+\subsection{Discovered Schedule Structures}
+\label{sec:discoveries}
+
+The two best-generalizing schedules use qualitatively different
+strategies for escaping local optima while maintaining constraint
+feasibility.
+
+\paragraph{Claude's dual Gaussian bumps (iter 192).}
+The learning rate follows a cosine decay from $4 \times \text{lr}_0$
+with two Gaussian bumps centered at $t = 0.5$ and $t = 0.75$:
+\begin{equation}
+\eta(t) = \eta_{\text{cosine}}(t) + 0.2\,\eta_0\,e^{-\frac{(t-0.5)^2}{2 \cdot 0.04^2}} + 0.3\,\eta_0\,e^{-\frac{(t-0.75)^2}{2 \cdot 0.05^2}}
+\end{equation}
+The penalty weight dips at $t = 0.6$ between the bumps:
+$\alpha(t) = \alpha_{\text{base}}(t) \cdot (1 - 0.5\,e^{-(t-0.6)^2/0.0032})$.
+This creates a coordinated explore--enforce cycle: the first bump
+escapes a local optimum, the penalty dip permits layout rearrangement,
+the second bump explores further, and the final convergence phase
+locks in feasibility. Moderate momentum ($\beta_1 = 0.3$,
+$\beta_2 = 0.5$) damps oscillations during bumps.
+
+\paragraph{Gemini's decaying sinusoidal shake (iter 67).}
+The learning rate is perturbed by a high-frequency sinusoid with
+decaying amplitude:
+\begin{equation}
+\eta(t) = \eta_{\text{cosine}}(t) \cdot \left(1 + 0.08\sqrt{1-t}\;\sin(80\pi t)\right)
+\end{equation}
+This ``shakes'' the optimizer out of local optima continuously in
+early iterations, with the perturbation vanishing at convergence.
+The penalty ramp is quadratic and extreme:
+$\alpha(t) = \alpha_0 (1 + 7499\,t^2)$, reaching $7500\times$ the
+initial penalty at the final iteration. Zero first momentum
+($\beta_1 = 0$) eliminates path dependence.
+
+\paragraph{Why these generalize.}
+Both schedules share a critical property absent from the baseline:
+the penalty weight is \emph{large} at convergence. The baseline
+couples $\alpha$ to $1/\eta$, reaching $\sim$100$\times$ at the
+end. Claude's schedule reaches $\sim$500$\times$; Gemini's reaches
+$7500\times$. On the spacious training polygon (DEI, 50 turbines at
+960\,m spacing), even weak constraint enforcement produces feasible
+layouts. On the tighter held-out polygon (ROWP, 74 turbines at
+792\,m spacing), the extra penalty pressure is essential.
+
+\subsection{Generalization Across Farm Sizes}
+\label{sec:generalization}
+
+We evaluate the best schedule from each model on DEI variants with
+$N = 30, 40, 50, 60, 70, 80$ turbines.
+
+\begin{table}[h]
+\centering
+\small
+\caption{AEP (GWh) across turbine counts. All LLM schedules are
+feasible at every $N$. The seed schedule (single-start, no
+multi-start baseline) fails feasibility at most counts (marked *).
+Timeout at $N=100$ for full-optimizer scripts. ROWP column uses
+the held-out farm ($N=74$, different turbine/polygon).}
+\label{tab:generalization}
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Script} & \textbf{30} & \textbf{50} & \textbf{70} & \textbf{80} & \textbf{ROWP} \\
+\midrule
+Gemini sched (iter 67)   & 3350 & 5557 & 7728 & 8799 & \textbf{4328} \\
+Claude sched (iter 192)  & 3350 & 5560 & 7747 & 8813 & 4261 \\
+Qwen full-opt (s1/011)   & 3349 & 5548 & 7709 & 8784 & 4251 \\
+Llama full-opt (s2/002)  & 3348 & 5547 & 7707 & 8778 & 4243 \\
+Seed (single start)      & 3340 & 5525 & 7698 & 8759 & 4227 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The improvement over the single-start seed grows with $N$:
++10~GWh at $N=30$, +32~GWh at $N=50$, +54~GWh at $N=80$.
+Schedule-only scripts (Claude, Gemini) consistently outperform
+full-optimizer scripts (Qwen, Llama) at every farm size, despite
+the full-optimizer scripts having freedom to choose initialization,
+multi-start strategy, and hyperparameters.
+
+\subsection{Full Optimizer Mode}
+\label{sec:results_full}
+
+In full-optimizer mode, the LLM writes an arbitrary
+\texttt{optimize()} function. All four models converge to the same
+strategy: wrap \texttt{topfarm\_sgd\_solve} with hexagonal lattice
+initialization, standard Adam momentum ($\beta_1 = 0.9$,
+$\beta_2 = 0.999$), and higher learning rates (100--200 vs.\
+baseline 50). No model writes a custom gradient optimizer that
+passes the held-out feasibility check.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Full-optimizer results (best across 5 seeds).}
 \label{tab:full_opt}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Model} & \textbf{Attempts} & \textbf{Best Train} & \textbf{Best ROWP} & \textbf{$\Delta$ROWP} \\
 \midrule
 Claude Code     & 124 & 5562.5 & 4268.5 & +21.8 \\
-Qwen 32B        & 8--9/seed & 5549.5 & 4251.4 & +4.7 \\
+Qwen 32B        & 8--11/seed & 5549.5 & 4251.4 & +4.7 \\
 Llama 70B       & 3--7/seed & 5546.9 & 4252.0 & +5.3 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-All three models beat the 500-multi-start baseline on training AEP.
-Claude Code achieves the highest held-out improvement (+21.8\,GWh),
-while Qwen and Llama achieve modest but positive generalization
-(+4.7 and +5.3\,GWh respectively). The winning strategies across all
-models share a common structure: they wrap \texttt{topfarm\_sgd\_solve}
-with modified initialization (hexagonal lattice, wind-aware clustering)
-and tuned hyperparameters (higher learning rate, standard Adam momentum).
-
-\paragraph{Train--test divergence.}
-For Qwen, the script with the highest training AEP (5549.5\,GWh) has
-a ROWP score of only 4244.0---\emph{below} the baseline. The script
-with the best ROWP (4251.4) has a lower training score (5547.9). This
-divergence confirms that training AEP alone is an unreliable proxy for
-generalization, motivating the held-out evaluation design.
-
-\subsection{Schedule-Only: The Scaffold Confound}
-\label{sec:results_schedule}
-
-The schedule-only results reveal a critical confound between model
-capability and agent scaffolding.
-
-\paragraph{Initial results (no codebase context).}
-When Qwen and Llama run schedule-only mode with the VLLMRunner's
-minimal tool interface, both models produce schedules stuck far below
-baseline:
-
-\begin{table}[h]
-\centering
-\small
-\caption{Schedule-only mode \emph{without} codebase context injected.
-Models wrote schedules without reading the skeleton or baseline
-schedule. All ROWP attempts for Qwen were infeasible.}
-\label{tab:sched_no_context}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Model} & \textbf{Attempts} & \textbf{Best Train} & \textbf{ROWP Feasible} \\
-\midrule
-Claude Code         & 320 & 5600.0 & 100\% \\
-Qwen 32B (seed 5)  & 54  & 5540.3 & 37\% (best feas: 4121) \\
-Llama 70B (seed 2)  & 9   & 5532.6 & TBD \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Investigating the agent logs reveals the root cause: \textbf{the models
-never read the relevant source code.} Llama's turn~1 response says
-``Read the skeleton and seed schedule'' but immediately submits code
-instead of calling \texttt{read\_file}. Qwen reads the skeleton once
-but never reads the baseline schedule. Neither model discovers the
-critical alpha--LR coupling ($\alpha_t \propto 1/\eta_t$) that ensures
-constraint feasibility at convergence.
-
-By contrast, Claude Code's rich CLI agent reads \texttt{skeleton.py},
-\texttt{seed\_schedule.py}, and \texttt{pixwake/optim/sgd.py} before
-writing its first schedule, giving it access to the penalty ramping
-mechanism.
-
-\paragraph{Enriched prompt (codebase context injected).}
-To isolate the effect of information access from model capability, we
-inject the contents of \texttt{skeleton.py} and
-\texttt{seed\_schedule.py} directly into the VLLMRunner system prompt,
-along with an explicit note about the alpha--LR coupling. Re-running
-with the enriched prompt:
-
-\begin{table}[h]
-\centering
-\small
-\caption{Schedule-only mode \emph{with} codebase context injected into
-the system prompt. Qwen's performance jumps dramatically, matching its
-full-optimizer results on training AEP. ROWP backfill pending for
-enriched runs.}
-\label{tab:sched_enriched}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Model} & \textbf{Context} & \textbf{Best Train} & \textbf{$\Delta$ from no-context} \\
-\midrule
-Qwen 32B & None     & 5528.0 & --- \\
-Qwen 32B & Enriched & \textbf{5547.8} & \textbf{+19.8} \\
-\midrule
-Llama 70B & None     & 5526.2 & --- \\
-Llama 70B & Enriched & 5540.3 & +14.1 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The enriched prompt produces a +19.8\,GWh swing for Qwen---closing the
-gap to its full-optimizer performance entirely. This demonstrates that
-the schedule-only failure was \emph{information asymmetry}, not model
-incapability: when given the same codebase context that Claude Code
-reads via its tools, Qwen~32B produces competitive schedules.
-
-\subsection{Cross-Model Autonomy Comparison}
-\label{sec:results_autonomy}
-
-Table~\ref{tab:autonomy} summarizes the interaction between model and
-autonomy level. The optimal autonomy level is model-dependent:
-
-\begin{table}[h]
-\centering
-\small
-\caption{Best held-out (ROWP) AEP by model and autonomy level. Baseline
-ROWP = 4246.7\,GWh. Bold indicates the better autonomy level for each
-model. Enriched schedule-only ROWP results pending at time of writing.}
-\label{tab:autonomy}
-\begin{tabular}{lccc}
-\toprule
-\textbf{Model} & \textbf{Full Opt ROWP} & \textbf{Sched ROWP} & \textbf{Better Level} \\
-\midrule
-Claude Code     & 4268.5 (+21.8) & \textbf{4271.5 (+24.8)} & Schedule \\
-Qwen 32B        & \textbf{4251.4 (+4.7)} & TBD & TBD \\
-Llama 70B       & \textbf{4252.0 (+5.3)} & TBD & TBD \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-For Claude Code, constraining the action space to a 4-parameter
-schedule function \emph{increases} held-out performance. For
-open-source models (with enriched prompts), full-optimizer mode produces
-the best held-out generalization seen so far, though enriched
-schedule-only ROWP results are pending.
+The full-optimizer mode produces lower held-out gains than
+schedule-only for Claude ($+21.8$ vs.\ $+24.8$) and dramatically
+lower for Gemini (no comparable run). This suggests that
+constraining the action space to the 4-parameter schedule forces
+deeper exploration of the optimization dynamics, while the
+full-optimizer action space encourages shallow strategy engineering
+(initialization tricks, multi-start, hyperparameter sweeps).

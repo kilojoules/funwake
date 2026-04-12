@@ -1,63 +1,66 @@
 \section{Introduction}
 \label{sec:intro}
 
-Recent work has demonstrated that large language models (LLMs) can serve
-as algorithm designers---systems that write code to solve optimization
-problems, then iterate on that code based on evaluation
-feedback~\cite{fawzi2024funsearch,deepmind2025alphaevolve,ye2024reevo}.
-These results are striking, but they share a common evaluation pattern:
-generated code is tested on instances drawn from the same distribution
-used during search. For engineering optimization, where the objective
-landscape changes with physical parameters, this conflates
-hyperparameter tuning with algorithmic discovery.
+FunSearch~\cite{fawzi2024funsearch} showed that LLMs can discover new
+mathematical constructions by evolving programs.
+AlphaEvolve~\cite{deepmind2025alphaevolve} scaled this to algorithm
+design across mathematics and computer science. But evaluating what
+LLM agents \emph{actually discover}---as opposed to what they
+overfit---remains an open problem. Existing benchmarks for
+LLM-generated optimization code (HeuriGym~\cite{yao2025heurigym},
+CO-Bench~\cite{cobench2025}) evaluate on same-distribution instances,
+making it impossible to distinguish genuine algorithmic insight from
+hyperparameter tuning to a specific problem.
 
-We present FunWake, an evaluation framework for LLM agents that write
-wind farm layout optimizers. The key design features are:
+We present FunWake, a benchmark with three properties:
+
 \begin{enumerate}[nosep]
-    \item \textbf{Held-out evaluation with different physics.} A
-    held-out farm differs from training in turbine model, polygon
-    geometry, turbine count, and wind resource. The LLM never sees
-    held-out AEP---only a binary feasibility signal.
-    \item \textbf{Controlled autonomy levels.} In \emph{full-optimizer}
-    mode, the LLM writes arbitrary \texttt{optimize()} functions. In
-    \emph{schedule-only} mode, it writes only a 4-parameter schedule
-    function controlling learning rate, penalty weight, and Adam
-    momentum within a fixed optimization skeleton.
-    \item \textbf{Multi-model, multi-scaffold comparison.} We evaluate
-    Claude Code (frontier), Qwen~2.5 Coder~32B, and Llama~3.3~70B
-    (open-source) through both a rich CLI agent and a minimal
-    structured-output interface.
+    \item \textbf{Minimal interface.} The LLM writes a single function
+    with 4 inputs and 4 outputs:
+    \texttt{schedule\_fn(step, total\_steps, lr0, alpha0)} $\to$
+    \texttt{(lr, alpha, beta1, beta2)}. A fixed skeleton handles
+    initialization, gradients, and Adam updates. Each evaluation takes
+    30--60 seconds on CPU.
+    \item \textbf{Physics-based held-out evaluation.} The held-out
+    farm differs from training in turbine model, polygon geometry,
+    turbine count, and wind resource. The LLM never sees held-out AEP.
+    Additionally, the training farm is evaluated at seven turbine
+    counts ($N=30$--$100$) to test scaling generalization.
+    \item \textbf{Low cost.} Evaluating a submitted schedule is free
+    (CPU only). Running an LLM agent through the full benchmark costs
+    \$5--50 depending on model. Full paper reproduction costs
+    $\sim$\$500.
 \end{enumerate}
 
-Three findings emerge from this framework:
+\paragraph{What the agents discover.}
+Across four models and 700+ generated schedules, two qualitatively
+novel schedule structures emerge:
 
-\paragraph{Scaffolding dominates model capability in constrained
-settings.} Open-source models that never read the optimization
-codebase---because their minimal agent interface discourages
-exploration---produce schedules stuck 13\,GWh below baseline.
-Injecting the same codebase context that Claude Code reads via its
-tools produces a +20\,GWh improvement, closing the gap entirely.
-The performance difference previously attributed to model capability
-was largely information asymmetry.
+\begin{itemize}[nosep]
+    \item \textbf{Dual Gaussian LR bumps} (Claude Code): brief
+    learning rate increases at $t=0.5$ and $t=0.75$ with a coordinated
+    penalty dip at $t=0.6$---controlled escapes from local optima
+    followed by constraint re-enforcement. Held-out: +24.8~GWh.
+    \item \textbf{Decaying sinusoidal shake} (Gemini CLI): 80-cycle
+    high-frequency perturbation with $\sqrt{1-t}$ amplitude decay,
+    paired with a 7500$\times$ quadratic penalty ramp and zero first
+    momentum ($\beta_1 = 0$). Held-out: +81.3~GWh.
+\end{itemize}
 
-\paragraph{The optimal autonomy level is model-dependent.}
-Claude Code's schedule-only mode achieves the best held-out
-generalization (+24.8\,GWh over baseline), outperforming its
-full-optimizer mode (+21.8\,GWh). For open-source models, the pattern
-reverses: full-optimizer mode generalizes better (+5\,GWh) while
-schedule-only fails to produce feasible held-out layouts. Constraining
-the action space helps frontier models but hinders smaller ones.
+Neither structure appears in the learning rate schedule
+literature~\cite{loshchilov2017sgdr}. Standard schedules (cosine
+decay, exponential decay, warm restarts) decay monotonically;
+these schedules inject structured noise that decays over time.
+The penalty coupling ($\alpha \propto 1/\eta$ or $\alpha \propto t^2$)
+is critical: schedules that reduce penalty weight at convergence
+produce feasible layouts on the spacious training farm but fail on the
+tighter held-out polygon.
 
-\paragraph{Training performance misleads without held-out evaluation.}
-The script with the highest training AEP (5549.5\,GWh, +8.8 over
-baseline) has a held-out score \emph{below} baseline. The script with
-the best held-out generalization has a lower training score. Any
-evaluation that reports only training AEP would draw the wrong
-conclusions about which optimizer is best.
-
-Our contributions are: (1)~an open-source benchmark for LLM-generated
-optimization code with held-out engineering evaluation;
-(2)~a controlled experiment showing that agent scaffolding explains
-more variance than model scale in constrained optimization settings;
-and (3)~evidence that the optimal LLM autonomy level depends on model
-capability, necessitating benchmark designs that test multiple levels.
+\paragraph{Contributions.}
+(1)~An open-source benchmark for LLM-discovered optimizer schedules
+with physics-based held-out evaluation and scalable difficulty.
+(2)~Documentation of two novel schedule structures discovered
+autonomously by LLM agents, with analysis of why they generalize.
+(3)~A generalization study across seven farm sizes showing that
+LLM-discovered schedules maintain feasibility where the baseline
+fails.
