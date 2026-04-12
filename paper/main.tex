@@ -1,9 +1,7 @@
 \documentclass{article}
 
-% NeurIPS 2026 style (uncomment when available)
-% \usepackage{neurips_2026}
-
-% Packages
+% ICML 2026 AI Scientists Workshop (4-8 pages)
+% TODO: switch to official style when available
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -14,8 +12,10 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
 
-\title{Strategies Without Algorithms: What LLM Agents Actually Discover for Wind Farm Layout Optimization}
+\title{FunWake: Scaffolding and Autonomy in LLM-Driven\\Optimization Algorithm Design}
 
 \author{
   Julian Quick \\
@@ -28,40 +28,50 @@
 \maketitle
 
 \begin{abstract}
-We present an evaluation framework for testing whether LLM agents can
-autonomously design optimization algorithms for real engineering problems.
-An LLM receives a wake simulation API, a training farm, and a time
-budget. It writes optimizer functions evaluated on the training farm,
-with silent scoring on a held-out farm with a different turbine, polygon,
-and wind resource. Across runs with Gemini~2.5~Flash, we find that LLMs
-consistently discover effective optimization \emph{strategies} ---
-wind-direction-aware initialization, two-stage feasibility-then-objective
-optimization, diverse multi-start --- but never produce novel optimization
-\emph{algorithms}. All winning solutions wrap the existing gradient solver
-with tuned hyperparameters. Custom gradient implementations fail constraint
-checks on the held-out farm. A stressed-polygon unit test predicts
-held-out failure with high accuracy.
+We present FunWake, an evaluation framework for LLM agents that write
+wind farm layout optimizers. An LLM receives a wake simulation API and
+a training farm; a held-out farm with different turbine, polygon, and
+wind resource is scored silently after the agent finishes. We compare
+three models (Claude Code, Qwen~2.5 Coder~32B, Llama~3.3~70B) across
+two autonomy levels---full optimizer and schedule-only---and find that
+performance depends critically on \emph{agent scaffolding}, not just
+model capability. Smaller models that never read the optimization
+codebase (due to limited tool use) produce schedules stuck 13\,GWh
+below baseline. When the same codebase context is injected into the
+prompt, Qwen~32B immediately matches its full-optimizer performance
+(+7\,GWh over baseline), demonstrating that the gap is information
+access, not reasoning ability. On the held-out farm, Claude Code's
+schedule-only mode generalizes best (+24.8\,GWh), while open-source
+models generalize better in full-optimizer mode (+5\,GWh). The optimal
+autonomy level is model-dependent, and evaluation frameworks that do
+not control for scaffolding quality will misattribute scaffold effects
+to model capability.
 \end{abstract}
 
 \input{sections/introduction}
 \input{sections/related_work}
 \input{sections/methods}
 \input{sections/application}
-
-% TODO: Results, Discussion, Conclusion sections
-% (to be written after multi-model experiments complete)
-
-\section{Results}
-\label{sec:results}
-\textit{(To be completed after multi-model experiments.)}
-
-\section{Discussion}
-\label{sec:discussion}
-\textit{(To be completed.)}
+\input{sections/results}
+\input{sections/discussion}
 
 \section{Conclusion}
 \label{sec:conclusion}
-\textit{(To be completed.)}
+
+We introduced FunWake, an agentic coding benchmark for wind farm layout
+optimization with held-out evaluation on a physically distinct farm.
+Three findings emerge:
+(1)~Agent scaffolding---whether the model reads the codebase before
+writing code---explains more performance variance than model scale in
+the constrained schedule-only setting.
+(2)~The optimal autonomy level is model-dependent: frontier models
+benefit from constraint (schedule-only), while smaller models need the
+safety net of an existing solver (full optimizer).
+(3)~Held-out evaluation with different physical parameters is essential;
+training AEP gains of +9\,GWh can correspond to held-out losses.
+
+FunWake is open-source and designed to be extended with additional
+models, autonomy levels, and held-out farms.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

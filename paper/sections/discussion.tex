@@ -1,0 +1,94 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Scaffolding as a Confound in Agentic Benchmarks}
+
+Our most actionable finding is that agent scaffolding quality---not
+model capability---was the primary bottleneck for open-source models in
+the schedule-only setting. Qwen~32B produced schedules stuck at
+5528\,GWh for 54 consecutive attempts when it never read the codebase,
+then jumped to 5548\,GWh when the same codebase context was injected
+into the prompt. This +20\,GWh swing from a prompt change dwarfs the
+differences between models.
+
+This has implications beyond FunWake. Agentic coding benchmarks
+(SWE-bench, HeuriGym, CO-Bench) compare models through agent
+scaffolds, but scaffold quality is rarely controlled. A model that
+appears ``less capable'' may simply have a scaffold that doesn't
+encourage codebase exploration. Our controlled experiment---same model,
+same time budget, different scaffolds---provides direct evidence that
+this effect is large.
+
+\subsection{Why Schedule-Only Works for Frontier Models}
+
+Claude Code's schedule-only mode produced 320 attempts in 5 hours with
+100\% novel code, versus 124 attempts with 4\% novel code in
+full-optimizer mode. The constrained action space forces exploration:
+the model cannot fall back to minor hyperparameter tweaks of the
+existing solver and must instead reason about the optimization dynamics.
+
+The key discovery---dual Gaussian learning rate bumps with a
+coordinated penalty dip---represents a novel schedule structure not
+present in the optimization literature. This structure emerged through
+incremental refinement over 320 iterations, not from a single flash
+of insight. The high throughput of the constrained mode is essential:
+at 124 attempts, the same model had not yet found it.
+
+\subsection{Why Schedule-Only Fails for Smaller Models}
+
+Without codebase context, smaller models write schedules from their
+training data alone. The dominant failure mode is incorrect penalty
+coupling: alpha that increases to a peak at 50\% of optimization then
+\emph{decreases}, rather than increasing monotonically to enforce
+feasibility at convergence. This produces feasible layouts on the
+spacious training farm (DEI) but infeasible layouts on the tighter
+held-out farm (ROWP).
+
+The training farm's forgiving geometry masks this error: all 54 of
+Qwen's no-context schedule attempts pass feasibility on DEI but 63\%
+fail on ROWP. The stressed-polygon unit test catches gross violations
+but not the subtle penalty-coupling failure. A stronger diagnostic---
+checking that constraint violations decrease monotonically in the
+final 20\% of steps---could close this gap.
+
+\subsection{The Training Farm Is Too Forgiving}
+
+The DEI training farm has a spacious 5-vertex polygon with 50 turbines
+at 960\,m spacing, leaving ample room for constraint violations to
+resolve during optimization. The ROWP farm has 74 turbines in a
+tighter polygon at 792\,m spacing, where weak constraint handling
+produces infeasible layouts.
+
+This asymmetry is realistic---wind farm planning cases vary widely in
+polygon geometry and packing density---but it means that training AEP
+is a poor proxy for generalization. The Qwen full-optimizer result
+illustrates this: the script with the highest training AEP (5549.5)
+has the worst ROWP AEP among scored attempts (4240.2). Held-out
+evaluation is not optional.
+
+\subsection{Limitations}
+
+\paragraph{Model coverage.}
+We evaluate three models. The interaction between scaffold quality,
+model scale, and autonomy level likely has additional structure that
+would be visible with more models (e.g., Gemini, DeepSeek-R1).
+
+\paragraph{Single held-out farm.}
+Our evaluation uses one held-out farm. Multiple held-out farms with
+varying difficulty (different polygon shapes, packing densities) would
+strengthen the generalization claims. The infrastructure supports this
+(9 additional farm definitions exist) but the computational cost of
+ROWP backfilling scales linearly.
+
+\paragraph{Scaffold fairness.}
+Even with context injection, the open-source models use a simpler
+agent interface (ACTION/ARGS text parsing) than Claude Code's native
+CLI tools. A fully controlled comparison would use the same agent
+framework for all models---e.g., OpenCode with each backend. We leave
+this to future work.
+
+\paragraph{No random search baseline.}
+We do not compare LLM-generated schedules against random or grid
+search over the same 4-parameter space. This ablation would establish
+whether the LLM adds value beyond the schedule parameterization
+itself.
