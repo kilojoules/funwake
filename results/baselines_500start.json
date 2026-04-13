@@ -1,0 +1,44 @@
+{
+  "problem_dei_n30": {
+    "n_starts": 495,
+    "best_aep": 3347.62,
+    "mean_aep": 3340.53,
+    "feasible_rate": 1.0,
+    "total_time_s": 2097.0
+  },
+  "problem_dei_n40": {
+    "n_starts": 500,
+    "best_aep": 4451.85,
+    "mean_aep": 4438.18,
+    "feasible_rate": 1.0,
+    "total_time_s": 1403.8
+  },
+  "problem_dei_n50": {
+    "n_starts": 500,
+    "best_aep": 5544.09,
+    "mean_aep": 5525.82,
+    "feasible_rate": 1.0,
+    "total_time_s": 1303.9
+  },
+  "problem_dei_n60": {
+    "n_starts": 499,
+    "best_aep": 6628.5,
+    "mean_aep": 6603.21,
+    "feasible_rate": 1.0,
+    "total_time_s": 1293.8
+  },
+  "problem_dei_n70": {
+    "n_starts": 500,
+    "best_aep": 7695.39,
+    "mean_aep": 7670.66,
+    "feasible_rate": 1.0,
+    "total_time_s": 1435.6
+  },
+  "problem_dei_n80": {
+    "n_starts": 332,
+    "best_aep": 8759.89,
+    "mean_aep": 8726.57,
+    "feasible_rate": 0.997,
+    "total_time_s": 971.2
+  }
+}

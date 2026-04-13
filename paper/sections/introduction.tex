@@ -32,9 +32,14 @@ We present FunWake, a benchmark with three properties:
     $\sim$\$500.
 \end{enumerate}
 
+\paragraph{The strongest agent.} Across four models evaluated, Gemini
+CLI produces the best schedule by a wide margin: +81.3~GWh on the
+held-out farm, approximately 3$\times$ the next-best result. Claude
+Code follows at +24.8~GWh, with open-source Llama 70B and Qwen 32B at
++5.3 and +4.7~GWh respectively.
+
 \paragraph{What the agents discover.}
-Across four models and 700+ generated schedules, two qualitatively
-novel schedule structures emerge:
+Two qualitatively novel schedule structures emerge:
 
 \begin{itemize}[nosep]
     \item \textbf{Dual Gaussian LR bumps} (Claude Code): brief

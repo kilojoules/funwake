@@ -36,17 +36,20 @@ a CPU with no GPU required. A physics-based held-out farm---with
 different turbine model, polygon geometry, and wind resource---catches
 overfitting that same-distribution evaluation misses.
 
-Four LLM agents (Claude Code, Gemini~CLI, Qwen~2.5 Coder~32B,
-Llama~3.3~70B) produce over 700 schedule functions. Two genuinely novel
-schedule structures emerge: a dual Gaussian learning rate bump with
-coordinated penalty relaxation (Claude, held-out +24.8~GWh) and a
+We evaluate four LLM agents (Claude Code, Gemini~CLI, Qwen~2.5 Coder~32B,
+Llama~3.3~70B) on the benchmark. \textbf{Gemini CLI is the strongest
+agent}, producing a schedule that yields +81.3~GWh over a 500-multi-start
+SGD baseline on the held-out farm---approximately 3$\times$ the
+improvement of any other model. Two qualitatively novel schedule
+structures emerge: Claude's dual Gaussian learning rate bumps with
+coordinated penalty relaxation (held-out +24.8~GWh) and Gemini's
 decaying sinusoidal perturbation with aggressive quadratic penalty
-ramping (Gemini, held-out +81.3~GWh). Neither structure appears in the
-optimization literature. Across seven held-out farm sizes
-($N=30$--$100$ turbines), the best LLM-discovered schedules produce
-feasible layouts at every scale while the baseline schedule fails at
-six of seven. FunWake is open-source, costs \$5--50 per model to run,
-and evaluates submitted schedules for free on CPU.
+ramping (held-out +81.3~GWh). Neither structure appears in the
+optimization literature. Across DEI farm variants with
+$N=30$--$80$ turbines, the LLM-discovered schedules track or exceed the
+500-multi-start baseline at every scale. FunWake is open-source, costs
+\$5--50 per model to run, and evaluates submitted schedules for free
+on CPU.
 \end{abstract}
 
 \input{sections/introduction}
