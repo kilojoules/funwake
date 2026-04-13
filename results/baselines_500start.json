@@ -35,10 +35,17 @@
     "total_time_s": 1435.6
   },
   "problem_dei_n80": {
-    "n_starts": 332,
+    "n_starts": 500,
     "best_aep": 8759.89,
-    "mean_aep": 8726.57,
-    "feasible_rate": 0.997,
-    "total_time_s": 971.2
+    "mean_aep": 8726.93,
+    "feasible_rate": 0.996,
+    "total_time_s": 1458.4
+  },
+  "problem_rowp": {
+    "n_starts": 500,
+    "best_aep": 4243.75,
+    "mean_aep": 4224.96,
+    "feasible_rate": 0.962,
+    "total_time_s": 1427.2
   }
 }

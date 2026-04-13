@@ -47,7 +47,7 @@ def load_results():
 
 def fig1_best_rowp_comparison(data):
     """Bar chart: best ROWP AEP for each model vs baseline."""
-    baseline_rowp = 4246.7  # from paper, manually computed 500-start
+    baseline_rowp = data["baselines"]["problem_rowp"]["best_aep"]
 
     models = [
         ("Gemini CLI", 4328.0),
@@ -267,7 +267,8 @@ def fig4_train_vs_rowp(data):
                    label=f"{name} ({len(points)})", edgecolors="none")
 
     # Baseline reference
-    ax.axhline(4246.7, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
+    ax.axhline(data["baselines"]["problem_rowp"]["best_aep"],
+               color="black", linestyle="--", linewidth=0.8, alpha=0.5,
                label="Baseline ROWP")
     ax.axvline(5540.7, color="black", linestyle=":", linewidth=0.8, alpha=0.5,
                label="Baseline train")
