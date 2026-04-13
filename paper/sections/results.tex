@@ -13,11 +13,10 @@ for each model.
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig1_rowp_comparison.png}
-\caption{Best held-out (ROWP) AEP by model, relative to the
-500-multi-start SGD baseline (horizontal line). Gemini CLI's best
-schedule produces +81.3\,GWh on the held-out farm, approximately
-3$\times$ the improvement of any other model. All LLM agents beat the
-baseline. Labels show improvement over baseline.}
+\caption{Best feasible held-out (ROWP) AEP by model, relative to the
+500-multi-start SGD baseline. Gemini CLI and Claude Code are
+essentially tied at $\sim$4272\,GWh (+28\,GWh over baseline). Infeasible
+held-out layouts are excluded regardless of their reported AEP.}
 \label{fig:rowp}
 \end{figure}
 
@@ -53,63 +52,46 @@ Qwen 32B (full-optimizer)       & 8--11 / seed & 5549.5 & +8.8 & 4251.4 & +4.7 \
 \subsection{Training vs Held-Out Divergence}
 \label{sec:divergence}
 
-Figure~\ref{fig:train_rowp} plots training AEP against held-out AEP
-for every scored attempt across four models. Three observations:
+\textbf{The training-optimal schedule is not the held-out-optimal
+schedule, and infeasibility is the dominant failure mode.} Several
+agents produced schedules with training AEP at the practical ceiling
+(5600.0\,GWh) that scored higher than 4272\,GWh on ROWP---but these
+layouts violate boundary or spacing constraints. When restricted to
+\emph{feasible} held-out layouts only, the best Gemini and Claude
+schedules both score $\sim$4272\,GWh. Training AEP at the ceiling does
+not distinguish feasible from infeasible generalizers.
+
+\textbf{Training AEP has a ceiling near 5600\,GWh.} Both frontier
+models hit 5600.0 exactly on multiple attempts, suggesting the training
+landscape has a practically reachable local optimum. Qwen and Llama
+full-optimizer runs max out at 5547--5549\,GWh, below this ceiling.
+
+\subsection{Running-best AEP and ``deployment''}
+\label{sec:running_best}
+
+Figure~\ref{fig:running} shows the running-best training AEP (top)
+and the held-out (ROWP) AEP of the currently best-training script
+(``would-be deployed'' script) over wall-clock time. The star marks
+the final deployed script for each model.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.85\linewidth]{figs/fig4_train_vs_rowp.png}
-\caption{Training AEP vs held-out (ROWP) AEP across all scored
-attempts. Dashed lines mark the 500-multi-start baselines. The best
-training schedule is rarely the best held-out schedule. Gemini's ROWP
-ceiling is substantially higher than any other model.}
-\label{fig:train_rowp}
+\includegraphics[width=0.9\linewidth]{figs/fig4_running_best.png}
+\caption{Running-best training AEP (top) and ROWP AEP of the
+best-training script at each point in time (bottom). Stars mark the
+final deployed script for each model. Training AEP saturates well
+before 5 hours for frontier models; ROWP improves more slowly. The
+deployed script's ROWP reflects the reality that one must commit to a
+specific optimizer at some point.}
+\label{fig:running}
 \end{figure}
 
-\textbf{The training-optimal schedule is not the held-out-optimal
-schedule.} For Gemini, the script with highest training AEP (5600.0)
-has ROWP 4328.0; the script with best ROWP (4328.0) has train 5552.1.
-For Qwen, the best-training script (5549.5) scores below baseline on
-ROWP. This divergence motivates the held-out evaluation design:
-training AEP alone is an unreliable proxy for generalization.
-
-\textbf{Training AEP has a ceiling near 5600\,GWh.} Both frontier
-models (Claude and Gemini) hit 5600.0 exactly, suggesting the training
-landscape has a practically reachable local optimum that multiple
-agents converge to. Held-out performance at this ceiling varies by
-schedule structure.
-
-\textbf{Open-source models never reach the training ceiling.} Their
-full-optimizer scripts max out around 5547--5549\,GWh, indicating that
-the schedule-only interface (which open-source models use with
-injected codebase context) or the rich CLI scaffold provides an
-advantage the minimal structured-output interface cannot replicate.
-
-\subsection{Seed Reproducibility}
-\label{sec:seeds}
-
-Figure~\ref{fig:seeds} shows the best training AEP for four independent
-Claude Code schedule-only seeds, each with a 5-hour budget. Two seeds
-converged to +24\,GWh over baseline; two got stuck at +4--7\,GWh.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\linewidth]{figs/fig5_seed_reproducibility.png}
-\caption{Best training AEP across four independent Claude Code
-schedule-only runs. Two of four seeds converge to the same
-$\sim$+24\,GWh regime as the original 320-attempt run; two plateau
-earlier. The $\sim$20\,GWh variance between seeds reflects the
-non-determinism of the agent search, not the benchmark itself.}
-\label{fig:seeds}
-\end{figure}
-
-The original Claude Code run~\cite{anthropic2025claude} used 320
-attempts and reached training AEP 5600.0. In our 4-seed replication
-(66--77 attempts per seed due to rate-limit interruption), seeds 2 and
-4 reached 5564.8 and 5564.6 respectively---within 35\,GWh of the
-original. Seeds 1 and 3 plateaued earlier (5544.9 and 5547.1). This
-suggests the $\sim$5600\,GWh result is reproducible but not guaranteed
-within a 5-hour budget.
+Training AEP saturates relatively quickly (within $\sim$1--2 hours for
+Claude and Gemini), but held-out ROWP continues to improve later as
+the agents explore schedules that happen to generalize better. The
+deployed (final best-training) script's ROWP lags behind the
+globally-best ROWP seen during the run, reflecting that selection on
+training AEP alone is suboptimal.
 
 \subsection{Generalization Across Turbine Counts}
 \label{sec:generalization}
@@ -171,7 +153,7 @@ iter 067 (decaying sinusoidal shake + quadratic alpha ramp).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.95\linewidth]{figs/fig3_schedules.png}
+\includegraphics[width=0.95\linewidth]{figs/fig3_top3_schedules.png}
 \caption{Schedule parameters over optimization progress for the
 baseline (TopFarm-style monotonic), Claude's iter 192 (dual Gaussian
 LR bumps at $t=0.5, 0.75$ with penalty dip at $t=0.6$), and Gemini's

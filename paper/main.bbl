@@ -1,0 +1,106 @@
+\begin{thebibliography}{16}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Chen et~al.(2013)Chen, Li, Jin, and Song]{chen2013wind}
+Ying Chen, Hua Li, Kai Jin, and Qing Song.
+\newblock Wind farm layout optimization using genetic algorithm with different
+  hub height turbines.
+\newblock \emph{Energy Conversion and Management}, 70:\penalty0 56--65, 2013.
+
+\bibitem[{CO-Bench Authors}(2025)]{cobench2025}
+{CO-Bench Authors}.
+\newblock Co-bench: Benchmarking llm agents for combinatorial optimization.
+\newblock 2025.
+\newblock AAAI 2026.
+
+\bibitem[{FLLM Authors}(2025)]{augmentedgda2025}
+{FLLM Authors}.
+\newblock Augmented-gda: Llm-augmented gradient descent algorithms.
+\newblock 2025.
+\newblock FLLM 2025.
+
+\bibitem[{Google DeepMind}(2025)]{deepmind2025alphaevolve}
+{Google DeepMind}.
+\newblock Alphaevolve: A coding agent for scientific and algorithmic discovery.
+\newblock 2025.
+\newblock arXiv:2506.13131.
+
+\bibitem[{IEA Wind Systems}(2024)]{borrassunyeriea2024rowp}
+{IEA Wind Systems}.
+\newblock Iea wind 740-10-mw reference offshore wind plants.
+\newblock \url{https://github.com/IEAWindSystems/IEA-Wind-740-10-ROWP}, 2024.
+
+\bibitem[Liu et~al.(2024)Liu, Tong, Yuan, et~al.]{liu2024eoh}
+Fei Liu, Xialiang Tong, Mingxuan Yuan, et~al.
+\newblock Evolution of heuristics: Towards efficient automatic algorithm design
+  using large language model.
+\newblock 2024.
+\newblock arXiv:2401.02051.
+
+\bibitem[Loshchilov and Hutter(2017)]{loshchilov2017sgdr}
+Ilya Loshchilov and Frank Hutter.
+\newblock {SGDR}: Stochastic gradient descent with warm restarts.
+\newblock 2017.
+
+\bibitem[Mosetti et~al.(1994)Mosetti, Poloni, and
+  Diviacco]{mosetti1994optimization}
+G~Mosetti, C~Poloni, and B~Diviacco.
+\newblock Optimization of wind turbine positioning in large windfarms by means
+  of a genetic algorithm.
+\newblock \emph{Journal of Wind Engineering and Industrial Aerodynamics},
+  51:\penalty0 105--116, 1994.
+
+\bibitem[Pedersen and Larsen(2019)]{pedersen2019topfarm}
+Mads~M Pedersen and Gunner~C Larsen.
+\newblock Topfarm: Multi-fidelity optimization of wind farms.
+\newblock \emph{Wind Energy Science}, 2019.
+
+\bibitem[Quick et~al.(2024)Quick, Rethore, and Pedersen]{quick2024design}
+Julian Quick, Pierre-Elouan Rethore, and Mads~M Pedersen.
+\newblock Speeding up large-wind-farm layout optimization using gradients,
+  parallelization, and a heuristic algorithm for the initial layout.
+\newblock \emph{Wind Energy Science}, 9:\penalty0 321--341, 2024.
+
+\bibitem[Romera-Paredes et~al.(2024)Romera-Paredes, Barekatain, Novikov, Balog,
+  Kumar, Dupont, Ruiz, Ellenberg, Wang, Fawzi, et~al.]{fawzi2024funsearch}
+Bernardino Romera-Paredes, Mohammadamin Barekatain, Alexander Novikov, Matej
+  Balog, M~Pawan Kumar, Emilien Dupont, Francisco~JR Ruiz, Jordan~S Ellenberg,
+  Pengming Wang, Omar Fawzi, et~al.
+\newblock Mathematical discoveries from program search with large language
+  models.
+\newblock \emph{Nature}, 625:\penalty0 468--475, 2024.
+
+\bibitem[Sim et~al.(2025)Sim, Renau, and Hart]{sim2025beyondhype}
+Kevin Sim, Quentin Renau, and Emma Hart.
+\newblock Beyond the hype: Benchmarking llm-evolved heuristics for bin packing.
+\newblock In \emph{EvoApplications}, 2025.
+
+\bibitem[Thomas et~al.(2023)Thomas, Baker, and Ning]{thomas2023improving}
+Jared Thomas, Andrew Baker, and Andrew Ning.
+\newblock Improving the accuracy of wind farm layout optimization with
+  gradient-based methods.
+\newblock \emph{Wind Energy Science}, 2023.
+
+\bibitem[Yang et~al.(2024)Yang, Wang, Lu, et~al.]{yang2024opro}
+Chengrun Yang, Xuezhi Wang, Yifeng Lu, et~al.
+\newblock Large language models as optimizers.
+\newblock 2024.
+
+\bibitem[Yao et~al.(2025)]{yao2025heurigym}
+Zhicheng Yao et~al.
+\newblock Heurigym: An agentic benchmark for llm-crafted heuristics in
+  combinatorial optimization.
+\newblock 2025.
+\newblock arXiv:2506.07972.
+
+\bibitem[Ye et~al.(2024)Ye, Wang, Cao, and Song]{ye2024reevo}
+Haoran Ye, Jiarui Wang, Zhiguang Cao, and Guojie Song.
+\newblock Reevo: Large language models as hyper-heuristics with reflective
+  evolution.
+\newblock In \emph{NeurIPS}, 2024.
+
+\end{thebibliography}

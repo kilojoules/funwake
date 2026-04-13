@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 """Generate all figures for the FunWake paper.
 
-Outputs PNG + PDF files in paper/figs/.
+Uses FEASIBLE ROWP scores only — infeasible held-out layouts are
+not counted regardless of their reported AEP.
 """
+import glob
 import json
 import os
 
@@ -11,6 +13,7 @@ import numpy as np
 
 FIGS = os.path.join(os.path.dirname(__file__), "figs")
 RESULTS = os.path.join(os.path.dirname(__file__), "..", "results")
+ROOT = os.path.join(os.path.dirname(__file__), "..")
 
 os.makedirs(FIGS, exist_ok=True)
 
@@ -24,60 +27,113 @@ plt.rcParams.update({
     "figure.dpi": 150,
 })
 
-# Model colors
 COLORS = {
-    "Gemini CLI": "#4285f4",
     "Claude Code": "#d97757",
+    "Gemini CLI": "#4285f4",
     "Qwen 32B": "#a020a0",
     "Llama 70B": "#1a9988",
     "Baseline": "#666666",
     "Seed": "#aaaaaa",
+    "Random": "#888888",
+    "Bump DE": "#b35900",
 }
 
 
-def load_results():
-    """Load all result JSONs."""
-    data = {}
-    data["baselines"] = json.load(open(os.path.join(RESULTS, "baselines_500start.json")))
-    data["gen_curve"] = json.load(open(os.path.join(RESULTS, "generalization_curve.json")))
-    data["gen_sched"] = json.load(open(os.path.join(RESULTS, "generalization_schedule.json")))
-    data["summary"] = json.load(open(os.path.join(RESULTS, "all_models_summary.json")))
-    return data
+MODEL_DIRS = {
+    "Claude schedule (320att)": ("results_agent_schedule_only_5hr", "Claude Code"),
+    "Claude 6hr":                ("results_agent_claude_6hr",       "Claude Code"),
+    "Claude 7hr":                ("results_agent_claude_7hr",       "Claude Code"),
+    "Gemini 5hr v2 (full-opt)":  ("results_agent_5hr_v2",           "Gemini CLI"),
+    "Gemini 5hr v4 (full-opt)":  ("results_agent_5hr_v4",           "Gemini CLI"),
+    "Gemini 5hr v6":             ("results_agent_5hr_v6",           "Gemini CLI"),
+}
 
 
-def fig1_best_rowp_comparison(data):
-    """Bar chart: best ROWP AEP for each model vs baseline."""
-    baseline_rowp = data["baselines"]["problem_rowp"]["best_aep"]
+def load_feasible_leaderboard():
+    """Return list of {dir, model, n_att, best_feas_rowp, best_feas_train, best_iter}."""
+    out = []
+    for d in sorted(glob.glob(os.path.join(ROOT, "results_agent_*"))):
+        log = os.path.join(d, "attempt_log.json")
+        if not os.path.exists(log):
+            continue
+        try:
+            attempts = json.load(open(log))
+        except Exception:
+            continue
+        # Identify model
+        model = "?"
+        h = os.path.join(d, "history.json")
+        if os.path.exists(h):
+            try:
+                hd = json.load(open(h))
+                m = hd.get("model", "")
+                if "claude" in m.lower():
+                    model = "Claude Code"
+                elif "gemini" in m.lower():
+                    model = "Gemini CLI"
+            except Exception:
+                pass
+        if model == "?":
+            base = os.path.basename(d)
+            if "claude" in base or "schedule_only" in base:
+                model = "Claude Code"
+            elif "qwen" in base.lower():
+                model = "Qwen 32B"
+            elif "llama" in base.lower():
+                model = "Llama 70B"
+            elif "5hr_v" in base or "5hr_noinit" in base or "5hr" == base[-3:] or "30min_v" in base or "1hr_v" in base or base == "results_agent_schedule_5hr":
+                model = "Gemini CLI"
 
-    models = [
-        ("Gemini CLI", 4328.0),
-        ("Claude Code", 4271.5),
-        ("Llama 70B", 4252.0),
-        ("Qwen 32B", 4251.4),
-        ("Baseline\n(500-start)", baseline_rowp),
-    ]
+        feas = [a for a in attempts if a.get("rowp_feasible") and "rowp_aep" in a]
+        if not feas:
+            continue
+        best = max(feas, key=lambda a: a["rowp_aep"])
+        out.append({
+            "dir": d,
+            "basename": os.path.basename(d),
+            "model": model,
+            "n_att": len(attempts),
+            "n_feas": len(feas),
+            "best_feas_rowp": best["rowp_aep"],
+            "best_feas_train": best["train_aep"],
+            "best_iter": best["attempt"],
+            "script": os.path.join(d, f"iter_{best['attempt']:03d}.py"),
+        })
+    out.sort(key=lambda x: -x["best_feas_rowp"])
+    return out
+
+
+def fig1_best_rowp_comparison(data, leaderboard):
+    """Best FEASIBLE ROWP AEP per model."""
+    baseline = data["baselines"]["problem_rowp"]["best_aep"]
+    by_model = {}
+    for r in leaderboard:
+        if r["model"] not in by_model or r["best_feas_rowp"] > by_model[r["model"]]["best_feas_rowp"]:
+            by_model[r["model"]] = r
+
+    models = sorted(by_model.items(), key=lambda kv: -kv[1]["best_feas_rowp"])
     names = [m[0] for m in models]
-    scores = [m[1] for m in models]
-    deltas = [s - baseline_rowp for s in scores]
+    scores = [m[1]["best_feas_rowp"] for m in models]
 
     fig, ax = plt.subplots(figsize=(6.5, 3.8))
-    colors = [COLORS["Gemini CLI"], COLORS["Claude Code"], COLORS["Llama 70B"],
-              COLORS["Qwen 32B"], COLORS["Baseline"]]
-    bars = ax.bar(names, scores, color=colors, edgecolor="black", linewidth=0.7)
+    colors = [COLORS.get(n, "#999999") for n in names]
+    bars = ax.bar(names + ["500-start SGD"], scores + [baseline],
+                  color=colors + [COLORS["Baseline"]],
+                  edgecolor="black", linewidth=0.7)
 
-    ax.axhline(baseline_rowp, color="black", linestyle="--", linewidth=0.8, alpha=0.5)
-    ax.set_ylim(4200, 4360)
-    ax.set_ylabel("Held-out AEP (GWh)")
-    ax.set_title("Best held-out (ROWP) performance by model", fontweight="bold")
+    ax.axhline(baseline, color="black", linestyle="--", linewidth=0.8, alpha=0.5)
+    ax.set_ylim(min(scores + [baseline]) - 5, max(scores + [baseline]) + 8)
+    ax.set_ylabel("Best feasible held-out (ROWP) AEP (GWh)")
+    ax.set_title("Best held-out performance (feasible only)", fontweight="bold")
 
-    # Annotate deltas
-    for bar, delta, score in zip(bars, deltas, scores):
-        height = bar.get_height()
+    for bar, score in zip(bars, scores + [baseline]):
+        delta = score - baseline
         label = f"+{delta:.1f}" if delta > 0 else f"{delta:.1f}"
-        ax.text(bar.get_x() + bar.get_width() / 2, height + 2,
+        if abs(delta) < 0.01:
+            label = "baseline"
+        ax.text(bar.get_x() + bar.get_width() / 2, score + 0.3,
                 label, ha="center", va="bottom", fontsize=9, fontweight="bold")
 
-    # Highlight the winner
     bars[0].set_edgecolor("#1a5490")
     bars[0].set_linewidth(2)
 
@@ -89,54 +145,46 @@ def fig1_best_rowp_comparison(data):
 
 
 def fig2_generalization_curve(data):
-    """AEP vs n_target curve for each model."""
+    """AEP vs n_target for each model's best script."""
     baselines = data["baselines"]
     gen = data["gen_curve"]
-    gen_sched = data["gen_sched"]
 
     ns = [30, 40, 50, 60, 70, 80]
 
-    # Baseline: 500-start SGD
     baseline_aep = []
     for n in ns:
         key = f"problem_dei_n{n}"
         baseline_aep.append(baselines[key]["best_aep"])
 
-    # Scripts from gen_curve
     scripts = {}
-    for r in gen["data"] if isinstance(gen, dict) and "data" in gen else gen:
-        if not isinstance(r, dict):
-            continue
+    for r in (gen if isinstance(gen, list) else []):
         s = r.get("script", "")
         n = r.get("n_target", 0)
         aep = r.get("aep_gwh")
         if aep is None:
             continue
-        if s not in scripts:
-            scripts[s] = {}
-        scripts[s][n] = aep
+        scripts.setdefault(s, {})[n] = aep
 
-    for r in gen_sched if isinstance(gen_sched, list) else []:
-        s = r.get("script", "")
-        n = r.get("n_target", 0)
-        aep = r.get("aep_gwh")
-        if aep is None:
-            continue
-        if s not in scripts:
-            scripts[s] = {}
-        scripts[s][n] = aep
+    try:
+        gen_sched = json.load(open(os.path.join(RESULTS, "generalization_schedule.json")))
+        for r in gen_sched:
+            s = r.get("script", "")
+            n = r.get("n_target", 0)
+            aep = r.get("aep_gwh")
+            if aep is None:
+                continue
+            scripts.setdefault(s, {})[n] = aep
+    except Exception:
+        pass
 
     fig, ax = plt.subplots(figsize=(6.5, 4.2))
 
-    # Reference: 500-start baseline
     ax.plot(ns, baseline_aep, "o-", color="black",
-            label="500 multi-start SGD (baseline)",
+            label="500 multi-start SGD baseline",
             linewidth=2.2, markersize=7, zorder=5)
 
-    # LLM scripts — pick the best known per-model
     plot_scripts = [
         ("results_agent_schedule_only_5hr/iter_192.py", "Claude schedule (iter 192)", COLORS["Claude Code"], "s"),
-        ("results_agent_gemini_cli_5hr/iter_192.py", "Gemini schedule (iter 192)", COLORS["Gemini CLI"], "^"),
         ("results_agent_qwen2_5-coder-32b_s1/iter_011.py", "Qwen 32B full-opt", COLORS["Qwen 32B"], "D"),
         ("results_agent_llama3_3-70b_s2/iter_002.py", "Llama 70B full-opt", COLORS["Llama 70B"], "v"),
         ("results/seed_optimizer.py", "Seed (single-start)", COLORS["Seed"], "x"),
@@ -148,12 +196,13 @@ def fig2_generalization_curve(data):
         d = scripts[script_key]
         xs = [n for n in ns if n in d]
         ys = [d[n] for n in xs]
-        ax.plot(xs, ys, marker=marker, linestyle="-", color=color,
-                label=label, linewidth=1.4, markersize=6)
+        if xs:
+            ax.plot(xs, ys, marker=marker, linestyle="-", color=color,
+                    label=label, linewidth=1.4, markersize=6)
 
     ax.set_xlabel("Number of turbines")
     ax.set_ylabel("AEP (GWh)")
-    ax.set_title("Generalization across turbine counts (DEI farm)", fontweight="bold")
+    ax.set_title("Generalization across turbine counts (DEI)", fontweight="bold")
     ax.legend(loc="upper left", frameon=True, fancybox=True)
     ax.grid(True, alpha=0.3)
 
@@ -164,171 +213,240 @@ def fig2_generalization_curve(data):
     print("  fig2_generalization.png")
 
 
-def fig3_discovered_schedules(data):
-    """Plot the 4 schedule parameters over time for key schedules."""
-    import sys
-    sys.path.insert(0, "playground/pixwake/src")
-    sys.path.insert(0, "playground")
-    sys.path.insert(0, "results")
+def fig3_top3_schedules(leaderboard):
+    """Plot the top-3 feasible-ROWP schedule_fn scripts."""
+    import importlib.util
+
+    # Scan ALL schedule_fn scripts across all dirs, pick top 3 by feasible ROWP
+    all_scheds = []
+    for d in sorted(glob.glob(os.path.join(ROOT, "results_agent_*"))):
+        log = os.path.join(d, "attempt_log.json")
+        if not os.path.exists(log):
+            continue
+        try:
+            atts = json.load(open(log))
+        except Exception:
+            continue
+        for a in atts:
+            if "rowp_aep" not in a or not a.get("rowp_feasible"):
+                continue
+            script = os.path.join(d, f"iter_{a['attempt']:03d}.py")
+            if not os.path.exists(script):
+                continue
+            try:
+                code = open(script).read()
+            except Exception:
+                continue
+            if "def schedule_fn" not in code:
+                continue
+            all_scheds.append({
+                "script": script,
+                "dir": os.path.basename(d),
+                "iter": a["attempt"],
+                "rowp": a["rowp_aep"],
+                "train": a["train_aep"],
+            })
+
+    all_scheds.sort(key=lambda x: -x["rowp"])
+    top = all_scheds[:3]
+    if not top:
+        print("  fig3: no schedule_fn scripts found")
+        return
 
     total_steps = 8000
     lr0 = 50.0
-    alpha0 = 1.0  # proxy
+    alpha0 = 1.0
 
-    # Import schedules
-    import importlib.util
+    fig, axes = plt.subplots(2, 2, figsize=(8, 5.5), sharex=True)
 
-    schedules = []
+    colors = [COLORS["Claude Code"], "#9c4a2f", "#6b3020"]
+    # Also overlay baseline
+    spec = importlib.util.spec_from_file_location("seed", os.path.join(ROOT, "results/seed_schedule.py"))
+    seed_mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(seed_mod)
+    top_all = [
+        {"label": "Baseline seed", "fn": seed_mod.schedule_fn, "color": COLORS["Seed"], "ls": "--"},
+    ]
+    for i, r in enumerate(top):
+        spec = importlib.util.spec_from_file_location(f"top{i}", r["script"])
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        label = f"#{i+1}: {r['dir']} iter {r['iter']} (ROWP {r['rowp']:.1f})"
+        top_all.append({"label": label, "fn": mod.schedule_fn, "color": colors[i], "ls": "-"})
 
-    # Seed
-    spec = importlib.util.spec_from_file_location("seed", "results/seed_schedule.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    schedules.append(("Seed (baseline)", mod.schedule_fn, COLORS["Seed"], "-"))
-
-    # Claude iter_192
-    spec = importlib.util.spec_from_file_location("claude", "results_agent_schedule_only_5hr/iter_192.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    schedules.append(("Claude (iter 192)", mod.schedule_fn, COLORS["Claude Code"], "-"))
-
-    # Gemini iter_067 (best ROWP)
-    spec = importlib.util.spec_from_file_location("gemini", "results_agent_gemini_cli_5hr/iter_067.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    schedules.append(("Gemini (iter 67)", mod.schedule_fn, COLORS["Gemini CLI"], "-"))
-
-    fig, axes = plt.subplots(2, 2, figsize=(7.5, 5.5), sharex=True)
     steps = np.arange(total_steps)
     t = steps / total_steps
+    labels = ["Learning rate", r"Penalty weight $\alpha$", r"Adam $\beta_1$", r"Adam $\beta_2$"]
 
-    labels = ["Learning rate (lr)", r"Penalty weight ($\alpha$)",
-              r"Adam $\beta_1$", r"Adam $\beta_2$"]
-
-    for name, fn, color, ls in schedules:
+    for entry in top_all:
         lrs = np.zeros(total_steps)
         alphas = np.zeros(total_steps)
         b1s = np.zeros(total_steps)
         b2s = np.zeros(total_steps)
         for i in range(total_steps):
             try:
-                lr, a, b1, b2 = fn(i, total_steps, lr0, alpha0)
-                lrs[i] = float(lr)
-                alphas[i] = float(a)
-                b1s[i] = float(b1)
-                b2s[i] = float(b2)
+                lr, a, b1, b2 = entry["fn"](i, total_steps, lr0, alpha0)
+                lrs[i] = float(lr); alphas[i] = float(a)
+                b1s[i] = float(b1); b2s[i] = float(b2)
             except Exception:
                 lrs[i] = alphas[i] = b1s[i] = b2s[i] = np.nan
 
-        axes[0, 0].plot(t, lrs, label=name, color=color, linestyle=ls, linewidth=1.5)
-        axes[0, 1].plot(t, alphas, label=name, color=color, linestyle=ls, linewidth=1.5)
-        axes[1, 0].plot(t, b1s, label=name, color=color, linestyle=ls, linewidth=1.5)
-        axes[1, 1].plot(t, b2s, label=name, color=color, linestyle=ls, linewidth=1.5)
+        for ax, y in zip(axes.flat, [lrs, alphas, b1s, b2s]):
+            ax.plot(t, y, label=entry["label"], color=entry["color"],
+                    linestyle=entry["ls"], linewidth=1.4)
 
     for ax, label in zip(axes.flat, labels):
         ax.set_ylabel(label)
         ax.grid(True, alpha=0.3)
-    axes[1, 0].set_xlabel("Progress (t = step / total_steps)")
-    axes[1, 1].set_xlabel("Progress (t = step / total_steps)")
+    axes[1, 0].set_xlabel("Progress $t$")
+    axes[1, 1].set_xlabel("Progress $t$")
     axes[0, 1].set_yscale("log")
-    axes[0, 0].legend(loc="upper right", frameon=True)
+    axes[0, 0].legend(loc="upper right", fontsize=7, frameon=True)
 
-    plt.suptitle("Discovered schedule structures", fontweight="bold", y=1.00)
+    plt.suptitle("Top-3 feasible schedule_fn discoveries", fontweight="bold", y=1.00)
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGS, "fig3_schedules.png"), dpi=200)
-    plt.savefig(os.path.join(FIGS, "fig3_schedules.pdf"))
+    plt.savefig(os.path.join(FIGS, "fig3_top3_schedules.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig3_top3_schedules.pdf"))
     plt.close()
-    print("  fig3_schedules.png")
+    print("  fig3_top3_schedules.png")
 
 
-def fig4_train_vs_rowp(data):
-    """Scatter: train AEP vs ROWP AEP for all scored attempts from each model."""
-    import os
+def fig4_running_best_with_deploy(leaderboard):
+    """Running-best train and ROWP vs wall-clock time, with deployed marker.
 
-    sources = [
-        ("Claude Code (schedule)", "results_agent_schedule_only_5hr/attempt_log.json", COLORS["Claude Code"], "o"),
-        ("Gemini CLI (schedule)", "results_agent_gemini_cli_5hr/attempt_log.json", COLORS["Gemini CLI"], "^"),
-        ("Qwen 32B (full-opt)", "results_agent_qwen2_5-coder-32b_s1/attempt_log.json", COLORS["Qwen 32B"], "D"),
-        ("Llama 70B (full-opt)", "results_agent_llama3_3-70b_s2/attempt_log.json", COLORS["Llama 70B"], "v"),
-    ]
+    Mirrors the README comparison plot: top panel = best-so-far training,
+    bottom panel = rowp of the currently-best-train script ("would-be deployed").
+    Marks the final deployed script with a star.
+    """
+    # Which dirs to plot — one best per model
+    model_dirs = {}
+    for r in leaderboard:
+        if r["model"] not in model_dirs:
+            model_dirs[r["model"]] = r["dir"]
 
-    fig, ax = plt.subplots(figsize=(6.5, 4.5))
+    fig, (ax_t, ax_r) = plt.subplots(2, 1, figsize=(7.5, 6), sharex=True)
 
-    for name, path, color, marker in sources:
-        if not os.path.exists(path):
+    deploy_points = []
+
+    for model, d in model_dirs.items():
+        log = os.path.join(d, "attempt_log.json")
+        if not os.path.exists(log):
             continue
-        d = json.load(open(path))
-        points = [(a["train_aep"], a["rowp_aep"])
-                  for a in d if "train_aep" in a and "rowp_aep" in a]
-        if not points:
+        try:
+            atts = json.load(open(log))
+        except Exception:
             continue
-        xs, ys = zip(*points)
-        ax.scatter(xs, ys, color=color, marker=marker, s=22, alpha=0.55,
-                   label=f"{name} ({len(points)})", edgecolors="none")
+        # Sort by timestamp
+        scored = [a for a in atts if "train_aep" in a]
+        scored.sort(key=lambda a: a.get("timestamp", 0))
+        if not scored:
+            continue
+        t0 = scored[0].get("timestamp", 0)
+        ts_min = [(a.get("timestamp", 0) - t0) / 60 for a in scored]
 
-    # Baseline reference
-    ax.axhline(data["baselines"]["problem_rowp"]["best_aep"],
-               color="black", linestyle="--", linewidth=0.8, alpha=0.5,
-               label="Baseline ROWP")
-    ax.axvline(5540.7, color="black", linestyle=":", linewidth=0.8, alpha=0.5,
-               label="Baseline train")
+        best_train_so_far = []
+        deploy_rowp_so_far = []   # rowp of current best-train script
+        best_t = -float("inf")
+        deploy_r = None
+        for a in scored:
+            if a["train_aep"] > best_t:
+                best_t = a["train_aep"]
+                if a.get("rowp_feasible"):
+                    deploy_r = a.get("rowp_aep")
+                else:
+                    deploy_r = None  # infeasible; don't deploy
+            best_train_so_far.append(best_t)
+            deploy_rowp_so_far.append(deploy_r if deploy_r is not None else np.nan)
 
-    ax.set_xlabel("Training AEP (GWh)")
-    ax.set_ylabel("Held-out (ROWP) AEP (GWh)")
-    ax.set_title("Training vs held-out AEP across all scored attempts", fontweight="bold")
-    ax.legend(loc="lower right", frameon=True)
-    ax.grid(True, alpha=0.3)
+        color = COLORS.get(model, "#999999")
+        ax_t.plot(ts_min, best_train_so_far, "-", color=color,
+                  label=f"{model} (n={len(scored)})", linewidth=1.6)
+        ax_r.plot(ts_min, deploy_rowp_so_far, "-", color=color,
+                  label=f"{model}", linewidth=1.6)
+
+        # Mark deployed point (last non-nan deploy_rowp)
+        valid = [(t, r) for t, r in zip(ts_min, deploy_rowp_so_far) if not np.isnan(r)]
+        if valid:
+            deploy_points.append((valid[-1][0], valid[-1][1], color, model))
+
+    # Baseline lines
+    train_base = 5540.7
+    rowp_base = 4243.75
+    ax_t.axhline(train_base, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
+                 label=f"500-start baseline ({train_base:.0f})")
+    ax_r.axhline(rowp_base, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
+                 label=f"500-start baseline ({rowp_base:.0f})")
+
+    # Mark deployed scripts
+    for t, r, color, model in deploy_points:
+        ax_r.plot(t, r, marker="*", color=color, markersize=16,
+                  markeredgecolor="black", markeredgewidth=0.8, zorder=10)
+
+    ax_t.set_ylabel("Best-so-far\ntraining AEP (GWh)")
+    ax_t.set_title("Running-best AEP over time", fontweight="bold")
+    ax_t.legend(loc="lower right", frameon=True, fontsize=8)
+    ax_t.grid(True, alpha=0.3)
+
+    ax_r.set_ylabel("Held-out (ROWP) AEP\nof currently-deployed script (GWh)")
+    ax_r.set_xlabel("Wall-clock time (minutes)")
+    ax_r.grid(True, alpha=0.3)
+    ax_r.legend(loc="lower right", frameon=True, fontsize=8)
 
     plt.tight_layout()
-    plt.savefig(os.path.join(FIGS, "fig4_train_vs_rowp.png"), dpi=200)
-    plt.savefig(os.path.join(FIGS, "fig4_train_vs_rowp.pdf"))
+    plt.savefig(os.path.join(FIGS, "fig4_running_best.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig4_running_best.pdf"))
     plt.close()
-    print("  fig4_train_vs_rowp.png")
+    print("  fig4_running_best.png")
 
 
 def fig5_convergence(data):
-    """Best-so-far ROWP AEP vs attempt number: Claude, Gemini, (random, DE when ready)."""
+    """Best-so-far ROWP vs attempt for LLMs + random + DE when available."""
     baseline = data["baselines"]["problem_rowp"]["best_aep"]
 
     sources = [
         ("Claude Code", "results_agent_schedule_only_5hr/attempt_log.json", COLORS["Claude Code"]),
-        ("Gemini CLI", "results_agent_gemini_cli_5hr/attempt_log.json", COLORS["Gemini CLI"]),
-        ("Random search", "results_random_search_320/attempt_log.json", "#888"),
-        ("Bump DE", "results_bump_opt/bump_opt_log.json", "#b35900"),
+        ("Gemini CLI", "results_agent_5hr_v2/attempt_log.json", COLORS["Gemini CLI"]),
+        ("Random search", "results_random_search_320/attempt_log.json", COLORS["Random"]),
+        ("Bump DE", "results_bump_opt/bump_opt_log.json", COLORS["Bump DE"]),
     ]
 
     fig, ax = plt.subplots(figsize=(7, 4.2))
 
-    for name, path, color in sources:
+    for name, rel_path, color in sources:
+        path = os.path.join(ROOT, rel_path)
         if not os.path.exists(path):
             continue
-        d = json.load(open(path))
-        # handle bump_opt_log.json which has "history" key
+        try:
+            d = json.load(open(path))
+        except Exception:
+            continue
         if isinstance(d, dict) and "history" in d:
             d = d["history"]
-        # get (attempt_num, rowp_aep) for scored attempts
-        pts = []
+        # Use ONLY feasible ROWP
+        feas_pts = []
         for a in d:
-            if "rowp_aep" in a:
-                attempt_num = a.get("attempt", a.get("eval", len(pts) + 1))
-                pts.append((attempt_num, a["rowp_aep"]))
-        if not pts:
+            if "rowp_aep" not in a:
+                continue
+            if not a.get("rowp_feasible"):
+                continue
+            n = a.get("attempt", a.get("eval", len(feas_pts) + 1))
+            feas_pts.append((n, a["rowp_aep"]))
+        if not feas_pts:
             continue
-        pts.sort()
-        xs = [p[0] for p in pts]
-        best_so_far = [pts[0][1]]
-        for _, y in pts[1:]:
-            best_so_far.append(max(best_so_far[-1], y))
-        ax.plot(xs, best_so_far, "-", color=color, label=f"{name} (n={len(pts)})",
-                linewidth=1.6)
+        feas_pts.sort()
+        xs = [p[0] for p in feas_pts]
+        best = [feas_pts[0][1]]
+        for _, y in feas_pts[1:]:
+            best.append(max(best[-1], y))
+        ax.plot(xs, best, "-", color=color, label=f"{name} (n={len(feas_pts)})", linewidth=1.6)
 
     ax.axhline(baseline, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
-               label=f"500-start SGD ({baseline:.0f})")
+               label=f"500-start baseline ({baseline:.0f})")
     ax.set_xlabel("Attempt number")
-    ax.set_ylabel("Best-so-far held-out (ROWP) AEP (GWh)")
-    ax.set_title("Search convergence: LLM agents vs random/DE baselines",
+    ax.set_ylabel("Best-so-far feasible ROWP (GWh)")
+    ax.set_title("Search convergence: LLM vs random/DE baselines",
                  fontweight="bold")
-    ax.legend(loc="lower right", frameon=True, fancybox=True)
+    ax.legend(loc="lower right", frameon=True, fontsize=9)
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
@@ -339,14 +457,8 @@ def fig5_convergence(data):
 
 
 def fig6_alpha_mechanism(data):
-    """Scatter: alpha value at convergence vs ROWP AEP, colored by model.
-
-    Tests the mechanism claim: schedules with high terminal constraint
-    penalty generalize better.
-    """
+    """Terminal alpha vs ROWP AEP across all schedule_fn scripts."""
     import importlib.util
-    import glob
-    import numpy as np
     import warnings
     warnings.filterwarnings("ignore")
 
@@ -354,12 +466,12 @@ def fig6_alpha_mechanism(data):
     jax.config.update("jax_enable_x64", True)
     import jax.numpy as jnp
 
-    sources = [
+    # Sources: any dir with schedule_fn scripts + attempt logs with rowp
+    source_dirs = [
         ("Claude Code", "results_agent_schedule_only_5hr", COLORS["Claude Code"], "o"),
-        ("Gemini CLI", "results_agent_gemini_cli_5hr", COLORS["Gemini CLI"], "^"),
-        ("Qwen 32B", "results_agent_qwen2_5-coder-32b_sched_s5", COLORS["Qwen 32B"], "D"),
-        ("Llama 70B", "results_agent_llama3_3-70b_sched_s3", COLORS["Llama 70B"], "v"),
     ]
+    for s in [1, 2, 3, 4]:
+        source_dirs.append((f"Claude seed {s}", f"results_agent_claude_sched_s{s}", COLORS["Claude Code"], "o"))
 
     fig, ax = plt.subplots(figsize=(7, 4.5))
 
@@ -367,51 +479,62 @@ def fig6_alpha_mechanism(data):
     lr0 = 50.0
     alpha0 = 1.0
 
-    for name, dir_path, color, marker in sources:
-        log_path = os.path.join(dir_path, "attempt_log.json")
-        if not os.path.exists(log_path):
+    any_plotted = False
+    plotted_labels = set()
+    for name, dir_path, color, marker in source_dirs:
+        log = os.path.join(ROOT, dir_path, "attempt_log.json")
+        if not os.path.exists(log):
             continue
-        attempts = json.load(open(log_path))
-
+        try:
+            atts = json.load(open(log))
+        except Exception:
+            continue
         xs, ys = [], []
-        for a in attempts:
-            if "rowp_aep" not in a:
+        for a in atts:
+            if "rowp_aep" not in a or not a.get("rowp_feasible"):
                 continue
-            script = os.path.join(dir_path, f"iter_{a['attempt']:03d}.py")
+            script = os.path.join(ROOT, dir_path, f"iter_{a['attempt']:03d}.py")
             if not os.path.exists(script):
                 continue
             try:
-                spec = importlib.util.spec_from_file_location("sched", script)
+                spec = importlib.util.spec_from_file_location("sched_mod", script)
                 mod = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(mod)
                 if not hasattr(mod, "schedule_fn"):
                     continue
-                # Alpha at final step
-                _, alpha_final, _, _ = mod.schedule_fn(total_steps - 1, total_steps, lr0, alpha0)
-                alpha_final = float(alpha_final)
-                if alpha_final <= 0 or not np.isfinite(alpha_final):
+                _, a_final, _, _ = mod.schedule_fn(total_steps - 1, total_steps, lr0, alpha0)
+                a_final = float(a_final)
+                if a_final <= 0 or not np.isfinite(a_final):
                     continue
-                xs.append(alpha_final)
+                xs.append(a_final)
                 ys.append(a["rowp_aep"])
             except Exception:
                 continue
-
         if not xs:
             continue
-        ax.scatter(xs, ys, c=color, marker=marker, s=22, alpha=0.55,
-                   label=f"{name} (n={len(xs)})", edgecolors="none")
+        label = "Claude Code" if "Claude" in name else name
+        if label in plotted_labels:
+            label = None
+        else:
+            plotted_labels.add(label)
+        ax.scatter(xs, ys, c=color, marker=marker, s=22, alpha=0.5,
+                   label=label, edgecolors="none")
+        any_plotted = True
 
-    # Baseline
+    if not any_plotted:
+        print("  fig6: no data")
+        return
+
     baseline = data["baselines"]["problem_rowp"]["best_aep"]
     ax.axhline(baseline, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
-               label=f"500-start SGD ({baseline:.0f})")
+               label=f"500-start baseline ({baseline:.0f})")
 
     ax.set_xscale("log")
     ax.set_xlabel(r"Terminal constraint weight $\alpha(t=1)$")
-    ax.set_ylabel("Held-out (ROWP) AEP (GWh)")
+    ax.set_ylabel("Feasible held-out (ROWP) AEP (GWh)")
     ax.set_title("Mechanism: high terminal penalty predicts generalization",
                  fontweight="bold")
-    ax.legend(loc="lower right", frameon=True, fancybox=True, fontsize=8)
+    ax.legend(loc="lower right", frameon=True, fontsize=9)
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
@@ -421,51 +544,35 @@ def fig6_alpha_mechanism(data):
     print("  fig6_alpha_mechanism.png")
 
 
-def fig5_seed_reproducibility_OLD(data):
-    """Bar chart: Claude 4-seed reproducibility."""
-    seeds = [1, 2, 3, 4]
-    best_trains = []
-    for s in seeds:
-        try:
-            d = json.load(open(f"results_agent_claude_sched_s{s}/attempt_log.json"))
-            scored = [a for a in d if "train_aep" in a]
-            best_trains.append(max(a["train_aep"] for a in scored) if scored else 0)
-        except FileNotFoundError:
-            best_trains.append(0)
-
-    fig, ax = plt.subplots(figsize=(5.5, 3.5))
-    bars = ax.bar([f"Seed {s}" for s in seeds], best_trains,
-                  color=COLORS["Claude Code"], edgecolor="black", linewidth=0.7)
-    ax.axhline(5540.7, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
-               label="500-start baseline")
-    ax.axhline(5600.0, color="gray", linestyle=":", linewidth=0.8, alpha=0.5,
-               label="Claude original (320 att)")
-    ax.set_ylim(5520, 5620)
-    ax.set_ylabel("Best training AEP (GWh)")
-    ax.set_title("Claude Code schedule-only: seed reproducibility", fontweight="bold")
-    ax.legend(loc="lower right", frameon=True)
-
-    for bar, v in zip(bars, best_trains):
-        ax.text(bar.get_x() + bar.get_width() / 2, v + 1,
-                f"{v:.1f}", ha="center", va="bottom", fontsize=9)
-
-    plt.tight_layout()
-    plt.savefig(os.path.join(FIGS, "fig5_seed_reproducibility.png"), dpi=200)
-    plt.savefig(os.path.join(FIGS, "fig5_seed_reproducibility.pdf"))
-    plt.close()
-    print("  fig5_seed_reproducibility.png")
+def load_results():
+    data = {}
+    data["baselines"] = json.load(open(os.path.join(RESULTS, "baselines_500start.json")))
+    try:
+        data["gen_curve"] = json.load(open(os.path.join(RESULTS, "generalization_curve.json")))
+    except FileNotFoundError:
+        data["gen_curve"] = []
+    return data
 
 
 def main():
     print("Generating figures...")
     data = load_results()
-    fig1_best_rowp_comparison(data)
+    leaderboard = load_feasible_leaderboard()
+    print(f"  Feasible leaderboard: {len(leaderboard)} runs")
+    print(f"  Top 3:")
+    for r in leaderboard[:3]:
+        print(f"    {r['basename']:<40s} {r['model']:<15s} ROWP={r['best_feas_rowp']:.1f}  train={r['best_feas_train']:.1f}")
+
+    fig1_best_rowp_comparison(data, leaderboard)
     fig2_generalization_curve(data)
     try:
-        fig3_discovered_schedules(data)
+        fig3_top3_schedules(leaderboard)
     except Exception as e:
         print(f"  fig3 failed: {e}")
-    fig4_train_vs_rowp(data)
+    try:
+        fig4_running_best_with_deploy(leaderboard)
+    except Exception as e:
+        print(f"  fig4 failed: {e}")
     fig5_convergence(data)
     try:
         fig6_alpha_mechanism(data)

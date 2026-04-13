@@ -32,11 +32,12 @@ We present FunWake, a benchmark with three properties:
     $\sim$\$500.
 \end{enumerate}
 
-\paragraph{The strongest agent.} Across four models evaluated, Gemini
-CLI produces the best schedule by a wide margin: +81.3~GWh on the
-held-out farm, approximately 3$\times$ the next-best result. Claude
-Code follows at +24.8~GWh, with open-source Llama 70B and Qwen 32B at
-+5.3 and +4.7~GWh respectively.
+\paragraph{The strongest agents.} Restricted to feasible held-out
+layouts, Claude Code and Gemini 2.5 Flash are tied at the top, both
+reaching $\sim$4272\,GWh (+28\,GWh over the 500-start SGD baseline).
+Open-source Llama 70B and Qwen 32B follow at +5--8\,GWh. Several
+schedules produce higher \emph{nominal} held-out AEP but violate
+constraints; feasibility-aware evaluation is essential.
 
 \paragraph{What the agents discover.}
 Two qualitatively novel schedule structures emerge:

@@ -1,0 +1,110 @@
+[
+  {
+    "dir": "results_agent_5hr_v2",
+    "model": "gemini-2.5-flash",
+    "n_att": 80,
+    "n_feas": 66,
+    "best_rowp": 4272.685218551676,
+    "best_rowp_train": 5542.16,
+    "best_rowp_iter": 27
+  },
+  {
+    "dir": "results_agent_schedule_only_5hr",
+    "model": "claude",
+    "n_att": 320,
+    "n_feas": 241,
+    "best_rowp": 4271.49,
+    "best_rowp_train": 5555.73,
+    "best_rowp_iter": 192
+  },
+  {
+    "dir": "results_agent_5hr",
+    "model": "?",
+    "n_att": 6,
+    "n_feas": 6,
+    "best_rowp": 4268.683133300506,
+    "best_rowp_train": 5533.48,
+    "best_rowp_iter": 1
+  },
+  {
+    "dir": "results_agent_claude_6hr",
+    "model": "claude",
+    "n_att": 130,
+    "n_feas": 104,
+    "best_rowp": 4268.51,
+    "best_rowp_train": 5530.95,
+    "best_rowp_iter": 49
+  },
+  {
+    "dir": "results_agent_schedule_5hr",
+    "model": "?",
+    "n_att": 99,
+    "n_feas": 78,
+    "best_rowp": 4267.82,
+    "best_rowp_train": 5548.06,
+    "best_rowp_iter": 88
+  },
+  {
+    "dir": "results_agent_claude_7hr",
+    "model": "claude",
+    "n_att": 135,
+    "n_feas": 105,
+    "best_rowp": 4267.0,
+    "best_rowp_train": 5544.75,
+    "best_rowp_iter": 26
+  },
+  {
+    "dir": "results_agent_5hr_v4",
+    "model": "gemini-2.5-flash",
+    "n_att": 100,
+    "n_feas": 50,
+    "best_rowp": 4264.025338937223,
+    "best_rowp_train": 5549.35,
+    "best_rowp_iter": 26
+  },
+  {
+    "dir": "results_agent_5hr_v6",
+    "model": "gemini-2.5-flash",
+    "n_att": 37,
+    "n_feas": 25,
+    "best_rowp": 4256.083075377759,
+    "best_rowp_train": 5551.52,
+    "best_rowp_iter": 35
+  },
+  {
+    "dir": "results_agent_5hr_noinit",
+    "model": "gemini-2.5-flash",
+    "n_att": 42,
+    "n_feas": 31,
+    "best_rowp": 4250.939848083492,
+    "best_rowp_train": 5552.58,
+    "best_rowp_iter": 33
+  },
+  {
+    "dir": "results_agent_30min_v2",
+    "model": "gemini-2.5-flash",
+    "n_att": 8,
+    "n_feas": 6,
+    "best_rowp": 4232.357137665714,
+    "best_rowp_train": 5522.97,
+    "best_rowp_iter": 5
+  },
+  {
+    "dir": "results_agent_5hr_v5",
+    "model": "gemini-2.5-flash",
+    "n_att": 3,
+    "n_feas": 3,
+    "best_rowp": 4230.100272663499,
+    "best_rowp_train": 5517.27,
+    "best_rowp_iter": 2
+  },
+  {
+    "dir": "results_agent_1hr_v5",
+    "model": "gemini-2.5-flash",
+    "n_att": 9,
+    "n_feas": 4,
+    "best_rowp": 3843.15879116976,
+    "best_rowp_train": 5548.31,
+    "best_rowp_iter": 6
+  }
+]
