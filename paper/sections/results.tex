@@ -69,29 +69,33 @@ full-optimizer runs max out at 5547--5549\,GWh, below this ceiling.
 \subsection{Running-best AEP and ``deployment''}
 \label{sec:running_best}
 
-Figure~\ref{fig:running} shows the running-best training AEP (top)
-and the held-out (ROWP) AEP of the currently best-training script
-(``would-be deployed'' script) over wall-clock time. The star marks
-the final deployed script for each model.
+Figure~\ref{fig:running} shows running-best training AEP (top) and
+running-best \emph{feasible} held-out (ROWP) AEP (bottom) over
+wall-clock time. We define the \textbf{deployed} script as the one
+with the highest feasible held-out AEP at the end of the run---this is
+the script a practitioner with access to a trusted validation set
+would actually ship. The star in the bottom panel marks the deployed
+script for each model.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.9\linewidth]{figs/fig4_running_best.png}
-\caption{Running-best training AEP (top) and ROWP AEP of the
-best-training script at each point in time (bottom). Stars mark the
-final deployed script for each model. Training AEP saturates well
-before 5 hours for frontier models; ROWP improves more slowly. The
-deployed script's ROWP reflects the reality that one must commit to a
-specific optimizer at some point.}
+\caption{Running-best training AEP (top) and running-best feasible
+held-out (ROWP) AEP (bottom) over wall-clock time. Stars mark the
+final deployed script for each model---the one with the highest
+feasible ROWP at run's end. Training AEP saturates quickly for
+frontier models; feasible ROWP continues to improve throughout the
+5-hour budget.}
 \label{fig:running}
 \end{figure}
 
-Training AEP saturates relatively quickly (within $\sim$1--2 hours for
-Claude and Gemini), but held-out ROWP continues to improve later as
-the agents explore schedules that happen to generalize better. The
-deployed (final best-training) script's ROWP lags behind the
-globally-best ROWP seen during the run, reflecting that selection on
-training AEP alone is suboptimal.
+Training AEP saturates within $\sim$1--2 hours for the frontier
+models, but the best-feasible held-out AEP continues to improve
+throughout the 5-hour budget. This matters for benchmark design: a
+time budget that terminates when training AEP plateaus would miss
+late-run improvements in generalization. The deployed script for
+Gemini (iter 27) was found in the first hour, while Claude's deployed
+script (iter 192) appears well into the second half of the run.
 
 \subsection{Generalization Across Turbine Counts}
 \label{sec:generalization}

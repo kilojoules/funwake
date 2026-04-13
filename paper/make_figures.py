@@ -314,11 +314,12 @@ def fig3_top3_schedules(leaderboard):
 def fig4_running_best_with_deploy(leaderboard):
     """Running-best train and ROWP vs wall-clock time, with deployed marker.
 
-    Mirrors the README comparison plot: top panel = best-so-far training,
-    bottom panel = rowp of the currently-best-train script ("would-be deployed").
-    Marks the final deployed script with a star.
+    Top panel: best-so-far training AEP.
+    Bottom panel: best-so-far FEASIBLE held-out (ROWP) AEP. The
+    "deployed" script is the one with the highest feasible ROWP at
+    run's end (star). Since the benchmark allows post-hoc held-out
+    selection, this is the script a researcher would actually ship.
     """
-    # Which dirs to plot — one best per model
     model_dirs = {}
     for r in leaderboard:
         if r["model"] not in model_dirs:
@@ -336,7 +337,6 @@ def fig4_running_best_with_deploy(leaderboard):
             atts = json.load(open(log))
         except Exception:
             continue
-        # Sort by timestamp
         scored = [a for a in atts if "train_aep" in a]
         scored.sort(key=lambda a: a.get("timestamp", 0))
         if not scored:
@@ -345,29 +345,30 @@ def fig4_running_best_with_deploy(leaderboard):
         ts_min = [(a.get("timestamp", 0) - t0) / 60 for a in scored]
 
         best_train_so_far = []
-        deploy_rowp_so_far = []   # rowp of current best-train script
+        best_feas_rowp_so_far = []
         best_t = -float("inf")
-        deploy_r = None
-        for a in scored:
+        best_r = -float("inf")
+        best_r_time = None
+        for a, ts in zip(scored, ts_min):
             if a["train_aep"] > best_t:
                 best_t = a["train_aep"]
-                if a.get("rowp_feasible"):
-                    deploy_r = a.get("rowp_aep")
-                else:
-                    deploy_r = None  # infeasible; don't deploy
+            # best-so-far FEASIBLE rowp — this defines the "deployed" script
+            if "rowp_aep" in a and a.get("rowp_feasible"):
+                if a["rowp_aep"] > best_r:
+                    best_r = a["rowp_aep"]
+                    best_r_time = ts
             best_train_so_far.append(best_t)
-            deploy_rowp_so_far.append(deploy_r if deploy_r is not None else np.nan)
+            best_feas_rowp_so_far.append(best_r if best_r > -float("inf") else np.nan)
 
         color = COLORS.get(model, "#999999")
         ax_t.plot(ts_min, best_train_so_far, "-", color=color,
                   label=f"{model} (n={len(scored)})", linewidth=1.6)
-        ax_r.plot(ts_min, deploy_rowp_so_far, "-", color=color,
+        ax_r.plot(ts_min, best_feas_rowp_so_far, "-", color=color,
                   label=f"{model}", linewidth=1.6)
 
-        # Mark deployed point (last non-nan deploy_rowp)
-        valid = [(t, r) for t, r in zip(ts_min, deploy_rowp_so_far) if not np.isnan(r)]
-        if valid:
-            deploy_points.append((valid[-1][0], valid[-1][1], color, model))
+        # Star at the point where the deployed (= best feasible ROWP) script was found
+        if best_r_time is not None and best_r > -float("inf"):
+            deploy_points.append((best_r_time, best_r, color, model))
 
     # Baseline lines
     train_base = 5540.7
@@ -383,11 +384,12 @@ def fig4_running_best_with_deploy(leaderboard):
                   markeredgecolor="black", markeredgewidth=0.8, zorder=10)
 
     ax_t.set_ylabel("Best-so-far\ntraining AEP (GWh)")
-    ax_t.set_title("Running-best AEP over time", fontweight="bold")
+    ax_t.set_title("Running-best AEP over time (deployed = best feasible ROWP)",
+                   fontweight="bold")
     ax_t.legend(loc="lower right", frameon=True, fontsize=8)
     ax_t.grid(True, alpha=0.3)
 
-    ax_r.set_ylabel("Held-out (ROWP) AEP\nof currently-deployed script (GWh)")
+    ax_r.set_ylabel("Best-so-far feasible\nheld-out (ROWP) AEP (GWh)")
     ax_r.set_xlabel("Wall-clock time (minutes)")
     ax_r.grid(True, alpha=0.3)
     ax_r.legend(loc="lower right", frameon=True, fontsize=8)
