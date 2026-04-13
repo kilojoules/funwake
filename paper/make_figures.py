@@ -286,7 +286,142 @@ def fig4_train_vs_rowp(data):
     print("  fig4_train_vs_rowp.png")
 
 
-def fig5_seed_reproducibility(data):
+def fig5_convergence(data):
+    """Best-so-far ROWP AEP vs attempt number: Claude, Gemini, (random, DE when ready)."""
+    baseline = data["baselines"]["problem_rowp"]["best_aep"]
+
+    sources = [
+        ("Claude Code", "results_agent_schedule_only_5hr/attempt_log.json", COLORS["Claude Code"]),
+        ("Gemini CLI", "results_agent_gemini_cli_5hr/attempt_log.json", COLORS["Gemini CLI"]),
+        ("Random search", "results_random_search_320/attempt_log.json", "#888"),
+        ("Bump DE", "results_bump_opt/bump_opt_log.json", "#b35900"),
+    ]
+
+    fig, ax = plt.subplots(figsize=(7, 4.2))
+
+    for name, path, color in sources:
+        if not os.path.exists(path):
+            continue
+        d = json.load(open(path))
+        # handle bump_opt_log.json which has "history" key
+        if isinstance(d, dict) and "history" in d:
+            d = d["history"]
+        # get (attempt_num, rowp_aep) for scored attempts
+        pts = []
+        for a in d:
+            if "rowp_aep" in a:
+                attempt_num = a.get("attempt", a.get("eval", len(pts) + 1))
+                pts.append((attempt_num, a["rowp_aep"]))
+        if not pts:
+            continue
+        pts.sort()
+        xs = [p[0] for p in pts]
+        best_so_far = [pts[0][1]]
+        for _, y in pts[1:]:
+            best_so_far.append(max(best_so_far[-1], y))
+        ax.plot(xs, best_so_far, "-", color=color, label=f"{name} (n={len(pts)})",
+                linewidth=1.6)
+
+    ax.axhline(baseline, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
+               label=f"500-start SGD ({baseline:.0f})")
+    ax.set_xlabel("Attempt number")
+    ax.set_ylabel("Best-so-far held-out (ROWP) AEP (GWh)")
+    ax.set_title("Search convergence: LLM agents vs random/DE baselines",
+                 fontweight="bold")
+    ax.legend(loc="lower right", frameon=True, fancybox=True)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGS, "fig5_convergence.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig5_convergence.pdf"))
+    plt.close()
+    print("  fig5_convergence.png")
+
+
+def fig6_alpha_mechanism(data):
+    """Scatter: alpha value at convergence vs ROWP AEP, colored by model.
+
+    Tests the mechanism claim: schedules with high terminal constraint
+    penalty generalize better.
+    """
+    import importlib.util
+    import glob
+    import numpy as np
+    import warnings
+    warnings.filterwarnings("ignore")
+
+    import jax
+    jax.config.update("jax_enable_x64", True)
+    import jax.numpy as jnp
+
+    sources = [
+        ("Claude Code", "results_agent_schedule_only_5hr", COLORS["Claude Code"], "o"),
+        ("Gemini CLI", "results_agent_gemini_cli_5hr", COLORS["Gemini CLI"], "^"),
+        ("Qwen 32B", "results_agent_qwen2_5-coder-32b_sched_s5", COLORS["Qwen 32B"], "D"),
+        ("Llama 70B", "results_agent_llama3_3-70b_sched_s3", COLORS["Llama 70B"], "v"),
+    ]
+
+    fig, ax = plt.subplots(figsize=(7, 4.5))
+
+    total_steps = 8000
+    lr0 = 50.0
+    alpha0 = 1.0
+
+    for name, dir_path, color, marker in sources:
+        log_path = os.path.join(dir_path, "attempt_log.json")
+        if not os.path.exists(log_path):
+            continue
+        attempts = json.load(open(log_path))
+
+        xs, ys = [], []
+        for a in attempts:
+            if "rowp_aep" not in a:
+                continue
+            script = os.path.join(dir_path, f"iter_{a['attempt']:03d}.py")
+            if not os.path.exists(script):
+                continue
+            try:
+                spec = importlib.util.spec_from_file_location("sched", script)
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                if not hasattr(mod, "schedule_fn"):
+                    continue
+                # Alpha at final step
+                _, alpha_final, _, _ = mod.schedule_fn(total_steps - 1, total_steps, lr0, alpha0)
+                alpha_final = float(alpha_final)
+                if alpha_final <= 0 or not np.isfinite(alpha_final):
+                    continue
+                xs.append(alpha_final)
+                ys.append(a["rowp_aep"])
+            except Exception:
+                continue
+
+        if not xs:
+            continue
+        ax.scatter(xs, ys, c=color, marker=marker, s=22, alpha=0.55,
+                   label=f"{name} (n={len(xs)})", edgecolors="none")
+
+    # Baseline
+    baseline = data["baselines"]["problem_rowp"]["best_aep"]
+    ax.axhline(baseline, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
+               label=f"500-start SGD ({baseline:.0f})")
+
+    ax.set_xscale("log")
+    ax.set_xlabel(r"Terminal constraint weight $\alpha(t=1)$")
+    ax.set_ylabel("Held-out (ROWP) AEP (GWh)")
+    ax.set_title("Mechanism: high terminal penalty predicts generalization",
+                 fontweight="bold")
+    ax.legend(loc="lower right", frameon=True, fancybox=True, fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGS, "fig6_alpha_mechanism.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig6_alpha_mechanism.pdf"))
+    plt.close()
+    print("  fig6_alpha_mechanism.png")
+
+
+def fig5_seed_reproducibility_OLD(data):
     """Bar chart: Claude 4-seed reproducibility."""
     seeds = [1, 2, 3, 4]
     best_trains = []
@@ -331,7 +466,11 @@ def main():
     except Exception as e:
         print(f"  fig3 failed: {e}")
     fig4_train_vs_rowp(data)
-    fig5_seed_reproducibility(data)
+    fig5_convergence(data)
+    try:
+        fig6_alpha_mechanism(data)
+    except Exception as e:
+        print(f"  fig6 failed: {e}")
     print("Done. Figures in paper/figs/")
 
 
