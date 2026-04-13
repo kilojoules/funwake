@@ -20,6 +20,62 @@ non-obvious reasoning about optimization dynamics---specifically,
 about the interaction between learning rate decay and constraint
 penalty ramping.
 
+\subsection{Overfitting vs Held-Out Selection: A Quantitative View}
+\label{sec:overfit}
+
+A common question about benchmarks with a single held-out problem is
+whether the held-out set is doing useful work, or is merely a sanity
+check. FunWake's data provides a concrete answer: \emph{held-out
+selection materially improves the deployed result}, and the gap
+grows with the training--test geometric mismatch.
+
+For each top run, we compare two deployment strategies:
+\begin{itemize}[nosep]
+    \item \textbf{Train-selected}: deploy the script with the highest
+    training AEP (the agent's default selection).
+    \item \textbf{Held-out-selected}: deploy the script with the highest
+    feasible ROWP AEP among those the run produced.
+\end{itemize}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig7_deployment_gap.png}
+\caption{Held-out-selected deployments consistently exceed
+train-selected deployments on the held-out farm. The red annotation
+shows the gain from using held-out selection. On average, held-out
+selection gains +14.4\,GWh per run; the largest gap (Claude 6hr, +38.2)
+reflects a training-optimal schedule that overfit severely to DEI.}
+\label{fig:deploygap}
+\end{figure}
+
+Figure~\ref{fig:deploygap} shows this comparison across six top runs.
+Held-out selection gains an average of \textbf{+14.4\,GWh} over
+train-only selection, with gains as large as +38.2\,GWh (Claude 6hr).
+Critically, for several top-performing runs, the training-optimal
+script is \emph{infeasible} on ROWP---deploying it without the
+held-out check would produce layouts that violate boundary or
+spacing constraints. For these runs, the benchmark's feasibility
+filter is the difference between a shippable and a broken optimizer.
+
+\paragraph{The training farm is too forgiving by design.} The
+spacious 5-vertex DEI polygon permits mild constraint violations
+without significantly reducing AEP, so training AEP alone does not
+discriminate between schedules that generalize and those that overfit.
+The held-out ROWP farm's tighter geometry makes such violations
+expensive. This asymmetry---easy training, hard held-out---is not a
+bug: it is what makes the benchmark's generalization signal
+informative. Without it, train-only selection would frequently
+``succeed'' on a schedule that silently fails in deployment.
+
+\paragraph{Overfitting is the default, not the exception.} Of the six
+top runs analyzed, five produced training-optimal schedules that are
+either infeasible on ROWP or score below the run's own best-feasible
+schedule. This is a property of the agent's search process: LLMs
+efficiently push training AEP toward a ceiling, and along the way
+they find schedules that exploit the training polygon's slack. Only a
+held-out filter separates the schedules that exploit training
+geometry from those that capture generalizable structure.
+
 \subsection{Why the Held-Out Farm Matters}
 
 Two specific failure modes are invisible without held-out evaluation:

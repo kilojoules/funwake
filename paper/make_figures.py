@@ -556,6 +556,88 @@ def load_results():
     return data
 
 
+def fig7_deployment_gap(data):
+    """For each run, show gap between train-selected and held-out-selected ROWP.
+
+    Clean bars showing that held-out selection consistently improves
+    deployed ROWP over training-only selection, quantifying the
+    'value of held-out evaluation'.
+    """
+    baseline = data["baselines"]["problem_rowp"]["best_aep"]
+
+    runs = [
+        ("Claude sched (320)", "results_agent_schedule_only_5hr"),
+        ("Claude 6hr", "results_agent_claude_6hr"),
+        ("Claude 7hr", "results_agent_claude_7hr"),
+        ("Gemini v2", "results_agent_5hr_v2"),
+        ("Gemini v4", "results_agent_5hr_v4"),
+        ("Gemini v6", "results_agent_5hr_v6"),
+    ]
+
+    names, ts_rowps, ho_rowps = [], [], []
+    for name, d in runs:
+        log = os.path.join(ROOT, d, "attempt_log.json")
+        if not os.path.exists(log):
+            continue
+        try:
+            atts = json.load(open(log))
+        except Exception:
+            continue
+        scored = [x for x in atts if "train_aep" in x]
+        train_feas = [x for x in scored if x.get("train_feasible") and "rowp_aep" in x]
+        ho_pool = [x for x in scored if x.get("rowp_feasible") and "rowp_aep" in x]
+        if not train_feas or not ho_pool:
+            continue
+        train_sel = max(train_feas, key=lambda x: x["train_aep"])
+        ho_sel = max(ho_pool, key=lambda x: x["rowp_aep"])
+
+        # If train-selected is infeasible on ROWP, can't deploy it cleanly
+        ts_val = train_sel["rowp_aep"] if train_sel.get("rowp_feasible") else np.nan
+        names.append(name)
+        ts_rowps.append(ts_val)
+        ho_rowps.append(ho_sel["rowp_aep"])
+
+    if not names:
+        print("  fig7: no data")
+        return
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+
+    x = np.arange(len(names))
+    w = 0.4
+    b1 = ax.bar(x - w/2, ts_rowps, w,
+                label="Train-selected (agent's choice)",
+                color="#9b9b9b", edgecolor="black", linewidth=0.7)
+    b2 = ax.bar(x + w/2, ho_rowps, w,
+                label="Held-out-selected (deployed)",
+                color=COLORS["Claude Code"], edgecolor="black", linewidth=0.7)
+
+    ax.axhline(baseline, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
+               label=f"500-start SGD baseline ({baseline:.0f})")
+    ax.set_xticks(x)
+    ax.set_xticklabels(names, rotation=20, ha="right")
+    ax.set_ylim(4220, 4290)
+    ax.set_ylabel("Feasible held-out (ROWP) AEP (GWh)")
+    ax.set_title("Value of held-out selection: deployed vs agent-chosen",
+                 fontweight="bold")
+    ax.legend(loc="lower right", frameon=True, fontsize=8)
+    ax.grid(True, alpha=0.3, axis="y")
+
+    # Annotate gaps
+    for i, (ts, ho) in enumerate(zip(ts_rowps, ho_rowps)):
+        if not np.isnan(ts):
+            gap = ho - ts
+            ax.annotate(f"+{gap:.1f}", xy=(i + w/2, ho + 0.5),
+                        ha="center", fontsize=8, fontweight="bold",
+                        color="#c73a1a")
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGS, "fig7_deployment_gap.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig7_deployment_gap.pdf"))
+    plt.close()
+    print("  fig7_deployment_gap.png")
+
+
 def main():
     print("Generating figures...")
     data = load_results()
@@ -580,6 +662,10 @@ def main():
         fig6_alpha_mechanism(data)
     except Exception as e:
         print(f"  fig6 failed: {e}")
+    try:
+        fig7_deployment_gap(data)
+    except Exception as e:
+        print(f"  fig7 failed: {e}")
     print("Done. Figures in paper/figs/")
 
 
