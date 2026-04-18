@@ -1,0 +1,1 @@
+Follow the instructions in .claude/CLAUDE.md. You are running as a batch job — work autonomously through the full workflow: read the seed optimizer, understand the interface, then iteratively write, test, score, and improve optimizers. Keep going until you have exhausted your ideas or hit diminishing returns. Always check generalization after each successful improvement.
