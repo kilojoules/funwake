@@ -69,7 +69,7 @@ def _parse_args() -> argparse.Namespace:
                    help="Baselines JSON (keyed by farm id)")
     p.add_argument("--train-farm",   default="1",
                    help="Key inside baselines.json for the training baseline")
-    p.add_argument("--timeout",      type=int, default=60,
+    p.add_argument("--timeout",      type=int, default=180,
                    help="Default per-script timeout (seconds)")
     p.add_argument("--schedule-only", action="store_true",
                    help="Require schedule_fn() interface, reject optimize()")

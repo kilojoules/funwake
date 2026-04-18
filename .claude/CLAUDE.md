@@ -38,13 +38,18 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
   distance and `from pixwake.optim.sgd import boundary_penalty,
   spacing_penalty` for differentiable penalties.
 - You may use `jax.grad`, `jax.jacobian`, `jax.vmap`, `jax.jit`.
-- Each evaluation has a 60-second timeout. Budget your compute.
+- Each evaluation has a **180-second timeout**. Budget your compute.
+- JAX JIT compilation takes ~20-30s on the first function call.
+  Design for ~150s of actual optimization after JIT warmup.
+- A single SLSQP run with 50 turbines takes ~30-60s after JIT.
+  Multi-start with more than 2-3 starts will timeout.
+- Prefer 1-2 high-quality starts over many cheap starts.
 
 ## Available tools
 
 ```bash
 # Score on training farm (returns AEP in GWh, feasibility, time)
-pixi run python tools/run_optimizer.py <script> --timeout 60
+pixi run python tools/run_optimizer.py <script> --timeout 180
 
 # Run unit tests (signature check + stressed polygon)
 pixi run python tools/run_tests.py <script> --quick
