@@ -58,10 +58,20 @@ class VLLMRunner(BaseRunner):
             return {"Authorization": f"Bearer {self.api_key}"}
         return {}
 
-    def _chat(self, messages: list[dict]) -> str:
-        """Send a chat completion request, return assistant text.
+    def _chat(self, messages: list[dict]) -> tuple[str, str]:
+        """Send a chat completion request.
 
-        Retries with exponential backoff on transient failures.
+        Returns (content, reasoning) — two strings.
+
+        For reasoning models (DeepSeek R1 family with
+        --reasoning-parser deepseek_r1 on the vLLM server), the
+        internal `<think>...</think>` trace is exposed in the
+        separate `reasoning_content` field and MUST NOT be fed back
+        as input to the next turn (context would explode). The
+        caller should add only `content` to the message history
+        and use `reasoning` only for logging.
+
+        For non-reasoning models, `reasoning` is an empty string.
         """
         payload = {
             "model": self.model,
@@ -80,11 +90,20 @@ class VLLMRunner(BaseRunner):
                 resp.raise_for_status()
                 data = resp.json()
                 msg = data["choices"][0]["message"]
-                # Some models (deepseek-r1) put output in "reasoning" with empty "content"
                 content = msg.get("content") or ""
-                if not content.strip() and msg.get("reasoning"):
-                    content = msg["reasoning"]
-                return content
+                # vLLM's deepseek_r1 reasoning parser emits
+                # `reasoning_content`; older variants use `reasoning`.
+                reasoning = (msg.get("reasoning_content")
+                             or msg.get("reasoning") or "")
+                # If the server didn't separate reasoning but content
+                # has literal <think> tags, strip them ourselves so
+                # we don't pollute the next turn's context.
+                if "<think>" in content and "</think>" in content:
+                    pre, rest = content.split("<think>", 1)
+                    think, post = rest.split("</think>", 1)
+                    reasoning = (reasoning + "\n" + think).strip() if reasoning else think.strip()
+                    content = (pre + post).strip()
+                return content, reasoning
             except (requests.ConnectionError, requests.Timeout) as e:
                 last_err = e
                 wait = 2 ** attempt
@@ -154,6 +173,12 @@ class VLLMRunner(BaseRunner):
 
         if name == "read_file":
             path = args.get("path", "")
+            # Allow reading agent_memory.md from the output dir
+            if path == "agent_memory.md":
+                try:
+                    return Path(self.memory_path).read_text()
+                except FileNotFoundError:
+                    return "No agent_memory.md yet. Submit code first."
             allowed = ["playground/", "results/"]
             if not any(path.startswith(p) for p in allowed):
                 return f"Error: cannot read {path}"
@@ -274,6 +299,44 @@ class VLLMRunner(BaseRunner):
                 "time_remaining_min": round(self.time_remaining() / 60, 1),
             })
 
+        elif name == "update_memory":
+            from .memory_template import refresh_memory, extract_agent_notes
+            existing = ""
+            if os.path.exists(self.memory_path):
+                existing = Path(self.memory_path).read_text()
+            notes = extract_agent_notes(existing)
+            kf = args.get("key_findings")
+            ne = args.get("next_experiments")
+            if kf is not None:
+                if "## Key Findings" in notes:
+                    start = notes.index("## Key Findings")
+                    rest = notes[start + len("## Key Findings"):]
+                    nh = rest.find("\n## ")
+                    after = rest[nh:] if nh >= 0 else ""
+                    notes = f"## Key Findings\n{kf}\n{after}"
+                else:
+                    notes = f"## Key Findings\n{kf}\n\n{notes}"
+            if ne is not None:
+                if "## Next Experiments" in notes:
+                    start = notes.index("## Next Experiments")
+                    rest = notes[start + len("## Next Experiments"):]
+                    nh = rest.find("\n## ")
+                    after = rest[nh:] if nh >= 0 else ""
+                    notes = notes[:notes.index("## Next Experiments")] + \
+                            f"## Next Experiments\n{ne}\n{after}"
+                else:
+                    notes += f"\n## Next Experiments\n{ne}\n"
+            from .memory_template import render_memory
+            content = render_memory(
+                attempt_log=self.attempts,
+                baseline_aep=self._get_baseline_aep(),
+                time_budget_s=self.config.time_budget,
+                elapsed_s=time.time() - self.start_time,
+                agent_notes=notes,
+            )
+            Path(self.memory_path).write_text(content)
+            return "Memory updated."
+
         return f"Unknown action: {name}"
 
     def run(self):
@@ -283,6 +346,17 @@ class VLLMRunner(BaseRunner):
         system_prompt = self.build_system_prompt()
         system_prompt += """
 
+## Memory
+
+You have a persistent memory file (agent_memory.md) with four sections:
+- **Status**: auto-updated after each eval (time, attempts, best, baseline)
+- **Top Scripts**: auto-updated ranked table of your best results
+- **Key Findings**: YOUR notes on what worked and what didn't — update after each eval
+- **Next Experiments**: YOUR plan for what to try next — update as you learn
+
+Read memory at the start of each turn. Update it after each eval to record
+what you learned. Your notes persist even if conversation context is lost.
+
 ## How to respond
 
 For each turn, respond with ONE of:
@@ -291,16 +365,25 @@ For each turn, respond with ONE of:
    ACTION: read_file
    ARGS: {"path": "playground/pixwake/src/pixwake/optim/sgd.py"}
 
-2. Submit code (will be tested and scored automatically):
+2. Read your memory:
+   ACTION: read_file
+   ARGS: {"path": "agent_memory.md"}
+
+3. Submit code (will be tested and scored automatically):
    CODE:
    ```python
    ...
    ```
 
-3. Check status:
+4. Check status:
    ACTION: get_status
 
+5. Update your memory notes:
+   ACTION: update_memory
+   ARGS: {"key_findings": "- LR=100 beats LR=50\n- ...", "next_experiments": "- [ ] Try LR=150\n- ..."}
+
 Always respond with exactly ONE action per turn.
+Start each session by reading agent_memory.md.
 """
 
         if self.schedule_only:
@@ -399,13 +482,22 @@ Always respond with exactly ONE action per turn.
                   f"{len(self.attempts)} attempts, best={self.best_aep:.1f}")
 
             try:
-                response = self._chat(messages)
+                response, reasoning = self._chat(messages)
             except Exception as e:
                 print(f"[turn {turn}] API error: {e}")
                 time.sleep(5)
                 continue
 
-            # Add assistant response to history
+            # Log reasoning trace but DO NOT add it to message history.
+            # Reasoning tokens are NOT fed back as input on the next
+            # turn — this is the whole reason the architecture needs
+            # reasoning-aware handling for DeepSeek R1 family models.
+            if reasoning:
+                n_tok = max(len(reasoning) // 4, 1)
+                print(f"[turn {turn}] reasoning: {n_tok} tok "
+                      f"({reasoning[:120].strip()!r}...)")
+
+            # Add ONLY the final content to history
             messages.append({"role": "assistant", "content": response})
             print(f"[turn {turn}] Response: {response[:200]}...")
 

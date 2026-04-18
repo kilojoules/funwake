@@ -1,16 +1,21 @@
 \section{Introduction}
 \label{sec:intro}
 
-FunSearch~\cite{fawzi2024funsearch} showed that LLMs can discover new
-mathematical constructions by evolving programs.
-AlphaEvolve~\cite{deepmind2025alphaevolve} scaled this to algorithm
-design across mathematics and computer science. But evaluating what
-LLM agents \emph{actually discover}---as opposed to what they
-overfit---remains an open problem. Existing benchmarks for
-LLM-generated optimization code (HeuriGym~\cite{yao2025heurigym},
-CO-Bench~\cite{cobench2025}) evaluate on same-distribution instances,
-making it impossible to distinguish genuine algorithmic insight from
-hyperparameter tuning to a specific problem.
+LLM agents have been shown to discover new mathematical
+constructions and algorithmic
+ideas~\cite{fawzi2024funsearch,deepmind2025alphaevolve}. On
+continuous constrained-optimization problems, however, it is
+unclear whether an LLM-generated schedule that outperforms a
+baseline contributes (a) a genuinely novel \emph{parameterization}
+of the search space or (b) a particular point inside a rich family
+that non-LLM search could have reached at matched compute.
+Same-distribution held-out benchmarks~\cite{yao2025heurigym} cannot
+distinguish these: when an LLM's score is reproduced by random
+search or differential evolution \emph{inside the same
+parameterization}, the LLM's contribution is the parameterization,
+not the score. We propose a benchmark that isolates this
+distinction: physics-based held-out evaluation and matched-compute
+non-LLM ablations within each LLM-proposed family.
 
 We present FunWake, a benchmark with three properties:
 
@@ -32,41 +37,62 @@ We present FunWake, a benchmark with three properties:
     $\sim$\$500.
 \end{enumerate}
 
-\paragraph{The strongest agents.} Restricted to feasible held-out
-layouts, Claude Code and Gemini 2.5 Flash are tied at the top, both
-reaching $\sim$4272\,GWh (+28\,GWh over the 500-start SGD baseline).
-Open-source Llama 70B and Qwen 32B follow at +5--8\,GWh. Several
-schedules produce higher \emph{nominal} held-out AEP but violate
-constraints; feasibility-aware evaluation is essential.
+\paragraph{The strongest agents, and the optimum they share.}
+Restricted to feasible held-out layouts, Gemini CLI reaches
+4272.7\,GWh (+26.0 over the 500-start SGD baseline of 4246.7) and
+Claude Code reaches 4271.5\,GWh (+24.8). Four non-LLM baselines at
+matched compute---random search over a parameterized schedule
+family (4268.6), bump-family DE seeded with Claude (4272.9),
+bump-family DE seeded with zero bumps (4271.4), and CMA-ES
+warm-started at Claude's layout (4272.2)---reach the same 4.3\,GWh
+band. A substrate-independent CMA-ES cold-started from a generic
+feasible init reaches only 4189.3\,GWh, $\sim$80\,GWh below the
+cluster at a matched 4500-evaluation budget.
+The picture that emerges (Sec.~\ref{sec:ablations}) is a
+\emph{shared local optimum} at 4272.7\,GWh: substrate-independent
+CMA-ES confirms this is a real landscape feature (warm-start:
+$+0.7$ in 6000 evals) rather than a shared-substrate artifact,
+though we cannot rule out higher optima reachable by longer
+substrate-independent runs. Several schedules produce higher
+\emph{nominal} held-out AEP but violate constraints;
+feasibility-aware evaluation is essential.
 
-\paragraph{What the agents discover.}
-Two qualitatively novel schedule structures emerge:
+\paragraph{What the LLMs contribute: parameterization, not score.}
+The two frontier agents propose qualitatively different
+parameterizations of the schedule space: Claude Code's
+14-parameter dual-Gaussian-bump family (two bump amplitudes,
+centers, widths, LR, warmup, penalty coupling, quadratic boost,
+two Adam betas) and Gemini CLI's sinusoidal-shake schedule plus a
+separate 6-parameter 2D lattice family. Running matched-compute
+differential evolution \emph{inside} Claude's bump family reaches
+4271.4\,GWh starting from a zero-bump baseline seed (+24.7 over
+baseline), within seed noise of the LLM-deployed schedule itself.
+The LLM's contribution is the parameterization---rich enough to
+contain the optimum---and not the particular point inside it.
 
-\begin{itemize}[nosep]
-    \item \textbf{Dual Gaussian LR bumps} (Claude Code): brief
-    learning rate increases at $t=0.5$ and $t=0.75$ with a coordinated
-    penalty dip at $t=0.6$---controlled escapes from local optima
-    followed by constraint re-enforcement. Held-out: +24.8~GWh.
-    \item \textbf{Decaying sinusoidal shake} (Gemini CLI): 80-cycle
-    high-frequency perturbation with $\sqrt{1-t}$ amplitude decay,
-    paired with a 7500$\times$ quadratic penalty ramp and zero first
-    momentum ($\beta_1 = 0$). Held-out: +81.3~GWh.
-\end{itemize}
-
-Neither structure appears in the learning rate schedule
-literature~\cite{loshchilov2017sgdr}. Standard schedules (cosine
-decay, exponential decay, warm restarts) decay monotonically;
-these schedules inject structured noise that decays over time.
-The penalty coupling ($\alpha \propto 1/\eta$ or $\alpha \propto t^2$)
-is critical: schedules that reduce penalty weight at convergence
-produce feasible layouts on the spacious training farm but fail on the
-tighter held-out polygon.
+The specific mechanisms the LLMs assemble---dual Gaussian LR bumps
+coupled to an in-phase penalty dip (Claude), or a high-frequency
+decaying sinusoidal perturbation paired with an aggressive
+quadratic penalty ramp (Gemini)---are novel relative to standard
+schedule building blocks (cosine annealing with warm
+restarts~\cite{loshchilov2017sgdr}, cyclical learning
+rates~\cite{smith2017cyclical,smith2019superconvergence}, noise
+injection~\cite{jastrzebski2018factors}, weight
+averaging~\cite{izmailov2018swa}). A controlled ablation varying penalty weight while holding the
+LR schedule fixed shows that the penalty trajectory affects
+held-out \emph{quality} (11.2\,GWh span) but not feasibility---the
+LR dynamics alone produce feasible layouts at all penalty scales
+(Sec.~\ref{sec:discussion}).
 
 \paragraph{Contributions.}
-(1)~An open-source benchmark for LLM-discovered optimizer schedules
-with physics-based held-out evaluation and scalable difficulty.
-(2)~Documentation of two novel schedule structures discovered
-autonomously by LLM agents, with analysis of why they generalize.
-(3)~A generalization study across seven farm sizes showing that
-LLM-discovered schedules maintain feasibility where the baseline
-fails.
+(1)~An open-source, low-cost benchmark for LLM-discovered optimizer
+schedules with physics-based held-out evaluation, matched-compute
+non-LLM ablations, and scalable difficulty.
+(2)~Empirical isolation of \emph{parameterization discovery} as the
+load-bearing LLM contribution: matched-compute DE inside the LLM's
+proposed families reaches the same optimum as the LLM-deployed
+schedules.
+(3)~Documentation of the LLM-proposed schedule structures (Gaussian
+bumps, decaying sinusoidal shake, 6-parameter 2D lattice) together
+with positive transfer from DEI to a single held-out polygon (ROWP)
+across turbine counts $N=30$--$80$.

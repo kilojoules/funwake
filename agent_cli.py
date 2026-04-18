@@ -67,6 +67,14 @@ def main():
                    help="Number of Claude Code invocations. 0=auto (default: 0)")
     p.add_argument("--schedule-only", action="store_true",
                    help="Constrain LLM to write only schedule_fn(), not optimize()")
+    p.add_argument("--train-problem", default="playground/problem.json",
+                   help="Training problem JSON (default: playground/problem.json)")
+    p.add_argument("--baselines", default="results/baselines.json",
+                   help="Baselines JSON (default: results/baselines.json)")
+    p.add_argument("--train-farm", default="1",
+                   help="Key in baselines JSON (default: 1)")
+    p.add_argument("--max-attempts", type=int, default=0,
+                   help="Stop after N scored attempts (0 = use time budget only)")
 
     args = p.parse_args()
 
@@ -91,6 +99,11 @@ def main():
         output_dir=output_dir,
         hot_start=args.hot_start,
         timeout_per_run=args.timeout_per_run,
+        schedule_only=args.schedule_only,
+        train_problem=args.train_problem,
+        baselines=args.baselines,
+        train_farm=args.train_farm,
+        max_attempts=args.max_attempts,
     )
 
     # Create runner

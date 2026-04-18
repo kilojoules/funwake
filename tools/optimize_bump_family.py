@@ -221,11 +221,25 @@ def main():
     p.add_argument("--popsize", type=int, default=12)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--skip-rowp", action="store_true")
+    p.add_argument("--init", choices=["claude", "baseline"], default="claude",
+                   help="Warm-start point for DE: "
+                        "'claude' = Claude iter_192 (dual bumps), "
+                        "'baseline' = TopFarm-like schedule with zero bumps (fair ablation)")
     args = p.parse_args()
 
     opt = Optimizer(args.output_dir, args.train_problem, args.rowp_problem, args.timeout)
 
-    # Claude iter_192 as x0 — good starting point inside the family
+    # Two warm-start points inside the 14-dim bump family:
+    #
+    #   claude_init: nonzero bump amplitudes + Claude's penalty coupling.
+    #     This seeds DE with the structural hint the LLM found, so DE only
+    #     does local refinement around Claude's point.
+    #
+    #   baseline_init: zero bump amplitudes, TopFarm-style Adam and alpha
+    #     coupling. This is a neutral starting point inside the same
+    #     parameterization. If DE still reaches the ~4273 ceiling, the
+    #     LLM's contribution was not load-bearing; if it plateaus well
+    #     below, Claude's structural hint was doing real work.
     claude_init = np.array([
         4.0,    # K
         4.0,    # logM (lr_min = lr_init / 10000)
@@ -241,21 +255,40 @@ def main():
         0.3,    # B1
         0.5,    # B2
     ])
+    baseline_init = np.array([
+        1.0,    # K (LR = baseline)
+        4.0,    # logM (same decay range)
+        0.0,    # W (no warmup)
+        0.0,    # A1 (NO bumps)
+        0.0,    # A2 (NO bumps)
+        0.5,    # c1 (irrelevant when A1=0)
+        0.75,   # c2 (irrelevant when A2=0)
+        0.04,   # w1 (irrelevant when A1=0)
+        0.05,   # w2 (irrelevant when A2=0)
+        1.0,    # C = 1 (TopFarm coupling: alpha = alpha0*lr0/lr)
+        0.0,    # D = 0 (no quadratic alpha boost)
+        0.1,    # B1 (TopFarm)
+        0.2,    # B2 (TopFarm)
+    ])
+
+    init_x0 = claude_init if args.init == "claude" else baseline_init
+    init_label = ("Claude iter_192-inspired" if args.init == "claude"
+                  else "baseline (TopFarm-style, zero bumps)")
 
     print("Starting differential evolution: "
           f"popsize={args.popsize}, maxiter={args.max_iter}, "
           f"max_evals={args.popsize * args.max_iter * len(PARAM_NAMES)}")
-    print(f"Initial (Claude iter_192-inspired): {params_to_dict(claude_init)}")
+    print(f"Initial ({init_label}): {params_to_dict(init_x0)}")
 
     # First evaluate the init point
-    opt.objective(claude_init)
+    opt.objective(init_x0)
 
-    # Build initial population: claude_init + random perturbations within bounds
+    # Build initial population: init_x0 + random perturbations within bounds
     rng = np.random.default_rng(args.seed)
     lower = np.array([b[0] for b in BOUNDS])
     upper = np.array([b[1] for b in BOUNDS])
     init_pop = np.zeros((args.popsize, len(PARAM_NAMES)))
-    init_pop[0] = claude_init
+    init_pop[0] = init_x0
     for i in range(1, args.popsize):
         init_pop[i] = rng.uniform(lower, upper)
 

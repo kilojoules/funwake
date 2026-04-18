@@ -145,16 +145,23 @@ def fig1_best_rowp_comparison(data, leaderboard):
 
 
 def fig2_generalization_curve(data):
-    """AEP vs n_target for each model's best script."""
+    """Gap over baseline vs n_target, normalized per-farm-size.
+
+    The raw AEP ranges from ~3300 GWh (n=30) to ~8800 GWh (n=80), so
+    raw AEP curves overlap visually and the meaningful differences
+    between methods (few GWh out of ~5500) are invisible. Instead we
+    plot the gap over each farm size's own 500-multi-start baseline,
+    expressed as a percentage. The baseline is a horizontal line at 0.
+    """
     baselines = data["baselines"]
     gen = data["gen_curve"]
 
     ns = [30, 40, 50, 60, 70, 80]
 
-    baseline_aep = []
+    baseline_aep = {}
     for n in ns:
         key = f"problem_dei_n{n}"
-        baseline_aep.append(baselines[key]["best_aep"])
+        baseline_aep[n] = baselines[key]["best_aep"]
 
     scripts = {}
     for r in (gen if isinstance(gen, list) else []):
@@ -179,15 +186,18 @@ def fig2_generalization_curve(data):
 
     fig, ax = plt.subplots(figsize=(6.5, 4.2))
 
-    ax.plot(ns, baseline_aep, "o-", color="black",
-            label="500 multi-start SGD baseline",
-            linewidth=2.2, markersize=7, zorder=5)
+    # Baseline reference at 0
+    ax.axhline(0.0, color="black", linestyle="-", linewidth=1.6,
+               label="500 multi-start SGD baseline", zorder=5)
 
+    # Only frontier LLMs (open-source models were dropped from the paper)
     plot_scripts = [
-        ("results_agent_schedule_only_5hr/iter_192.py", "Claude schedule (iter 192)", COLORS["Claude Code"], "s"),
-        ("results_agent_qwen2_5-coder-32b_s1/iter_011.py", "Qwen 32B full-opt", COLORS["Qwen 32B"], "D"),
-        ("results_agent_llama3_3-70b_s2/iter_002.py", "Llama 70B full-opt", COLORS["Llama 70B"], "v"),
-        ("results/seed_optimizer.py", "Seed (single-start)", COLORS["Seed"], "x"),
+        ("results_agent_schedule_only_5hr/iter_192.py",
+         "Claude schedule (iter 192)", COLORS["Claude Code"], "s"),
+        ("results_agent_gemini_cli_5hr/iter_192.py",
+         "Gemini schedule", COLORS["Gemini CLI"], "o"),
+        ("results/seed_optimizer.py",
+         "Seed (single-start)", COLORS.get("Seed", "#888888"), "x"),
     ]
 
     for script_key, label, color, marker in plot_scripts:
@@ -195,15 +205,17 @@ def fig2_generalization_curve(data):
             continue
         d = scripts[script_key]
         xs = [n for n in ns if n in d]
-        ys = [d[n] for n in xs]
+        ys = [(d[n] / baseline_aep[n] - 1.0) * 100 for n in xs]
         if xs:
             ax.plot(xs, ys, marker=marker, linestyle="-", color=color,
-                    label=label, linewidth=1.4, markersize=6)
+                    label=label, linewidth=1.6, markersize=7)
 
-    ax.set_xlabel("Number of turbines")
-    ax.set_ylabel("AEP (GWh)")
-    ax.set_title("Generalization across turbine counts (DEI)", fontweight="bold")
-    ax.legend(loc="upper left", frameon=True, fancybox=True)
+    ax.set_xlabel("Number of turbines $N$")
+    ax.set_ylabel("Gap over 500-multistart baseline (\\%)")
+    ax.set_title("Generalization across turbine counts (DEI)",
+                 fontweight="bold")
+    ax.legend(loc="upper left", frameon=True, fancybox=True,
+              fontsize=9)
     ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
@@ -370,9 +382,13 @@ def fig4_running_best_with_deploy(leaderboard):
         if best_r_time is not None and best_r > -float("inf"):
             deploy_points.append((best_r_time, best_r, color, model))
 
-    # Baseline lines
-    train_base = 5540.7
-    rowp_base = 4243.75
+    # Baseline lines — loaded from authoritative baseline files
+    with open(os.path.join(RESULTS, "baselines.json")) as _f:
+        _bl = json.load(_f)
+    with open(os.path.join(RESULTS, "baseline_rowp.json")) as _f:
+        _bl_rowp = json.load(_f)
+    train_base = _bl["1"]["aep_gwh"]   # DEI farm 1
+    rowp_base = _bl_rowp["aep_gwh"]    # ROWP 74-turbine
     ax_t.axhline(train_base, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
                  label=f"500-start baseline ({train_base:.0f})")
     ax_r.axhline(rowp_base, color="black", linestyle="--", linewidth=0.8, alpha=0.5,
@@ -638,6 +654,193 @@ def fig7_deployment_gap(data):
     print("  fig7_deployment_gap.png")
 
 
+def fig2b_generalization_rowp(data):
+    """Gap over baseline vs N on the ROWP polygon (cross-geometry test).
+
+    Uses DEI rose on the ROWP polygon — the schedule was trained on DEI
+    with the DEI rose, so this tests whether it generalizes to a
+    different polygon while keeping the wind resource constant.
+    """
+    sched_path = os.path.join(RESULTS, "matrix", "schedules_matrix.json")
+    baseline_path = os.path.join(RESULTS, "matrix", "baselines_matrix.json")
+    if not os.path.exists(sched_path) or not os.path.exists(baseline_path):
+        print("  fig2b: missing matrix data, skipping")
+        return
+
+    sched = json.load(open(sched_path))
+    baselines = json.load(open(baseline_path))
+
+    ns = [30, 40, 50, 60, 70, 80]
+    rose = "dei"
+    farm = "rowp"
+
+    baseline_aep = {}
+    for n in ns:
+        key = f"{farm}_n{n}_rose{rose}"
+        if key in baselines:
+            baseline_aep[n] = baselines[key]["best_aep"]
+
+    labels_to_plot = [
+        ("Claude schedule (iter 192)", "Claude schedule (iter 192)",
+         COLORS["Claude Code"], "s"),
+        ("Gemini schedule", "Gemini schedule",
+         COLORS["Gemini CLI"], "o"),
+        ("DeepSeek R1 32B", "DeepSeek R1 32B",
+         "#2E6B3E", "D"),
+    ]
+
+    fig, ax = plt.subplots(figsize=(6.5, 4.2))
+    ax.axhline(0.0, color="black", linestyle="-", linewidth=1.6,
+               label="500 multi-start SGD baseline", zorder=5)
+
+    for label_key, label_display, color, marker in labels_to_plot:
+        xs, ys = [], []
+        infeas_xs, infeas_ys = [], []
+        for n in ns:
+            cell_key = f"{label_key}|{farm}_n{n}_rose{rose}"
+            if cell_key not in sched:
+                continue
+            entry = sched[cell_key]
+            aep = entry.get("aep_gwh")
+            feasible = entry.get("feasible", True)
+            if aep is None or n not in baseline_aep:
+                continue
+            gap_pct = (aep / baseline_aep[n] - 1.0) * 100
+            if feasible:
+                xs.append(n)
+                ys.append(gap_pct)
+            else:
+                infeas_xs.append(n)
+                infeas_ys.append(gap_pct)
+
+        if xs:
+            ax.plot(xs, ys, marker=marker, linestyle="-", color=color,
+                    label=label_display, linewidth=1.6, markersize=7)
+        if infeas_xs:
+            ax.scatter(infeas_xs, infeas_ys, marker="x", color=color,
+                       s=80, linewidths=2, zorder=6)
+
+    ax.set_xlabel("Number of turbines $N$")
+    ax.set_ylabel("Gap over 500-multistart baseline (\\%)")
+    ax.set_title("Generalization across turbine counts (ROWP polygon, DEI wind rose)",
+                 fontweight="bold")
+    ax.legend(loc="upper left", frameon=True, fancybox=True, fontsize=9)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGS, "fig2b_generalization_rowp.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig2b_generalization_rowp.pdf"))
+    plt.close()
+    print("  fig2b_generalization_rowp.png")
+
+
+def fig8_generalization_matrix(data):
+    """2x4 grid of generalization curves: farm × wind-rose.
+
+    Rows: polygon + turbine model (DEI, ROWP)
+    Cols: wind rose (uniform, omnidir, DEI, ROWP)
+    X axis per subplot: turbine count N ∈ {30..80}
+    Y axis: % gap over the 500-multistart baseline FOR THAT CELL
+    Lines: Claude schedule (iter 192), Gemini schedule, baseline at 0
+
+    Infeasible points are plotted as hollow markers.
+    If the baseline matrix is missing for some cells, those lines are
+    shown as raw AEP with a '(no baseline)' annotation so the figure
+    still renders during development.
+    """
+    sched_path = os.path.join(RESULTS, "matrix", "schedules_matrix.json")
+    baseline_path = os.path.join(RESULTS, "matrix", "baselines_matrix.json")
+    if not os.path.exists(sched_path):
+        print("  fig8: no schedules_matrix.json, skipping")
+        return
+
+    sched = json.load(open(sched_path))
+    baselines = {}
+    if os.path.exists(baseline_path):
+        baselines = json.load(open(baseline_path))
+    else:
+        print("  fig8: no baselines_matrix.json — plotting AEP without normalization")
+
+    farms = ["dei", "rowp"]
+    roses = ["uniform", "omnidir", "dei", "rowp"]
+    ns = [30, 40, 50, 60, 70, 80]
+    rose_titles = {
+        "uniform": "Uniform (1 direction)",
+        "omnidir": "Omnidirectional",
+        "dei": "DEI rose",
+        "rowp": "ROWP rose",
+    }
+    farm_labels = {"dei": "DEI polygon (5 vertex)", "rowp": "ROWP polygon (4 vertex)"}
+
+    labels = [
+        ("Claude schedule (iter 192)", COLORS.get("Claude Code", "#c73a1a"), "s"),
+        ("Gemini schedule", COLORS.get("Gemini CLI", "#1a73c7"), "o"),
+        ("DeepSeek R1 32B", "#2E6B3E", "D"),
+    ]
+
+    fig, axes = plt.subplots(2, 4, figsize=(12, 6), sharex=True, sharey=True)
+
+    for i, farm in enumerate(farms):
+        for j, rose in enumerate(roses):
+            ax = axes[i, j]
+            cell_key_prefix = f"{farm}_n"  # append nK_rose{rose}
+            # Baseline reference
+            ax.axhline(0.0, color="black", linewidth=1.4, zorder=3,
+                       label="500-multistart baseline" if (i, j) == (0, 0) else None)
+
+            for label, color, marker in labels:
+                xs_f, ys_f = [], []  # feasible
+                xs_i, ys_i = [], []  # infeasible
+                for n in ns:
+                    sched_key = f"{label}|{farm}_n{n}_rose{rose}"
+                    s = sched.get(sched_key)
+                    if not s or "aep_gwh" not in s:
+                        continue
+                    base_key = f"{farm}_n{n}_rose{rose}"
+                    base_row = baselines.get(base_key, {})
+                    base_aep = base_row.get("best_aep")
+                    if base_aep is None:
+                        continue  # Skip until baseline lands
+                    gap_pct = (s["aep_gwh"] / base_aep - 1.0) * 100
+                    if s.get("feasible"):
+                        xs_f.append(n)
+                        ys_f.append(gap_pct)
+                    else:
+                        xs_i.append(n)
+                        ys_i.append(gap_pct)
+
+                if xs_f:
+                    ax.plot(xs_f, ys_f, marker=marker, linestyle="-",
+                            color=color, linewidth=1.4, markersize=6,
+                            label=label if (i, j) == (0, 0) else None)
+                if xs_i:
+                    # Hollow / X for infeasible
+                    ax.plot(xs_i, ys_i, marker="x", linestyle="",
+                            color=color, markersize=7,
+                            markeredgewidth=1.5)
+
+            ax.grid(True, alpha=0.3)
+            if i == 0:
+                ax.set_title(rose_titles[rose], fontsize=10)
+            if j == 0:
+                ax.set_ylabel(f"{farm_labels[farm]}\nGap over baseline (%)",
+                              fontsize=9)
+            if i == 1:
+                ax.set_xlabel("Turbines $N$")
+            ax.set_xticks(ns)
+
+    # Single shared legend on the top-left subplot
+    axes[0, 0].legend(loc="upper left", fontsize=8, framealpha=0.9)
+
+    fig.suptitle("Generalization across farm polygon × turbine count × wind rose",
+                 fontweight="bold", fontsize=12)
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIGS, "fig8_generalization_matrix.png"), dpi=200)
+    plt.savefig(os.path.join(FIGS, "fig8_generalization_matrix.pdf"))
+    plt.close()
+    print("  fig8_generalization_matrix.png")
+
+
 def main():
     print("Generating figures...")
     data = load_results()
@@ -649,6 +852,7 @@ def main():
 
     fig1_best_rowp_comparison(data, leaderboard)
     fig2_generalization_curve(data)
+    fig2b_generalization_rowp(data)
     try:
         fig3_top3_schedules(leaderboard)
     except Exception as e:
@@ -666,6 +870,10 @@ def main():
         fig7_deployment_gap(data)
     except Exception as e:
         print(f"  fig7 failed: {e}")
+    try:
+        fig8_generalization_matrix(data)
+    except Exception as e:
+        print(f"  fig8 failed: {e}")
     print("Done. Figures in paper/figs/")
 
 

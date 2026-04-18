@@ -15,6 +15,8 @@ git = "*"
 together = ">=1.0"
 google-genai = ">=1.0"
 huggingface-hub = ">=0.20"
+cma = ">=4.4.4, <5"
+mcp = ">=1.2"
 # pixwake: installed from playground clone (see setup.sh)
 # The benchmark uses the playground pixwake via PYTHONPATH.
 # The LLM's scripts also use it via PYTHONPATH.

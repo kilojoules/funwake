@@ -2,44 +2,55 @@
 \label{sec:related}
 
 \paragraph{LLMs as algorithm designers.}
-FunSearch~\cite{fawzi2024funsearch} evolves programs with an LLM to
-discover mathematical constructions. AlphaEvolve~\cite{deepmind2025alphaevolve}
-scales this with Gemini across matrix multiplication, scheduling, and
-geometry. ReEvo~\cite{ye2024reevo} applies LLMs as hyper-heuristics
-for combinatorial optimization. EoH~\cite{liu2024eoh} co-evolves
-natural language ``thoughts'' with code. These systems evaluate
-generated code on instances from the same distribution used during
-search. Sim et al.~\cite{sim2025beyondhype} show that FunSearch
-heuristics for bin packing do not generalize to broader benchmark
-suites, motivating held-out evaluation. FunWake adopts the
-FunSearch pattern (LLM fills a function signature, fixed evaluation
-harness) but adds physics-based held-out evaluation.
+FunSearch~\cite{fawzi2024funsearch} evolves programs with an LLM
+to discover mathematical constructions;
+AlphaEvolve~\cite{deepmind2025alphaevolve} scales this across
+matrix multiplication, scheduling, and geometry;
+ReEvo~\cite{ye2024reevo}, EoH~\cite{liu2024eoh}, and
+LLaMEA~\cite{llamea2024} apply related ideas to combinatorial
+optimization and metaheuristics. These systems evaluate generated
+code on same-distribution instances; Sim et
+al.~\cite{sim2025beyondhype} show FunSearch heuristics for bin
+packing do not generalize to broader suites. FunWake adopts the
+FunSearch pattern (LLM fills a function signature, fixed harness)
+but adds physics-based held-out evaluation.
 
 \paragraph{LLMs inside optimization loops.}
-OPRO~\cite{yang2024opro} uses LLMs to optimize by generating solution
-candidates from natural language descriptions of past performance.
-Augmented-GDA~\cite{augmentedgda2025} places an LLM inside a gradient
-descent loop, making real-time scoped interventions (learning rate,
-step direction). FunWake differs in that the LLM writes a schedule
-function \emph{offline}---the 8000-step optimization runs without
-LLM involvement, enabling cheap evaluation.
+OPRO~\cite{yang2024opro} uses LLMs to optimize from natural
+language descriptions of past performance, with the LLM in the
+inner loop. FunWake differs in that the LLM writes a schedule
+function \emph{offline}: the 8000-step optimization runs without
+any per-step LLM involvement, enabling cheap CPU-only evaluation.
+
+\paragraph{Automated schedule discovery.}
+Population-Based Training~\cite{jaderberg2017pbt} jointly evolves a
+population of training schedules during optimization;
+BOHB~\cite{falkner2018bohb} combines Bayesian optimization with
+bandit-based early stopping for hyperparameter search. FunWake's
+random-search and DE ablations serve a similar purpose---searching
+inside a parameterized schedule family---but the schedule space is
+much smaller (4 scalars per step), and the LLM's contribution is
+proposing the parameterization itself rather than searching within a
+known one.
 
 \paragraph{Agentic coding benchmarks.}
-HeuriGym~\cite{yao2025heurigym} benchmarks LLM-generated heuristics
-across 9 combinatorial optimization problems.
-CO-Bench~\cite{cobench2025} evaluates on 36 combinatorial tasks with
-same-distribution held-out instances. Both are discrete-domain.
-FunWake evaluates on a continuous constrained optimization problem
-with held-out instances that differ in physical parameters (turbine
-model, polygon, wind resource), not just problem size.
+HeuriGym~\cite{yao2025heurigym} evaluates LLM-generated heuristics
+on discrete combinatorial problems with same-distribution held-out
+instances. FunWake evaluates on a continuous constrained
+optimization problem with \emph{physically distinct} held-out
+instances (different turbine model, polygon, wind resource).
+Scaffold differences (rich CLI agents vs.\ structured-output
+prompting) also confound cross-model comparisons, motivating our
+use of a single portable scaffold for the open-source arm.
 
 \paragraph{Wind farm layout optimization.}
-The WFLOP places $N$ turbines to maximize energy production subject to
-boundary and spacing constraints~\cite{mosetti1994optimization}.
-Gradient methods exploit differentiable wake
-models~\cite{thomas2023improving,quick2024design}; evolutionary
-methods handle multimodality through population
-diversity~\cite{chen2013wind}. TopFarm~\cite{pedersen2019topfarm}
-provides the SGD solver whose internal schedule FunWake's agents
-aim to improve. No prior work applies LLMs to wind farm layout
-optimization.
+The WFLOP places $N$ turbines to maximize energy production subject
+to boundary and spacing
+constraints~\cite{mosetti1994optimization,grady2005placement};
+gradient methods exploit differentiable wake
+models~\cite{thomas2023improving,quick2024design,stanley2019massive};
+evolutionary methods handle multimodality through population
+diversity~\cite{chen2013wind,rios2023population}.
+TopFarm~\cite{pedersen2019topfarm} provides the SGD solver whose
+internal schedule FunWake's agents aim to improve. No prior work
+applies LLMs to wind farm layout optimization.

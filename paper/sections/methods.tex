@@ -1,137 +1,93 @@
 \section{Methods}
 \label{sec:methods}
 
-\subsection{Problem Formulation}
-\label{sec:problem}
+\paragraph{Problem.}
+Place $N$ turbines at positions $\mathbf{x}, \mathbf{y} \in
+\mathbb{R}^N$ to maximize annual energy production
+$\text{AEP}(\mathbf{x}, \mathbf{y}) = \sum_{d} w_d \sum_{i} P_i \cdot
+8760$ subject to (i)~all positions inside a convex polygon
+$\mathcal{P}$ and (ii)~pairwise distance $\geq s_{\min}$. Sums are
+over wind direction--speed sectors $d$ with frequency weights
+$w_d$, and over turbines $i$. The objective is non-convex (wake
+interactions); the constraint set is convex.
 
-The wind farm layout optimization problem (WFLOP) seeks turbine positions $\mathbf{x}, \mathbf{y} \in \mathbb{R}^N$ that maximize annual energy production (AEP):
-\begin{equation}
-\label{eq:objective}
-    \max_{\mathbf{x}, \mathbf{y}} \; \text{AEP}(\mathbf{x}, \mathbf{y}) = \sum_{d=1}^{D} w_d \sum_{i=1}^{N} P_i(\mathbf{x}, \mathbf{y}; \theta_d, u_d) \cdot 8760
-\end{equation}
-subject to:
-\begin{align}
-    (x_i, y_i) &\in \mathcal{P} \quad \forall \, i = 1, \ldots, N  \label{eq:boundary} \\
-    \| (x_i, y_i) - (x_j, y_j) \|_2 &\geq s_{\min} \quad \forall \, i \neq j  \label{eq:spacing}
-\end{align}
-where $D$ is the number of wind direction--speed sectors, $w_d$ is the frequency weight for sector $d$, $P_i$ is the power output of turbine $i$ computed through the wake model given wind direction $\theta_d$ and speed $u_d$, $\mathcal{P}$ is a convex polygon boundary, and $s_{\min}$ is the minimum inter-turbine spacing (typically $4D_{\text{rotor}}$).
-The factor 8760 converts from hourly power to annual energy.
+\paragraph{Function interface.}
+The LLM writes a single Python function
+\texttt{optimize(sim, n\_target, boundary, min\_spacing, wd, ws,
+weights)} returning $(\mathbf{x}, \mathbf{y})$, OR (in
+\emph{schedule-only} mode) a single
+\texttt{schedule\_fn(step, total\_steps, lr0, alpha0)} returning
+$(\eta_t, \alpha_t, \beta_1, \beta_2)$ that controls a fixed
+8000-step Adam skeleton. The skeleton handles initialization,
+gradient computation, and constraint penalties; the LLM controls
+\emph{only} the schedule. A harness loads the problem, instantiates
+the wake model, calls the LLM's function, and scores the result.
+The LLM cannot modify the wake model parameters.
 
-The problem is non-convex due to wake interactions: each turbine's power depends on the positions of all upstream turbines through aerodynamic wake deficit functions.
-The constraint set is convex (intersection of a polygon and pairwise distance constraints), but the objective landscape contains many local optima.
+\paragraph{Train/test protocol.}
+The agent trains on a single cell: DEI polygon, $N\!=\!50$
+turbines, observed DEI wind rose. This deliberate single-cell
+design maximizes the strength of the generalization claim: any
+positive transfer to other configurations represents
+\emph{extrapolation}, not interpolation across a training
+distribution.
 
-\subsection{Function Interface}
-\label{sec:interface}
+We evaluate on a $2 \times 6 \times 4 = 48$-cell matrix
+(Table~\ref{tab:matrix}) crossing two polygons, six turbine
+counts, and four wind roses. The ROWP polygon is fully held
+out---the agent never sees any ROWP configuration. The DEI
+variants (different $N$, different wind roses) are also held out:
+the agent sees only DEI-$N\!$50-DEI\_rose during training.
 
-The LLM writes a single Python function:
-\begin{verbatim}
-def optimize(sim, n_target, boundary, min_spacing,
-             wd, ws, weights):
-    """Returns (opt_x, opt_y) -- optimized positions."""
-\end{verbatim}
-where \texttt{sim} is a differentiable wake simulation object (supporting \texttt{jax.grad}), \texttt{n\_target} is the number of turbines, \texttt{boundary} is a JAX array of polygon vertices, \texttt{min\_spacing} is $s_{\min}$ in meters, and \texttt{wd}, \texttt{ws}, \texttt{weights} define the wind rose.
-The LLM must generate initial turbine positions and return final optimized positions.
+The LLM receives full AEP scores on the training cell; on
+held-out, it sees only binary feasibility (PASS / FAIL). Held-out
+AEP is logged silently for post-hoc analysis but never
+communicated to the LLM.
 
-A harness loads the problem definition, constructs the wake simulation with a fixed Bastankhah Gaussian deficit model ($k = 0.04$), and calls the LLM's function.
-This design prevents the LLM from modifying the physics model (e.g., changing $k$ to inflate scores---a behavior we observed in early experiments) while giving it full access to gradients through JAX automatic differentiation.
+\paragraph{Script selection.}
+The \emph{deployed} schedule is the one with the highest training
+AEP among scripts that pass all unit tests, including the
+stressed-polygon feasibility test. This criterion uses no held-out
+information and simulates a practitioner who lacks a validation
+farm. We separately report oracle selection (best feasible
+held-out AEP) as an upper bound. The same selection criterion is
+applied to all models.
 
-\subsection{Train/Test Split}
-\label{sec:split}
+\paragraph{Baseline.}
+500 multi-start runs of \texttt{topfarm\_sgd\_solve}~\cite{pedersen2019topfarm}:
+grid initialization filtered to the polygon, 4000 gradient
+iterations with Adam ($\beta_1=0.1$, $\beta_2=0.2$), preceded by
+2000 constant-LR iterations. Best layout across 500 starts is the
+baseline: 5540.7\,GWh on DEI (mean 5525.8), 4246.7\,GWh on ROWP
+(mean 4225.0, 96.2\% feasibility rate).
 
-The evaluation framework uses two wind farms that differ across every physical parameter:
+\paragraph{Unit tests.}
+A three-tier sandbox test suite validates each submission:
+signature check, 3-turbine quick run, and a stressed thin-rhombus
+polygon with 25 turbines. The stressed-polygon test catches
+optimizers that satisfy constraints on the spacious training
+polygon but produce boundary violations on tight geometries; in
+our experiments, every custom optimizer that later failed on
+held-out ROWP also failed the stressed test, making it a 7-second
+proxy for held-out feasibility.
 
-\begin{table}[h]
-\centering
-\small
-\caption{Training and held-out farm specifications. The farms differ in turbine count, turbine model, rotor diameter, minimum spacing, polygon shape, number of wind sectors, and wind resource type.}
-\label{tab:farms}
-\begin{tabular}{lcc}
-\toprule
-& \textbf{Training (DEI)} & \textbf{Held-out (ROWP)} \\
-\midrule
-Turbines & 50 & 74 \\
-Turbine model & IEA 15\,MW & IEA 10\,MW \\
-Rotor diameter $D$ & 240\,m & 198\,m \\
-Min.\ spacing $s_{\min}$ & 960\,m ($4D$) & 792\,m ($4D$) \\
-Boundary & 5-vertex polygon & 4-vertex polygon \\
-Wind sectors & 24 & 12 \\
-Wind resource & Observed timeseries & Weibull per sector \\
-\bottomrule
-\end{tabular}
-\end{table}
+\paragraph{Agent architecture.}
+A tool-calling loop with six tools: \texttt{read\_file},
+\texttt{write\_file}, \texttt{run\_tests}, \texttt{run\_optimizer}
+(scores on training, returns AEP/time/feasibility),
+\texttt{test\_generalization} (returns held-out PASS/FAIL only,
+\emph{not} AEP), and \texttt{get\_status}. Generated code runs in a
+restricted environment: no network, no API keys, filesystem writes
+limited to the workspace, and a static blocklist on
+\texttt{subprocess}/\texttt{exec}/\texttt{eval} within optimizer
+code. The system prompt includes phase-2 nudges toward custom
+optimizers after 30\% of the time budget elapses, and a diversity
+nudge after 5 consecutive \texttt{topfarm\_sgd\_solve} wrappers.
 
-The LLM receives full AEP scores on the training farm after each optimizer submission.
-For the held-out farm, it receives only a binary feasibility signal: PASS if all boundary and spacing constraints are satisfied, FAIL otherwise.
-The held-out AEP is logged silently for post-hoc analysis but is never communicated to the LLM.
-
-This design ensures that any held-out improvement must result from strategies that generalize across turbine models, polygon geometries, and wind resources---not from fitting to a specific AEP landscape.
-The two farms are based on real planning cases: DEI (Danish Energy Island farm~1) and the IEA Wind Task~37 Reference Offshore Wind Plant (ROWP)~\cite{borrassunyeriea2024rowp}.
-
-\subsection{Baseline}
-\label{sec:baseline}
-
-The baseline uses 500 independent multi-start runs of the \texttt{topfarm\_sgd\_solve} gradient optimizer~\cite{pedersen2019topfarm}, each with:
-\begin{itemize}[nosep]
-    \item Grid initialization: turbines placed on a rectangular grid spaced at $s_{\min}$, filtered to polygon interior, subsampled to $N$ positions.
-    \item \texttt{max\_iter}~$= 4000$ gradient iterations with ADAM momentum ($\beta_1 = 0.1$, $\beta_2 = 0.2$).
-    \item \texttt{additional\_constant\_lr\_iterations}~$= 2000$ iterations at constant learning rate before decay begins.
-    \item Default learning rate $= 50$, default penalty weights $= 1.0$.
-\end{itemize}
-The best layout across all 500 starts is taken as the baseline AEP.
-This is a deliberately strong baseline: 500 starts explore a wide range of local optima, and the 6000 total iterations per start (2000 constant~$+$~4000 decaying) provide thorough convergence.
-The baseline achieves 5540.7\,GWh on the training farm and 4246.7\,GWh on the held-out farm.
-
-\subsection{Unit Test Suite}
-\label{sec:tests}
-
-The LLM can run a three-tier test suite to validate its optimizer before scoring:
-
-\begin{enumerate}[nosep]
-    \item \textbf{Signature check} ($<1$\,s): Verifies that \texttt{optimize()} exists with the correct 7-parameter signature.
-    \item \textbf{Quick run} ($<3$\,s): Runs on a 3-turbine toy problem (square boundary, 4 wind directions) and checks the output count, finiteness, and absence of NaN.
-    \item \textbf{Stressed polygon} ($\sim$7\,s): Runs on a thin rhombus boundary (16\,km $\times$ 4\,km) with 25 turbines at 600\,m spacing. This test catches optimizers that satisfy constraints on the spacious training polygon but produce boundary violations or NaN on tighter geometries. We verify boundary feasibility ($\text{penalty} < 10^{-3}$) and spacing feasibility ($\min_{i \neq j} \|p_i - p_j\| \geq 0.99 \, s_{\min}$).
-\end{enumerate}
-
-The stressed polygon test is the key diagnostic.
-In our experiments, every custom optimizer that later failed on the held-out ROWP farm also failed the stressed polygon test.
-This makes it an efficient proxy for generalization: the LLM can catch constraint-handling failures in 7 seconds rather than waiting for the 25-second full-farm evaluation followed by the held-out feasibility check.
-
-\subsection{Agent Architecture}
-\label{sec:agent}
-
-The agent operates in a tool-calling loop where the LLM generates text and tool invocations, and the harness executes them in a sandbox.
-
-\paragraph{Tools.}
-The LLM has access to six tools:
-\begin{itemize}[nosep]
-    \item \texttt{read\_file}: Read source files from the wake simulation codebase, problem JSON, or previous optimizer scripts.
-    \item \texttt{write\_file}: Save an optimizer script. Each submission is versioned as \texttt{iter\_NNN.py}.
-    \item \texttt{run\_tests}: Execute the unit test suite (Section~\ref{sec:tests}).
-    \item \texttt{run\_optimizer}: Score on the training farm. Returns AEP in GWh, wall-clock time, and feasibility.
-    \item \texttt{test\_generalization}: Score on the held-out farm. Returns only PASS/FAIL feasibility.
-    \item \texttt{get\_status}: Report the current best AEP versus baseline.
-\end{itemize}
-
-\paragraph{Search guidance.}
-The agent loop includes three mechanisms to encourage exploration:
-\begin{enumerate}[nosep]
-    \item \textbf{Phase-2 prompting.} After 30\% of the time budget has elapsed, the system prompt is augmented with a nudge toward custom optimizers: an Adam template using \texttt{jax.grad} directly, suggestions for custom initialization strategies, and encouragement to go beyond wrapping the existing solver.
-    \item \textbf{Diversity nudge.} After 5 consecutive submissions that wrap \texttt{topfarm\_sgd\_solve}, a message suggests trying alternative approaches.
-    \item \textbf{Context pruning.} After every 40 conversation turns, old messages are compressed into a summary of attempt history, preserving the system prompt and the most recent exchanges.
-\end{enumerate}
-
-\paragraph{Sandbox.}
-Generated code executes in a restricted environment: no network access, no API keys in the environment, filesystem writes restricted to the workspace directory.
-A static blocklist prevents calls to \texttt{subprocess}, \texttt{exec}, and \texttt{eval} within generated optimizer code.
-
-\subsection{Metrics}
-\label{sec:metrics}
-
-We evaluate along five dimensions:
-\begin{itemize}[nosep]
-    \item \textbf{Training AEP} (GWh): AEP on the DEI farm, directly comparable to the baseline.
-    \item \textbf{Held-out AEP} (GWh): AEP on the ROWP farm, scored silently.
-    \item \textbf{Held-out feasibility rate}: Fraction of submissions that satisfy all constraints on the held-out farm.
-    \item \textbf{Strategy classification}: Whether each submission wraps \texttt{topfarm\_sgd\_solve} or implements a custom gradient optimizer.
-    \item \textbf{Time to first improvement}: Wall-clock time until the first submission that exceeds the baseline AEP.
-\end{itemize}
+\paragraph{Metrics.}
+We report training AEP, feasible held-out AEP, held-out feasibility
+rate, strategy classification, and time-to-first-improvement.
+\emph{All ROWP scores in this paper are filtered to feasible
+layouts only}---a critical filter, since several schedules
+producing the highest \emph{nominal} ROWP scores violate
+constraints (Sec.~\ref{sec:results}).

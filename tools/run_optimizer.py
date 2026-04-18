@@ -18,6 +18,58 @@ import tempfile
 import time
 
 
+_META_PATTERNS = {
+    "hypothesis": r"HYPOTHESIS\s*:\s*(.+)",
+    "axis":       r"AXIS\s*:\s*(.+)",
+    "lesson":     r"LESSON\s*:\s*(.+)",
+}
+
+
+def _parse_metadata(source: str):
+    """Extract HYPOTHESIS / AXIS / LESSON lines from a script's docstrings.
+
+    Returns (hypothesis, axis, lesson) — any of which may be None.
+    Matches the first occurrence of each tag, case-sensitive, anywhere
+    in the source (typically inside a top-level triple-quoted docstring).
+    """
+    import re
+    out = {}
+    for key, pat in _META_PATTERNS.items():
+        m = re.search(pat, source)
+        if m:
+            value = m.group(1).strip().strip('"').strip("'")
+            # Truncate at next blank line or another METAKEY line
+            value = re.split(r"\n\s*\n|\n\s*[A-Z]+\s*:", value)[0].strip()
+            if value:
+                out[key] = value[:500]
+    return out.get("hypothesis"), out.get("axis"), out.get("lesson")
+
+
+def _classify_source(source: str, schedule_only: bool):
+    """Classify the script into strategy taxonomy families, best-effort.
+
+    Returns a sorted list of family names, or None if classification
+    infrastructure isn't available. Loads the taxonomy module directly
+    to avoid triggering runners/__init__.py (which imports heavy LLM
+    SDK deps that may not be importable in the harness subprocess).
+    """
+    try:
+        import importlib.util
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        tax_path = os.path.join(project_root, "runners", "strategy_taxonomy.py")
+        spec = importlib.util.spec_from_file_location("_funwake_taxonomy", tax_path)
+        mod = importlib.util.module_from_spec(spec)
+        # Register before exec_module — dataclass machinery looks up
+        # cls.__module__ in sys.modules and errors with AttributeError
+        # if the module isn't registered yet.
+        sys.modules["_funwake_taxonomy"] = mod
+        spec.loader.exec_module(mod)
+        mode = "schedule" if schedule_only else "fullopt"
+        return sorted(mod.classify(source, mode))
+    except Exception as e:
+        return [f"_classify_error:{type(e).__name__}:{str(e)[:80]}"]
+
+
 def _append_to_log(log_path, entry):
     """Append an entry to the attempt log JSON file."""
     if not log_path:
@@ -57,6 +109,8 @@ def main():
                    help="Path to attempt_log.json (auto-detected from script path if not set)")
     p.add_argument("--schedule-only", action="store_true",
                    help="Require schedule_fn() only — reject optimize()")
+    p.add_argument("--seed", type=int, default=0,
+                   help="Initialization seed (grid subsampling in the skeleton)")
     args = p.parse_args()
 
     # Auto-detect log path from script directory
@@ -99,6 +153,7 @@ def main():
         "JAX_ENABLE_X64": "True",
         "FUNWAKE_PROBLEM": os.path.abspath(args.problem),
         "FUNWAKE_OUTPUT": output_path,
+        "FUNWAKE_SEED": str(args.seed),
         "HOME": os.environ.get("HOME", ""),
         "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
     }
@@ -159,10 +214,14 @@ def main():
         except FileNotFoundError:
             pass
 
-        # Classify strategy
+        # Classify strategy + parse agent-authored metadata from the source
+        hypothesis = axis = lesson = None
+        families = None
         try:
             code = open(args.script).read()
             strategy = "sgd_solve" if "topfarm_sgd_solve" in code else "custom"
+            hypothesis, axis, lesson = _parse_metadata(code)
+            families = _classify_source(code, args.schedule_only)
         except IOError:
             strategy = "unknown"
 
@@ -184,6 +243,14 @@ def main():
             "train_baseline": round(baseline, 2),
             "strategy": strategy,
         }
+        if hypothesis:
+            entry["hypothesis"] = hypothesis
+        if axis:
+            entry["axis"] = axis
+        if lesson:
+            entry["lesson"] = lesson
+        if families:
+            entry["families"] = families
         _append_to_log(log_path, entry)
 
         print(json.dumps(output))

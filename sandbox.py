@@ -13,7 +13,9 @@ import ast
 ALLOWED_MODULE_PREFIXES = (
     "jax",
     "numpy",
+    "scipy",
     "math",
+    "time",
     "functools",
     "pixwake",
 )

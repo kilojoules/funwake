@@ -93,6 +93,10 @@ def main():
     # Check for mode flag: --schedule-only forces schedule_fn mode
     schedule_only = "--schedule-only" in sys.argv
 
+    # Initialization seed (for grid subsampling in the skeleton).
+    # Defaults to 0 to preserve prior behavior.
+    init_seed = int(os.environ.get("FUNWAKE_SEED", "0"))
+
     if schedule_only:
         if not hasattr(mod, "schedule_fn"):
             print("ERROR: --schedule-only mode requires schedule_fn(), "
@@ -104,7 +108,7 @@ def main():
         from skeleton import run_with_schedule
         opt_x, opt_y = run_with_schedule(
             mod.schedule_fn, sim, n_target, boundary,
-            min_spacing, wd, ws, weights,
+            min_spacing, wd, ws, weights, seed=init_seed,
         )
     elif hasattr(mod, "optimize"):
         opt_x, opt_y = mod.optimize(
@@ -120,7 +124,7 @@ def main():
         from skeleton import run_with_schedule
         opt_x, opt_y = run_with_schedule(
             mod.schedule_fn, sim, n_target, boundary,
-            min_spacing, wd, ws, weights,
+            min_spacing, wd, ws, weights, seed=init_seed,
         )
     else:
         print("ERROR: module must define optimize() or schedule_fn()",
