@@ -67,20 +67,40 @@ selecting a deployed schedule.
 
 \subsection{Benchmark Properties}
 
-\paragraph{Cost.}
+\paragraph{Cost and compute equalization.}
 Evaluating a submitted schedule requires only a CPU and takes
-30--60 seconds. Running an LLM agent through the benchmark costs
-\$5--50 for a 5-hour session depending on model. The 500-multi-start
-baseline costs $\sim$2.5 GPU-hours per farm. Full paper reproduction
-costs $\sim$\$500. This is 5--10$\times$ cheaper than SWE-bench
+30--60 seconds at the training scale ($N\!=\!50$). Running an LLM
+agent through the benchmark costs \$5--50 for a 5-hour session
+depending on model. The 500-multi-start baseline costs
+$\sim$2.5 GPU-hours per farm. Full paper reproduction costs
+$\sim$\$500. This is 5--10$\times$ cheaper than SWE-bench
 evaluations at comparable scope.
 
-\paragraph{Difficulty scaling.}
-The DEI farm variants ($N = 30, 40, 50, 60, 70, 80, 100$) provide
-a natural difficulty axis. Low $N$ is easy (sparse turbines, weak
-wake interactions); high $N$ is hard (tight packing, strong
-constraint pressure). The ROWP held-out farm adds a cross-physics
-axis (different turbine, polygon, wind).
+A key design property of the schedule-only interface is
+\emph{compute equalization}: every schedule runs the identical
+8000-step Adam loop, so evaluation cost depends only on problem
+size, not on the schedule's complexity. This eliminates the
+confound present in full-optimizer mode, where different strategies
+have different compute profiles and the timeout itself shapes which
+approaches are viable. In our full-optimizer experiments, 14 of 18
+scored scripts exceeded the schedule-only 60\,s budget; without
+evaluation feedback, all 19 scripts from a separate run timed out.
+The schedule-only interface makes the benchmark \emph{timeout-invariant}:
+the same evaluation budget applies to every submission.
+
+\paragraph{Difficulty scaling and cheap-to-expensive transfer.}
+The DEI farm variants ($N = 30$--$300$) provide a natural difficulty
+axis. Low $N$ is easy (sparse turbines, weak wake interactions);
+high $N$ is hard (tight packing, strong constraint pressure,
+and increasing evaluation cost---$\sim$30\,s at $N\!=\!50$ vs.\
+$\sim$340\,s at $N\!=\!200$). The ROWP held-out farm adds a
+cross-physics axis (different turbine, polygon, wind). Crucially,
+the LLM's search is conducted entirely in the cheap regime
+($N\!=\!50$, 30\,s per evaluation), but the discovered schedules
+transfer to the expensive regime ($N\!=\!200$--$300$) without
+modification. This \emph{cheap-to-expensive transfer} means the
+benchmark's low cost is not a limitation: search happens at
+low $N$, deployment happens at high $N$.
 
 \paragraph{Saturated within the schedule-only space.}
 Four distinct search strategies (Gemini's hand-found schedule,

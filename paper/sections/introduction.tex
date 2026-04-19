@@ -20,17 +20,19 @@ non-LLM ablations within each LLM-proposed family.
 We present FunWake, a benchmark with three properties:
 
 \begin{enumerate}[nosep]
-    \item \textbf{Minimal interface.} The LLM writes a single function
-    with 4 inputs and 4 outputs:
+    \item \textbf{Minimal interface, equalized compute.} The LLM writes
+    a single function with 4 inputs and 4 outputs:
     \texttt{schedule\_fn(step, total\_steps, lr0, alpha0)} $\to$
     \texttt{(lr, alpha, beta1, beta2)}. A fixed skeleton handles
-    initialization, gradients, and Adam updates. Each evaluation takes
-    30--60 seconds on CPU.
+    initialization, gradients, and Adam updates. Because every schedule
+    runs the same 8000-step loop, evaluation cost is identical across
+    submissions ($\sim$30\,s at $N\!=\!50$)---eliminating the
+    timeout-sensitivity that plagues full-optimizer benchmarks.
     \item \textbf{Physics-based held-out evaluation.} The held-out
     farm differs from training in turbine model, polygon geometry,
     turbine count, and wind resource. The LLM never sees held-out AEP.
-    Additionally, the training farm is evaluated at seven turbine
-    counts ($N=30$--$100$) to test scaling generalization.
+    Additionally, the training farm is evaluated at turbine
+    counts from $N=30$ to $300$ to test scaling generalization.
     \item \textbf{Low cost.} Evaluating a submitted schedule is free
     (CPU only). Running an LLM agent through the full benchmark costs
     \$5--50 depending on model. Full paper reproduction costs

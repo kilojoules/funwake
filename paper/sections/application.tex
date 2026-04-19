@@ -58,7 +58,14 @@ custom optimizer reproduces in full-optimizer mode (Sec.~\ref{sec:results}).
 
 \paragraph{Models, time budget, hot-start.}
 Each run has a 5-hour wall-clock budget; per-evaluation timeout
-60\,s. We evaluate two frontier LLM agents through their rich CLI
+60\,s (schedule-only) or 180\,s (full-optimizer). The schedule-only
+timeout is a \emph{compute equalizer}: every schedule runs the same
+8000-step Adam loop, so all evaluations take identical wall-clock
+time ($\sim$30\,s at $N\!=\!50$). In full-optimizer mode, different
+approaches have different compute profiles---a single SLSQP run
+with JAX JIT compilation takes $\sim$40\,s, leaving room for at
+most 2--3 restarts at 180\,s.
+We evaluate two frontier LLM agents through their rich CLI
 scaffolds: Claude Code~\cite{anthropic2025claude} and Gemini~2.5
 Flash via Gemini CLI~\cite{gemini2025flash}. Both runs hot-start
 from a single-start \texttt{topfarm\_sgd\_solve} seed scoring below

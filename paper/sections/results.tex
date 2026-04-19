@@ -413,14 +413,24 @@ of the agent's engineering judgment but does not produce new
 optimization knowledge: SLSQP with exact boundary and spacing
 Jacobians is well-established practice.
 
-The schedule-only interface, by constraining the agent to the
-less-explored SGD skeleton, forces it into unfamiliar territory
+The schedule-only interface constrains the agent in two
+complementary ways. First, it restricts the design space to the
+less-explored SGD skeleton, forcing it into unfamiliar territory
 where it discovers genuinely novel schedule structures (Gaussian
 bumps, cyclic restarts, terminal-alpha squeeze) that have no
-precedent in the learning-rate schedule literature. The constraint
-\emph{is} the contribution---mirroring the FunSearch finding that
-restricting the search space to a narrow function interface drives
-creative exploration~\cite{fawzi2024funsearch}.
+precedent in the learning-rate schedule literature---mirroring the
+FunSearch finding that restricting the search space to a narrow
+function interface drives creative
+exploration~\cite{fawzi2024funsearch}. Second, it \emph{equalizes
+compute}: every schedule runs the same 8000-step Adam loop, so all
+evaluations have identical wall-clock cost ($\sim$30\,s at
+$N\!=\!50$). In full-optimizer mode, Claude's scripts have a
+$5.6\!\times$ range in execution time (20--113\,s), and 14 of 18
+scripts exceed the schedule-only 60\,s budget. Without
+evaluation-in-the-loop feedback (MCP), the same model produced 19
+scripts that \emph{all} timed out---none were tested during the
+5-hour session. The schedule-only interface eliminates this failure
+mode entirely.
 
 Across five full-optimizer seeds
 (Fig.~\ref{fig:mode_comparison}, left), the best seed
