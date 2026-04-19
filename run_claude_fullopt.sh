@@ -7,8 +7,8 @@
 #SBATCH --nodes=1
 #SBATCH --exclusive
 
-source ~/.bash_profile
-export DISABLE_AUTOUPDATER=1
+# Source bashrc instead of bash_profile (bash_profile has pixi self-update which segfaults)
+. ~/.bashrc
 
 # Fix for Sophia's older glibc (2.17) - pixi packages need 2.28+
 export CONDA_OVERRIDE_GLIBC=2.28

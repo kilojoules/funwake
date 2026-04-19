@@ -1,9 +1,11 @@
-"""iter_029 with different random seeds and perturbation strategy.
+"""iter_034 extended with a third start for more exploration.
 
-iter_029 achieved 5559.08 GWh. Try identical settings but:
-- Different random seed for second start (777 instead of 888)
-- Larger perturbation (0.4x instead of 0.3x min_spacing)
-- gamma_min_factor=0.0025 (between 0.002 and 0.003)
+iter_034 achieved 5559.54 with 2 starts (~78s).
+Add a third start with different perturbation (~90s total):
+- Start 1: Wind-aware (same)
+- Start 2: Perturbed 0.4x (same)
+- Start 3: Perturbed 0.25x (smaller, different local basin)
+- Reduce iterations to 3200+1400 to fit 3 starts in budget
 """
 import jax
 import jax.numpy as jnp
@@ -11,7 +13,7 @@ from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve
 
 
 def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
-    """iter_029 variant with adjusted perturbation."""
+    """Three-start variant of iter_034."""
 
     def objective(x, y):
         r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
@@ -64,27 +66,27 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
         key, _ = jax.random.split(key)
         init_y1 = jax.random.uniform(key, (n_target,), minval=y_min, maxval=y_max)
 
-    # iter_029's proven settings with minor adjustment
+    # Adjusted iterations for 3 starts
     settings = SGDSettings(
         learning_rate=150.0,
-        max_iter=3500,
-        additional_constant_lr_iterations=1500,
+        max_iter=3200,                   # Reduced from 3500
+        additional_constant_lr_iterations=1400,  # Reduced from 1500
         tol=1e-7,
         beta1=0.12,
         beta2=0.22,
-        gamma_min_factor=0.0025,         # Between 0.002 and 0.003
+        gamma_min_factor=0.0025,
         ks_rho=120.0,
         spacing_weight=100.0,
         boundary_weight=100.0,
     )
 
-    # Start 1: Wind-aware initialization
+    # Start 1: Wind-aware
     opt_x1, opt_y1 = topfarm_sgd_solve(objective, init_x1, init_y1, boundary, min_spacing, settings)
     aep1 = objective(opt_x1, opt_y1)
 
-    # Start 2: Larger perturbation with different seed
-    key = jax.random.PRNGKey(777)        # Different seed
-    noise = min_spacing * 0.4             # Larger perturbation
+    # Start 2: Large perturbation
+    key = jax.random.PRNGKey(777)
+    noise = min_spacing * 0.4
     init_x2 = opt_x1 + jax.random.normal(key, shape=(n_target,)) * noise
     key, _ = jax.random.split(key)
     init_y2 = opt_y1 + jax.random.normal(key, shape=(n_target,)) * noise
@@ -94,8 +96,23 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
     opt_x2, opt_y2 = topfarm_sgd_solve(objective, init_x2, init_y2, boundary, min_spacing, settings)
     aep2 = objective(opt_x2, opt_y2)
 
+    # Start 3: Smaller perturbation (different seed)
+    key = jax.random.PRNGKey(555)
+    noise = min_spacing * 0.25
+    init_x3 = opt_x1 + jax.random.normal(key, shape=(n_target,)) * noise
+    key, _ = jax.random.split(key)
+    init_y3 = opt_y1 + jax.random.normal(key, shape=(n_target,)) * noise
+    init_x3 = jnp.clip(init_x3, x_min, x_max)
+    init_y3 = jnp.clip(init_y3, y_min, y_max)
+
+    opt_x3, opt_y3 = topfarm_sgd_solve(objective, init_x3, init_y3, boundary, min_spacing, settings)
+    aep3 = objective(opt_x3, opt_y3)
+
     # Return best
-    if aep1 < aep2:
+    best_aep = min(aep1, aep2, aep3)
+    if aep1 == best_aep:
         return opt_x1, opt_y1
-    else:
+    elif aep2 == best_aep:
         return opt_x2, opt_y2
+    else:
+        return opt_x3, opt_y3

@@ -1,9 +1,11 @@
-"""iter_029 with different random seeds and perturbation strategy.
+"""Single-start SGD with maximum iterations and ultra-high penalties.
 
-iter_029 achieved 5559.08 GWh. Try identical settings but:
-- Different random seed for second start (777 instead of 888)
-- Larger perturbation (0.4x instead of 0.3x min_spacing)
-- gamma_min_factor=0.0025 (between 0.002 and 0.003)
+Strategy:
+- Only 1 start to maximize iterations (~5000+ total)
+- Wind-aware initialization (proven best)
+- Extreme penalties (150.0) for perfect constraint satisfaction
+- Very long constant LR phase for thorough exploration
+- Budget: ~40s JIT + 140s optimization
 """
 import jax
 import jax.numpy as jnp
@@ -11,7 +13,7 @@ from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve
 
 
 def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
-    """iter_029 variant with adjusted perturbation."""
+    """Single-start deep SGD optimizer."""
 
     def objective(x, y):
         r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
@@ -56,46 +58,28 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 
     if len(inside_x) >= n_target:
         idx = jnp.round(jnp.linspace(0, len(inside_x) - 1, n_target)).astype(int)
-        init_x1 = inside_x[idx]
-        init_y1 = inside_y[idx]
+        init_x = inside_x[idx]
+        init_y = inside_y[idx]
     else:
         key = jax.random.PRNGKey(42)
-        init_x1 = jax.random.uniform(key, (n_target,), minval=x_min, maxval=x_max)
+        init_x = jax.random.uniform(key, (n_target,), minval=x_min, maxval=x_max)
         key, _ = jax.random.split(key)
-        init_y1 = jax.random.uniform(key, (n_target,), minval=y_min, maxval=y_max)
+        init_y = jax.random.uniform(key, (n_target,), minval=y_min, maxval=y_max)
 
-    # iter_029's proven settings with minor adjustment
+    # Extreme penalty settings
     settings = SGDSettings(
         learning_rate=150.0,
-        max_iter=3500,
-        additional_constant_lr_iterations=1500,
-        tol=1e-7,
-        beta1=0.12,
-        beta2=0.22,
-        gamma_min_factor=0.0025,         # Between 0.002 and 0.003
-        ks_rho=120.0,
-        spacing_weight=100.0,
-        boundary_weight=100.0,
+        max_iter=5000,                   # Maximum iterations
+        additional_constant_lr_iterations=2500,  # Long constant phase
+        tol=1e-8,
+        beta1=0.1,                       # iter_022's proven values
+        beta2=0.2,
+        gamma_min_factor=0.002,
+        ks_rho=150.0,                    # Very sharp constraints
+        spacing_weight=150.0,            # Extreme penalty
+        boundary_weight=150.0,           # Extreme penalty
     )
 
-    # Start 1: Wind-aware initialization
-    opt_x1, opt_y1 = topfarm_sgd_solve(objective, init_x1, init_y1, boundary, min_spacing, settings)
-    aep1 = objective(opt_x1, opt_y1)
+    opt_x, opt_y = topfarm_sgd_solve(objective, init_x, init_y, boundary, min_spacing, settings)
 
-    # Start 2: Larger perturbation with different seed
-    key = jax.random.PRNGKey(777)        # Different seed
-    noise = min_spacing * 0.4             # Larger perturbation
-    init_x2 = opt_x1 + jax.random.normal(key, shape=(n_target,)) * noise
-    key, _ = jax.random.split(key)
-    init_y2 = opt_y1 + jax.random.normal(key, shape=(n_target,)) * noise
-    init_x2 = jnp.clip(init_x2, x_min, x_max)
-    init_y2 = jnp.clip(init_y2, y_min, y_max)
-
-    opt_x2, opt_y2 = topfarm_sgd_solve(objective, init_x2, init_y2, boundary, min_spacing, settings)
-    aep2 = objective(opt_x2, opt_y2)
-
-    # Return best
-    if aep1 < aep2:
-        return opt_x1, opt_y1
-    else:
-        return opt_x2, opt_y2
+    return opt_x, opt_y
