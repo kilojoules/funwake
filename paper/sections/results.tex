@@ -10,25 +10,9 @@ SGD baseline achieves 4246.7\,GWh on the
 held-out ROWP farm. We test two frontier models (Claude Code, Gemini
 2.5 Flash) and one self-hosted open-source model (DeepSeek R1
 Distill 32B, run on LUMI via vLLM with the portable scaffold).
-Figure~\ref{fig:rowp} shows the best held-out AEP for each method.
+Table~\ref{tab:main} summarizes the best held-out AEP for each method.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\linewidth]{figs/fig1_rowp_comparison.png}
-\caption{Best feasible held-out (ROWP) AEP by method, relative to
-the 500-multi-start SGD baseline of 4246.7\,GWh. Bars show each
-method's best schedule among those that produce feasible ROWP
-layouts (boundary and spacing constraints satisfied); infeasible
-held-out layouts are excluded regardless of their reported AEP.
-Claude Code (4271.5), Gemini CLI schedule-only (4269.3),
-bump-family DE (4272.9), and random search (4268.6) all cluster at
-the shared local optimum of 4272.7\,GWh. Gemini CLI's best overall
-result (4272.7) is obtained in full-optimizer mode
-(Sec.~\ref{sec:generalization}, Appendix~\ref{app:fullopt});
-the bar here shows the schedule-only result. DeepSeek R1 32B is
-not shown (no ROWP backfill).}
-\label{fig:rowp}
-\end{figure}
+% Fig 1 bar chart removed — subsumed by Table 1 and Fig.~\ref{fig:matrix}.
 
 \textbf{The two frontier LLMs cluster at the same local optimum} on the
 held-out farm. In schedule-only mode, Claude Code's best feasible

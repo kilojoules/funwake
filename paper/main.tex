@@ -134,29 +134,20 @@ extremes ($-$8--11\,GWh), suggesting the LR dynamics (bumps,
 cosine decay) are sufficient for feasibility; the penalty trajectory
 controls AEP quality on the held-out farm.
 
-\section{Running-Best AEP Over Time}
-\label{app:running_best}
+\section{Convergence and Search Efficiency}
+\label{app:convergence}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\linewidth]{figs/fig4_running_best.png}
 \caption{Running-best training AEP (top) and running-best feasible
 held-out (ROWP) AEP (bottom) over wall-clock time. Stars mark the
-final \emph{deployed} script for each model---the one with the
-highest feasible ROWP at run's end. Training AEP saturates quickly
-for frontier models; feasible ROWP continues to improve throughout
-the 5-hour budget.}
+final \emph{deployed} script for each model. Training AEP saturates
+within 1--2 hours; feasible ROWP continues to improve throughout
+the 5-hour budget---a time budget that terminates when training AEP
+plateaus would miss late-run generalization improvements.}
 \label{fig:running}
 \end{figure}
-
-Training AEP saturates within $\sim$1--2 hours for the frontier
-models, but the best-feasible held-out AEP continues to improve
-throughout the 5-hour budget. This matters for benchmark design: a
-time budget that terminates when training AEP plateaus would miss
-late-run improvements in generalization.
-
-\section{Convergence Comparison and Mechanism Plot}
-\label{app:convergence}
 
 \begin{figure}[h]
 \centering
@@ -166,19 +157,10 @@ search strategies in Sec.~\ref{sec:ablations}: Claude Code
 schedule-only (320 attempts), Gemini CLI (best-among-runs), random
 search at $N=320$, and bump-family DE (316 evals). All four
 converge into a tight band at the shared local optimum of
-4272.7\,GWh.}
+4272.7\,GWh. Note: random search and DE use the same number of
+physics evaluations as the LLM agents, so horizontal alignment
+represents matched compute.}
 \label{fig:convergence}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\linewidth]{figs/fig6_alpha_mechanism.png}
-\caption{Terminal penalty weight $\alpha$ at the final iteration vs.\
-held-out (ROWP) AEP for schedules across Claude's seed runs.
-Schedules that drive $\alpha$ to high values at convergence are the
-ones that produce feasible held-out layouts; schedules with
-plateauing or decreasing $\alpha$ at the end fail on ROWP.}
-\label{fig:alpha_mech}
 \end{figure}
 
 \section{Full-Optimizer Mode}
@@ -196,30 +178,12 @@ Full-optimizer held-out AEP: Claude 4268.5 (+21.8); Gemini 4264.0
 held-out results for both, suggesting that constraining the search
 space forces deeper exploration of optimization dynamics.
 
-\section{Generalization Curve and Table}
+\section{Generalization Table}
 \label{app:gen_table}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\linewidth]{figs/fig2_generalization.png}
-\caption{Generalization across turbine counts on the \textbf{training
-polygon} (DEI).  Gap over the per-$N$ 500-multi-start baseline.
-LLM schedules gain most at high $N$ where packing constraints bind.}
-\label{fig:gen}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.85\linewidth]{figs/fig2b_generalization_rowp.png}
-\caption{Generalization across turbine counts on the \textbf{held-out
-polygon} (ROWP) with the training wind rose (DEI).  The schedule
-never saw ROWP during training, yet the same upward trend holds:
-LLM schedules outperform the 500-multi-start baseline by up to
-0.9\% at $N\!=\!80$.  Positive transfer is observed on this single
-DEI$\to$ROWP held-out pair ($N=1$ held-out polygon); broader
-cross-geometry claims require additional polygons.}
-\label{fig:gen_rowp}
-\end{figure}
+% Figs 2 and 2b (per-N generalization curves) removed ---
+% subsumed by Fig.~\ref{fig:matrix} in the main text, which shows
+% the same data across all wind roses and both polygons.
 
 \begin{table}[h]
 \centering
