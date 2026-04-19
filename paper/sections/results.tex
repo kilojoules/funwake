@@ -70,7 +70,7 @@ these numbers should not be used for fine-grained model ranking.}
 \midrule
 \multicolumn{6}{l}{\emph{Non-LLM ablations (Sec.~\ref{sec:ablations})}} \\
 \textbf{Bump-family DE (Claude-seeded)}        & 316 evals    & 5566.3 & +25.6 & \textbf{4272.9} & \textbf{+26.2} \\
-Bump-family DE (baseline-seeded, zero bumps)   & 316 evals    & 5567.1 & +26.4 & 4271.4 & +24.7 \\
+Bump-family DE (baseline-seeded, zero bumps)   & 316 evals    & 5562.7 & +22.0 & 4271.9 & +25.2 \\
 Random search (parameterized family)           & 320 samples  & 5561.8 & +21.1 & 4268.6 & +21.9 \\
 CMA-ES on raw 148-D positions (warm, from Claude) & 6000 evals & n/a    & ---    & 4272.2 & +25.5 \\
 CMA-ES on raw 148-D positions (cold, from grid)   & 4500 evals & n/a    & ---    & 4189.3 & $-57.4$ \\
@@ -347,7 +347,7 @@ penalty coupling, quadratic boost, $\beta_1$, $\beta_2$) and run
 scipy DE (\texttt{popsize=15}, \texttt{maxiter=20}, 316 evals) in
 two conditions: \textbf{Claude-seeded} (iter 192's params) reaches
 \textbf{4272.9\,GWh}; \textbf{baseline-seeded} (zero bumps,
-TopFarm $\beta_1=0.1$, $\beta_2=0.2$) reaches \textbf{4271.4\,GWh}.
+TopFarm $\beta_1=0.1$, $\beta_2=0.2$) reaches \textbf{4271.9\,GWh}.
 The two runs agree within seed noise: the bump-family
 parameterization reaches the 4272.7\,GWh optimum without the LLM's
 structural hint, so Claude's specific bump placement is not

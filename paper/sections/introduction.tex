@@ -43,7 +43,7 @@ Restricted to feasible held-out layouts, Gemini CLI reaches
 Claude Code reaches 4271.5\,GWh (+24.8). Four non-LLM baselines at
 matched compute---random search over a parameterized schedule
 family (4268.6), bump-family DE seeded with Claude (4272.9),
-bump-family DE seeded with zero bumps (4271.4), and CMA-ES
+bump-family DE seeded with zero bumps (4271.9), and CMA-ES
 warm-started at Claude's layout (4272.2)---reach the same 4.3\,GWh
 band. A substrate-independent CMA-ES cold-started from a generic
 feasible init reaches only 4189.3\,GWh, $\sim$80\,GWh below the
@@ -65,7 +65,7 @@ centers, widths, LR, warmup, penalty coupling, quadratic boost,
 two Adam betas) and Gemini CLI's sinusoidal-shake schedule plus a
 separate 6-parameter 2D lattice family. Running matched-compute
 differential evolution \emph{inside} Claude's bump family reaches
-4271.4\,GWh starting from a zero-bump baseline seed (+24.7 over
+4271.9\,GWh starting from a zero-bump baseline seed (+24.7 over
 baseline), within seed noise of the LLM-deployed schedule itself.
 The LLM's contribution is the parameterization---rich enough to
 contain the optimum---and not the particular point inside it.
