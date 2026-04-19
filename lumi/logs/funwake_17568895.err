@@ -1,0 +1,9 @@
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) ModuleLabel/label   2) lumi-tools/24.05   3) init-lumi/0.2
+
+The following sticky modules could not be reloaded:
+
+  1) lumi-tools
+slurmstepd: error: *** JOB 17568895 ON nid005042 CANCELLED AT 2026-04-16T21:14:02 ***

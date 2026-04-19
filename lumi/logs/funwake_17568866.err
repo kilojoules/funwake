@@ -1,0 +1,21 @@
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) ModuleLabel/label   2) lumi-tools/24.05   3) init-lumi/0.2
+
+The following sticky modules could not be reloaded:
+
+  1) lumi-tools
+Traceback (most recent call last):
+  File "/pfs/lustrep2/scratch/project_465002609/julian/funwake/agent_cli.py", line 147, in <module>
+    main()
+    ~~~~^^
+  File "/pfs/lustrep2/scratch/project_465002609/julian/funwake/agent_cli.py", line 143, in main
+    runner.run()
+    ~~~~~~~~~~^^
+  File "/pfs/lustrep2/scratch/project_465002609/julian/funwake/runners/vllm_runner.py", line 513, in run
+    result = self._execute_tool(action, args)
+  File "/pfs/lustrep2/scratch/project_465002609/julian/funwake/runners/vllm_runner.py", line 208, in _execute_tool
+    Path(iter_path).write_text(code)
+    ^^^^
+UnboundLocalError: cannot access local variable 'Path' where it is not associated with a value

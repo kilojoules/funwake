@@ -1,0 +1,16 @@
+=== Gemini Agent on LUMI CPU ===
+  Problem:      results/matrix/problem_dei_n50_roseuniform.json
+  Baselines:    results/baselines_with_uniform.json
+  Train farm:   uniform
+  Max attempts: 50
+  Hot start:    results/seed_optimizer.py
+  Output:       results_agent_gemini_uniform_50att
+  Model:        gemini-2.5-flash
+
+Starting gemini agent
+  Time budget: 720 min
+  Output: results_agent_gemini_uniform_50att/
+  Hot-start: results/seed_optimizer.py
+
+[turn 1] Rate limited, waiting 60s (retry 1/5)
+[turn 1] Rate limited, waiting 120s (retry 2/5)

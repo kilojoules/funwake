@@ -1,0 +1,45 @@
+=== Iterative Seed Evolution ===
+Model:      deepseek-r1-distill-qwen-32b
+Seeds/gen:  4
+Budget:     60 min per seed
+Gens:       3
+Mode:       full optimizer
+Seed link:  results/iterative_seeds/deepseek-r1-distill-qwen-32b_current.py -> /scratch/project_465002609/julian/funwake/results/seed_optimizer.py
+
+
+=== Generation 1 / 3 ===
+  Hot-start: /scratch/project_465002609/julian/funwake/results/seed_optimizer.py
+  seed 1: job 17576496 (output: results_agent_deepseek-r1-distill-qwen-32b_gen1_s1/)
+  seed 2: job 17576497 (output: results_agent_deepseek-r1-distill-qwen-32b_gen1_s2/)
+  seed 3: job 17576498 (output: results_agent_deepseek-r1-distill-qwen-32b_gen1_s3/)
+  seed 4: job 17576499 (output: results_agent_deepseek-r1-distill-qwen-32b_gen1_s4/)
+  Waiting for jobs: 17576496,17576497,17576498,17576499
+  All seeds for generation 1 complete.
+  Generation 1 best: results_agent_deepseek-r1-distill-qwen-32b_gen1_s4/iter_009.py
+  Seed link now: /scratch/project_465002609/julian/funwake/results_agent_deepseek-r1-distill-qwen-32b_gen1_s4/iter_009.py
+
+=== Generation 2 / 3 ===
+  Hot-start: /scratch/project_465002609/julian/funwake/results_agent_deepseek-r1-distill-qwen-32b_gen1_s4/iter_009.py
+  seed 1: job 17582306 (output: results_agent_deepseek-r1-distill-qwen-32b_gen2_s1/)
+  seed 2: job 17582307 (output: results_agent_deepseek-r1-distill-qwen-32b_gen2_s2/)
+  seed 3: job 17582308 (output: results_agent_deepseek-r1-distill-qwen-32b_gen2_s3/)
+  seed 4: job 17582309 (output: results_agent_deepseek-r1-distill-qwen-32b_gen2_s4/)
+  Waiting for jobs: 17582306,17582307,17582308,17582309
+  All seeds for generation 2 complete.
+  Generation 2 best: results_agent_deepseek-r1-distill-qwen-32b_gen2_s2/iter_011.py
+  Seed link now: /scratch/project_465002609/julian/funwake/results_agent_deepseek-r1-distill-qwen-32b_gen2_s2/iter_011.py
+
+=== Generation 3 / 3 ===
+  Hot-start: /scratch/project_465002609/julian/funwake/results_agent_deepseek-r1-distill-qwen-32b_gen2_s2/iter_011.py
+  seed 1: job 17587111 (output: results_agent_deepseek-r1-distill-qwen-32b_gen3_s1/)
+  seed 2: job 17587112 (output: results_agent_deepseek-r1-distill-qwen-32b_gen3_s2/)
+  seed 3: job 17587113 (output: results_agent_deepseek-r1-distill-qwen-32b_gen3_s3/)
+  seed 4: job 17587114 (output: results_agent_deepseek-r1-distill-qwen-32b_gen3_s4/)
+  Waiting for jobs: 17587111,17587112,17587113,17587114
+  All seeds for generation 3 complete.
+  Generation 3 best: results_agent_deepseek-r1-distill-qwen-32b_gen3_sched_s4/iter_004.py
+  Seed link now: /scratch/project_465002609/julian/funwake/results_agent_deepseek-r1-distill-qwen-32b_gen3_sched_s4/iter_004.py
+
+=== All 3 generations complete ===
+Final seed: /scratch/project_465002609/julian/funwake/results_agent_deepseek-r1-distill-qwen-32b_gen3_sched_s4/iter_004.py
+ed_s4/iter_004.py

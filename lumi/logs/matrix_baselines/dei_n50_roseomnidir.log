@@ -1,0 +1,14 @@
+
+=== Starting at 23:45:33 ===
+[dei_n50_roseomnidir] 500/500 seeds to run
+[dei_n50_roseomnidir] problem loaded in 9.6s, inside candidates: 412, n_target=50
+
+=== Starting at 23:55:45 ===
+[dei_n50_roseomnidir] 489/500 seeds to run
+[dei_n50_roseomnidir] problem loaded in 6.8s, inside candidates: 412, n_target=50
+[dei_n50_roseomnidir] 50/489 done, rate=0.04/s, eta=12367s
+
+=== Starting at 00:21:44 ===
+[dei_n50_roseomnidir] 436/500 seeds to run
+[dei_n50_roseomnidir] problem loaded in 8.8s, inside candidates: 412, n_target=50
+[dei_n50_roseomnidir] 50/436 done, rate=0.04/s, eta=9756s

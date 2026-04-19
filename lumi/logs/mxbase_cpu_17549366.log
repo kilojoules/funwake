@@ -1,0 +1,55 @@
+Matrix baselines (CPU): 48 problems × 500 seeds, 48 parallel
+
+done: s/matrix/problem_dei_n30_roseuniform.json	dei_n30_roseuniform
+done: s/matrix/problem_dei_n30_roseomnidir.json	dei_n30_roseomnidir
+done: s/matrix/problem_dei_n30_rosedei.json	dei_n30_rosedei
+done: s/matrix/problem_dei_n30_roserowp.json	dei_n30_roserowp
+done: s/matrix/problem_dei_n40_roseuniform.json	dei_n40_roseuniform
+done: s/matrix/problem_dei_n40_roseomnidir.json	dei_n40_roseomnidir
+done: s/matrix/problem_dei_n40_rosedei.json	dei_n40_rosedei
+done: s/matrix/problem_dei_n40_roserowp.json	dei_n40_roserowp
+done: s/matrix/problem_dei_n50_roseuniform.json	dei_n50_roseuniform
+done: s/matrix/problem_dei_n50_roseomnidir.json	dei_n50_roseomnidir
+done: s/matrix/problem_dei_n50_rosedei.json	dei_n50_rosedei
+done: s/matrix/problem_dei_n50_roserowp.json	dei_n50_roserowp
+done: s/matrix/problem_dei_n60_roseuniform.json	dei_n60_roseuniform
+done: s/matrix/problem_dei_n60_roseomnidir.json	dei_n60_roseomnidir
+done: s/matrix/problem_dei_n60_rosedei.json	dei_n60_rosedei
+done: s/matrix/problem_dei_n60_roserowp.json	dei_n60_roserowp
+done: s/matrix/problem_dei_n70_roseuniform.json	dei_n70_roseuniform
+done: s/matrix/problem_dei_n70_roseomnidir.json	dei_n70_roseomnidir
+done: s/matrix/problem_dei_n70_rosedei.json	dei_n70_rosedei
+done: s/matrix/problem_dei_n70_roserowp.json	dei_n70_roserowp
+done: s/matrix/problem_dei_n80_roseuniform.json	dei_n80_roseuniform
+done: s/matrix/problem_dei_n80_roseomnidir.json	dei_n80_roseomnidir
+done: s/matrix/problem_dei_n80_rosedei.json	dei_n80_rosedei
+done: s/matrix/problem_dei_n80_roserowp.json	dei_n80_roserowp
+done: s/matrix/problem_rowp_n30_roseuniform.json	rowp_n30_roseuniform
+done: s/matrix/problem_rowp_n30_roseomnidir.json	rowp_n30_roseomnidir
+done: s/matrix/problem_rowp_n30_rosedei.json	rowp_n30_rosedei
+done: s/matrix/problem_rowp_n30_roserowp.json	rowp_n30_roserowp
+done: s/matrix/problem_rowp_n40_roseuniform.json	rowp_n40_roseuniform
+done: s/matrix/problem_rowp_n40_roseomnidir.json	rowp_n40_roseomnidir
+done: s/matrix/problem_rowp_n40_rosedei.json	rowp_n40_rosedei
+done: s/matrix/problem_rowp_n40_roserowp.json	rowp_n40_roserowp
+done: s/matrix/problem_rowp_n50_roseuniform.json	rowp_n50_roseuniform
+done: s/matrix/problem_rowp_n50_roseomnidir.json	rowp_n50_roseomnidir
+done: s/matrix/problem_rowp_n50_rosedei.json	rowp_n50_rosedei
+done: s/matrix/problem_rowp_n50_roserowp.json	rowp_n50_roserowp
+done: s/matrix/problem_rowp_n60_roseuniform.json	rowp_n60_roseuniform
+done: s/matrix/problem_rowp_n60_roseomnidir.json	rowp_n60_roseomnidir
+done: s/matrix/problem_rowp_n60_rosedei.json	rowp_n60_rosedei
+done: s/matrix/problem_rowp_n60_roserowp.json	rowp_n60_roserowp
+done: s/matrix/problem_rowp_n70_roseuniform.json	rowp_n70_roseuniform
+done: s/matrix/problem_rowp_n70_roseomnidir.json	rowp_n70_roseomnidir
+done: s/matrix/problem_rowp_n70_rosedei.json	rowp_n70_rosedei
+done: s/matrix/problem_rowp_n70_roserowp.json	rowp_n70_roserowp
+done: s/matrix/problem_rowp_n80_roseuniform.json	rowp_n80_roseuniform
+done: s/matrix/problem_rowp_n80_roseomnidir.json	rowp_n80_roseomnidir
+done: s/matrix/problem_rowp_n80_rosedei.json	rowp_n80_rosedei
+done: s/matrix/problem_rowp_n80_roserowp.json	rowp_n80_roserowp
+
+All problems complete. Aggregate with:
+  pixi run python tools/aggregate_matrix_baselines.py \
+      --matrix-dir results/matrix \
+      --out results/matrix/baselines_matrix.json

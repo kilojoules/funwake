@@ -1,0 +1,1104 @@
+=== FunWake Benchmark ===
+Model:  deepseek-r1-distill-qwen-32b (deepseek-ai/DeepSeek-R1-Distill-Qwen-32B)
+GPUs:   2
+Seed:   4
+Budget: 60 min
+
+Container: /appl/local/laifs/containers/lumi-multitorch-u24r64f21m43t29-20260319_153422/lumi-multitorch-full-u24r64f21m43t29-20260319_153422.sif
+Reasoning mode enabled (parser: deepseek_r1)
+Starting vLLM: --model /scratch/project_465002609/models/deepseek-r1-distill-qwen-32b --tensor-parallel-size 2 --dtype bfloat16 --max-model-len 16384 --port 8000 --host 0.0.0.0 --reasoning-parser deepseek_r1
+vLLM log: /scratch/project_465002609/julian/funwake/lumi/logs/vllm_17554808.log
+vLLM PID: 56239
+Waiting for vLLM server...
+Server ready after 540s
+Serving: /scratch/project_465002609/models/deepseek-r1-distill-qwen-32b
+
+Running: pixi run python agent_cli.py --provider vllm --model /scratch/project_465002609/models/deepseek-r1-distill-qwen-32b --base-url http://localhost:8000 --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv --time-budget 3600 --hot-start results/seed_optimizer.py --output-dir results_agent_deepseek-r1-distill-qwen-32b_gen3_s4 --timeout-per-run 60
+[vLLM] Connected to http://localhost:8000, models: ['/scratch/project_465002609/models/deepseek-r1-distill-qwen-32b']
+Starting vllm agent
+  Time budget: 60 min
+  Output: results_agent_deepseek-r1-distill-qwen-32b_gen3_s4/
+  Hot-start: results/seed_optimizer.py
+
+
+[turn 1] 60 min remaining, 0 attempts, best=-inf
+[turn 1] reasoning: 1028 tok ("Okay, I need to optimize the wind farm layout to maximize Annual Energy Production (AEP). The function I'm writing is ca"...)
+[turn 1] Response: 
+
+To address the problem of optimizing turbine layout for maximum AEP, I'll implement a hexagonal grid initialization strategy. This approach aims to provide better coverage and turbine spacing compar...
+[turn 1] submit_code → AEP: 5467.08 GWh (baseline: 5540.72, gap: -73.64)
+Feasible: True
+Time: 95.8s
+Strategy: sgd_solve
+Best so far: 5467.08 GWh...
+
+[turn 2] 56 min remaining, 1 attempts, best=5467.1
+[turn 2] reasoning: 731 tok ("Alright, let's see what's going on here. So, I submitted an optimizer that uses a hexagonal grid initialization, hoping"...)
+[turn 2] Response: 
+
+To address the underperformance of the hexagonal grid initialization, I will refine the approach by adjusting the grid generation and optimizing the initialization strategy.
+
+**Step-by-Step Plan:**
+...
+[turn 2] submit_code → ERROR: Timeout after 120s...
+
+[turn 3] 51 min remaining, 2 attempts, best=5467.1
+[turn 3] reasoning: 637 tok ("Okay, so I'm trying to optimize the layout of wind turbines in a farm to maximize the Annual Energy Production (AEP). Th"...)
+[turn 3] Response: 
+
+To address the issues of poor performance and timeout, I'll simplify the initialization process and optimize the solver settings for efficiency.
+
+**Step-by-Step Plan:**
+
+1. **Simplified Initializati...
+[turn 3] submit_code → ERROR: Timeout after 120s...
+
+[turn 4] 47 min remaining, 3 attempts, best=5467.1
+[turn 4] reasoning: 756 tok ('Alright, I need to tackle this problem of optimizing turbine layouts to maximize Annual Energy Production (AEP). The pre'...)
+[turn 4] Response: 
+
+To address the timeout issue and improve the optimization process, I'll implement a simplified initialization strategy with optimized solver settings. This approach aims to balance exploration and e...
+[turn 4] submit_code → ERROR: Timeout after 120s...
+
+[turn 5] 43 min remaining, 4 attempts, best=5467.1
+[turn 5] reasoning: 580 tok ("Alright, so I'm trying to optimize the layout of wind turbines to maximize the Annual Energy Production (AEP). The probl"...)
+[turn 5] Response: 
+
+To address the timeout issue and improve the optimization process, I'll implement a simplified initialization strategy with optimized solver settings. This approach aims to balance exploration and e...
+[turn 5] submit_code → ERROR: Timeout after 120s...
+
+[turn 6] 39 min remaining, 5 attempts, best=5467.1
+[turn 6] reasoning: 1219 tok ("Alright, so I'm trying to optimize the layout of wind turbines to maximize the Annual Energy Production (AEP). I've been"...)
+[turn 6] Response: 
+
+To address the timeout issue and improve the optimization process, I'll implement a simplified initialization strategy with optimized solver settings. This approach aims to balance exploration and e...
+[turn 6] submit_code → ERROR: Timeout after 120s...
+
+[turn 7] 34 min remaining, 6 attempts, best=5467.1
+[turn 7] reasoning: 768 tok ("Okay, I'm trying to figure out how to improve the optimization process for placing wind turbines in a wind farm. The goa"...)
+[turn 7] Response: 
+
+To address the timeout issue and improve the optimization process, I'll implement a streamlined approach with optimized solver settings. This approach aims to balance exploration and exploitation wh...
+[turn 7] submit_code → AEP: 5520.48 GWh (baseline: 5540.72, gap: -20.24)
+Feasible: True
+Time: 37.7s
+Strategy: sgd_solve
+Best so far: 5520.48 GWh...
+
+[turn 8] 32 min remaining, 7 attempts, best=5520.5
+[turn 8] reasoning: 626 tok ("Okay, so I'm trying to optimize the layout of wind turbines to maximize their Annual Energy Production (AEP). The proble"...)
+[turn 8] Response: 
+
+To optimize the wind turbine layout for maximum Annual Energy Production (AEP) while respecting boundary and spacing constraints, we can follow a structured approach. This approach involves using a ...
+[turn 8] submit_code → AEP: 5467.08 GWh (baseline: 5540.72, gap: -73.64)
+Feasible: True
+Time: 75.7s
+Strategy: sgd_solve
+Best so far: 5520.48 GWh...
+
+[turn 9] 29 min remaining, 8 attempts, best=5520.5
+[turn 9] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 10] 29 min remaining, 8 attempts, best=5520.5
+[turn 10] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 11] 29 min remaining, 8 attempts, best=5520.5
+[turn 11] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 12] 28 min remaining, 8 attempts, best=5520.5
+[turn 12] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 13] 28 min remaining, 8 attempts, best=5520.5
+[turn 13] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 14] 28 min remaining, 8 attempts, best=5520.5
+[turn 14] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 15] 28 min remaining, 8 attempts, best=5520.5
+[turn 15] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 16] 28 min remaining, 8 attempts, best=5520.5
+[turn 16] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 17] 28 min remaining, 8 attempts, best=5520.5
+[turn 17] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 18] 28 min remaining, 8 attempts, best=5520.5
+[turn 18] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 19] 28 min remaining, 8 attempts, best=5520.5
+[turn 19] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 20] 28 min remaining, 8 attempts, best=5520.5
+[turn 20] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 21] 28 min remaining, 8 attempts, best=5520.5
+[turn 21] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 22] 28 min remaining, 8 attempts, best=5520.5
+[turn 22] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 23] 27 min remaining, 8 attempts, best=5520.5
+[turn 23] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 24] 27 min remaining, 8 attempts, best=5520.5
+[turn 24] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 25] 27 min remaining, 8 attempts, best=5520.5
+[turn 25] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 26] 27 min remaining, 8 attempts, best=5520.5
+[turn 26] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 27] 27 min remaining, 8 attempts, best=5520.5
+[turn 27] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 28] 27 min remaining, 8 attempts, best=5520.5
+[turn 28] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 29] 27 min remaining, 8 attempts, best=5520.5
+[turn 29] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 30] 27 min remaining, 8 attempts, best=5520.5
+[turn 30] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 31] 27 min remaining, 8 attempts, best=5520.5
+[turn 31] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 32] 27 min remaining, 8 attempts, best=5520.5
+[turn 32] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 33] 27 min remaining, 8 attempts, best=5520.5
+[turn 33] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 34] 27 min remaining, 8 attempts, best=5520.5
+[turn 34] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 35] 26 min remaining, 8 attempts, best=5520.5
+[turn 35] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 36] 26 min remaining, 8 attempts, best=5520.5
+[turn 36] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 37] 26 min remaining, 8 attempts, best=5520.5
+[turn 37] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 38] 26 min remaining, 8 attempts, best=5520.5
+[turn 38] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 39] 26 min remaining, 8 attempts, best=5520.5
+[turn 39] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 40] 26 min remaining, 8 attempts, best=5520.5
+[turn 40] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 41] 26 min remaining, 8 attempts, best=5520.5
+[turn 41] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 42] 26 min remaining, 8 attempts, best=5520.5
+[turn 42] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 43] 26 min remaining, 8 attempts, best=5520.5
+[turn 43] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 44] 26 min remaining, 8 attempts, best=5520.5
+[turn 44] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 45] 26 min remaining, 8 attempts, best=5520.5
+[turn 45] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 46] 26 min remaining, 8 attempts, best=5520.5
+[turn 46] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 47] 25 min remaining, 8 attempts, best=5520.5
+[turn 47] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 48] 25 min remaining, 8 attempts, best=5520.5
+[turn 48] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 49] 25 min remaining, 8 attempts, best=5520.5
+[turn 49] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 50] 25 min remaining, 8 attempts, best=5520.5
+[turn 50] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 51] 25 min remaining, 8 attempts, best=5520.5
+[turn 51] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 52] 25 min remaining, 8 attempts, best=5520.5
+[turn 52] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 53] 25 min remaining, 8 attempts, best=5520.5
+[turn 53] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 54] 25 min remaining, 8 attempts, best=5520.5
+[turn 54] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 55] 25 min remaining, 8 attempts, best=5520.5
+[turn 55] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 56] 25 min remaining, 8 attempts, best=5520.5
+[turn 56] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 57] 25 min remaining, 8 attempts, best=5520.5
+[turn 57] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 58] 25 min remaining, 8 attempts, best=5520.5
+[turn 58] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 59] 24 min remaining, 8 attempts, best=5520.5
+[turn 59] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 60] 24 min remaining, 8 attempts, best=5520.5
+[turn 60] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 61] 24 min remaining, 8 attempts, best=5520.5
+[turn 61] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 62] 24 min remaining, 8 attempts, best=5520.5
+[turn 62] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 63] 24 min remaining, 8 attempts, best=5520.5
+[turn 63] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 64] 24 min remaining, 8 attempts, best=5520.5
+[turn 64] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 65] 24 min remaining, 8 attempts, best=5520.5
+[turn 65] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 66] 24 min remaining, 8 attempts, best=5520.5
+[turn 66] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 67] 24 min remaining, 8 attempts, best=5520.5
+[turn 67] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 68] 24 min remaining, 8 attempts, best=5520.5
+[turn 68] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 69] 24 min remaining, 8 attempts, best=5520.5
+[turn 69] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 70] 24 min remaining, 8 attempts, best=5520.5
+[turn 70] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 71] 23 min remaining, 8 attempts, best=5520.5
+[turn 71] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 72] 23 min remaining, 8 attempts, best=5520.5
+[turn 72] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 73] 23 min remaining, 8 attempts, best=5520.5
+[turn 73] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 74] 23 min remaining, 8 attempts, best=5520.5
+[turn 74] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 75] 23 min remaining, 8 attempts, best=5520.5
+[turn 75] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 76] 23 min remaining, 8 attempts, best=5520.5
+[turn 76] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 77] 23 min remaining, 8 attempts, best=5520.5
+[turn 77] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 78] 23 min remaining, 8 attempts, best=5520.5
+[turn 78] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 79] 23 min remaining, 8 attempts, best=5520.5
+[turn 79] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 80] 23 min remaining, 8 attempts, best=5520.5
+[turn 80] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 81] 23 min remaining, 8 attempts, best=5520.5
+[turn 81] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 82] 23 min remaining, 8 attempts, best=5520.5
+[turn 82] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 83] 22 min remaining, 8 attempts, best=5520.5
+[turn 83] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 84] 22 min remaining, 8 attempts, best=5520.5
+[turn 84] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 85] 22 min remaining, 8 attempts, best=5520.5
+[turn 85] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 86] 22 min remaining, 8 attempts, best=5520.5
+[turn 86] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 87] 22 min remaining, 8 attempts, best=5520.5
+[turn 87] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 88] 22 min remaining, 8 attempts, best=5520.5
+[turn 88] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 89] 22 min remaining, 8 attempts, best=5520.5
+[turn 89] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 90] 22 min remaining, 8 attempts, best=5520.5
+[turn 90] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 91] 22 min remaining, 8 attempts, best=5520.5
+[turn 91] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 92] 22 min remaining, 8 attempts, best=5520.5
+[turn 92] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 93] 22 min remaining, 8 attempts, best=5520.5
+[turn 93] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 94] 22 min remaining, 8 attempts, best=5520.5
+[turn 94] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 95] 21 min remaining, 8 attempts, best=5520.5
+[turn 95] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 96] 21 min remaining, 8 attempts, best=5520.5
+[turn 96] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 97] 21 min remaining, 8 attempts, best=5520.5
+[turn 97] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 98] 21 min remaining, 8 attempts, best=5520.5
+[turn 98] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 99] 21 min remaining, 8 attempts, best=5520.5
+[turn 99] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 100] 21 min remaining, 8 attempts, best=5520.5
+[turn 100] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 101] 21 min remaining, 8 attempts, best=5520.5
+[turn 101] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 102] 21 min remaining, 8 attempts, best=5520.5
+[turn 102] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 103] 21 min remaining, 8 attempts, best=5520.5
+[turn 103] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 104] 21 min remaining, 8 attempts, best=5520.5
+[turn 104] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 105] 21 min remaining, 8 attempts, best=5520.5
+[turn 105] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 106] 20 min remaining, 8 attempts, best=5520.5
+[turn 106] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 107] 20 min remaining, 8 attempts, best=5520.5
+[turn 107] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 108] 20 min remaining, 8 attempts, best=5520.5
+[turn 108] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 109] 20 min remaining, 8 attempts, best=5520.5
+[turn 109] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 110] 20 min remaining, 8 attempts, best=5520.5
+[turn 110] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 111] 20 min remaining, 8 attempts, best=5520.5
+[turn 111] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 112] 20 min remaining, 8 attempts, best=5520.5
+[turn 112] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 113] 20 min remaining, 8 attempts, best=5520.5
+[turn 113] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 114] 20 min remaining, 8 attempts, best=5520.5
+[turn 114] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 115] 20 min remaining, 8 attempts, best=5520.5
+[turn 115] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 116] 20 min remaining, 8 attempts, best=5520.5
+[turn 116] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 117] 20 min remaining, 8 attempts, best=5520.5
+[turn 117] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 118] 19 min remaining, 8 attempts, best=5520.5
+[turn 118] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 119] 19 min remaining, 8 attempts, best=5520.5
+[turn 119] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 120] 19 min remaining, 8 attempts, best=5520.5
+[turn 120] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 121] 19 min remaining, 8 attempts, best=5520.5
+[turn 121] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 122] 19 min remaining, 8 attempts, best=5520.5
+[turn 122] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 123] 19 min remaining, 8 attempts, best=5520.5
+[turn 123] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 124] 19 min remaining, 8 attempts, best=5520.5
+[turn 124] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 125] 19 min remaining, 8 attempts, best=5520.5
+[turn 125] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 126] 19 min remaining, 8 attempts, best=5520.5
+[turn 126] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 127] 19 min remaining, 8 attempts, best=5520.5
+[turn 127] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 128] 19 min remaining, 8 attempts, best=5520.5
+[turn 128] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 129] 19 min remaining, 8 attempts, best=5520.5
+[turn 129] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 130] 18 min remaining, 8 attempts, best=5520.5
+[turn 130] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 131] 18 min remaining, 8 attempts, best=5520.5
+[turn 131] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 132] 18 min remaining, 8 attempts, best=5520.5
+[turn 132] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 133] 18 min remaining, 8 attempts, best=5520.5
+[turn 133] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 134] 18 min remaining, 8 attempts, best=5520.5
+[turn 134] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 135] 18 min remaining, 8 attempts, best=5520.5
+[turn 135] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 136] 18 min remaining, 8 attempts, best=5520.5
+[turn 136] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 137] 18 min remaining, 8 attempts, best=5520.5
+[turn 137] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 138] 18 min remaining, 8 attempts, best=5520.5
+[turn 138] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 139] 18 min remaining, 8 attempts, best=5520.5
+[turn 139] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 140] 18 min remaining, 8 attempts, best=5520.5
+[turn 140] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 141] 18 min remaining, 8 attempts, best=5520.5
+[turn 141] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 142] 17 min remaining, 8 attempts, best=5520.5
+[turn 142] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 143] 17 min remaining, 8 attempts, best=5520.5
+[turn 143] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 144] 17 min remaining, 8 attempts, best=5520.5
+[turn 144] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 145] 17 min remaining, 8 attempts, best=5520.5
+[turn 145] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 146] 17 min remaining, 8 attempts, best=5520.5
+[turn 146] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 147] 17 min remaining, 8 attempts, best=5520.5
+[turn 147] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 148] 17 min remaining, 8 attempts, best=5520.5
+[turn 148] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 149] 17 min remaining, 8 attempts, best=5520.5
+[turn 149] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 150] 17 min remaining, 8 attempts, best=5520.5
+[turn 150] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 151] 17 min remaining, 8 attempts, best=5520.5
+[turn 151] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 152] 17 min remaining, 8 attempts, best=5520.5
+[turn 152] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 153] 17 min remaining, 8 attempts, best=5520.5
+[turn 153] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 154] 16 min remaining, 8 attempts, best=5520.5
+[turn 154] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 155] 16 min remaining, 8 attempts, best=5520.5
+[turn 155] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 156] 16 min remaining, 8 attempts, best=5520.5
+[turn 156] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 157] 16 min remaining, 8 attempts, best=5520.5
+[turn 157] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 158] 16 min remaining, 8 attempts, best=5520.5
+[turn 158] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 159] 16 min remaining, 8 attempts, best=5520.5
+[turn 159] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 160] 16 min remaining, 8 attempts, best=5520.5
+[turn 160] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 161] 16 min remaining, 8 attempts, best=5520.5
+[turn 161] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 162] 16 min remaining, 8 attempts, best=5520.5
+[turn 162] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 163] 16 min remaining, 8 attempts, best=5520.5
+[turn 163] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 164] 16 min remaining, 8 attempts, best=5520.5
+[turn 164] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 165] 16 min remaining, 8 attempts, best=5520.5
+[turn 165] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 166] 15 min remaining, 8 attempts, best=5520.5
+[turn 166] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 167] 15 min remaining, 8 attempts, best=5520.5
+[turn 167] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 168] 15 min remaining, 8 attempts, best=5520.5
+[turn 168] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 169] 15 min remaining, 8 attempts, best=5520.5
+[turn 169] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 170] 15 min remaining, 8 attempts, best=5520.5
+[turn 170] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 171] 15 min remaining, 8 attempts, best=5520.5
+[turn 171] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 172] 15 min remaining, 8 attempts, best=5520.5
+[turn 172] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 173] 15 min remaining, 8 attempts, best=5520.5
+[turn 173] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 174] 15 min remaining, 8 attempts, best=5520.5
+[turn 174] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 175] 15 min remaining, 8 attempts, best=5520.5
+[turn 175] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 176] 15 min remaining, 8 attempts, best=5520.5
+[turn 176] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 177] 14 min remaining, 8 attempts, best=5520.5
+[turn 177] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 178] 14 min remaining, 8 attempts, best=5520.5
+[turn 178] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 179] 14 min remaining, 8 attempts, best=5520.5
+[turn 179] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 180] 14 min remaining, 8 attempts, best=5520.5
+[turn 180] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 181] 14 min remaining, 8 attempts, best=5520.5
+[turn 181] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 182] 14 min remaining, 8 attempts, best=5520.5
+[turn 182] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 183] 14 min remaining, 8 attempts, best=5520.5
+[turn 183] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 184] 14 min remaining, 8 attempts, best=5520.5
+[turn 184] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 185] 14 min remaining, 8 attempts, best=5520.5
+[turn 185] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 186] 14 min remaining, 8 attempts, best=5520.5
+[turn 186] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 187] 14 min remaining, 8 attempts, best=5520.5
+[turn 187] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 188] 14 min remaining, 8 attempts, best=5520.5
+[turn 188] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 189] 13 min remaining, 8 attempts, best=5520.5
+[turn 189] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 190] 13 min remaining, 8 attempts, best=5520.5
+[turn 190] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 191] 13 min remaining, 8 attempts, best=5520.5
+[turn 191] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 192] 13 min remaining, 8 attempts, best=5520.5
+[turn 192] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 193] 13 min remaining, 8 attempts, best=5520.5
+[turn 193] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 194] 13 min remaining, 8 attempts, best=5520.5
+[turn 194] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 195] 13 min remaining, 8 attempts, best=5520.5
+[turn 195] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 196] 13 min remaining, 8 attempts, best=5520.5
+[turn 196] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 197] 13 min remaining, 8 attempts, best=5520.5
+[turn 197] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 198] 13 min remaining, 8 attempts, best=5520.5
+[turn 198] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 199] 13 min remaining, 8 attempts, best=5520.5
+[turn 199] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 200] 13 min remaining, 8 attempts, best=5520.5
+[turn 200] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 201] 12 min remaining, 8 attempts, best=5520.5
+[turn 201] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 202] 12 min remaining, 8 attempts, best=5520.5
+[turn 202] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 203] 12 min remaining, 8 attempts, best=5520.5
+[turn 203] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 204] 12 min remaining, 8 attempts, best=5520.5
+[turn 204] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 205] 12 min remaining, 8 attempts, best=5520.5
+[turn 205] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 206] 12 min remaining, 8 attempts, best=5520.5
+[turn 206] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 207] 12 min remaining, 8 attempts, best=5520.5
+[turn 207] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 208] 12 min remaining, 8 attempts, best=5520.5
+[turn 208] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 209] 12 min remaining, 8 attempts, best=5520.5
+[turn 209] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 210] 12 min remaining, 8 attempts, best=5520.5
+[turn 210] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 211] 12 min remaining, 8 attempts, best=5520.5
+[turn 211] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 212] 12 min remaining, 8 attempts, best=5520.5
+[turn 212] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 213] 11 min remaining, 8 attempts, best=5520.5
+[turn 213] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 214] 11 min remaining, 8 attempts, best=5520.5
+[turn 214] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 215] 11 min remaining, 8 attempts, best=5520.5
+[turn 215] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 216] 11 min remaining, 8 attempts, best=5520.5
+[turn 216] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 217] 11 min remaining, 8 attempts, best=5520.5
+[turn 217] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 218] 11 min remaining, 8 attempts, best=5520.5
+[turn 218] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 219] 11 min remaining, 8 attempts, best=5520.5
+[turn 219] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 220] 11 min remaining, 8 attempts, best=5520.5
+[turn 220] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 221] 11 min remaining, 8 attempts, best=5520.5
+[turn 221] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 222] 11 min remaining, 8 attempts, best=5520.5
+[turn 222] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 223] 11 min remaining, 8 attempts, best=5520.5
+[turn 223] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 224] 11 min remaining, 8 attempts, best=5520.5
+[turn 224] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 225] 10 min remaining, 8 attempts, best=5520.5
+[turn 225] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 226] 10 min remaining, 8 attempts, best=5520.5
+[turn 226] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 227] 10 min remaining, 8 attempts, best=5520.5
+[turn 227] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 228] 10 min remaining, 8 attempts, best=5520.5
+[turn 228] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 229] 10 min remaining, 8 attempts, best=5520.5
+[turn 229] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 230] 10 min remaining, 8 attempts, best=5520.5
+[turn 230] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 231] 10 min remaining, 8 attempts, best=5520.5
+[turn 231] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 232] 10 min remaining, 8 attempts, best=5520.5
+[turn 232] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 233] 10 min remaining, 8 attempts, best=5520.5
+[turn 233] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 234] 10 min remaining, 8 attempts, best=5520.5
+[turn 234] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 235] 10 min remaining, 8 attempts, best=5520.5
+[turn 235] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 236] 9 min remaining, 8 attempts, best=5520.5
+[turn 236] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 237] 9 min remaining, 8 attempts, best=5520.5
+[turn 237] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 238] 9 min remaining, 8 attempts, best=5520.5
+[turn 238] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 239] 9 min remaining, 8 attempts, best=5520.5
+[turn 239] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 240] 9 min remaining, 8 attempts, best=5520.5
+[turn 240] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 241] 9 min remaining, 8 attempts, best=5520.5
+[turn 241] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 242] 9 min remaining, 8 attempts, best=5520.5
+[turn 242] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 243] 9 min remaining, 8 attempts, best=5520.5
+[turn 243] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 244] 9 min remaining, 8 attempts, best=5520.5
+[turn 244] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 245] 9 min remaining, 8 attempts, best=5520.5
+[turn 245] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 246] 9 min remaining, 8 attempts, best=5520.5
+[turn 246] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 247] 9 min remaining, 8 attempts, best=5520.5
+[turn 247] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 248] 8 min remaining, 8 attempts, best=5520.5
+[turn 248] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 249] 8 min remaining, 8 attempts, best=5520.5
+[turn 249] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 250] 8 min remaining, 8 attempts, best=5520.5
+[turn 250] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 251] 8 min remaining, 8 attempts, best=5520.5
+[turn 251] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 252] 8 min remaining, 8 attempts, best=5520.5
+[turn 252] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 253] 8 min remaining, 8 attempts, best=5520.5
+[turn 253] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 254] 8 min remaining, 8 attempts, best=5520.5
+[turn 254] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 255] 8 min remaining, 8 attempts, best=5520.5
+[turn 255] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 256] 8 min remaining, 8 attempts, best=5520.5
+[turn 256] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 257] 8 min remaining, 8 attempts, best=5520.5
+[turn 257] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 258] 8 min remaining, 8 attempts, best=5520.5
+[turn 258] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 259] 8 min remaining, 8 attempts, best=5520.5
+[turn 259] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 260] 7 min remaining, 8 attempts, best=5520.5
+[turn 260] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 261] 7 min remaining, 8 attempts, best=5520.5
+[turn 261] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 262] 7 min remaining, 8 attempts, best=5520.5
+[turn 262] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 263] 7 min remaining, 8 attempts, best=5520.5
+[turn 263] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 264] 7 min remaining, 8 attempts, best=5520.5
+[turn 264] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 265] 7 min remaining, 8 attempts, best=5520.5
+[turn 265] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 266] 7 min remaining, 8 attempts, best=5520.5
+[turn 266] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 267] 7 min remaining, 8 attempts, best=5520.5
+[turn 267] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 268] 7 min remaining, 8 attempts, best=5520.5
+[turn 268] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 269] 7 min remaining, 8 attempts, best=5520.5
+[turn 269] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 270] 7 min remaining, 8 attempts, best=5520.5
+[turn 270] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 271] 7 min remaining, 8 attempts, best=5520.5
+[turn 271] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 272] 6 min remaining, 8 attempts, best=5520.5
+[turn 272] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 273] 6 min remaining, 8 attempts, best=5520.5
+[turn 273] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 274] 6 min remaining, 8 attempts, best=5520.5
+[turn 274] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 275] 6 min remaining, 8 attempts, best=5520.5
+[turn 275] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 276] 6 min remaining, 8 attempts, best=5520.5
+[turn 276] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 277] 6 min remaining, 8 attempts, best=5520.5
+[turn 277] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 278] 6 min remaining, 8 attempts, best=5520.5
+[turn 278] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 279] 6 min remaining, 8 attempts, best=5520.5
+[turn 279] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 280] 6 min remaining, 8 attempts, best=5520.5
+[turn 280] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 281] 6 min remaining, 8 attempts, best=5520.5
+[turn 281] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 282] 6 min remaining, 8 attempts, best=5520.5
+[turn 282] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 283] 6 min remaining, 8 attempts, best=5520.5
+[turn 283] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 284] 5 min remaining, 8 attempts, best=5520.5
+[turn 284] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 285] 5 min remaining, 8 attempts, best=5520.5
+[turn 285] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 286] 5 min remaining, 8 attempts, best=5520.5
+[turn 286] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 287] 5 min remaining, 8 attempts, best=5520.5
+[turn 287] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 288] 5 min remaining, 8 attempts, best=5520.5
+[turn 288] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 289] 5 min remaining, 8 attempts, best=5520.5
+[turn 289] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 290] 5 min remaining, 8 attempts, best=5520.5
+[turn 290] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 291] 5 min remaining, 8 attempts, best=5520.5
+[turn 291] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 292] 5 min remaining, 8 attempts, best=5520.5
+[turn 292] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 293] 5 min remaining, 8 attempts, best=5520.5
+[turn 293] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 294] 5 min remaining, 8 attempts, best=5520.5
+[turn 294] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 295] 5 min remaining, 8 attempts, best=5520.5
+[turn 295] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 296] 4 min remaining, 8 attempts, best=5520.5
+[turn 296] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 297] 4 min remaining, 8 attempts, best=5520.5
+[turn 297] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 298] 4 min remaining, 8 attempts, best=5520.5
+[turn 298] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 299] 4 min remaining, 8 attempts, best=5520.5
+[turn 299] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 300] 4 min remaining, 8 attempts, best=5520.5
+[turn 300] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 301] 4 min remaining, 8 attempts, best=5520.5
+[turn 301] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 302] 4 min remaining, 8 attempts, best=5520.5
+[turn 302] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 303] 4 min remaining, 8 attempts, best=5520.5
+[turn 303] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 304] 4 min remaining, 8 attempts, best=5520.5
+[turn 304] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 305] 4 min remaining, 8 attempts, best=5520.5
+[turn 305] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 306] 4 min remaining, 8 attempts, best=5520.5
+[turn 306] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 307] 3 min remaining, 8 attempts, best=5520.5
+[turn 307] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 308] 3 min remaining, 8 attempts, best=5520.5
+[turn 308] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 309] 3 min remaining, 8 attempts, best=5520.5
+[turn 309] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 310] 3 min remaining, 8 attempts, best=5520.5
+[turn 310] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 311] 3 min remaining, 8 attempts, best=5520.5
+[turn 311] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 312] 3 min remaining, 8 attempts, best=5520.5
+[turn 312] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 313] 3 min remaining, 8 attempts, best=5520.5
+[turn 313] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 314] 3 min remaining, 8 attempts, best=5520.5
+[turn 314] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 315] 3 min remaining, 8 attempts, best=5520.5
+[turn 315] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 316] 3 min remaining, 8 attempts, best=5520.5
+[turn 316] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 317] 3 min remaining, 8 attempts, best=5520.5
+[turn 317] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 318] 3 min remaining, 8 attempts, best=5520.5
+[turn 318] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 319] 2 min remaining, 8 attempts, best=5520.5
+[turn 319] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 320] 2 min remaining, 8 attempts, best=5520.5
+[turn 320] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 321] 2 min remaining, 8 attempts, best=5520.5
+[turn 321] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 322] 2 min remaining, 8 attempts, best=5520.5
+[turn 322] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 323] 2 min remaining, 8 attempts, best=5520.5
+[turn 323] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 324] 2 min remaining, 8 attempts, best=5520.5
+[turn 324] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 325] 2 min remaining, 8 attempts, best=5520.5
+[turn 325] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 326] 2 min remaining, 8 attempts, best=5520.5
+[turn 326] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 327] 2 min remaining, 8 attempts, best=5520.5
+[turn 327] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 328] 2 min remaining, 8 attempts, best=5520.5
+[turn 328] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 329] 2 min remaining, 8 attempts, best=5520.5
+[turn 329] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 330] 2 min remaining, 8 attempts, best=5520.5
+[turn 330] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 331] 1 min remaining, 8 attempts, best=5520.5
+[turn 331] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 332] 1 min remaining, 8 attempts, best=5520.5
+[turn 332] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 333] 1 min remaining, 8 attempts, best=5520.5
+[turn 333] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 334] 1 min remaining, 8 attempts, best=5520.5
+[turn 334] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 335] 1 min remaining, 8 attempts, best=5520.5
+[turn 335] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 336] 1 min remaining, 8 attempts, best=5520.5
+[turn 336] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 337] 1 min remaining, 8 attempts, best=5520.5
+[turn 337] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 338] 1 min remaining, 8 attempts, best=5520.5
+[turn 338] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 339] 1 min remaining, 8 attempts, best=5520.5
+[turn 339] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 340] 1 min remaining, 8 attempts, best=5520.5
+[turn 340] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 341] 1 min remaining, 8 attempts, best=5520.5
+[turn 341] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+[turn 342] 1 min remaining, 8 attempts, best=5520.5
+[turn 342] API error: 400 Client Error: Bad Request for url: http://localhost:8000/v1/chat/completions
+
+Done. Best AEP: 5520.5 GWh over 8 attempts.
+
+Agent finished. Results in results_agent_deepseek-r1-distill-qwen-32b_gen3_s4/
+Stopping vLLM...
