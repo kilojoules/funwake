@@ -1,0 +1,288 @@
+[
+  {
+    "attempt": 205,
+    "timestamp": 1776357947.349983,
+    "train_aep": 6647.96,
+    "train_feasible": true,
+    "train_time": 38.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 206,
+    "timestamp": 1776358001.869657,
+    "train_aep": 7726.84,
+    "train_feasible": true,
+    "train_time": 51.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 207,
+    "timestamp": 1776358072.119953,
+    "train_aep": 8801.12,
+    "train_feasible": true,
+    "train_time": 66.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 213,
+    "timestamp": 1776358312.3391,
+    "train_aep": 6046.07,
+    "train_feasible": true,
+    "train_time": 62.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 217,
+    "timestamp": 1776392707.258611,
+    "train_aep": 6647.96,
+    "train_feasible": true,
+    "train_time": 36.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 218,
+    "timestamp": 1776392760.224714,
+    "train_aep": 7726.84,
+    "train_feasible": true,
+    "train_time": 49.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 219,
+    "timestamp": 1776392827.224768,
+    "train_aep": 8801.12,
+    "train_feasible": true,
+    "train_time": 64.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 225,
+    "timestamp": 1776393054.2164311,
+    "train_aep": 6046.07,
+    "train_feasible": true,
+    "train_time": 62.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 235,
+    "timestamp": 1776397023.388449,
+    "train_aep": 6710.19,
+    "train_feasible": true,
+    "train_time": 34.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 236,
+    "timestamp": 1776397063.0840478,
+    "train_aep": 6654.96,
+    "train_feasible": true,
+    "train_time": 36.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 238,
+    "timestamp": 1776397134.539298,
+    "train_aep": 7812.57,
+    "train_feasible": false,
+    "train_time": 46.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 239,
+    "timestamp": 1776397189.653909,
+    "train_aep": 7729.6,
+    "train_feasible": true,
+    "train_time": 51.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 240,
+    "timestamp": 1776397216.866421,
+    "train_aep": 6020.33,
+    "train_feasible": true,
+    "train_time": 24.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 241,
+    "timestamp": 1776397278.0077991,
+    "train_aep": 8921.65,
+    "train_feasible": false,
+    "train_time": 57.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 242,
+    "timestamp": 1776397343.944004,
+    "train_aep": 8799.31,
+    "train_feasible": true,
+    "train_time": 62.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 243,
+    "timestamp": 1776397375.780658,
+    "train_aep": 6854.98,
+    "train_feasible": true,
+    "train_time": 28.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 259,
+    "timestamp": 1776397832.600254,
+    "train_aep": 6171.72,
+    "train_feasible": false,
+    "train_time": 55.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 260,
+    "timestamp": 1776397897.976741,
+    "train_aep": 6041.04,
+    "train_feasible": true,
+    "train_time": 61.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 265,
+    "timestamp": 1776436620.1690502,
+    "train_aep": 6647.96,
+    "train_feasible": true,
+    "train_time": 37.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 266,
+    "timestamp": 1776436674.547817,
+    "train_aep": 7726.84,
+    "train_feasible": true,
+    "train_time": 50.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 267,
+    "timestamp": 1776436743.358679,
+    "train_aep": 8801.12,
+    "train_feasible": true,
+    "train_time": 65.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 273,
+    "timestamp": 1776436980.81025,
+    "train_aep": 6046.07,
+    "train_feasible": true,
+    "train_time": 66.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  }
+]
