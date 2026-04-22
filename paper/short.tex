@@ -215,12 +215,12 @@ $N\!=\!200$; schedule-only scales predictably.}
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figs/fig_short_scaling.png}
-\caption{Left: execution time vs.\ turbine count (log--log).
-SLSQP (black) is fastest at small $N$ but exceeds 1600\,s at
-$N\!=\!200$ ($\blacktriangle$ = lower bound; run did not
-complete). LLM-discovered schedules (red, blue) scale smoothly.
-Faded markers: Quick et al.~\cite{quick2023sgd} reference data.
-Right: per-turbine AEP (solution quality).}
+\caption{Left: execution time vs.\ turbine count (log--log,
+same hardware). SLSQP (black) is fastest at small $N$ but exceeds
+1600\,s at $N\!=\!200$ ($\blacktriangle$ = lower bound; run did
+not complete within 1800\,s). LLM-discovered schedules (red, blue)
+scale smoothly. Right: per-turbine AEP; SLSQP has no result at
+$N\!=\!200$.}
 \label{fig:scaling}
 \end{figure}
 
