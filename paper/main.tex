@@ -1,9 +1,6 @@
 \documentclass{article}
 
-% NeurIPS 2026 style (uncomment when available)
-% \usepackage{neurips_2026}
-
-% Packages
+% ICML 2026 AI Scientists Workshop (4-8 pages)
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -14,8 +11,10 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
 
-\title{Strategies Without Algorithms: What LLM Agents Actually Discover for Wind Farm Layout Optimization}
+\title{FunWake: A Low-Cost Benchmark for LLM-Discovered\\Optimizer Schedules}
 
 \author{
   Julian Quick \\
@@ -28,42 +27,233 @@
 \maketitle
 
 \begin{abstract}
-We present an evaluation framework for testing whether LLM agents can
-autonomously design optimization algorithms for real engineering problems.
-An LLM receives a wake simulation API, a training farm, and a time
-budget. It writes optimizer functions evaluated on the training farm,
-with silent scoring on a held-out farm with a different turbine, polygon,
-and wind resource. Across runs with Gemini~2.5~Flash, we find that LLMs
-consistently discover effective optimization \emph{strategies} ---
-wind-direction-aware initialization, two-stage feasibility-then-objective
-optimization, diverse multi-start --- but never produce novel optimization
-\emph{algorithms}. All winning solutions wrap the existing gradient solver
-with tuned hyperparameters. Custom gradient implementations fail constraint
-checks on the held-out farm. A stressed-polygon unit test predicts
-held-out failure with high accuracy.
+We introduce FunWake, a low-cost benchmark for evaluating whether
+LLM agents can discover novel optimizer schedules. The task is
+minimal: write a Python function returning four scalars (learning
+rate, penalty weight, two Adam betas) at each step of a fixed
+gradient optimizer for wind farm layout. A physics-based held-out
+farm---with different turbine model, polygon, and wind
+resource---catches overfitting that same-distribution evaluation
+misses. Two frontier agents (Claude Code, Gemini CLI) discover
+structurally distinct schedules (dual Gaussian bumps, sinusoidal
+shake) that generalize across turbine counts $N\!=\!30$--$80$ and
+exceed a 500-multi-start baseline by up to 0.6\%. Six search
+strategies converge to a shared local optimum at 4272.7\,GWh
+($+26$ over baseline), confirmed by substrate-independent CMA-ES.
+The LLM contribution is \emph{parameterization discovery}: random
+search and differential evolution within the LLM-proposed
+schedule families reach the same optimum at matched compute.
+FunWake is open-source, evaluates on CPU in 30--60\,s, and costs
+\$5--50 per model.
 \end{abstract}
 
 \input{sections/introduction}
 \input{sections/related_work}
 \input{sections/methods}
 \input{sections/application}
-
-% TODO: Results, Discussion, Conclusion sections
-% (to be written after multi-model experiments complete)
-
-\section{Results}
-\label{sec:results}
-\textit{(To be completed after multi-model experiments.)}
-
-\section{Discussion}
-\label{sec:discussion}
-\textit{(To be completed.)}
+\input{sections/results}
+\input{sections/discussion}
 
 \section{Conclusion}
 \label{sec:conclusion}
-\textit{(To be completed.)}
+
+FunWake is a low-cost, open-source benchmark for LLM-discovered
+optimizer schedules. The task is simple---write a 4-output Python
+function---and evaluation is fast (30--60~seconds on CPU). Two findings
+justify the benchmark's design: (1)~LLM agents discover genuinely novel
+schedule structures (decaying sinusoidal perturbation, dual Gaussian
+bumps) that generalize across farm sizes the agent never trained on, and
+(2)~physics-based held-out evaluation is essential, as training AEP
+improvements of +9~GWh can correspond to held-out degradation.
+
+The held-out farm surfaces a shared local optimum at
+4272.7\,GWh that six structurally distinct search strategies all
+reach from different starting points and different
+parameterizations; substrate-independent CMA-ES warm-started at
+this optimum improves by only $+0.7$\,GWh in 6000 samples,
+confirming it is a real landscape feature rather than a substrate
+artifact.
+The LLM contribution is parameterization discovery: Claude
+proposed the 14-parameter dual-bump family, within which
+baseline-seeded DE (zero bumps, no LLM structural hint) still
+reaches the same optimum; Gemini proposed the sinusoidal-shake schedule
+and a separate 6-parameter 2D lattice family that reaches the
+optimum through an unrelated route. The structures are rich enough
+to contain the optimum; non-LLM search inside them matches the
+LLM-deployed schedules at matched compute. We release all 700+
+generated schedules, the evaluation harness, and seven farm
+variants at \url{https://github.com/kilojoules/funwake}.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
+
+\appendix
+
+\section{Discovered Schedule Structures (Detailed)}
+\label{app:structures}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\linewidth]{figs/fig3_top3_schedules.png}
+\caption{Schedule parameters over optimization progress for the
+baseline (TopFarm-style monotonic), Claude's iter 192 (dual Gaussian
+LR bumps at $t=0.5, 0.75$ with penalty dip at $t=0.6$), and Gemini's
+iter 067 (80-cycle sinusoidal shake with $\sqrt{1-t}$ amplitude
+decay; $\beta_1=0$; quadratic alpha ramp to $7500\times$). Note the
+log-scale $\alpha$ axis: Gemini's penalty weight reaches two orders
+of magnitude higher than the baseline.}
+\label{fig:schedules}
+\end{figure}
+
+\paragraph{Claude's dual Gaussian bumps.}
+The learning rate is $4\eta_0 \cdot \texttt{cosine}(t)$ with Gaussian
+bumps at $t=0.5$ and $t=0.75$ ($+20\%$ and $+30\%$ of initial rate).
+Penalty weight grows as $\alpha_\text{base}(t) \cdot (1 - 0.5 \cdot
+\exp(-(t-0.6)^2/0.0032))$, with a dip at $t=0.6$ between the bumps.
+$\beta_1 = 0.3$, $\beta_2 = 0.5$. The intuition: bumps escape local
+optima, the penalty dip permits rearrangement during the second
+bump, and moderate momentum damps post-bump oscillations.
+
+\paragraph{Gemini's sinusoidal shake.}
+The learning rate is $\eta_\text{cosine}(t) \cdot (1 + 0.08\sqrt{1-t}
+\cdot \sin(80\pi t))$---a high-frequency perturbation (80 cycles
+over the run) with $\sqrt{1-t}$ amplitude decay. The penalty weight
+is $\alpha_0 (1 + 7499 t^2)$, reaching $7500\times$ by the final
+iteration (the baseline reaches $\sim$100$\times$). $\beta_1 = 0$
+(no momentum). The intuition: continuous shake prevents the
+optimizer from settling into a local minimum early; extreme
+late-stage penalty forces feasibility regardless of how the
+schedule approaches convergence.
+
+\paragraph{Penalty weight affects quality, not feasibility.}
+A controlled ablation multiplying Claude iter~192's $\alpha$ by
+factors 0.01$\times$--10$\times$ while holding LR fixed shows all
+nine variants produce feasible ROWP layouts. Held-out AEP peaks at
+the original scale (4271.5\,GWh) and degrades symmetrically at both
+extremes ($-$8--11\,GWh), suggesting the LR dynamics (bumps,
+cosine decay) are sufficient for feasibility; the penalty trajectory
+controls AEP quality on the held-out farm.
+
+\section{Convergence and Search Efficiency}
+\label{app:convergence}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{figs/fig4_running_best.png}
+\caption{Running-best training AEP (top) and running-best feasible
+held-out (ROWP) AEP (bottom) over wall-clock time. Stars mark the
+final \emph{deployed} script for each model. Training AEP saturates
+within 1--2 hours; feasible ROWP continues to improve throughout
+the 5-hour budget---a time budget that terminates when training AEP
+plateaus would miss late-run generalization improvements.}
+\label{fig:running}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{figs/fig5_convergence.png}
+\caption{Best-so-far feasible ROWP vs.\ attempt number for the four
+search strategies in Sec.~\ref{sec:ablations}: Claude Code
+schedule-only (320 attempts), Gemini CLI (best-among-runs), random
+search at $N=320$, and bump-family DE (316 evals). All four
+converge into a tight band at the shared local optimum of
+4272.7\,GWh. Note: random search and DE use the same number of
+physics evaluations as the LLM agents, so horizontal alignment
+represents matched compute.}
+\label{fig:convergence}
+\end{figure}
+
+\section{Full-Optimizer Mode}
+\label{app:fullopt}
+
+For completeness, we also run the two frontier models in
+full-optimizer mode (writing an arbitrary \texttt{optimize()}
+function). Both converge to the same strategy: wrap
+\texttt{topfarm\_sgd\_solve} with a better initialization
+(hexagonal lattice, K-means clustering, wind-direction-aware
+placement) and tuned hyperparameters. Neither produces a custom
+gradient optimizer that passes held-out feasibility.
+Full-optimizer held-out AEP: Claude 4268.5 (+21.8); Gemini 4264.0
+(+17.3). The schedule-only interface produces marginally better
+held-out results for both, suggesting that constraining the search
+space forces deeper exploration of optimization dynamics.
+
+\section{Generalization Table}
+\label{app:gen_table}
+
+% Figs 2 and 2b (per-N generalization curves) removed ---
+% subsumed by Fig.~\ref{fig:matrix} in the main text, which shows
+% the same data across all wind roses and both polygons.
+
+\begin{table}[h]
+\centering
+\small
+\caption{AEP (GWh) across DEI farm turbine counts. ``Gap''
+columns show improvement over the per-$N$ 500-multi-start baseline.
+The $N\!=\!50$ baseline here (5544.1) differs from
+Table~\ref{tab:main}'s value (5540.7) because the two are from
+independent 500-start runs with different random seeds; the
+difference ($<\!0.1\%$) reflects initialization stochasticity.}
+\label{tab:generalization}
+\begin{tabular}{lcccccc}
+\toprule
+ & \textbf{n=30} & \textbf{n=40} & \textbf{n=50} & \textbf{n=60} & \textbf{n=70} & \textbf{n=80} \\
+\midrule
+500-start baseline  & 3347.6 & 4451.9 & 5544.1 & 6628.5 & 7695.4 & 8759.9 \\
+Seed (single-start) & 3339.5 & 4446.4 & 5525.0 & 6619.8 & 7698.2 & 8758.5 \\
+\midrule
+Gemini schedule    & 3350.2 & 4454.8 & 5556.6 & 6641.2 & 7727.8 & 8798.6 \\
+\quad Gap           & +2.6   & +2.9   & +12.5  & +12.7  & +32.4  & +38.7 \\
+Claude schedule    & 3349.5 & 4456.8 & 5559.9 & 6653.7 & 7746.9 & 8812.4 \\
+\quad Gap           & +1.9   & +4.9   & +15.8  & +25.2  & +51.5  & +52.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Baseline 500-multi-start feasibility rates (\%) across the
+48-cell matrix.  At high $N$ with uniform wind, less than 30\% of
+random starts produce feasible layouts---the regime where
+LLM-discovered schedules show the largest gains.}
+\label{tab:matrix_feas}
+\begin{tabular}{lcccc}
+\toprule
+$N$ & Uniform & Omnidir & DEI rose & ROWP rose \\
+\midrule
+\multicolumn{5}{l}{\emph{DEI polygon (spacious, 5-vertex)}} \\
+30  & 100 & 100 & 100 & 100 \\
+40  &  92 & 100 & 100 & 100 \\
+50  &  69 & 100 & 100 & 100 \\
+60  &  41 & 100 & 100 & 100 \\
+70  &  29 &  99 & 100 &  99 \\
+80  &  15 &  98 & 100 &  97 \\
+\midrule
+\multicolumn{5}{l}{\emph{ROWP polygon (tight, 4-vertex)}} \\
+30  & 100 & 100 & 100 & 100 \\
+40  & 100 & 100 & 100 &  99 \\
+50  &  98 & 100 & 100 &  99 \\
+60  &  72 & 100 & 100 &  99 \\
+70  &  37 &  97 &  99 &  98 \\
+80  &  15 &  85 &  98 &  96 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Deployment Gap (Per-Run Detail)}
+\label{app:deploy_gap}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig7_deployment_gap.png}
+\caption{Held-out-selected deployments consistently exceed
+train-selected deployments on the held-out farm. The red annotation
+shows the gain from using held-out selection. On average, held-out
+selection gains $+14.4$\,GWh per run; the largest gap (Claude 6hr,
+$+38.2$) reflects a training-optimal schedule that overfit severely
+to DEI.}
+\label{fig:deploygap}
+\end{figure}
 
 \end{document}

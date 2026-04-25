@@ -1,0 +1,1154 @@
+{
+  "Claude DEPLOY (iter 179)|dei_n30_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 3350.27,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n40_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 4455.86,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n50_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 5560.9,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n60_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 6655.29,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n70_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 7739.9,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n80_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 8823.69,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n30_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 2318.85,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n40_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 3082.51,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n50_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 3839.82,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n60_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 4584.89,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n70_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 5321.33,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n80_rosedei": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 6048.17,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n30_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 3350.38,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n40_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 4454.71,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n50_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 5561.58,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n60_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 6656.63,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n70_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 7741.69,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n80_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 8827.18,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n30_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 2317.64,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n40_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 3084.26,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n50_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 3835.7,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n60_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 4586.26,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n70_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 5321.57,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n80_rosedei": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 6046.55,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n30_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 3349.06,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n40_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 4458.41,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n50_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 5552.82,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n60_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 6647.96,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n70_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 7726.84,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n80_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 8801.12,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n30_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 2319.18,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n40_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 3082.91,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n50_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 3830.61,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n60_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 4580.42,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n70_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 5319.73,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n80_rosedei": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 6046.07,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n30_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 3359.98,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n30_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 3350.61,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n30_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 2606.94,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n40_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 4479.97,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n40_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 4457.53,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n40_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 3470.24,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n50_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 5599.04,
+    "feasible": false
+  },
+  "Claude DEPLOY (iter 179)|dei_n50_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 5560.55,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n50_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 4325.01,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n60_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 6713.69,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n60_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 6660.04,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n60_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 5177.54,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n70_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 7826.57,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n70_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 7741.97,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n70_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 6029.78,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n80_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 8938.93,
+    "feasible": false
+  },
+  "Claude DEPLOY (iter 179)|dei_n80_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 8817.27,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|dei_n80_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 6864.29,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n30_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 2330.16,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n30_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 2320.78,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n30_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 1749.71,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n40_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 3106.88,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n40_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 3083.97,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n40_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 2328.66,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n50_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 3883.6,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n50_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 3839.89,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n50_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 2902.68,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n60_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 4657.52,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n60_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 4589.02,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n60_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 3471.08,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n70_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 5422.82,
+    "feasible": false
+  },
+  "Claude DEPLOY (iter 179)|rowp_n70_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 5326.75,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n70_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 4035.89,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n80_roseuniform": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 6194.2,
+    "feasible": false
+  },
+  "Claude DEPLOY (iter 179)|rowp_n80_roseomnidir": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 6054.28,
+    "feasible": true
+  },
+  "Claude DEPLOY (iter 179)|rowp_n80_roserowp": {
+    "label": "Claude DEPLOY (iter 179)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 4600.94,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n30_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 3359.98,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n30_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 3349.71,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n30_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 2607.65,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n40_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 4479.97,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n40_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 4456.3,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n40_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 3468.13,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n50_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 5599.38,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n50_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 5561.38,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n50_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 4326.26,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n60_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 6715.38,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n60_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 6660.24,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n60_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 5180.16,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n70_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 7825.27,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n70_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 7742.16,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n70_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 6021.02,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n80_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 8933.3,
+    "feasible": false
+  },
+  "Claude ORACLE (iter 192)|dei_n80_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 8817.09,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|dei_n80_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 6862.98,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n30_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 2330.16,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n30_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 2319.95,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n30_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 1748.66,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n40_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 3106.88,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n40_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 3083.52,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n40_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 2326.55,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n50_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 3883.6,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n50_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 3842.57,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n50_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 2902.39,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n60_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 4659.38,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n60_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 4587.0,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n60_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 3470.75,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n70_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 5427.89,
+    "feasible": false
+  },
+  "Claude ORACLE (iter 192)|rowp_n70_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 5331.5,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n70_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 4033.61,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n80_roseuniform": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 6191.85,
+    "feasible": false
+  },
+  "Claude ORACLE (iter 192)|rowp_n80_roseomnidir": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 6041.2,
+    "feasible": true
+  },
+  "Claude ORACLE (iter 192)|rowp_n80_roserowp": {
+    "label": "Claude ORACLE (iter 192)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 4600.21,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n30_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 3359.98,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n30_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 3350.58,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n30_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 2608.63,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n40_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 4478.25,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n40_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 4460.32,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n40_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 3470.43,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n50_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 5595.01,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n50_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 5557.37,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n50_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 4329.51,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n60_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 6710.19,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n60_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 6654.96,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n60_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 5177.57,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n70_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 7812.57,
+    "feasible": false
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n70_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 7729.6,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n70_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 6020.33,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n80_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 8921.65,
+    "feasible": false
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n80_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 8799.31,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|dei_n80_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "dei",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 6854.98,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n30_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 2330.16,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n30_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 2317.98,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n30_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 1750.74,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n40_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 3106.88,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n40_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 3083.16,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n40_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 2327.87,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n50_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 3882.07,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n50_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 3837.06,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n50_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 2902.14,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n60_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 4650.84,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n60_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 4576.75,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n60_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 3473.12,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n70_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 5412.67,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n70_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 5314.97,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n70_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 4035.14,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n80_roseuniform": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 6171.72,
+    "feasible": false
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n80_roseomnidir": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 6041.04,
+    "feasible": true
+  },
+  "Gemini DEPLOY=ORACLE (iter 118)|rowp_n80_roserowp": {
+    "label": "Gemini DEPLOY=ORACLE (iter 118)",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 4593.53,
+    "feasible": true
+  }
+}

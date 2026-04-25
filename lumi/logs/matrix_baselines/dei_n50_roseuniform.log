@@ -1,0 +1,84 @@
+
+=== Starting at 23:45:33 ===
+[dei_n50_roseuniform] 500/500 seeds to run
+[dei_n50_roseuniform] problem loaded in 9.6s, inside candidates: 412, n_target=50
+
+=== Starting at 23:55:45 ===
+[dei_n50_roseuniform] 488/500 seeds to run
+[dei_n50_roseuniform] problem loaded in 6.8s, inside candidates: 412, n_target=50
+[dei_n50_roseuniform] 50/488 done, rate=0.04/s, eta=10940s
+
+=== Starting at 00:21:44 ===
+[dei_n50_roseuniform] 428/500 seeds to run
+[dei_n50_roseuniform] problem loaded in 8.9s, inside candidates: 412, n_target=50
+[dei_n50_roseuniform] 50/428 done, rate=0.04/s, eta=8463s
+E0416 00:50:18.485117  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485278  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485339  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485393  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485445  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485509  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485569  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485633  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485691  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485751  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485811  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485897  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.485962  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486019  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486121  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486193  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486283  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486386  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486519  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486585  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486654  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486731  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486826  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486915  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.486987  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487058  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487116  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487181  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487265  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487345  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487432  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487521  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487605  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487683  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487764  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487871  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.487938  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488004  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488071  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488142  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488206  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488267  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488340  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488422  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488484  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488547  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488614  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488682  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488765  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488838  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488904  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.488968  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489041  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489114  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489181  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489257  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489353  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489404  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489469  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489520  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:18.489544  204478 contiguous_section_memory_manager.cc:70] releaseMappedMemory failed with error: Cannot allocate memory
+E0416 00:50:18.489572  204478 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+/pfs/lustrep2/scratch/project_465002609/julian/funwake/.pixi/envs/default/lib/python3.13/site-packages/jax/_src/compiler.py:783: UserWarning: Error reading persistent compilation cache entry for 'jit_while': JaxRuntimeError: INTERNAL: Failed to materialize symbols: { (<xla_jit_dylib_0>, { pad_bitcast_fusion.1 }) }
+  warnings.warn(
+E0416 00:50:19.076594  211508 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:19.077759  211312 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0416 00:50:19.077807  211331 contiguous_section_memory_manager.cc:101] allocateMappedMemory failed with error: Cannot allocate memory
+E0416 00:50:19.077935  211331 contiguous_section_memory_manager.cc:139] Failed to satisfy suballocation request for 358
+LLVM ERROR: Unable to allocate section memory!
+E0416 00:50:19.077986  211471 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory

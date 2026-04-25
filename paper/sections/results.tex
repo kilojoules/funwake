@@ -1,0 +1,425 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Main Comparison}
+\label{sec:main_comparison}
+
+We evaluate LLM agents on the schedule-only interface with a
+5-hour wall-clock budget and the same fixed skeleton. The 500-multi-start
+SGD baseline achieves 4246.7\,GWh on the
+held-out ROWP farm. We test two frontier models (Claude Code, Gemini
+2.5 Flash) and one self-hosted open-source model (DeepSeek R1
+Distill 32B, run on LUMI via vLLM with the portable scaffold).
+Table~\ref{tab:main} summarizes the best held-out AEP for each method.
+
+% Fig 1 bar chart removed — subsumed by Table 1 and Fig.~\ref{fig:matrix}.
+
+\textbf{The two frontier LLMs cluster at the same local optimum} on the
+held-out farm. In schedule-only mode, Claude Code's best feasible
+schedule reaches 4271.5\,GWh (+24.8) and Gemini CLI's reaches
+4269.3\,GWh (+22.6); Gemini CLI's best overall result (full-optimizer
+mode, best of five seeds) reaches 4272.7\,GWh (+26.0). All three
+fall within seed noise of the bump-family DE upper bound
+(4272.9\,GWh) and within $\sim$4\,GWh of random search at matched
+budget (4268.6\,GWh)---a tight cluster at the 4272.7\,GWh
+shared local optimum.
+
+\textbf{The open-source model does not reach this optimum.}
+DeepSeek R1 Distill 32B, self-hosted on LUMI via vLLM with the
+same portable scaffold, achieves 5537.6\,GWh on training ($-3.1$
+below baseline) in an iterative seed tournament (4 seeds $\times$
+3 generations). Despite producing feasible layouts on all 48
+evaluation cells, its best schedule consistently underperforms the
+baseline (Fig.~\ref{fig:matrix}, green). This capability gap
+persists across both scaffold versions (v1 and v2 with updated
+memory template), confirming it reflects model capability rather
+than scaffold design.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Best schedule per method, ranked by best \emph{feasible}
+held-out (ROWP) AEP. Train and ROWP are GWh; $\Delta$ columns show
+improvement over the 500-multi-start baseline (train = 5540.7,
+ROWP = 4246.7). All ROWP scores are from layouts that satisfy the
+boundary and minimum-spacing constraints; infeasible layouts are
+excluded regardless of their nominal AEP. Frontier LLM scores are
+from single agent runs; cross-seed variance in full-optimizer mode
+spans a $6\!\times$ range (Sec.~\ref{sec:generalization}), so
+these numbers should not be used for fine-grained model ranking.}
+\label{tab:main}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Method} & \textbf{Budget} & \textbf{Train} & \textbf{$\Delta$Train} & \textbf{ROWP} & \textbf{$\Delta$ROWP} \\
+\midrule
+\multicolumn{6}{l}{\emph{Non-LLM ablations (Sec.~\ref{sec:ablations})}} \\
+\textbf{Bump-family DE (Claude-seeded)}        & 316 evals    & 5566.3 & +25.6 & \textbf{4272.9} & \textbf{+26.2} \\
+Bump-family DE (baseline-seeded, zero bumps)   & 316 evals    & 5562.7 & +22.0 & 4271.9 & +25.2 \\
+Random search (parameterized family)           & 320 samples  & 5561.8 & +21.1 & 4268.6 & +21.9 \\
+CMA-ES on raw 148-D positions (warm, from Claude) & 6000 evals & n/a    & ---    & 4272.2 & +25.5 \\
+CMA-ES on raw 148-D positions (cold, from grid)   & 4500 evals & n/a    & ---    & 4189.3 & $-57.4$ \\
+500-multi-start SGD baseline                   & 500 starts   & 5540.7 & ---    & 4246.7 & --- \\
+\midrule
+\multicolumn{6}{l}{\emph{Frontier LLMs (rich CLI agent)}} \\
+Gemini CLI (schedule-only, iter 118)           & 254 evals    & 5565.1 & +24.4 & 4269.3 & +22.6 \\
+Claude Code (schedule-only, iter 192)          & 320 evals    & 5555.7 & +15.0 & 4271.5 & +24.8 \\
+\midrule
+\multicolumn{6}{l}{\emph{Open-source LLM (self-hosted, portable scaffold$^\dagger$)}} \\
+DeepSeek R1 32B (schedule-only, 3 gens)       & 20 evals/seed & 5537.6 & $-3.1$ & ---   & ---   \\
+\multicolumn{6}{l}{\footnotesize $^\dagger$Open-source models use a different scaffold; scores are not directly comparable to frontier models.}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Training vs Held-Out Divergence}
+\label{sec:divergence}
+
+\textbf{The training-optimal schedule is not the held-out-optimal
+schedule, and infeasibility is the dominant failure mode.} Several
+agents produced schedules with training AEP at the practical
+ceiling (5600.0\,GWh) whose \emph{nominal} ROWP AEP exceeded the
+true held-out winners---but these layouts violate boundary or
+spacing constraints. After filtering out infeasible ROWP layouts,
+Claude's best schedule scores 4271.5\,GWh and Gemini's best
+schedule-only result scores 4269.3\,GWh (Table~\ref{tab:main});
+Gemini's best across modes is 4272.7\,GWh from a full-optimizer
+seed (training AEP 5542.2, iter 27; Appendix~\ref{app:fullopt}).
+Training AEP at the ceiling does not distinguish feasible from
+infeasible generalizers.
+
+\textbf{Training AEP has a ceiling near 5600\,GWh.} Both frontier
+models hit 5600.0 exactly on multiple attempts, suggesting the
+training landscape has a practically reachable local optimum.
+
+\paragraph{Deployment selection.}
+A practitioner without a validation farm would deploy the schedule
+with the highest training AEP among those passing unit tests.
+We compare this \emph{deploy} selection against an \emph{oracle}
+that picks the best feasible held-out AEP
+(Fig.~\ref{fig:deploy_oracle}).  For Claude, the deploy script
+(iter~179, train=5566.6) differs from the oracle (iter~192,
+train=5555.7); on ROWP the oracle gains 8.1\,GWh.  For Gemini,
+deploy and oracle select the same script (iter~118).  The
+deployment gap is small across all 48 cells
+(Fig.~\ref{fig:deploy_oracle}), confirming that the unit-test
+suite is a reliable proxy for held-out feasibility.
+
+Training AEP saturates within 1--2 hours for the frontier
+models but the best feasible held-out AEP continues to improve
+throughout the 5-hour budget (Fig.~\ref{fig:convergence_holdout});
+a time budget that terminates when training AEP plateaus would
+miss late-run improvements in generalization
+(Appendix~\ref{app:running_best}, Fig.~\ref{fig:running}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/fig_deploy_vs_oracle_matrix.png}
+\caption{Deploy (best training AEP, solid) vs oracle (best
+held-out AEP, dashed) selection across the 48-cell matrix.
+Shaded region shows the deployment gap.  The gap is negligible
+on realistic wind roses, confirming that training AEP plus the
+unit-test suite is a reliable deployment criterion.}
+\label{fig:deploy_oracle}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/fig_convergence_train_vs_holdout.png}
+\caption{Training vs held-out convergence for Gemini 2.5 Flash.
+Left: trained on DEI rose, held-out on ROWP---training AEP
+saturates early but held-out AEP keeps improving late.
+Right: trained on uniform wind, held-out on DEI
+rose---schedules trained on the harder 1D landscape still
+transfer to multi-directional wind.}
+\label{fig:convergence_holdout}
+\end{figure}
+
+\subsection{Generalization Across the 48-Cell Matrix}
+\label{sec:generalization}
+
+A schedule discovered on one farm configuration should generalize
+across turbine counts, wind resources, and polygon geometries.
+To test this, we construct a $2 \times 6 \times 4 = 48$-cell
+evaluation matrix crossing two farm polygons, six turbine counts,
+and four wind roses (Table~\ref{tab:matrix}).
+
+\begin{table}[t]
+\centering
+\small
+\caption{The 48-cell generalization matrix.  Each cell is a distinct
+layout problem; each has its own 500-multi-start SGD baseline.
+LLM-discovered schedules are trained \emph{only} on DEI $N\!=\!50$
+with the DEI rose and evaluated across all 48 cells.}
+\label{tab:matrix}
+\begin{tabular}{lll}
+\toprule
+\textbf{Axis} & \textbf{Levels} & \textbf{Purpose} \\
+\midrule
+Farm polygon  & DEI (5-vertex, spacious) & Scaling within training geometry \\
+              & ROWP (4-vertex, tight)   & Cross-geometry generalization \\
+\midrule
+Turbine count $N$ & 30, 40, 50, 60, 70, 80 & Packing density stress test \\
+\midrule
+Wind rose     & Uniform (single direction)     & Removes directional structure \\
+              & Omnidirectional (equal sectors) & Symmetric, no dominant wind \\
+              & DEI rose (observed, 24 sectors) & Training distribution \\
+              & ROWP rose (Weibull, 12 sectors) & Held-out distribution \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The uniform rose uses a single wind direction with the same speed
+distribution as DEI; omnidirectional uses 24 equally-weighted
+directions.  Both retain realistic wind speeds---only the
+directional structure is varied.
+
+Figure~\ref{fig:matrix} shows the percentage gap over the per-cell
+500-multi-start baseline.  Key findings:
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/fig8_generalization_matrix.png}
+\caption{Generalization across the 48-cell matrix.  Each subplot
+shows gap over the per-cell 500-multi-start baseline (dashed line
+at 0\%).  Top row: DEI polygon; bottom row: ROWP polygon.  Columns
+vary wind rose.  $\times$ marks indicate infeasible layouts.
+Frontier LLM schedules (Claude, Gemini) generalize positively at
+high $N$; DeepSeek R1 32B (green) consistently underperforms the
+baseline despite producing 100\% feasible layouts.}
+\label{fig:matrix}
+\end{figure}
+
+\paragraph{Gains increase with packing density.}
+At low $N$ (30--40), the polygon is spacious and the baseline
+already near-optimal; LLM schedules offer $<\!5\%$ improvement.
+At high $N$ (70--80), spacing constraints bind and the baseline's
+feasibility rate drops below 30\% on the tightest cells
+(Table~\ref{tab:matrix_feas}).  LLM schedules maintain feasibility
+and achieve 20--40\% gains over baseline, suggesting the learned
+penalty dynamics handle constraint pressure better than the fixed
+$\alpha \propto 1/\eta$ ramp.
+
+\paragraph{Generalization to the held-out ROWP polygon.}
+The ROWP polygon (bottom row of Fig.~\ref{fig:matrix}) shows the
+same trend as DEI despite the schedule never seeing ROWP during
+training. This is positive transfer on a single held-out polygon
+($N=1$ held-out geometry); broader cross-geometry claims would
+require additional polygons drawn from independent offshore cases.
+
+\paragraph{Wind rose sensitivity.}
+The realistic multi-directional roses (DEI, ROWP, omnidirectional)
+show consistent positive transfer: schedules trained on the DEI
+rose generalize to the ROWP rose without degradation.  However,
+the uniform single-direction rose (column~1 of Fig.~\ref{fig:matrix})
+is a constructive failure case: LLM schedules score at or below the
+baseline.  With a single wind direction, the optimal layout
+degenerates to a 1D row perpendicular to the wind---a qualitatively
+different landscape from the 2D spreading required by
+multi-directional roses.  The penalty dynamics discovered on the
+DEI rose (Gaussian bumps, penalty coupling) are tuned for 2D
+exploration and do not transfer to this degenerate 1D geometry.
+
+\paragraph{Generalization boundary.}
+This failure sharpens the generalization claim: the agent
+discovered penalty dynamics for 2D constrained layout
+optimization, not a universal optimization schedule. Within this
+DEI$\to$ROWP train/test pair, schedules transfer across turbine
+count ($N\!=\!30$ to $N\!=\!80$) and realistic multi-directional
+wind resources, but not to qualitatively different optimization
+landscapes. Transfer to additional polygon geometries beyond ROWP
+is untested. The single-cell training protocol makes this
+boundary precise and falsifiable on every held-out cell
+individually.
+
+\paragraph{Cross-seed variance and mode comparison.}
+We run Gemini 2.5 Flash in both modes: five independent seeds in
+full-optimizer mode (Gemini API, 5-hour budget each) and one seed
+in schedule-only mode (Gemini CLI).
+Figure~\ref{fig:mode_comparison} separates the results by mode.
+
+In full-optimizer mode (left panel), best feasible ROWP AEP varies
+from +4.2 (no hot-start) to +26.0 (Seed~2) GWh over baseline
+across five seeds---a 6$\times$ range.  A single run gives a noisy
+estimate of the method's capability.  With the corrected system
+prompt (which prohibits file I/O and requires the function to
+use its arguments), a fresh 2-hour Gemini run produced a
+SLSQP-based optimizer with JAX Jacobians that achieves
+5557.1\,GWh on training (+16.4) and generalizes across the
+48-cell matrix (Fig.~\ref{fig:mode_comparison}, right, dashed).
+
+The right panel shows the generalization curves. The SLSQP
+full-optimizer (dashed) is the strongest on the training polygon
+at high $N$, consistent with SLSQP being the established
+method in the wind farm community. Schedule-only scripts
+(solid lines) produce more consistent cross-seed results and
+generalize well, despite being constrained to the less-standard
+SGD skeleton. DeepSeek R1 32B consistently underperforms
+regardless of mode.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figs/fig_all_models_comparison.png}
+\caption{Generalization across turbine counts (DEI rose).
+Left: training polygon (DEI); right: held-out polygon (ROWP).
+The SLSQP full-optimizer (dashed blue, Gemini) is strongest on
+DEI at high $N$, consistent with SLSQP being the standard
+approach in wind farm optimization.  Schedule-only schedules
+(solid lines) generalize consistently.  DeepSeek R1 32B (green)
+underperforms the baseline despite using the same scaffold.}
+\label{fig:mode_comparison}
+\end{figure}
+
+\subsection{Discovered Schedule Structures}
+\label{sec:structures}
+
+The top frontier-LLM schedules use three qualitatively different
+mechanisms:
+\begin{itemize}[nosep]
+\item \textbf{Claude iter 192}: \emph{dual Gaussian LR bumps} at
+  $t=0.5, 0.75$ with a coordinated penalty dip at $t=0.6$.
+\item \textbf{Gemini iter 118}: \emph{8-cycle cosine restarts}
+  (7 short + 1 long) with cyclic Adam betas, aggressive $\alpha
+  \propto t^3$ penalty ramp, and a ``squeeze'' phase at $t>0.98$
+  where $\alpha$ jumps to $5\!\times\!10^6 \alpha_0$.
+\item \textbf{DeepSeek iter 004}: \emph{constant-then-cosine}
+  LR decay with $\alpha \propto 1/\eta$ coupling and standard
+  Adam ($\beta_1\!=\!0.9$, $\beta_2\!=\!0.999$).
+\end{itemize}
+All three maintain high penalty weight $\alpha$ at convergence.
+A controlled ablation (Sec.~\ref{sec:discussion}) shows that
+penalty scale affects held-out AEP quality ($\pm$11\,GWh) but
+not feasibility; the LR dynamics themselves are sufficient for
+feasible held-out layouts.  The frontier schedules (Claude, Gemini)
+introduce non-monotonic LR dynamics (bumps, restarts) that the
+open-source model does not discover.
+Detailed parameter plots and per-mechanism intuition are in
+Appendix~\ref{app:structures}.
+
+\subsection{Random-Search and Within-Family Ablations}
+\label{sec:ablations}
+
+To isolate the LLM's contribution from the richness of the
+parameterized schedule family itself, we run two non-LLM ablations
+with budgets matched to the LLM schedule-only runs. Both ablations
+share the same skeleton, training farm, and held-out evaluation
+protocol as the LLM agents.
+
+\paragraph{Random search over a parameterized family.}
+We sample $N=320$ schedules (matching Claude's attempt count) from
+a parameterized family covering cosine / exponential / linear /
+polynomial LR decay with optional warmup, optional sinusoidal shake
+or Gaussian bumps, monotonic penalty ramps (linear / quadratic /
+coupled), and random Adam betas. \emph{This family was designed
+after inspecting the LLM-generated schedules}: it includes Gaussian
+bumps and sinusoidal perturbations because the LLMs proposed those
+structures. The ablation therefore tests whether the
+LLM-discovered structures are simple enough to be found by random
+search within a known family, not whether random search would have
+discovered these structures independently.
+Each sample is scored on DEI
+(training) and ROWP (held-out) with the same feasibility check.
+\textbf{Result:} of 320 samples, 163 produced feasible ROWP layouts;
+the best feasible random-search schedule reaches \textbf{4268.6\,GWh}
+on the held-out farm---within $\sim$4\,GWh of both LLM frontier
+schedules (Claude 4271.5, Gemini 4272.7) and within seed noise of
+the bump-family DE result (4272.9).
+
+\paragraph{Differential evolution within Claude's bump family.}
+We parameterize Claude's iter 192 dual-bump structure as a
+14-dim family (LR, warmup, two bump amplitudes, centers, widths,
+penalty coupling, quadratic boost, $\beta_1$, $\beta_2$) and run
+scipy DE (\texttt{popsize=15}, \texttt{maxiter=20}, 316 evals) in
+two conditions: \textbf{Claude-seeded} (iter 192's params) reaches
+\textbf{4272.9\,GWh}; \textbf{baseline-seeded} (zero bumps,
+TopFarm $\beta_1=0.1$, $\beta_2=0.2$) reaches \textbf{4271.9\,GWh}.
+The two runs agree within seed noise: the bump-family
+parameterization reaches the 4272.7\,GWh optimum without the LLM's
+structural hint, so Claude's specific bump placement is not
+load-bearing once the parameterization exists.
+
+\paragraph{Substrate-independent tiebreaker: CMA-ES on raw 148-D.}
+All methods above share pixwake physics and (for four of five) an
+Adam-plus-penalty continuous-relaxation skeleton. To test whether
+the 4272.7\,GWh cluster is a real local optimum or a shared-substrate
+fixed point, we run CMA-ES directly on the raw $2N=148$-dimensional
+position vector with no Adam, no schedule, no penalty ramp, no JAX
+gradients, and no polish---feasibility enforced as a continuous
+soft penalty. \textbf{Cold-start} from a feasible wind-aware grid
+init (4039.6\,GWh): at a 4500-evaluation compute cap (comparable
+to the LLM schedule-only budgets of 254--320 evaluations and the
+bump-family DE budget of 316), CMA-ES reaches \textbf{4189.3},
+still climbing but $\sim$80\,GWh below the cluster. This gap
+reflects compute-starvation at the matched budget rather than
+substrate failure: the direct 148-dimensional search simply needs
+much more compute to climb from a generic init.
+\textbf{Warm-start} from Claude iter 192's converged layout
+(4271.5): 6000 evals with 68\% feasibility rate reach only
+\textbf{4272.2}, an improvement of $+0.7$\,GWh---essentially
+nothing. Substrate-independent local search cannot reach the
+cluster from a generic init at matched compute \emph{and} cannot
+meaningfully exceed it once warm-started inside. The 4272.7\,GWh
+optimum is a real feature of the feasibility-filtered
+landscape, not a shared-substrate artifact.
+
+\paragraph{Interpretation.}
+Six search strategies with qualitatively different inductive
+biases all cluster within $\sim$4\,GWh (Table~\ref{tab:main}), and
+CMA-ES confirms the cluster is not a substrate fixed point. This
+establishes a \textbf{shared local optimum at 4272.7\,GWh} for
+this DEI$\to$ROWP pair. CMA-ES warm-started at Claude's layout
+improves by only $+0.7$\,GWh in 6000 evaluations, confirming
+this is a real landscape feature; cold-started CMA-ES reaches
+only 4189.3 at a matched budget, reflecting compute starvation
+in 148 dimensions rather than a substrate limitation---we cannot
+rule out higher optima reachable by longer runs.
+The LLM contribution is therefore
+\emph{not} a score advantage---random search, baseline-init DE,
+and warm-start CMA-ES all match within noise. The LLM contribution
+is \textbf{parameterization discovery}: Claude proposed the
+14-parameter dual-bump family (baseline-init DE still reaches
+the optimum within it), and Gemini proposed both the
+sinusoidal-shake schedule and a 6-parameter 2D lattice family
+(via scipy DE + vectorized JAX; Sec.~\ref{sec:structures}) that
+reaches the optimum through an unrelated route. The benchmark
+measures which parameterizations LLMs propose and whether they
+are rich enough to contain the optimum; absolute scores are
+matched by non-LLM search at equivalent compute.
+
+
+\paragraph{Full-optimizer mode.}
+In full-optimizer mode, Gemini independently converges on
+SLSQP~\cite{kraft1988software} with JAX-computed constraint
+Jacobians---the standard approach in the wind farm optimization
+community (e.g.,
+TopFarm~\cite{pedersen2019topfarm})---rather than the gradient
+descent skeleton used in schedule-only mode. This is a validation
+of the agent's engineering judgment but does not produce new
+optimization knowledge: SLSQP with exact boundary and spacing
+Jacobians is well-established practice.
+
+The schedule-only interface constrains the agent in two
+complementary ways. First, it restricts the design space to the
+less-explored SGD skeleton, forcing it into unfamiliar territory
+where it discovers genuinely novel schedule structures (Gaussian
+bumps, cyclic restarts, terminal-alpha squeeze) that have no
+precedent in the learning-rate schedule literature---mirroring the
+FunSearch finding that restricting the search space to a narrow
+function interface drives creative
+exploration~\cite{fawzi2024funsearch}. Second, it \emph{equalizes
+compute}: every schedule runs the same 8000-step Adam loop, so all
+evaluations have identical wall-clock cost ($\sim$30\,s at
+$N\!=\!50$). In full-optimizer mode, Claude's scripts have a
+$5.6\!\times$ range in execution time (20--113\,s), and 14 of 18
+scripts exceed the schedule-only 60\,s budget. Without
+evaluation-in-the-loop feedback (MCP), the same model produced 19
+scripts that \emph{all} timed out---none were tested during the
+5-hour session. The schedule-only interface eliminates this failure
+mode entirely.
+
+Across five full-optimizer seeds
+(Fig.~\ref{fig:mode_comparison}, left), the best seed
+(+26.0\,GWh ROWP) matches the schedule-only result, but the median
+(+17.3) and worst (+4.2) are substantially lower. Schedule-only
+produces more consistent results and---crucially---scripts that
+generalize across the 48-cell matrix without modification, since
+they receive only \texttt{(step, total\_steps, lr0, alpha0)}.

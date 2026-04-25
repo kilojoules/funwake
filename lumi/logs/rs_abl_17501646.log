@@ -1,0 +1,26 @@
+=== Random Search Ablation ===
+Shards: 8, samples per shard: 40
+Total samples: 320
+Per-sample timeout: 120s
+
+[0] starting, log=lumi/logs/rs_abl_shard_0.log
+[1] starting, log=lumi/logs/rs_abl_shard_1.log
+[2] starting, log=lumi/logs/rs_abl_shard_2.log
+[3] starting, log=lumi/logs/rs_abl_shard_3.log
+[4] starting, log=lumi/logs/rs_abl_shard_4.log
+[5] starting, log=lumi/logs/rs_abl_shard_5.log
+[7] starting, log=lumi/logs/rs_abl_shard_7.log
+[6] starting, log=lumi/logs/rs_abl_shard_6.log
+[4] done
+[3] done
+[2] done
+[6] done
+[0] done
+[1] done
+[5] done
+[7] done
+
+All shards complete. Merge with:
+  pixi run python tools/merge_random_search_shards.py \
+      --shard-dirs results_random_search_shard_{0..7} \
+      --output-dir results_random_search_320

@@ -1,0 +1,87 @@
+[
+  {
+    "n": 50,
+    "method": "SLSQP",
+    "aep": 5557.12,
+    "feasible": true,
+    "time": 16.2
+  },
+  {
+    "n": 50,
+    "method": "Claude sched",
+    "aep": 5561.58,
+    "feasible": true,
+    "time": 31.0
+  },
+  {
+    "n": 50,
+    "method": "Gemini sched",
+    "aep": 5552.82,
+    "feasible": true,
+    "time": 43.0
+  },
+  {
+    "n": 50,
+    "method": "Baseline SGD",
+    "aep": 5529.2,
+    "feasible": false,
+    "time": 31.5
+  },
+  {
+    "n": 80,
+    "method": "SLSQP",
+    "aep": 8835.88,
+    "feasible": true,
+    "time": 20.9
+  },
+  {
+    "n": 80,
+    "method": "Claude sched",
+    "aep": 8827.18,
+    "feasible": true,
+    "time": 67.3
+  },
+  {
+    "n": 80,
+    "method": "Gemini sched",
+    "aep": 8801.12,
+    "feasible": true,
+    "time": 83.4
+  },
+  {
+    "n": 80,
+    "method": "Baseline SGD",
+    "aep": 8754.95,
+    "feasible": false,
+    "time": 68.0
+  },
+  {
+    "n": 200,
+    "method": "SLSQP",
+    "aep": 0,
+    "feasible": false,
+    "time": 1644.2,
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+    "n": 200,
+    "method": "Claude sched",
+    "aep": 20909.07,
+    "feasible": true,
+    "time": 642.2
+  },
+  {
+    "n": 200,
+    "method": "Gemini sched",
+    "aep": 20872.67,
+    "feasible": true,
+    "time": 638.9
+  },
+  {
+    "n": 200,
+    "method": "Baseline SGD",
+    "aep": 20672.25,
+    "feasible": false,
+    "time": 413.4
+  }
+]

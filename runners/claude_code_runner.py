@@ -191,7 +191,11 @@ This ensures feasibility in late iterations. Can you do better?
     def _write_memory_file(self):
         """Write agent_memory.md to the run-scoped output dir."""
         from .memory import render_agent_memory
-        content = render_agent_memory(self.session, self.history, self.attempts)
+        content = render_agent_memory(
+            self.session, self.history, self.attempts,
+            output_dir=self.config.output_dir,
+            mode=self.config.taxonomy_mode,
+        )
         Path(self.memory_path).write_text(content)
 
     def _setup_claude_config(self):

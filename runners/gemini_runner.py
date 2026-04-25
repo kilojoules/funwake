@@ -227,7 +227,12 @@ class GeminiRunner(BaseRunner):
         self.conversation_history.append({"role": "user", "parts": [{"text": first_msg}]})
 
         turn = 0
+        scored_attempts = 0
         while self.time_remaining() > 0:
+            if self.config.max_attempts > 0 and scored_attempts >= self.config.max_attempts:
+                print(f"[turn {turn}] Reached max_attempts={self.config.max_attempts}, stopping.")
+                break
+
             turn += 1
 
             # Inject memory context periodically
@@ -238,19 +243,39 @@ class GeminiRunner(BaseRunner):
                     "parts": [{"text": f"[Status update]\n{memory}\n\nTime remaining: {self.time_remaining()/60:.0f} min. Continue optimizing."}]
                 })
 
-            # Call Gemini
-            try:
-                response = self.client.models.generate_content(
-                    model=self.model,
-                    contents=self.conversation_history,
-                    config={
-                        "system_instruction": system_prompt,
-                        "tools": [{"function_declarations": TOOL_DECLARATIONS}],
-                    }
-                )
-            except Exception as e:
-                print(f"[turn {turn}] Gemini API error: {e}")
-                time.sleep(5)
+            # Pace API calls to stay under rate limit (free tier: 5 req/min)
+            if not hasattr(self, '_last_api_call'):
+                self._last_api_call = 0
+            elapsed_since_last = time.time() - self._last_api_call
+            min_interval = 60  # seconds between calls (free tier: 5 req/min)
+            if elapsed_since_last < min_interval:
+                time.sleep(min_interval - elapsed_since_last)
+
+            response = None
+            for retry in range(3):
+                # Pace ALL API calls (including retries) to stay under quota
+                elapsed_since_last = time.time() - self._last_api_call
+                if elapsed_since_last < min_interval:
+                    time.sleep(min_interval - elapsed_since_last)
+                try:
+                    self._last_api_call = time.time()
+                    response = self.client.models.generate_content(
+                        model=self.model,
+                        contents=self.conversation_history,
+                        config={
+                            "system_instruction": system_prompt,
+                            "tools": [{"function_declarations": TOOL_DECLARATIONS}],
+                        }
+                    )
+                    break
+                except Exception as e:
+                    err_str = str(e)
+                    if "429" in err_str or "503" in err_str or "RESOURCE_EXHAUSTED" in err_str or "UNAVAILABLE" in err_str:
+                        print(f"[turn {turn}] Rate limited (retry {retry+1}/3): {err_str[:300]}")
+                    else:
+                        print(f"[turn {turn}] Gemini API error: {e}")
+                        break
+            if response is None:
                 continue
 
             # Process response
@@ -261,7 +286,10 @@ class GeminiRunner(BaseRunner):
                 if hasattr(part, "function_call") and part.function_call:
                     fc = part.function_call
                     print(f"[turn {turn}] Tool: {fc.name}({json.dumps(dict(fc.args))[:80]}...)")
+                    prev_count = len(self.attempts)
                     result = self._execute_tool(fc.name, dict(fc.args))
+                    if len(self.attempts) > prev_count:
+                        scored_attempts = sum(1 for a in self.attempts if "train_aep" in a)
                     assistant_parts.append(part)
 
                     # Add tool result

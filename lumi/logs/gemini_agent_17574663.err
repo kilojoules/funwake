@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/pfs/lustrep2/scratch/project_465002609/julian/funwake/agent_cli.py", line 159, in <module>
+    main()
+    ~~~~^^
+  File "/pfs/lustrep2/scratch/project_465002609/julian/funwake/agent_cli.py", line 96, in main
+    config = RunConfig(
+        wind_csv=args.wind_csv,
+    ...<8 lines>...
+        max_attempts=args.max_attempts,
+    )
+TypeError: RunConfig.__init__() got an unexpected keyword argument 'max_attempts'

@@ -1,0 +1,325 @@
+[
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n100",
+    "n_target": 100,
+    "aep_gwh": 10863.58,
+    "feasible": true,
+    "time_s": 135.5
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n30",
+    "n_target": 30,
+    "aep_gwh": 3339.51,
+    "feasible": true,
+    "time_s": 26.4
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n40",
+    "n_target": 40,
+    "aep_gwh": 4446.44,
+    "feasible": true,
+    "time_s": 29.1
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n50",
+    "n_target": 50,
+    "aep_gwh": 5525.03,
+    "feasible": true,
+    "time_s": 36.2
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n60",
+    "n_target": 60,
+    "aep_gwh": 6619.78,
+    "feasible": true,
+    "time_s": 43.5
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n70",
+    "n_target": 70,
+    "aep_gwh": 7698.17,
+    "feasible": true,
+    "time_s": 54.9
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_dei_n80",
+    "n_target": 80,
+    "aep_gwh": 8758.5,
+    "feasible": true,
+    "time_s": 68.7
+  },
+  {
+    "script": "results/seed_optimizer.py",
+    "problem": "problem_rowp",
+    "n_target": 74,
+    "aep_gwh": 4227.4,
+    "feasible": true,
+    "time_s": 32.9
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n100",
+    "n_target": 100,
+    "aep_gwh": null,
+    "feasible": null,
+    "time_s": 180.2,
+    "error": "Timeout after 180s"
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n30",
+    "n_target": 30,
+    "aep_gwh": 3349.2,
+    "feasible": true,
+    "time_s": 50.3
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n40",
+    "n_target": 40,
+    "aep_gwh": 4456.2,
+    "feasible": true,
+    "time_s": 59.1
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n50",
+    "n_target": 50,
+    "aep_gwh": 5547.86,
+    "feasible": true,
+    "time_s": 81.6
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n60",
+    "n_target": 60,
+    "aep_gwh": 6632.11,
+    "feasible": true,
+    "time_s": 101.1
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n70",
+    "n_target": 70,
+    "aep_gwh": 7708.49,
+    "feasible": true,
+    "time_s": 136.0
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_dei_n80",
+    "n_target": 80,
+    "aep_gwh": 8784.18,
+    "feasible": true,
+    "time_s": 176.4
+  },
+  {
+    "script": "results_agent_qwen2_5-coder-32b_s1/iter_011.py",
+    "problem": "problem_rowp",
+    "n_target": 74,
+    "aep_gwh": 4251.36,
+    "feasible": true,
+    "time_s": 66.3
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n100",
+    "n_target": 100,
+    "aep_gwh": null,
+    "feasible": null,
+    "time_s": 180.2,
+    "error": "Timeout after 180s"
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n30",
+    "n_target": 30,
+    "aep_gwh": 3347.57,
+    "feasible": true,
+    "time_s": 38.5
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n40",
+    "n_target": 40,
+    "aep_gwh": 4446.37,
+    "feasible": true,
+    "time_s": 48.2
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n50",
+    "n_target": 50,
+    "aep_gwh": 5546.82,
+    "feasible": true,
+    "time_s": 67.9
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n60",
+    "n_target": 60,
+    "aep_gwh": 6628.41,
+    "feasible": true,
+    "time_s": 85.7
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n70",
+    "n_target": 70,
+    "aep_gwh": 7707.19,
+    "feasible": true,
+    "time_s": 113.5
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_dei_n80",
+    "n_target": 80,
+    "aep_gwh": 8778.03,
+    "feasible": true,
+    "time_s": 150.8
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s2/iter_002.py",
+    "problem": "problem_rowp",
+    "n_target": 74,
+    "aep_gwh": 4243.39,
+    "feasible": true,
+    "time_s": 54.2
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n100",
+    "n_target": 100,
+    "aep_gwh": null,
+    "feasible": null,
+    "time_s": 180.2,
+    "error": "Timeout after 180s"
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n30",
+    "n_target": 30,
+    "aep_gwh": 3333.68,
+    "feasible": true,
+    "time_s": 37.1
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n40",
+    "n_target": 40,
+    "aep_gwh": 4436.69,
+    "feasible": true,
+    "time_s": 45.7
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n50",
+    "n_target": 50,
+    "aep_gwh": 5527.67,
+    "feasible": true,
+    "time_s": 63.7
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n60",
+    "n_target": 60,
+    "aep_gwh": 6595.91,
+    "feasible": true,
+    "time_s": 80.4
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n70",
+    "n_target": 70,
+    "aep_gwh": 7677.54,
+    "feasible": true,
+    "time_s": 105.8
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_dei_n80",
+    "n_target": 80,
+    "aep_gwh": 8739.75,
+    "feasible": true,
+    "time_s": 139.2
+  },
+  {
+    "script": "results_agent_llama3_3-70b_s5/iter_005.py",
+    "problem": "problem_rowp",
+    "n_target": 74,
+    "aep_gwh": 4237.62,
+    "feasible": true,
+    "time_s": 49.7
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n100",
+    "n_target": 100,
+    "aep_gwh": 10908.45,
+    "feasible": true,
+    "time_s": 126.4
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n30",
+    "n_target": 30,
+    "aep_gwh": 3350.21,
+    "feasible": true,
+    "time_s": 26.7
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n40",
+    "n_target": 40,
+    "aep_gwh": 4454.78,
+    "feasible": true,
+    "time_s": 31.3
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n50",
+    "n_target": 50,
+    "aep_gwh": 5556.6,
+    "feasible": true,
+    "time_s": 42.2
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n60",
+    "n_target": 60,
+    "aep_gwh": 6641.24,
+    "feasible": true,
+    "time_s": 51.5
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n70",
+    "n_target": 70,
+    "aep_gwh": 7727.82,
+    "feasible": true,
+    "time_s": 67.2
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_dei_n80",
+    "n_target": 80,
+    "aep_gwh": 8798.63,
+    "feasible": true,
+    "time_s": 86.2
+  },
+  {
+    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "problem": "problem_rowp",
+    "n_target": 74,
+    "aep_gwh": 4259.66,
+    "feasible": true,
+    "time_s": 35.9
+  }
+]

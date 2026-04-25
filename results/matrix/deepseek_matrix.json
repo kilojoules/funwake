@@ -1,0 +1,482 @@
+{
+  "DeepSeek R1 32B|dei_n30_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 3357.49,
+    "feasible": true,
+    "time_s": 14.7
+  },
+  "DeepSeek R1 32B|dei_n30_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 3341.67,
+    "feasible": true,
+    "time_s": 16.0
+  },
+  "DeepSeek R1 32B|dei_n30_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 3340.75,
+    "feasible": true,
+    "time_s": 16.9
+  },
+  "DeepSeek R1 32B|dei_n30_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 2605.39,
+    "feasible": true,
+    "time_s": 9.9
+  },
+  "DeepSeek R1 32B|dei_n40_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 4472.89,
+    "feasible": true,
+    "time_s": 17.7
+  },
+  "DeepSeek R1 32B|dei_n40_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 4441.37,
+    "feasible": true,
+    "time_s": 20.1
+  },
+  "DeepSeek R1 32B|dei_n40_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 4444.23,
+    "feasible": true,
+    "time_s": 18.9
+  },
+  "DeepSeek R1 32B|dei_n40_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 3455.99,
+    "feasible": true,
+    "time_s": 11.7
+  },
+  "DeepSeek R1 32B|dei_n50_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 5590.91,
+    "feasible": true,
+    "time_s": 23.3
+  },
+  "DeepSeek R1 32B|dei_n50_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 5532.43,
+    "feasible": true,
+    "time_s": 28.9
+  },
+  "DeepSeek R1 32B|dei_n50_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 5537.42,
+    "feasible": true,
+    "time_s": 28.3
+  },
+  "DeepSeek R1 32B|dei_n50_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 4316.28,
+    "feasible": true,
+    "time_s": 14.8
+  },
+  "DeepSeek R1 32B|dei_n60_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 6696.91,
+    "feasible": true,
+    "time_s": 33.0
+  },
+  "DeepSeek R1 32B|dei_n60_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 6616.09,
+    "feasible": true,
+    "time_s": 38.0
+  },
+  "DeepSeek R1 32B|dei_n60_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 6625.07,
+    "feasible": true,
+    "time_s": 37.6
+  },
+  "DeepSeek R1 32B|dei_n60_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 5156.77,
+    "feasible": true,
+    "time_s": 19.2
+  },
+  "DeepSeek R1 32B|dei_n70_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 7800.13,
+    "feasible": true,
+    "time_s": 44.1
+  },
+  "DeepSeek R1 32B|dei_n70_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 7685.04,
+    "feasible": true,
+    "time_s": 50.9
+  },
+  "DeepSeek R1 32B|dei_n70_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 7705.08,
+    "feasible": true,
+    "time_s": 50.2
+  },
+  "DeepSeek R1 32B|dei_n70_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 5994.31,
+    "feasible": true,
+    "time_s": 25.2
+  },
+  "DeepSeek R1 32B|dei_n80_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 8896.9,
+    "feasible": true,
+    "time_s": 56.7
+  },
+  "DeepSeek R1 32B|dei_n80_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 8754.31,
+    "feasible": true,
+    "time_s": 65.1
+  },
+  "DeepSeek R1 32B|dei_n80_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 8763.7,
+    "feasible": true,
+    "time_s": 63.8
+  },
+  "DeepSeek R1 32B|dei_n80_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "dei",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 6838.62,
+    "feasible": true,
+    "time_s": 29.6
+  },
+  "DeepSeek R1 32B|rowp_n30_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "uniform",
+    "aep_gwh": 2330.16,
+    "feasible": true,
+    "time_s": 10.7
+  },
+  "DeepSeek R1 32B|rowp_n30_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "omnidir",
+    "aep_gwh": 2313.01,
+    "feasible": true,
+    "time_s": 14.7
+  },
+  "DeepSeek R1 32B|rowp_n30_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "dei",
+    "aep_gwh": 2309.52,
+    "feasible": true,
+    "time_s": 14.6
+  },
+  "DeepSeek R1 32B|rowp_n30_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 30,
+    "rose": "rowp",
+    "aep_gwh": 1746.74,
+    "feasible": true,
+    "time_s": 8.6
+  },
+  "DeepSeek R1 32B|rowp_n40_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "uniform",
+    "aep_gwh": 3104.99,
+    "feasible": true,
+    "time_s": 16.3
+  },
+  "DeepSeek R1 32B|rowp_n40_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "omnidir",
+    "aep_gwh": 3070.19,
+    "feasible": true,
+    "time_s": 19.2
+  },
+  "DeepSeek R1 32B|rowp_n40_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "dei",
+    "aep_gwh": 3068.56,
+    "feasible": true,
+    "time_s": 18.7
+  },
+  "DeepSeek R1 32B|rowp_n40_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 40,
+    "rose": "rowp",
+    "aep_gwh": 2319.09,
+    "feasible": true,
+    "time_s": 10.6
+  },
+  "DeepSeek R1 32B|rowp_n50_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "uniform",
+    "aep_gwh": 3878.44,
+    "feasible": true,
+    "time_s": 21.3
+  },
+  "DeepSeek R1 32B|rowp_n50_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "omnidir",
+    "aep_gwh": 3817.6,
+    "feasible": true,
+    "time_s": 26.7
+  },
+  "DeepSeek R1 32B|rowp_n50_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "dei",
+    "aep_gwh": 3805.58,
+    "feasible": true,
+    "time_s": 27.3
+  },
+  "DeepSeek R1 32B|rowp_n50_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 50,
+    "rose": "rowp",
+    "aep_gwh": 2887.3,
+    "feasible": true,
+    "time_s": 13.3
+  },
+  "DeepSeek R1 32B|rowp_n60_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "uniform",
+    "aep_gwh": 4646.01,
+    "feasible": true,
+    "time_s": 29.6
+  },
+  "DeepSeek R1 32B|rowp_n60_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "omnidir",
+    "aep_gwh": 4557.49,
+    "feasible": true,
+    "time_s": 37.1
+  },
+  "DeepSeek R1 32B|rowp_n60_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "dei",
+    "aep_gwh": 4542.49,
+    "feasible": true,
+    "time_s": 36.3
+  },
+  "DeepSeek R1 32B|rowp_n60_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 60,
+    "rose": "rowp",
+    "aep_gwh": 3450.88,
+    "feasible": true,
+    "time_s": 17.3
+  },
+  "DeepSeek R1 32B|rowp_n70_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "uniform",
+    "aep_gwh": 5410.09,
+    "feasible": true,
+    "time_s": 38.6
+  },
+  "DeepSeek R1 32B|rowp_n70_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "omnidir",
+    "aep_gwh": 5274.33,
+    "feasible": true,
+    "time_s": 50.1
+  },
+  "DeepSeek R1 32B|rowp_n70_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "dei",
+    "aep_gwh": 5266.32,
+    "feasible": true,
+    "time_s": 49.5
+  },
+  "DeepSeek R1 32B|rowp_n70_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 70,
+    "rose": "rowp",
+    "aep_gwh": 4013.07,
+    "feasible": true,
+    "time_s": 21.6
+  },
+  "DeepSeek R1 32B|rowp_n80_roseuniform": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "uniform",
+    "aep_gwh": 6166.9,
+    "feasible": true,
+    "time_s": 49.6
+  },
+  "DeepSeek R1 32B|rowp_n80_roseomnidir": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "omnidir",
+    "aep_gwh": 5974.56,
+    "feasible": true,
+    "time_s": 64.4
+  },
+  "DeepSeek R1 32B|rowp_n80_rosedei": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "dei",
+    "aep_gwh": 5989.36,
+    "feasible": true,
+    "time_s": 63.5
+  },
+  "DeepSeek R1 32B|rowp_n80_roserowp": {
+    "label": "DeepSeek R1 32B",
+    "script": "results/deepseek_best_schedule.py",
+    "farm": "rowp",
+    "n": 80,
+    "rose": "rowp",
+    "aep_gwh": 4558.59,
+    "feasible": true,
+    "time_s": 26.5
+  }
+}

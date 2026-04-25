@@ -1,0 +1,46 @@
+{
+  "dei_n30_rosedei": {
+    "aep_gwh": 3346.02,
+    "feasible": true
+  },
+  "dei_n40_rosedei": {
+    "aep_gwh": 4456.21,
+    "feasible": true
+  },
+  "dei_n50_rosedei": {
+    "aep_gwh": 5557.12,
+    "feasible": true
+  },
+  "dei_n60_rosedei": {
+    "aep_gwh": 6652.55,
+    "feasible": true
+  },
+  "dei_n70_rosedei": {
+    "aep_gwh": 7743.71,
+    "feasible": true
+  },
+  "dei_n80_rosedei": {
+    "aep_gwh": 8835.88,
+    "feasible": true
+  },
+  "rowp_n30_rosedei": {
+    "aep_gwh": 2316.78,
+    "feasible": true
+  },
+  "rowp_n40_rosedei": {
+    "aep_gwh": 3078.7,
+    "feasible": true
+  },
+  "rowp_n50_rosedei": {
+    "aep_gwh": 3831.63,
+    "feasible": true
+  },
+  "rowp_n60_rosedei": {
+    "aep_gwh": 4580.83,
+    "feasible": true
+  },
+  "rowp_n70_rosedei": {
+    "aep_gwh": 5323.69,
+    "feasible": true
+  }
+}

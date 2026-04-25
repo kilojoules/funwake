@@ -58,6 +58,19 @@ def main():
 
     optimizer_path = sys.argv[1]
 
+    # Safety check before loading
+    try:
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+        from sandbox import check_code_safety
+        with open(optimizer_path) as f:
+            code = f.read()
+        safe, reason = check_code_safety(code)
+        if not safe:
+            print(f"SANDBOX BLOCKED: {reason}", file=sys.stderr)
+            sys.exit(1)
+    except ImportError:
+        pass  # sandbox module not available — skip check
+
     # Load the optimizer module
     spec = importlib.util.spec_from_file_location("optimizer", optimizer_path)
     mod = importlib.util.module_from_spec(spec)
@@ -80,6 +93,10 @@ def main():
     # Check for mode flag: --schedule-only forces schedule_fn mode
     schedule_only = "--schedule-only" in sys.argv
 
+    # Initialization seed (for grid subsampling in the skeleton).
+    # Defaults to 0 to preserve prior behavior.
+    init_seed = int(os.environ.get("FUNWAKE_SEED", "0"))
+
     if schedule_only:
         if not hasattr(mod, "schedule_fn"):
             print("ERROR: --schedule-only mode requires schedule_fn(), "
@@ -91,7 +108,7 @@ def main():
         from skeleton import run_with_schedule
         opt_x, opt_y = run_with_schedule(
             mod.schedule_fn, sim, n_target, boundary,
-            min_spacing, wd, ws, weights,
+            min_spacing, wd, ws, weights, seed=init_seed,
         )
     elif hasattr(mod, "optimize"):
         opt_x, opt_y = mod.optimize(
@@ -107,7 +124,7 @@ def main():
         from skeleton import run_with_schedule
         opt_x, opt_y = run_with_schedule(
             mod.schedule_fn, sim, n_target, boundary,
-            min_spacing, wd, ws, weights,
+            min_spacing, wd, ws, weights, seed=init_seed,
         )
     else:
         print("ERROR: module must define optimize() or schedule_fn()",

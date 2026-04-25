@@ -1,0 +1,7 @@
+Running 48 problems × 500 seeds each with 48 parallel workers
+Out dir: lumi/logs/matrix_baselines
+CPU cores available: 256
+[1/48] dei_n30_roseuniform: ok  elapsed=0.0m  eta=1.0m
+[2/48] dei_n30_rosedei: ok  elapsed=0.0m  eta=0.5m
+[3/48] dei_n30_roseomnidir: ok  elapsed=0.0m  eta=0.3m
+[4/48] rowp_n30_roseuniform: rc=-6  elapsed=6.0m  eta=65.8m

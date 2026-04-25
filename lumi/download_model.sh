@@ -1,21 +1,55 @@
 #!/bin/bash
-# Download Llama 3.1 405B AWQ INT4 to LUMI scratch.
+# Download a model from HuggingFace to LUMI scratch.
 # Run from a login node (has internet access).
 #
-# Usage: bash lumi/download_model.sh
+# Usage:
+#   MODEL_PRESET=gemma4-26b bash lumi/download_model.sh
+#   MODEL_PRESET=qwen2.5-72b bash lumi/download_model.sh
+#
+# For gated models (Gemma, Llama), set HF_TOKEN or place it in ~/.hf_token
 
 set -e
 
-MODEL_DIR=/scratch/project_465002609/models/llama-405b-awq
+MODEL_PRESET=${MODEL_PRESET:-llama3.1-405b}
+MODELS_JSON="$(dirname "$0")/../models.json"
 
-echo "Downloading Llama 3.1 405B AWQ INT4 to ${MODEL_DIR}..."
-echo "This will take 1-2 hours (~200 GB)."
+if [ ! -f "$MODELS_JSON" ]; then
+    echo "ERROR: models.json not found at $MODELS_JSON"
+    exit 1
+fi
 
-pip install --user huggingface-hub 2>/dev/null
+HF_ID=$(python3 -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['hf_id'])")
+MODEL_DIR="/scratch/project_465002609/models/${MODEL_PRESET}"
 
-huggingface-cli download \
-    huggingface/Meta-Llama-3.1-405B-Instruct-AWQ-INT4 \
-    --local-dir ${MODEL_DIR}
+echo "Downloading ${HF_ID} to ${MODEL_DIR}..."
+
+# Use HF token for gated models (Gemma, Llama)
+if [ -z "$HF_TOKEN" ] && [ -f ~/.hf_token ]; then
+    export HF_TOKEN=$(cat ~/.hf_token)
+fi
+
+TOKEN_ARG=""
+if [ -n "$HF_TOKEN" ]; then
+    TOKEN_ARG="--token $HF_TOKEN"
+    echo "Using HF token for authentication"
+fi
+
+# Use pixi python if available (LUMI), fallback to system
+if command -v pixi &> /dev/null && [ -f "$(dirname "$0")/../pixi.toml" ]; then
+    PYTHON="pixi run python"
+    cd "$(dirname "$0")/.."
+else
+    pip install --user huggingface-hub 2>/dev/null
+    PYTHON="python3"
+fi
+
+$PYTHON -c "
+from huggingface_hub import snapshot_download
+import os
+token = os.environ.get('HF_TOKEN')
+snapshot_download('$HF_ID', local_dir='$MODEL_DIR', token=token)
+print('Download complete')
+"
 
 echo "Done. Model at ${MODEL_DIR}"
-ls -lh ${MODEL_DIR}
+ls -lh "$MODEL_DIR"

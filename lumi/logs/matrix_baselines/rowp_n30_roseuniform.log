@@ -1,0 +1,21 @@
+
+=== Starting at 23:45:33 ===
+[rowp_n30_roseuniform] 500/500 seeds to run
+[rowp_n30_roseuniform] problem loaded in 9.7s, inside candidates: 335, n_target=30
+[rowp_n30_roseuniform] 50/500 done, rate=0.26/s, eta=1729s
+E0415 23:51:30.828899  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.918819  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919014  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919127  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919200  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919273  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919357  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919420  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919478  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919555  198960 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory
+E0415 23:51:30.919818  198960 contiguous_section_memory_manager.cc:101] allocateMappedMemory failed with error: Cannot allocate memory
+E0415 23:51:30.919861  198960 contiguous_section_memory_manager.cc:139] Failed to satisfy suballocation request for 67
+LLVM ERROR: Unable to allocate section memory!
+
+=== Starting at 00:21:23 ===
+[rowp_n30_roseuniform] 415/500 seeds to run

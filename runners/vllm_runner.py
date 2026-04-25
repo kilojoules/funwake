@@ -21,45 +21,95 @@ class VLLMRunner(BaseRunner):
     def __init__(self, config: RunConfig,
                  model: str = "meta-llama/Meta-Llama-3.1-405B-Instruct-AWQ-INT4",
                  base_url: str = "http://localhost:8000",
-                 max_tokens: int = 16384,
-                 temperature: float = 0.7):
+                 max_tokens: int = 4096,
+                 temperature: float = 0.7,
+                 api_key: str = None,
+                 schedule_only: bool = False):
         super().__init__(config)
         self.model = model
+        self.schedule_only = schedule_only
         # Normalize base URL: strip trailing /v1 if present (we add it ourselves)
         self.base_url = base_url.rstrip("/")
         if self.base_url.endswith("/v1"):
             self.base_url = self.base_url[:-3]
         self.max_tokens = max_tokens
         self.temperature = temperature
+        self.api_key = api_key
 
-        # Verify server is reachable
-        try:
-            resp = requests.get(f"{self.base_url}/v1/models", timeout=10)
-            models = resp.json().get("data", [])
-            print(f"[vLLM] Connected to {self.base_url}, models: {[m['id'] for m in models]}")
-        except Exception as e:
-            print(f"[vLLM] Warning: server not reachable at {self.base_url}: {e}")
+        # Verify server is reachable (with retry)
+        for attempt in range(5):
+            try:
+                resp = requests.get(f"{self.base_url}/v1/models",
+                                    timeout=10, headers=self._auth_headers())
+                models = resp.json().get("data", [])
+                print(f"[vLLM] Connected to {self.base_url}, models: {[m['id'] for m in models]}")
+                break
+            except Exception as e:
+                if attempt < 4:
+                    wait = 2 ** attempt
+                    print(f"[vLLM] Server not ready, retrying in {wait}s...")
+                    time.sleep(wait)
+                else:
+                    print(f"[vLLM] Warning: server not reachable at {self.base_url}: {e}")
 
-    def _chat(self, messages: list[dict]) -> str:
-        """Send a chat completion request, return assistant text."""
+    def _auth_headers(self) -> dict:
+        """Return authorization headers if an API key is configured."""
+        if self.api_key:
+            return {"Authorization": f"Bearer {self.api_key}"}
+        return {}
+
+    def _chat(self, messages: list[dict]) -> tuple[str, str]:
+        """Send a chat completion request.
+
+        Returns (content, reasoning) — two strings.
+
+        For reasoning models (DeepSeek R1 family with
+        --reasoning-parser deepseek_r1 on the vLLM server), the
+        internal `<think>...</think>` trace is exposed in the
+        separate `reasoning_content` field and MUST NOT be fed back
+        as input to the next turn (context would explode). The
+        caller should add only `content` to the message history
+        and use `reasoning` only for logging.
+
+        For non-reasoning models, `reasoning` is an empty string.
+        """
         payload = {
             "model": self.model,
             "messages": messages,
             "max_tokens": self.max_tokens,
             "temperature": self.temperature,
         }
-        resp = requests.post(
-            f"{self.base_url}/v1/chat/completions",
-            json=payload, timeout=300
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        msg = data["choices"][0]["message"]
-        # Some models (deepseek-r1) put output in "reasoning" with empty "content"
-        content = msg.get("content") or ""
-        if not content.strip() and msg.get("reasoning"):
-            content = msg["reasoning"]
-        return content
+        last_err = None
+        for attempt in range(4):
+            try:
+                resp = requests.post(
+                    f"{self.base_url}/v1/chat/completions",
+                    json=payload, timeout=300,
+                    headers=self._auth_headers(),
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                msg = data["choices"][0]["message"]
+                content = msg.get("content") or ""
+                # vLLM's deepseek_r1 reasoning parser emits
+                # `reasoning_content`; older variants use `reasoning`.
+                reasoning = (msg.get("reasoning_content")
+                             or msg.get("reasoning") or "")
+                # If the server didn't separate reasoning but content
+                # has literal <think> tags, strip them ourselves so
+                # we don't pollute the next turn's context.
+                if "<think>" in content and "</think>" in content:
+                    pre, rest = content.split("<think>", 1)
+                    think, post = rest.split("</think>", 1)
+                    reasoning = (reasoning + "\n" + think).strip() if reasoning else think.strip()
+                    content = (pre + post).strip()
+                return content, reasoning
+            except (requests.ConnectionError, requests.Timeout) as e:
+                last_err = e
+                wait = 2 ** attempt
+                print(f"[vLLM] Connection error, retrying in {wait}s: {e}")
+                time.sleep(wait)
+        raise last_err
 
     def _parse_action(self, text: str) -> tuple[str, dict]:
         """Parse the LLM's structured action from its response.
@@ -107,13 +157,28 @@ class VLLMRunner(BaseRunner):
 
     def _execute_tool(self, name: str, args: dict) -> str:
         """Execute a tool, return result string."""
-        env = {**os.environ, "PYTHONPATH": self.config.pythonpath,
-               "JAX_ENABLE_X64": "True"}
+        env = {
+            "PATH": os.environ.get("PATH", ""),
+            "PYTHONPATH": self.config.pythonpath,
+            "JAX_ENABLE_X64": "True",
+            "HOME": os.environ.get("HOME", ""),
+            "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
+        }
+        # Preserve GPU-related env vars for HPC (LUMI, CUDA)
+        for key in os.environ:
+            if key.startswith(("ROCR_", "HIP_", "CUDA_", "HSA_", "NCCL_")):
+                env[key] = os.environ[key]
         tools_dir = os.path.join(os.path.dirname(__file__), "..", "tools")
         project_root = os.path.join(os.path.dirname(__file__), "..")
 
         if name == "read_file":
             path = args.get("path", "")
+            # Allow reading agent_memory.md from the output dir
+            if path == "agent_memory.md":
+                try:
+                    return Path(self.memory_path).read_text()
+                except FileNotFoundError:
+                    return "No agent_memory.md yet. Submit code first."
             allowed = ["playground/", "results/"]
             if not any(path.startswith(p) for p in allowed):
                 return f"Error: cannot read {path}"
@@ -126,6 +191,13 @@ class VLLMRunner(BaseRunner):
 
         elif name == "submit_code":
             code = args.get("code", "")
+
+            # Safety check before execution
+            from sandbox import check_code_safety
+            safe, reason = check_code_safety(code)
+            if not safe:
+                return f"BLOCKED: {reason}\nPlease fix and resubmit."
+
             attempt_num = len(self.attempts) + 1
 
             # Save to workspace
@@ -136,35 +208,46 @@ class VLLMRunner(BaseRunner):
             Path(iter_path).write_text(code)
             Path(gen_path).write_text(code)
 
-            # Run tests first
-            test_result = subprocess.run(
-                ["python", os.path.join(tools_dir, "run_tests.py"),
-                 iter_path, "--quick"],
-                capture_output=True, text=True, timeout=60, env=env,
-                cwd=project_root
-            )
+            # Run tests first (generous timeout for first JAX compile on HPC)
+            sched_flag = ["--schedule-only"] if self.schedule_only else []
             try:
-                test_data = json.loads(test_result.stdout)
-                if not test_data.get("passed"):
-                    return f"Tests FAILED:\n{test_data.get('output', '')}"
-            except json.JSONDecodeError:
-                pass
+                test_result = subprocess.run(
+                    ["python", os.path.join(tools_dir, "run_tests.py"),
+                     iter_path, "--quick"] + sched_flag,
+                    capture_output=True, text=True, timeout=180, env=env,
+                    cwd=project_root
+                )
+                try:
+                    test_data = json.loads(test_result.stdout)
+                    if not test_data.get("passed"):
+                        return f"Tests FAILED:\n{test_data.get('output', '')}"
+                except json.JSONDecodeError:
+                    pass
+            except subprocess.TimeoutExpired:
+                return "Tests TIMED OUT after 180s (JAX compilation may be slow on first run)"
 
-            # Score on training farm
-            score_result = subprocess.run(
-                ["python", os.path.join(tools_dir, "run_optimizer.py"),
-                 iter_path,
-                 "--problem", os.path.join(project_root, self.config.train_problem),
-                 "--timeout", str(self.config.timeout_per_run)],
-                capture_output=True, text=True,
-                timeout=self.config.timeout_per_run + 30, env=env,
-                cwd=project_root
-            )
-
+            # Score on training farm (extra time for first JAX compile)
+            score_timeout = self.config.timeout_per_run + 120
             try:
-                data = json.loads(score_result.stdout)
-            except json.JSONDecodeError:
-                data = {"error": score_result.stdout[:500]}
+                score_result = subprocess.run(
+                    ["python", os.path.join(tools_dir, "run_optimizer.py"),
+                     iter_path,
+                     "--problem", os.path.join(project_root, self.config.train_problem),
+                     "--timeout", str(self.config.timeout_per_run + 60)]
+                    + sched_flag,
+                    capture_output=True, text=True,
+                    timeout=score_timeout, env=env,
+                    cwd=project_root
+                )
+            except subprocess.TimeoutExpired:
+                data = {"error": f"Scoring timed out after {score_timeout}s"}
+                score_result = None
+
+            if score_result is not None:
+                try:
+                    data = json.loads(score_result.stdout)
+                except json.JSONDecodeError:
+                    data = {"error": score_result.stdout[:500]}
 
             # Log attempt
             result = AttemptResult(
@@ -180,25 +263,10 @@ class VLLMRunner(BaseRunner):
                 result.train_baseline = data.get("baseline")
                 result.strategy = "sgd_solve" if "topfarm_sgd_solve" in code else "custom"
 
-                # Silent ROWP scoring
-                rowp_problem = os.path.join(project_root, self.config.rowp_problem)
-                if os.path.exists(rowp_problem):
-                    try:
-                        rowp_result = subprocess.run(
-                            ["python", os.path.join(tools_dir, "run_optimizer.py"),
-                             iter_path, "--problem", rowp_problem,
-                             "--timeout", str(self.config.timeout_per_run + 60)],
-                            capture_output=True, text=True,
-                            timeout=self.config.timeout_per_run + 90, env=env,
-                            cwd=project_root
-                        )
-                        rowp_data = json.loads(rowp_result.stdout)
-                        if "aep_gwh" in rowp_data:
-                            result.rowp_aep = rowp_data["aep_gwh"]
-                            result.rowp_feasible = rowp_data.get("feasible")
-                            result.rowp_time = rowp_data.get("time_s")
-                    except Exception:
-                        pass
+                # ROWP scoring is done in post-processing, NOT during the
+                # agent loop. This ensures the held-out farm's AEP is never
+                # available to the LLM — not in the process, not on disk,
+                # not anywhere the agent could access it.
 
             self.log_attempt(result)
 
@@ -231,6 +299,44 @@ class VLLMRunner(BaseRunner):
                 "time_remaining_min": round(self.time_remaining() / 60, 1),
             })
 
+        elif name == "update_memory":
+            from .memory_template import refresh_memory, extract_agent_notes
+            existing = ""
+            if os.path.exists(self.memory_path):
+                existing = Path(self.memory_path).read_text()
+            notes = extract_agent_notes(existing)
+            kf = args.get("key_findings")
+            ne = args.get("next_experiments")
+            if kf is not None:
+                if "## Key Findings" in notes:
+                    start = notes.index("## Key Findings")
+                    rest = notes[start + len("## Key Findings"):]
+                    nh = rest.find("\n## ")
+                    after = rest[nh:] if nh >= 0 else ""
+                    notes = f"## Key Findings\n{kf}\n{after}"
+                else:
+                    notes = f"## Key Findings\n{kf}\n\n{notes}"
+            if ne is not None:
+                if "## Next Experiments" in notes:
+                    start = notes.index("## Next Experiments")
+                    rest = notes[start + len("## Next Experiments"):]
+                    nh = rest.find("\n## ")
+                    after = rest[nh:] if nh >= 0 else ""
+                    notes = notes[:notes.index("## Next Experiments")] + \
+                            f"## Next Experiments\n{ne}\n{after}"
+                else:
+                    notes += f"\n## Next Experiments\n{ne}\n"
+            from .memory_template import render_memory
+            content = render_memory(
+                attempt_log=self.attempts,
+                baseline_aep=self._get_baseline_aep(),
+                time_budget_s=self.config.time_budget,
+                elapsed_s=time.time() - self.start_time,
+                agent_notes=notes,
+            )
+            Path(self.memory_path).write_text(content)
+            return "Memory updated."
+
         return f"Unknown action: {name}"
 
     def run(self):
@@ -240,6 +346,17 @@ class VLLMRunner(BaseRunner):
         system_prompt = self.build_system_prompt()
         system_prompt += """
 
+## Memory
+
+You have a persistent memory file (agent_memory.md) with four sections:
+- **Status**: auto-updated after each eval (time, attempts, best, baseline)
+- **Top Scripts**: auto-updated ranked table of your best results
+- **Key Findings**: YOUR notes on what worked and what didn't — update after each eval
+- **Next Experiments**: YOUR plan for what to try next — update as you learn
+
+Read memory at the start of each turn. Update it after each eval to record
+what you learned. Your notes persist even if conversation context is lost.
+
 ## How to respond
 
 For each turn, respond with ONE of:
@@ -248,12 +365,94 @@ For each turn, respond with ONE of:
    ACTION: read_file
    ARGS: {"path": "playground/pixwake/src/pixwake/optim/sgd.py"}
 
-2. Submit an optimizer (will be tested and scored automatically):
+2. Read your memory:
+   ACTION: read_file
+   ARGS: {"path": "agent_memory.md"}
+
+3. Submit code (will be tested and scored automatically):
    CODE:
    ```python
-   def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
+   ...
+   ```
+
+4. Check status:
+   ACTION: get_status
+
+5. Update your memory notes:
+   ACTION: update_memory
+   ARGS: {"key_findings": "- LR=100 beats LR=50\n- ...", "next_experiments": "- [ ] Try LR=150\n- ..."}
+
+Always respond with exactly ONE action per turn.
+Start each session by reading agent_memory.md.
+"""
+
+        if self.schedule_only:
+            # Inject key source files so models have the same information
+            # as Claude Code (which reads these via its rich tool suite)
+            skeleton_src = ""
+            seed_sched_src = ""
+            project_root = os.path.join(os.path.dirname(__file__), "..")
+            try:
+                skeleton_src = Path(os.path.join(project_root, "playground", "skeleton.py")).read_text()
+                seed_sched_src = Path(os.path.join(project_root, "results", "seed_schedule.py")).read_text()
+            except FileNotFoundError:
+                pass
+
+            system_prompt = f"""\
+You are designing a learning rate and penalty schedule for a wind farm
+layout optimizer. A fixed skeleton handles initialization, gradients, and
+Adam updates. You control ONLY how four parameters change per step.
+
+Write a `schedule_fn` that returns (lr, alpha, beta1, beta2):
+
+```python
+import jax.numpy as jnp
+
+def schedule_fn(step, total_steps, lr0, alpha0):
+    # Returns (lr, alpha, beta1, beta2)
+    ...
+    return lr, alpha, beta1, beta2
+```
+
+## The fixed skeleton (you CANNOT change this, but study it carefully)
+
+```python
+{skeleton_src}
+```
+
+## Baseline schedule (this is what you're trying to beat)
+
+```python
+{seed_sched_src}
+```
+
+KEY INSIGHT from the baseline: alpha is coupled to 1/lr. As lr decays,
+alpha INCREASES. This ensures constraints are enforced at convergence.
+Your schedule MUST maintain high alpha in the final iterations or the
+layout will violate boundary/spacing constraints on unseen farms.
+
+## Constraints
+- Time budget: {self.config.time_budget // 60} minutes
+- Each run times out at {self.config.timeout_per_run}s
+- Baseline: {self._get_baseline_aep():.1f} GWh — beat this
+- Do NOT write optimize() — only schedule_fn()
+
+## How to respond
+
+For each turn, respond with ONE of:
+
+1. Read a file:
+   ACTION: read_file
+   ARGS: {{"path": "playground/skeleton.py"}}
+
+2. Submit a schedule (will be tested and scored automatically):
+   CODE:
+   ```python
+   import jax.numpy as jnp
+
+   def schedule_fn(step, total_steps, lr0, alpha0):
        ...
-       return opt_x, opt_y
+       return lr, alpha, beta1, beta2
    ```
 
 3. Check status:
@@ -261,12 +460,16 @@ For each turn, respond with ONE of:
 
 Always respond with exactly ONE action per turn.
 """
+
         messages = [
             {"role": "system", "content": system_prompt},
         ]
 
         # Hot-start
-        first_msg = "Begin optimizing. Read the problem and pixwake source, then write and submit optimizers."
+        if self.schedule_only:
+            first_msg = "Begin designing schedules. Read the skeleton and seed schedule, then write and submit schedule functions."
+        else:
+            first_msg = "Begin optimizing. Read the problem and pixwake source, then write and submit optimizers."
         if self.config.hot_start and os.path.exists(self.config.hot_start):
             seed = Path(self.config.hot_start).read_text()
             first_msg += f"\n\nSeed optimizer:\n```python\n{seed}\n```"
@@ -279,13 +482,22 @@ Always respond with exactly ONE action per turn.
                   f"{len(self.attempts)} attempts, best={self.best_aep:.1f}")
 
             try:
-                response = self._chat(messages)
+                response, reasoning = self._chat(messages)
             except Exception as e:
                 print(f"[turn {turn}] API error: {e}")
                 time.sleep(5)
                 continue
 
-            # Add assistant response to history
+            # Log reasoning trace but DO NOT add it to message history.
+            # Reasoning tokens are NOT fed back as input on the next
+            # turn — this is the whole reason the architecture needs
+            # reasoning-aware handling for DeepSeek R1 family models.
+            if reasoning:
+                n_tok = max(len(reasoning) // 4, 1)
+                print(f"[turn {turn}] reasoning: {n_tok} tok "
+                      f"({reasoning[:120].strip()!r}...)")
+
+            # Add ONLY the final content to history
             messages.append({"role": "assistant", "content": response})
             print(f"[turn {turn}] Response: {response[:200]}...")
 

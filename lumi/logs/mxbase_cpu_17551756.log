@@ -1,0 +1,95 @@
+Matrix baselines: 48 cells × 500 seeds = 24000 total (15051 to run, 8949 already done)
+Workers: 64, cores available: 256
+Out: lumi/logs/matrix_baselines
+[200/15051] ok=200 err=0 rate=0.3/s elapsed=11.5m eta=852.3m
+[400/15051] ok=400 err=0 rate=0.3/s elapsed=19.9m eta=728.0m
+[600/15051] ok=600 err=0 rate=0.3/s elapsed=28.7m eta=692.0m
+[800/15051] ok=800 err=0 rate=0.4/s elapsed=37.5m eta=667.4m
+[1000/15051] ok=1000 err=0 rate=0.4/s elapsed=46.1m eta=648.0m
+[1200/15051] ok=1200 err=0 rate=0.4/s elapsed=54.1m eta=624.5m
+[1400/15051] ok=1400 err=0 rate=0.4/s elapsed=57.9m eta=564.3m
+[1600/15051] ok=1600 err=0 rate=0.4/s elapsed=61.6m eta=517.6m
+  ERR dei_n80_roseuniform seed109: timeout
+  ERR dei_n80_roseuniform seed160: timeout
+  ERR dei_n80_roseuniform seed181: timeout
+  ERR dei_n80_roseuniform seed185: timeout
+  ERR dei_n80_roseuniform seed215: timeout
+  ERR dei_n80_roseuniform seed216: timeout
+  ERR dei_n80_roseuniform seed217: timeout
+[1800/15051] ok=1793 err=7 rate=0.4/s elapsed=76.3m eta=561.5m
+  ERR dei_n80_roseuniform seed225: timeout
+  ERR dei_n80_roseuniform seed267: timeout
+[2000/15051] ok=1987 err=13 rate=0.4/s elapsed=89.4m eta=583.6m
+[2200/15051] ok=2172 err=28 rate=0.4/s elapsed=103.2m eta=602.6m
+[2400/15051] ok=2361 err=39 rate=0.3/s elapsed=116.8m eta=615.7m
+[2600/15051] ok=2554 err=46 rate=0.3/s elapsed=130.1m eta=623.2m
+[2800/15051] ok=2740 err=60 rate=0.3/s elapsed=143.7m eta=628.8m
+[3000/15051] ok=2919 err=81 rate=0.3/s elapsed=157.5m eta=632.6m
+[3200/15051] ok=3105 err=95 rate=0.3/s elapsed=164.9m eta=610.7m
+[3400/15051] ok=3305 err=95 rate=0.3/s elapsed=171.7m eta=588.3m
+[3600/15051] ok=3505 err=95 rate=0.3/s elapsed=175.3m eta=557.6m
+[3800/15051] ok=3705 err=95 rate=0.4/s elapsed=176.0m eta=521.0m
+[4000/15051] ok=3905 err=95 rate=0.4/s elapsed=176.9m eta=488.6m
+[4200/15051] ok=4105 err=95 rate=0.4/s elapsed=178.3m eta=460.7m
+[4400/15051] ok=4305 err=95 rate=0.4/s elapsed=179.8m eta=435.2m
+[4600/15051] ok=4505 err=95 rate=0.4/s elapsed=181.5m eta=412.3m
+[4800/15051] ok=4705 err=95 rate=0.4/s elapsed=182.9m eta=390.7m
+[5000/15051] ok=4905 err=95 rate=0.5/s elapsed=184.0m eta=369.9m
+[5200/15051] ok=5105 err=95 rate=0.5/s elapsed=184.9m eta=350.2m
+[5400/15051] ok=5305 err=95 rate=0.5/s elapsed=185.7m eta=332.0m
+[5600/15051] ok=5505 err=95 rate=0.5/s elapsed=186.6m eta=315.0m
+[5800/15051] ok=5705 err=95 rate=0.5/s elapsed=187.9m eta=299.7m
+[6000/15051] ok=5905 err=95 rate=0.5/s elapsed=189.8m eta=286.4m
+[6200/15051] ok=6105 err=95 rate=0.5/s elapsed=191.8m eta=273.8m
+[6400/15051] ok=6305 err=95 rate=0.6/s elapsed=193.7m eta=261.9m
+[6600/15051] ok=6505 err=95 rate=0.6/s elapsed=195.7m eta=250.6m
+[6800/15051] ok=6705 err=95 rate=0.6/s elapsed=197.3m eta=239.4m
+[7000/15051] ok=6905 err=95 rate=0.6/s elapsed=198.4m eta=228.1m
+[7200/15051] ok=7105 err=95 rate=0.6/s elapsed=199.4m eta=217.4m
+[7400/15051] ok=7305 err=95 rate=0.6/s elapsed=202.1m eta=209.0m
+[7600/15051] ok=7505 err=95 rate=0.6/s elapsed=205.1m eta=201.1m
+[7800/15051] ok=7705 err=95 rate=0.6/s elapsed=208.7m eta=194.0m
+[8000/15051] ok=7905 err=95 rate=0.6/s elapsed=212.6m eta=187.4m
+[8200/15051] ok=8105 err=95 rate=0.6/s elapsed=216.4m eta=180.8m
+[8400/15051] ok=8305 err=95 rate=0.6/s elapsed=220.4m eta=174.5m
+[8600/15051] ok=8505 err=95 rate=0.6/s elapsed=224.6m eta=168.5m
+[8800/15051] ok=8705 err=95 rate=0.6/s elapsed=226.7m eta=161.0m
+[9000/15051] ok=8905 err=95 rate=0.7/s elapsed=228.0m eta=153.3m
+[9200/15051] ok=9105 err=95 rate=0.7/s elapsed=230.8m eta=146.8m
+[9400/15051] ok=9305 err=95 rate=0.7/s elapsed=236.6m eta=142.2m
+[9600/15051] ok=9505 err=95 rate=0.7/s elapsed=242.3m eta=137.6m
+[9800/15051] ok=9705 err=95 rate=0.7/s elapsed=248.9m eta=133.3m
+[10000/15051] ok=9905 err=95 rate=0.7/s elapsed=255.2m eta=128.9m
+[10200/15051] ok=10105 err=95 rate=0.7/s elapsed=260.9m eta=124.1m
+[10400/15051] ok=10305 err=95 rate=0.6/s elapsed=266.8m eta=119.3m
+[10600/15051] ok=10505 err=95 rate=0.6/s elapsed=272.5m eta=114.4m
+[10800/15051] ok=10705 err=95 rate=0.7/s elapsed=274.9m eta=108.2m
+[11000/15051] ok=10905 err=95 rate=0.7/s elapsed=277.1m eta=102.1m
+[11200/15051] ok=11105 err=95 rate=0.7/s elapsed=283.6m eta=97.5m
+[11400/15051] ok=11305 err=95 rate=0.6/s elapsed=292.5m eta=93.7m
+[11600/15051] ok=11505 err=95 rate=0.6/s elapsed=301.7m eta=89.8m
+[11800/15051] ok=11705 err=95 rate=0.6/s elapsed=310.5m eta=85.6m
+[12000/15051] ok=11905 err=95 rate=0.6/s elapsed=319.6m eta=81.3m
+[12200/15051] ok=12105 err=95 rate=0.6/s elapsed=328.5m eta=76.8m
+[12400/15051] ok=12305 err=95 rate=0.6/s elapsed=337.4m eta=72.1m
+[12600/15051] ok=12505 err=95 rate=0.6/s elapsed=345.6m eta=67.2m
+[12800/15051] ok=12705 err=95 rate=0.6/s elapsed=349.1m eta=61.4m
+[13000/15051] ok=12905 err=95 rate=0.6/s elapsed=352.7m eta=55.7m
+[13200/15051] ok=13105 err=95 rate=0.6/s elapsed=362.9m eta=50.9m
+[13400/15051] ok=13280 err=120 rate=0.6/s elapsed=377.9m eta=46.6m
+[13600/15051] ok=13477 err=123 rate=0.6/s elapsed=390.9m eta=41.7m
+[13800/15051] ok=13653 err=147 rate=0.6/s elapsed=404.9m eta=36.7m
+[14000/15051] ok=13837 err=163 rate=0.6/s elapsed=418.3m eta=31.4m
+[14200/15051] ok=14031 err=169 rate=0.5/s elapsed=431.6m eta=25.9m
+[14400/15051] ok=14212 err=188 rate=0.5/s elapsed=445.5m eta=20.1m
+[14600/15051] ok=14399 err=201 rate=0.5/s elapsed=456.8m eta=14.1m
+[14800/15051] ok=14599 err=201 rate=0.5/s elapsed=462.6m eta=7.8m
+[15000/15051] ok=14799 err=201 rate=0.5/s elapsed=468.8m eta=1.6m
+[15051/15051] ok=14850 err=201 rate=0.5/s elapsed=469.8m eta=0.0m
+
+Done. ok=14850 err=201 skipped=0 total elapsed=469.8m
+
+Aggregate with:
+  pixi run python tools/aggregate_matrix_baselines.py \
+      --matrix-dir results/matrix \
+      --out results/matrix/baselines_matrix.json

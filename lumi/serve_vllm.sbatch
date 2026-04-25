@@ -1,18 +1,53 @@
 #!/bin/bash
-#SBATCH --job-name=vllm-405b
+# Serve an open-source model via vLLM on LUMI.
+#
+# Usage:
+#   MODEL_PRESET=qwen2.5-72b sbatch lumi/serve_vllm.sbatch
+#   MODEL_PRESET=llama3.1-405b sbatch lumi/serve_vllm.sbatch
+#
+# The MODEL_PRESET must match a key in models.json.
+# GPU count and partition are determined by the preset.
+
+#SBATCH --job-name=vllm-serve
 #SBATCH --account=project_465002609
-#SBATCH --partition=standard-g
-#SBATCH --nodes=1
-#SBATCH --gpus-per-node=8
 #SBATCH --time=06:00:00
 #SBATCH --output=lumi/logs/vllm_%j.log
 #SBATCH --error=lumi/logs/vllm_%j.err
 
-# Serve Llama 3.1 405B via vLLM on a full LUMI node (8 GCDs).
-# The agent connects to http://localhost:8000 from the same node.
-
 set -e
 mkdir -p lumi/logs
+
+MODEL_PRESET=${MODEL_PRESET:-llama3.1-405b}
+PROJECT_ROOT=$(pwd)
+MODELS_JSON="${PROJECT_ROOT}/models.json"
+
+if [ ! -f "$MODELS_JSON" ]; then
+    echo "ERROR: models.json not found at $MODELS_JSON"
+    exit 1
+fi
+
+# Read model config from models.json
+HF_ID=$(python3 -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['hf_id'])")
+NUM_GPUS=$(python3 -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['num_gpus'])")
+MAX_MODEL_LEN=$(python3 -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args']['max-model-len'])")
+DTYPE=$(python3 -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args']['dtype'])")
+QUANT=$(python3 -c "import json; q=json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args'].get('quantization'); print(q if q else '')")
+
+MODEL_DIR="/scratch/project_465002609/models/${MODEL_PRESET}"
+
+echo "Model preset: $MODEL_PRESET"
+echo "HF ID: $HF_ID"
+echo "Model dir: $MODEL_DIR"
+echo "GPUs: $NUM_GPUS"
+echo "Max model len: $MAX_MODEL_LEN"
+echo "Dtype: $DTYPE"
+echo "Quantization: ${QUANT:-none}"
+
+if [ ! -d "$MODEL_DIR" ]; then
+    echo "ERROR: Model not found at $MODEL_DIR"
+    echo "Run: MODEL_PRESET=$MODEL_PRESET bash lumi/download_model.sh"
+    exit 1
+fi
 
 module purge
 module use /appl/local/laifs/modules
@@ -32,18 +67,13 @@ echo "Using container: $SIF"
 export NCCL_SOCKET_IFNAME=hsn0,hsn1,hsn2,hsn3
 export NCCL_NET_GDR_LEVEL=3
 
-MODEL=/scratch/project_465002609/models/llama-405b-awq
+# Build vLLM args
+VLLM_ARGS="--model $MODEL_DIR --tensor-parallel-size $NUM_GPUS --dtype $DTYPE --max-model-len $MAX_MODEL_LEN --port 8000 --host 0.0.0.0"
+if [ -n "$QUANT" ]; then
+    VLLM_ARGS="$VLLM_ARGS --quantization $QUANT"
+fi
 
-echo "Starting vLLM server with model: $MODEL"
-echo "Tensor parallel: 8 GCDs"
-echo "Port: 8000"
+echo "Starting vLLM: $VLLM_ARGS"
 
 singularity exec $SIF \
-    python -m vllm.entrypoints.openai.api_server \
-        --model $MODEL \
-        --tensor-parallel-size 8 \
-        --quantization awq \
-        --dtype float16 \
-        --max-model-len 8192 \
-        --port 8000 \
-        --host 0.0.0.0
+    python -m vllm.entrypoints.openai.api_server $VLLM_ARGS

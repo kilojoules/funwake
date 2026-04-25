@@ -1,0 +1,13 @@
+=== FunWake Benchmark ===
+Model:  gemma4-26b (google/gemma-4-26B-A4B-it)
+GPUs:   1
+Seed:   2
+Budget: 300 min
+
+Container: /appl/local/laifs/containers/lumi-multitorch-u24r64f21m43t29-20260319_153422/lumi-multitorch-full-u24r64f21m43t29-20260319_153422.sif
+Starting vLLM: --model /scratch/project_465002609/models/gemma4-26b --tensor-parallel-size 1 --dtype bfloat16 --max-model-len 32768 --port 8000 --host 0.0.0.0
+vLLM log: /scratch/project_465002609/julian/funwake/lumi/logs/vllm_17501844.log
+vLLM PID: 122785
+Waiting for vLLM server...
+ERROR: vLLM server not ready after 10 min
+Stopping vLLM...

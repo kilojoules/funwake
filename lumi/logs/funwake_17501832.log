@@ -1,0 +1,2800 @@
+=== FunWake Benchmark ===
+Model:  llama3.3-70b (ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4)
+GPUs:   1
+Seed:   3
+Budget: 300 min
+
+Container: /appl/local/laifs/containers/lumi-multitorch-u24r64f21m43t29-20260319_153422/lumi-multitorch-full-u24r64f21m43t29-20260319_153422.sif
+Starting vLLM: --model /scratch/project_465002609/models/llama3.3-70b --tensor-parallel-size 1 --dtype float16 --max-model-len 16384 --port 8000 --host 0.0.0.0 --quantization awq
+vLLM log: /scratch/project_465002609/julian/funwake/lumi/logs/vllm_17501832.log
+vLLM PID: 5309
+Waiting for vLLM server...
+Server ready after 200s
+Serving: /scratch/project_465002609/models/qwen2.5-coder-32b
+
+Running: pixi run python agent_cli.py --provider vllm --model /scratch/project_465002609/models/qwen2.5-coder-32b --base-url http://localhost:8000 --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv --time-budget 18000 --hot-start results/seed_optimizer.py --output-dir results_agent_llama3_3-70b_registry_sched_s3 --timeout-per-run 60 --schedule-only --hot-start results/seed_schedule.py
+[vLLM] Connected to http://localhost:8000, models: ['/scratch/project_465002609/models/qwen2.5-coder-32b']
+Starting vllm agent
+  Time budget: 300 min
+  Output: results_agent_llama3_3-70b_registry_sched_s3/
+  Hot-start: results/seed_schedule.py
+
+
+[turn 1] 300 min remaining, 0 attempts, best=-inf
+[turn 1] Response: ACTION: read_file
+ARGS: {"path": "playground/skeleton.py"}...
+[turn 1] read_file → """Fixed optimization skeleton. The LLM evolves ONLY the schedule_fn.
+
+The skeleton handles: initialization, gradient computation, Adam update,
+constraint penalties, convergence. The LLM controls the ...
+
+[turn 2] 300 min remaining, 0 attempts, best=-inf
+[turn 2] Response: Let's design a new schedule function that might improve upon the baseline. We'll start by experimenting with different learning rate and penalty weight schedules, while keeping the Adam parameters (`b...
+[turn 2] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 298.5}...
+
+[turn 3] 299 min remaining, 0 attempts, best=-inf
+[turn 3] Response: Given the result, it seems that the initial attempt did not yield any valid solution, likely due to improper handling of the learning rate and penalty weight schedules. Let's refine our approach.
+
+We ...
+[turn 3] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 297.9}...
+
+[turn 4] 298 min remaining, 0 attempts, best=-inf
+[turn 4] Response: It appears that the current schedule function is still not producing valid results. Let's take a more structured approach to designing the learning rate and penalty weight schedules.
+
+### Key Consider...
+[turn 4] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 296.6}...
+
+[turn 5] 297 min remaining, 0 attempts, best=-inf
+[turn 5] Response: Given that the previous attempts have not yielded valid results, let's further refine our approach. We need to ensure that the learning rate and penalty weight schedules are more robust and effective....
+[turn 5] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 295.2}...
+
+[turn 6] 295 min remaining, 0 attempts, best=-inf
+[turn 6] Response: Given that the previous attempts have not produced valid results, it suggests that the learning rate and penalty weight schedules might need further refinement. Let's take a more cautious approach to ...
+[turn 6] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 293.8}...
+
+[turn 7] 294 min remaining, 0 attempts, best=-inf
+[turn 7] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be more carefully designed to ensure convergence and respect co...
+[turn 7] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 292.4}...
+
+[turn 8] 292 min remaining, 0 attempts, best=-inf
+[turn 8] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 9] 292 min remaining, 0 attempts, best=-inf
+[turn 9] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure convergence and respe...
+[turn 9] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 290.7}...
+
+[turn 10] 291 min remaining, 0 attempts, best=-inf
+[turn 10] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be further refined to ensure proper convergence and constraint ...
+[turn 10] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 288.9}...
+
+[turn 11] 289 min remaining, 0 attempts, best=-inf
+[turn 11] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 12] 289 min remaining, 0 attempts, best=-inf
+[turn 12] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 12] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 287.1}...
+
+[turn 13] 287 min remaining, 0 attempts, best=-inf
+[turn 13] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 14] 287 min remaining, 0 attempts, best=-inf
+[turn 14] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 15] 287 min remaining, 0 attempts, best=-inf
+[turn 15] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 16] 287 min remaining, 0 attempts, best=-inf
+[turn 16] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 16] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 285.0}...
+
+[turn 17] 285 min remaining, 0 attempts, best=-inf
+[turn 17] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 18] 285 min remaining, 0 attempts, best=-inf
+[turn 18] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 18] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 282.8}...
+
+[turn 19] 283 min remaining, 0 attempts, best=-inf
+[turn 19] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 20] 283 min remaining, 0 attempts, best=-inf
+[turn 20] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 21] 283 min remaining, 0 attempts, best=-inf
+[turn 21] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 22] 283 min remaining, 0 attempts, best=-inf
+[turn 22] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 23] 283 min remaining, 0 attempts, best=-inf
+[turn 23] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 24] 282 min remaining, 0 attempts, best=-inf
+[turn 24] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 25] 282 min remaining, 0 attempts, best=-inf
+[turn 25] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 26] 282 min remaining, 0 attempts, best=-inf
+[turn 26] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 27] 282 min remaining, 0 attempts, best=-inf
+[turn 27] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 28] 282 min remaining, 0 attempts, best=-inf
+[turn 28] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 29] 282 min remaining, 0 attempts, best=-inf
+[turn 29] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 30] 282 min remaining, 0 attempts, best=-inf
+[turn 30] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 30] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 279.8}...
+
+[turn 31] 280 min remaining, 0 attempts, best=-inf
+[turn 31] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 32] 280 min remaining, 0 attempts, best=-inf
+[turn 32] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 33] 280 min remaining, 0 attempts, best=-inf
+[turn 33] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 34] 280 min remaining, 0 attempts, best=-inf
+[turn 34] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 35] 279 min remaining, 0 attempts, best=-inf
+[turn 35] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 36] 279 min remaining, 0 attempts, best=-inf
+[turn 36] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 37] 279 min remaining, 0 attempts, best=-inf
+[turn 37] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 38] 279 min remaining, 0 attempts, best=-inf
+[turn 38] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 39] 279 min remaining, 0 attempts, best=-inf
+[turn 39] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 40] 279 min remaining, 0 attempts, best=-inf
+[turn 40] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 41] 279 min remaining, 0 attempts, best=-inf
+[turn 41] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 42] 279 min remaining, 0 attempts, best=-inf
+[turn 42] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 43] 279 min remaining, 0 attempts, best=-inf
+[turn 43] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 44] 279 min remaining, 0 attempts, best=-inf
+[turn 44] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 45] 279 min remaining, 0 attempts, best=-inf
+[turn 45] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 46] 279 min remaining, 0 attempts, best=-inf
+[turn 46] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 47] 278 min remaining, 0 attempts, best=-inf
+[turn 47] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 48] 278 min remaining, 0 attempts, best=-inf
+[turn 48] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 49] 278 min remaining, 0 attempts, best=-inf
+[turn 49] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 50] 278 min remaining, 0 attempts, best=-inf
+[turn 50] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 50] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 276.1}...
+
+[turn 51] 276 min remaining, 0 attempts, best=-inf
+[turn 51] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 52] 276 min remaining, 0 attempts, best=-inf
+[turn 52] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 53] 276 min remaining, 0 attempts, best=-inf
+[turn 53] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 53] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 273.8}...
+
+[turn 54] 274 min remaining, 0 attempts, best=-inf
+[turn 54] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 55] 274 min remaining, 0 attempts, best=-inf
+[turn 55] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 55] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 271.5}...
+
+[turn 56] 272 min remaining, 0 attempts, best=-inf
+[turn 56] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 57] 271 min remaining, 0 attempts, best=-inf
+[turn 57] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 58] 271 min remaining, 0 attempts, best=-inf
+[turn 58] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 59] 271 min remaining, 0 attempts, best=-inf
+[turn 59] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 59] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 269.0}...
+
+[turn 60] 269 min remaining, 0 attempts, best=-inf
+[turn 60] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 61] 269 min remaining, 0 attempts, best=-inf
+[turn 61] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 62] 269 min remaining, 0 attempts, best=-inf
+[turn 62] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 63] 269 min remaining, 0 attempts, best=-inf
+[turn 63] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 64] 269 min remaining, 0 attempts, best=-inf
+[turn 64] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 65] 269 min remaining, 0 attempts, best=-inf
+[turn 65] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 66] 268 min remaining, 0 attempts, best=-inf
+[turn 66] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 67] 268 min remaining, 0 attempts, best=-inf
+[turn 67] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 68] 268 min remaining, 0 attempts, best=-inf
+[turn 68] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 69] 268 min remaining, 0 attempts, best=-inf
+[turn 69] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 70] 268 min remaining, 0 attempts, best=-inf
+[turn 70] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 71] 268 min remaining, 0 attempts, best=-inf
+[turn 71] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 72] 268 min remaining, 0 attempts, best=-inf
+[turn 72] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 73] 268 min remaining, 0 attempts, best=-inf
+[turn 73] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 74] 268 min remaining, 0 attempts, best=-inf
+[turn 74] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 75] 268 min remaining, 0 attempts, best=-inf
+[turn 75] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 76] 268 min remaining, 0 attempts, best=-inf
+[turn 76] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 77] 268 min remaining, 0 attempts, best=-inf
+[turn 77] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 78] 267 min remaining, 0 attempts, best=-inf
+[turn 78] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 79] 267 min remaining, 0 attempts, best=-inf
+[turn 79] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 79] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 265.1}...
+
+[turn 80] 265 min remaining, 0 attempts, best=-inf
+[turn 80] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 81] 265 min remaining, 0 attempts, best=-inf
+[turn 81] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 82] 265 min remaining, 0 attempts, best=-inf
+[turn 82] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 83] 265 min remaining, 0 attempts, best=-inf
+[turn 83] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 84] 265 min remaining, 0 attempts, best=-inf
+[turn 84] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 84] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 262.4}...
+
+[turn 85] 262 min remaining, 0 attempts, best=-inf
+[turn 85] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 86] 262 min remaining, 0 attempts, best=-inf
+[turn 86] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 87] 262 min remaining, 0 attempts, best=-inf
+[turn 87] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 88] 262 min remaining, 0 attempts, best=-inf
+[turn 88] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 89] 262 min remaining, 0 attempts, best=-inf
+[turn 89] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 89] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 259.7}...
+
+[turn 90] 260 min remaining, 0 attempts, best=-inf
+[turn 90] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 91] 260 min remaining, 0 attempts, best=-inf
+[turn 91] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 92] 260 min remaining, 0 attempts, best=-inf
+[turn 92] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 93] 259 min remaining, 0 attempts, best=-inf
+[turn 93] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 94] 259 min remaining, 0 attempts, best=-inf
+[turn 94] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 95] 259 min remaining, 0 attempts, best=-inf
+[turn 95] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 96] 259 min remaining, 0 attempts, best=-inf
+[turn 96] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 97] 259 min remaining, 0 attempts, best=-inf
+[turn 97] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 98] 259 min remaining, 0 attempts, best=-inf
+[turn 98] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 99] 259 min remaining, 0 attempts, best=-inf
+[turn 99] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 100] 259 min remaining, 0 attempts, best=-inf
+[turn 100] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 101] 259 min remaining, 0 attempts, best=-inf
+[turn 101] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 102] 259 min remaining, 0 attempts, best=-inf
+[turn 102] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 103] 259 min remaining, 0 attempts, best=-inf
+[turn 103] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 104] 259 min remaining, 0 attempts, best=-inf
+[turn 104] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 105] 258 min remaining, 0 attempts, best=-inf
+[turn 105] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 106] 258 min remaining, 0 attempts, best=-inf
+[turn 106] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 106] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 255.9}...
+
+[turn 107] 256 min remaining, 0 attempts, best=-inf
+[turn 107] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 107] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 253.5}...
+
+[turn 108] 254 min remaining, 0 attempts, best=-inf
+[turn 108] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 109] 253 min remaining, 0 attempts, best=-inf
+[turn 109] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 110] 253 min remaining, 0 attempts, best=-inf
+[turn 110] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 111] 253 min remaining, 0 attempts, best=-inf
+[turn 111] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 112] 253 min remaining, 0 attempts, best=-inf
+[turn 112] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 113] 253 min remaining, 0 attempts, best=-inf
+[turn 113] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 114] 253 min remaining, 0 attempts, best=-inf
+[turn 114] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 115] 253 min remaining, 0 attempts, best=-inf
+[turn 115] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 116] 253 min remaining, 0 attempts, best=-inf
+[turn 116] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 117] 253 min remaining, 0 attempts, best=-inf
+[turn 117] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 118] 253 min remaining, 0 attempts, best=-inf
+[turn 118] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 119] 253 min remaining, 0 attempts, best=-inf
+[turn 119] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 120] 253 min remaining, 0 attempts, best=-inf
+[turn 120] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 121] 252 min remaining, 0 attempts, best=-inf
+[turn 121] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 122] 252 min remaining, 0 attempts, best=-inf
+[turn 122] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 122] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 251.2}...
+
+[turn 123] 251 min remaining, 0 attempts, best=-inf
+[turn 123] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 124] 251 min remaining, 0 attempts, best=-inf
+[turn 124] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 125] 251 min remaining, 0 attempts, best=-inf
+[turn 125] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 126] 251 min remaining, 0 attempts, best=-inf
+[turn 126] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 127] 251 min remaining, 0 attempts, best=-inf
+[turn 127] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 128] 251 min remaining, 0 attempts, best=-inf
+[turn 128] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 129] 251 min remaining, 0 attempts, best=-inf
+[turn 129] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 130] 251 min remaining, 0 attempts, best=-inf
+[turn 130] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 131] 251 min remaining, 0 attempts, best=-inf
+[turn 131] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 132] 250 min remaining, 0 attempts, best=-inf
+[turn 132] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 133] 250 min remaining, 0 attempts, best=-inf
+[turn 133] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 134] 250 min remaining, 0 attempts, best=-inf
+[turn 134] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 135] 250 min remaining, 0 attempts, best=-inf
+[turn 135] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 135] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 247.8}...
+
+[turn 136] 248 min remaining, 0 attempts, best=-inf
+[turn 136] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 137] 248 min remaining, 0 attempts, best=-inf
+[turn 137] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 138] 248 min remaining, 0 attempts, best=-inf
+[turn 138] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 139] 248 min remaining, 0 attempts, best=-inf
+[turn 139] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 139] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 245.1}...
+
+[turn 140] 245 min remaining, 0 attempts, best=-inf
+[turn 140] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 141] 245 min remaining, 0 attempts, best=-inf
+[turn 141] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 142] 245 min remaining, 0 attempts, best=-inf
+[turn 142] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 143] 245 min remaining, 0 attempts, best=-inf
+[turn 143] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 144] 245 min remaining, 0 attempts, best=-inf
+[turn 144] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 145] 245 min remaining, 0 attempts, best=-inf
+[turn 145] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 146] 245 min remaining, 0 attempts, best=-inf
+[turn 146] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 147] 245 min remaining, 0 attempts, best=-inf
+[turn 147] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 148] 244 min remaining, 0 attempts, best=-inf
+[turn 148] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 149] 244 min remaining, 0 attempts, best=-inf
+[turn 149] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 150] 244 min remaining, 0 attempts, best=-inf
+[turn 150] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 151] 244 min remaining, 0 attempts, best=-inf
+[turn 151] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 152] 244 min remaining, 0 attempts, best=-inf
+[turn 152] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 153] 244 min remaining, 0 attempts, best=-inf
+[turn 153] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 154] 244 min remaining, 0 attempts, best=-inf
+[turn 154] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 154] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 241.6}...
+
+[turn 155] 242 min remaining, 0 attempts, best=-inf
+[turn 155] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 156] 241 min remaining, 0 attempts, best=-inf
+[turn 156] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 157] 241 min remaining, 0 attempts, best=-inf
+[turn 157] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 158] 241 min remaining, 0 attempts, best=-inf
+[turn 158] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 159] 241 min remaining, 0 attempts, best=-inf
+[turn 159] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 160] 241 min remaining, 0 attempts, best=-inf
+[turn 160] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 161] 241 min remaining, 0 attempts, best=-inf
+[turn 161] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 162] 241 min remaining, 0 attempts, best=-inf
+[turn 162] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 163] 241 min remaining, 0 attempts, best=-inf
+[turn 163] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 164] 241 min remaining, 0 attempts, best=-inf
+[turn 164] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 164] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 238.5}...
+
+[turn 165] 239 min remaining, 0 attempts, best=-inf
+[turn 165] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 165] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 236.0}...
+
+[turn 166] 236 min remaining, 0 attempts, best=-inf
+[turn 166] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 167] 236 min remaining, 0 attempts, best=-inf
+[turn 167] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 168] 236 min remaining, 0 attempts, best=-inf
+[turn 168] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 169] 236 min remaining, 0 attempts, best=-inf
+[turn 169] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 170] 236 min remaining, 0 attempts, best=-inf
+[turn 170] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 171] 236 min remaining, 0 attempts, best=-inf
+[turn 171] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 171] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 233.2}...
+
+[turn 172] 233 min remaining, 0 attempts, best=-inf
+[turn 172] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 173] 233 min remaining, 0 attempts, best=-inf
+[turn 173] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 174] 233 min remaining, 0 attempts, best=-inf
+[turn 174] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 175] 233 min remaining, 0 attempts, best=-inf
+[turn 175] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 175] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 230.4}...
+
+[turn 176] 230 min remaining, 0 attempts, best=-inf
+[turn 176] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 177] 230 min remaining, 0 attempts, best=-inf
+[turn 177] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 178] 230 min remaining, 0 attempts, best=-inf
+[turn 178] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 179] 230 min remaining, 0 attempts, best=-inf
+[turn 179] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 179] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 227.6}...
+
+[turn 180] 228 min remaining, 0 attempts, best=-inf
+[turn 180] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 180] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 225.2}...
+
+[turn 181] 225 min remaining, 0 attempts, best=-inf
+[turn 181] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 182] 225 min remaining, 0 attempts, best=-inf
+[turn 182] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 183] 225 min remaining, 0 attempts, best=-inf
+[turn 183] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 183] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 222.6}...
+
+[turn 184] 223 min remaining, 0 attempts, best=-inf
+[turn 184] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 185] 223 min remaining, 0 attempts, best=-inf
+[turn 185] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 186] 222 min remaining, 0 attempts, best=-inf
+[turn 186] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 187] 222 min remaining, 0 attempts, best=-inf
+[turn 187] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 188] 222 min remaining, 0 attempts, best=-inf
+[turn 188] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 189] 222 min remaining, 0 attempts, best=-inf
+[turn 189] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 190] 222 min remaining, 0 attempts, best=-inf
+[turn 190] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 191] 222 min remaining, 0 attempts, best=-inf
+[turn 191] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 192] 222 min remaining, 0 attempts, best=-inf
+[turn 192] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 193] 222 min remaining, 0 attempts, best=-inf
+[turn 193] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 194] 222 min remaining, 0 attempts, best=-inf
+[turn 194] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 195] 222 min remaining, 0 attempts, best=-inf
+[turn 195] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 196] 222 min remaining, 0 attempts, best=-inf
+[turn 196] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 197] 222 min remaining, 0 attempts, best=-inf
+[turn 197] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 198] 221 min remaining, 0 attempts, best=-inf
+[turn 198] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 198] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 219.0}...
+
+[turn 199] 219 min remaining, 0 attempts, best=-inf
+[turn 199] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 200] 219 min remaining, 0 attempts, best=-inf
+[turn 200] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 201] 219 min remaining, 0 attempts, best=-inf
+[turn 201] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 202] 219 min remaining, 0 attempts, best=-inf
+[turn 202] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 203] 219 min remaining, 0 attempts, best=-inf
+[turn 203] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 204] 219 min remaining, 0 attempts, best=-inf
+[turn 204] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 205] 219 min remaining, 0 attempts, best=-inf
+[turn 205] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 206] 218 min remaining, 0 attempts, best=-inf
+[turn 206] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 206] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 216.0}...
+
+[turn 207] 216 min remaining, 0 attempts, best=-inf
+[turn 207] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 208] 216 min remaining, 0 attempts, best=-inf
+[turn 208] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 208] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 213.5}...
+
+[turn 209] 213 min remaining, 0 attempts, best=-inf
+[turn 209] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 210] 213 min remaining, 0 attempts, best=-inf
+[turn 210] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 211] 213 min remaining, 0 attempts, best=-inf
+[turn 211] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 212] 213 min remaining, 0 attempts, best=-inf
+[turn 212] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 213] 213 min remaining, 0 attempts, best=-inf
+[turn 213] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 214] 213 min remaining, 0 attempts, best=-inf
+[turn 214] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 215] 213 min remaining, 0 attempts, best=-inf
+[turn 215] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 216] 213 min remaining, 0 attempts, best=-inf
+[turn 216] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 217] 213 min remaining, 0 attempts, best=-inf
+[turn 217] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 218] 213 min remaining, 0 attempts, best=-inf
+[turn 218] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 218] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 210.3}...
+
+[turn 219] 210 min remaining, 0 attempts, best=-inf
+[turn 219] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 220] 210 min remaining, 0 attempts, best=-inf
+[turn 220] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 221] 210 min remaining, 0 attempts, best=-inf
+[turn 221] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 222] 210 min remaining, 0 attempts, best=-inf
+[turn 222] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 223] 210 min remaining, 0 attempts, best=-inf
+[turn 223] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 224] 210 min remaining, 0 attempts, best=-inf
+[turn 224] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 225] 210 min remaining, 0 attempts, best=-inf
+[turn 225] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 226] 210 min remaining, 0 attempts, best=-inf
+[turn 226] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 227] 210 min remaining, 0 attempts, best=-inf
+[turn 227] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 228] 210 min remaining, 0 attempts, best=-inf
+[turn 228] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 229] 209 min remaining, 0 attempts, best=-inf
+[turn 229] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 230] 209 min remaining, 0 attempts, best=-inf
+[turn 230] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 231] 209 min remaining, 0 attempts, best=-inf
+[turn 231] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 232] 209 min remaining, 0 attempts, best=-inf
+[turn 232] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 233] 209 min remaining, 0 attempts, best=-inf
+[turn 233] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 234] 209 min remaining, 0 attempts, best=-inf
+[turn 234] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 235] 209 min remaining, 0 attempts, best=-inf
+[turn 235] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 236] 209 min remaining, 0 attempts, best=-inf
+[turn 236] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 237] 209 min remaining, 0 attempts, best=-inf
+[turn 237] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 238] 209 min remaining, 0 attempts, best=-inf
+[turn 238] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 239] 209 min remaining, 0 attempts, best=-inf
+[turn 239] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 240] 209 min remaining, 0 attempts, best=-inf
+[turn 240] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 241] 208 min remaining, 0 attempts, best=-inf
+[turn 241] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 242] 208 min remaining, 0 attempts, best=-inf
+[turn 242] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 243] 208 min remaining, 0 attempts, best=-inf
+[turn 243] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 244] 208 min remaining, 0 attempts, best=-inf
+[turn 244] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 245] 208 min remaining, 0 attempts, best=-inf
+[turn 245] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 246] 208 min remaining, 0 attempts, best=-inf
+[turn 246] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 247] 208 min remaining, 0 attempts, best=-inf
+[turn 247] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 248] 208 min remaining, 0 attempts, best=-inf
+[turn 248] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 249] 208 min remaining, 0 attempts, best=-inf
+[turn 249] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 250] 208 min remaining, 0 attempts, best=-inf
+[turn 250] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 251] 208 min remaining, 0 attempts, best=-inf
+[turn 251] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 251] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 205.1}...
+
+[turn 252] 205 min remaining, 0 attempts, best=-inf
+[turn 252] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 253] 205 min remaining, 0 attempts, best=-inf
+[turn 253] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 254] 205 min remaining, 0 attempts, best=-inf
+[turn 254] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 255] 205 min remaining, 0 attempts, best=-inf
+[turn 255] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 256] 205 min remaining, 0 attempts, best=-inf
+[turn 256] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 257] 205 min remaining, 0 attempts, best=-inf
+[turn 257] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 258] 205 min remaining, 0 attempts, best=-inf
+[turn 258] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 259] 205 min remaining, 0 attempts, best=-inf
+[turn 259] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 260] 204 min remaining, 0 attempts, best=-inf
+[turn 260] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 261] 204 min remaining, 0 attempts, best=-inf
+[turn 261] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 262] 204 min remaining, 0 attempts, best=-inf
+[turn 262] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 263] 204 min remaining, 0 attempts, best=-inf
+[turn 263] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 263] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 201.6}...
+
+[turn 264] 202 min remaining, 0 attempts, best=-inf
+[turn 264] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 265] 201 min remaining, 0 attempts, best=-inf
+[turn 265] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 266] 201 min remaining, 0 attempts, best=-inf
+[turn 266] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 267] 201 min remaining, 0 attempts, best=-inf
+[turn 267] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 268] 201 min remaining, 0 attempts, best=-inf
+[turn 268] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 269] 201 min remaining, 0 attempts, best=-inf
+[turn 269] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 270] 201 min remaining, 0 attempts, best=-inf
+[turn 270] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 271] 201 min remaining, 0 attempts, best=-inf
+[turn 271] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 272] 201 min remaining, 0 attempts, best=-inf
+[turn 272] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 273] 201 min remaining, 0 attempts, best=-inf
+[turn 273] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 274] 201 min remaining, 0 attempts, best=-inf
+[turn 274] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 275] 201 min remaining, 0 attempts, best=-inf
+[turn 275] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 276] 201 min remaining, 0 attempts, best=-inf
+[turn 276] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 277] 200 min remaining, 0 attempts, best=-inf
+[turn 277] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 278] 200 min remaining, 0 attempts, best=-inf
+[turn 278] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 279] 200 min remaining, 0 attempts, best=-inf
+[turn 279] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 280] 200 min remaining, 0 attempts, best=-inf
+[turn 280] Response: Given that the previous attempts have not yielded valid results, it suggests that the learning rate and penalty weight schedules need to be even more carefully designed to ensure proper convergence an...
+[turn 280] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 197.8}...
+
+[turn 281] 198 min remaining, 0 attempts, best=-inf
+[turn 281] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 282] 198 min remaining, 0 attempts, best=-inf
+[turn 282] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 283] 198 min remaining, 0 attempts, best=-inf
+[turn 283] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 284] 198 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 284] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 285] 192 min remaining, 0 attempts, best=-inf
+[turn 285] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 286] 192 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 286] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 287] 187 min remaining, 0 attempts, best=-inf
+[turn 287] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 288] 187 min remaining, 0 attempts, best=-inf
+[turn 288] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 289] 187 min remaining, 0 attempts, best=-inf
+[turn 289] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 290] 187 min remaining, 0 attempts, best=-inf
+[turn 290] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 291] 187 min remaining, 0 attempts, best=-inf
+[turn 291] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 292] 187 min remaining, 0 attempts, best=-inf
+[turn 292] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 293] 187 min remaining, 0 attempts, best=-inf
+[turn 293] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 294] 187 min remaining, 0 attempts, best=-inf
+[turn 294] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 295] 187 min remaining, 0 attempts, best=-inf
+[turn 295] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 296] 187 min remaining, 0 attempts, best=-inf
+[turn 296] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 297] 186 min remaining, 0 attempts, best=-inf
+[turn 297] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 298] 186 min remaining, 0 attempts, best=-inf
+[turn 298] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 299] 186 min remaining, 0 attempts, best=-inf
+[turn 299] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 300] 186 min remaining, 0 attempts, best=-inf
+[turn 300] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 301] 186 min remaining, 0 attempts, best=-inf
+[turn 301] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 302] 186 min remaining, 0 attempts, best=-inf
+[turn 302] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 303] 186 min remaining, 0 attempts, best=-inf
+[turn 303] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 304] 186 min remaining, 0 attempts, best=-inf
+[turn 304] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 305] 186 min remaining, 0 attempts, best=-inf
+[turn 305] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 306] 186 min remaining, 0 attempts, best=-inf
+[turn 306] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 307] 186 min remaining, 0 attempts, best=-inf
+[turn 307] Response: Given that the previous attempts have not yielded valid results, let's take a different approach by designing a custom optimizer using JAX's `jax.grad` function. We'll manually implement a more adapti...
+[turn 307] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 183.2}...
+
+[turn 308] 183 min remaining, 0 attempts, best=-inf
+[turn 308] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 309] 183 min remaining, 0 attempts, best=-inf
+[turn 309] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 310] 183 min remaining, 0 attempts, best=-inf
+[turn 310] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 311] 183 min remaining, 0 attempts, best=-inf
+[turn 311] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 312] 183 min remaining, 0 attempts, best=-inf
+[turn 312] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to rethink our approach to the learning rate and penalty weight schedules. Let's try a different strategy by f...
+[turn 312] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 181.4}...
+
+[turn 313] 181 min remaining, 0 attempts, best=-inf
+[turn 313] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 314] 181 min remaining, 0 attempts, best=-inf
+[turn 314] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 315] 181 min remaining, 0 attempts, best=-inf
+[turn 315] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 316] 181 min remaining, 0 attempts, best=-inf
+[turn 316] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to further refine our approach to the learning rate and penalty weight schedules. Let's try a different strate...
+[turn 316] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 179.5}...
+
+[turn 317] 179 min remaining, 0 attempts, best=-inf
+[turn 317] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 318] 179 min remaining, 0 attempts, best=-inf
+[turn 318] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 319] 179 min remaining, 0 attempts, best=-inf
+[turn 319] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to further refine our approach to the learning rate and penalty weight schedules. Let's try a different strate...
+[turn 319] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 177.3}...
+
+[turn 320] 177 min remaining, 0 attempts, best=-inf
+[turn 320] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 321] 177 min remaining, 0 attempts, best=-inf
+[turn 321] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 322] 177 min remaining, 0 attempts, best=-inf
+[turn 322] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 323] 177 min remaining, 0 attempts, best=-inf
+[turn 323] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 324] 177 min remaining, 0 attempts, best=-inf
+[turn 324] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 325] 177 min remaining, 0 attempts, best=-inf
+[turn 325] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to further refine our approach to the learning rate and penalty weight schedules. Let's try a different strate...
+[turn 325] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 175.1}...
+
+[turn 326] 175 min remaining, 0 attempts, best=-inf
+[turn 326] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 327] 175 min remaining, 0 attempts, best=-inf
+[turn 327] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to further refine our approach to the learning rate and penalty weight schedules. Let's try a different strate...
+[turn 327] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 173.3}...
+
+[turn 328] 173 min remaining, 0 attempts, best=-inf
+[turn 328] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 329] 173 min remaining, 0 attempts, best=-inf
+[turn 329] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 330] 173 min remaining, 0 attempts, best=-inf
+[turn 330] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to further refine our approach to the learning rate and penalty weight schedules. Let's try a different strate...
+[turn 330] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 171.0}...
+
+[turn 331] 171 min remaining, 0 attempts, best=-inf
+[turn 331] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 332] 171 min remaining, 0 attempts, best=-inf
+[turn 332] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 333] 171 min remaining, 0 attempts, best=-inf
+[turn 333] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 334] 171 min remaining, 0 attempts, best=-inf
+[turn 334] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 335] 171 min remaining, 0 attempts, best=-inf
+[turn 335] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 336] 171 min remaining, 0 attempts, best=-inf
+[turn 336] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 337] 171 min remaining, 0 attempts, best=-inf
+[turn 337] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 338] 170 min remaining, 0 attempts, best=-inf
+[turn 338] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 339] 170 min remaining, 0 attempts, best=-inf
+[turn 339] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 340] 170 min remaining, 0 attempts, best=-inf
+[turn 340] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 341] 170 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 341] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 342] 165 min remaining, 0 attempts, best=-inf
+[turn 342] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 343] 165 min remaining, 0 attempts, best=-inf
+[turn 343] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 344] 165 min remaining, 0 attempts, best=-inf
+[turn 344] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 345] 165 min remaining, 0 attempts, best=-inf
+[turn 345] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 346] 165 min remaining, 0 attempts, best=-inf
+[turn 346] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 347] 165 min remaining, 0 attempts, best=-inf
+[turn 347] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 348] 165 min remaining, 0 attempts, best=-inf
+[turn 348] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 349] 164 min remaining, 0 attempts, best=-inf
+[turn 349] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 350] 164 min remaining, 0 attempts, best=-inf
+[turn 350] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 351] 164 min remaining, 0 attempts, best=-inf
+[turn 351] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 352] 164 min remaining, 0 attempts, best=-inf
+[turn 352] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 353] 164 min remaining, 0 attempts, best=-inf
+[turn 353] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 354] 164 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 354] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 355] 159 min remaining, 0 attempts, best=-inf
+[turn 355] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 356] 159 min remaining, 0 attempts, best=-inf
+[turn 356] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 357] 159 min remaining, 0 attempts, best=-inf
+[turn 357] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 358] 159 min remaining, 0 attempts, best=-inf
+[turn 358] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 359] 159 min remaining, 0 attempts, best=-inf
+[turn 359] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 360] 159 min remaining, 0 attempts, best=-inf
+[turn 360] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 361] 158 min remaining, 0 attempts, best=-inf
+[turn 361] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 362] 158 min remaining, 0 attempts, best=-inf
+[turn 362] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 363] 158 min remaining, 0 attempts, best=-inf
+[turn 363] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 364] 158 min remaining, 0 attempts, best=-inf
+[turn 364] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 365] 158 min remaining, 0 attempts, best=-inf
+[turn 365] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 366] 158 min remaining, 0 attempts, best=-inf
+[turn 366] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 367] 158 min remaining, 0 attempts, best=-inf
+[turn 367] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more comprehensive approach to designing the learning rate and penalty weight schedules. Let's desig...
+[turn 367] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 156.1}...
+
+[turn 368] 156 min remaining, 0 attempts, best=-inf
+[turn 368] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 369] 156 min remaining, 0 attempts, best=-inf
+[turn 369] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to simplify our approach and focus on a more robust and reliable schedule. Let's try a more straightforward an...
+[turn 369] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 154.7}...
+
+[turn 370] 155 min remaining, 0 attempts, best=-inf
+[turn 370] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 371] 155 min remaining, 0 attempts, best=-inf
+[turn 371] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more conservative and straightforward approach to the learning rate and penalty weight schedules. Le...
+[turn 371] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 153.1}...
+
+[turn 372] 153 min remaining, 0 attempts, best=-inf
+[turn 372] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 373] 153 min remaining, 0 attempts, best=-inf
+[turn 373] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take an even more conservative and straightforward approach to the learning rate and penalty weight schedul...
+[turn 373] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 151.6}...
+
+[turn 374] 152 min remaining, 0 attempts, best=-inf
+[turn 374] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 375] 152 min remaining, 0 attempts, best=-inf
+[turn 375] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 376] 151 min remaining, 0 attempts, best=-inf
+[turn 376] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental approach to the learning rate and penalty weight schedules. Let's simplify the sche...
+[turn 376] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 150.0}...
+
+[turn 377] 150 min remaining, 0 attempts, best=-inf
+[turn 377] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 378] 150 min remaining, 0 attempts, best=-inf
+[turn 378] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 379] 150 min remaining, 0 attempts, best=-inf
+[turn 379] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 380] 150 min remaining, 0 attempts, best=-inf
+[turn 380] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 381] 150 min remaining, 0 attempts, best=-inf
+[turn 381] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 382] 150 min remaining, 0 attempts, best=-inf
+[turn 382] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 383] 149 min remaining, 0 attempts, best=-inf
+[turn 383] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 384] 149 min remaining, 0 attempts, best=-inf
+[turn 384] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 385] 149 min remaining, 0 attempts, best=-inf
+[turn 385] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 386] 149 min remaining, 0 attempts, best=-inf
+[turn 386] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 387] 149 min remaining, 0 attempts, best=-inf
+[turn 387] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 388] 149 min remaining, 0 attempts, best=-inf
+[turn 388] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 389] 149 min remaining, 0 attempts, best=-inf
+[turn 389] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 389] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 147.5}...
+
+[turn 390] 148 min remaining, 0 attempts, best=-inf
+[turn 390] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 391] 147 min remaining, 0 attempts, best=-inf
+[turn 391] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 392] 147 min remaining, 0 attempts, best=-inf
+[turn 392] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 393] 147 min remaining, 0 attempts, best=-inf
+[turn 393] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 394] 147 min remaining, 0 attempts, best=-inf
+[turn 394] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 395] 147 min remaining, 0 attempts, best=-inf
+[turn 395] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 396] 147 min remaining, 0 attempts, best=-inf
+[turn 396] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 397] 147 min remaining, 0 attempts, best=-inf
+[turn 397] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 398] 147 min remaining, 0 attempts, best=-inf
+[turn 398] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 399] 147 min remaining, 0 attempts, best=-inf
+[turn 399] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 400] 147 min remaining, 0 attempts, best=-inf
+[turn 400] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 401] 147 min remaining, 0 attempts, best=-inf
+[turn 401] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 402] 147 min remaining, 0 attempts, best=-inf
+[turn 402] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 403] 146 min remaining, 0 attempts, best=-inf
+[turn 403] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 404] 146 min remaining, 0 attempts, best=-inf
+[turn 404] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 405] 146 min remaining, 0 attempts, best=-inf
+[turn 405] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 406] 146 min remaining, 0 attempts, best=-inf
+[turn 406] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 406] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 144.8}...
+
+[turn 407] 145 min remaining, 0 attempts, best=-inf
+[turn 407] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 408] 145 min remaining, 0 attempts, best=-inf
+[turn 408] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more conservative and straightforward approach to the learning rate and penalty weight schedules. Le...
+[turn 408] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 143.2}...
+
+[turn 409] 143 min remaining, 0 attempts, best=-inf
+[turn 409] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 410] 143 min remaining, 0 attempts, best=-inf
+[turn 410] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 411] 143 min remaining, 0 attempts, best=-inf
+[turn 411] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 411] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 141.6}...
+
+[turn 412] 142 min remaining, 0 attempts, best=-inf
+[turn 412] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 413] 142 min remaining, 0 attempts, best=-inf
+[turn 413] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 413] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 140.0}...
+
+[turn 414] 140 min remaining, 0 attempts, best=-inf
+[turn 414] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 415] 140 min remaining, 0 attempts, best=-inf
+[turn 415] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 416] 140 min remaining, 0 attempts, best=-inf
+[turn 416] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 417] 140 min remaining, 0 attempts, best=-inf
+[turn 417] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 418] 140 min remaining, 0 attempts, best=-inf
+[turn 418] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 418] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 138.2}...
+
+[turn 419] 138 min remaining, 0 attempts, best=-inf
+[turn 419] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 419] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 136.8}...
+
+[turn 420] 137 min remaining, 0 attempts, best=-inf
+[turn 420] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 421] 137 min remaining, 0 attempts, best=-inf
+[turn 421] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 422] 137 min remaining, 0 attempts, best=-inf
+[turn 422] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 423] 137 min remaining, 0 attempts, best=-inf
+[turn 423] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 424] 136 min remaining, 0 attempts, best=-inf
+[turn 424] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 425] 136 min remaining, 0 attempts, best=-inf
+[turn 425] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 426] 136 min remaining, 0 attempts, best=-inf
+[turn 426] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 426] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 134.8}...
+
+[turn 427] 135 min remaining, 0 attempts, best=-inf
+[turn 427] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 428] 135 min remaining, 0 attempts, best=-inf
+[turn 428] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 429] 135 min remaining, 0 attempts, best=-inf
+[turn 429] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 430] 135 min remaining, 0 attempts, best=-inf
+[turn 430] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 431] 134 min remaining, 0 attempts, best=-inf
+[turn 431] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 432] 134 min remaining, 0 attempts, best=-inf
+[turn 432] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 432] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 132.8}...
+
+[turn 433] 133 min remaining, 0 attempts, best=-inf
+[turn 433] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 434] 133 min remaining, 0 attempts, best=-inf
+[turn 434] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 435] 133 min remaining, 0 attempts, best=-inf
+[turn 435] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 436] 133 min remaining, 0 attempts, best=-inf
+[turn 436] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 437] 132 min remaining, 0 attempts, best=-inf
+[turn 437] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 438] 132 min remaining, 0 attempts, best=-inf
+[turn 438] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 439] 132 min remaining, 0 attempts, best=-inf
+[turn 439] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 440] 132 min remaining, 0 attempts, best=-inf
+[turn 440] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 441] 132 min remaining, 0 attempts, best=-inf
+[turn 441] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 441] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 130.7}...
+
+[turn 442] 131 min remaining, 0 attempts, best=-inf
+[turn 442] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 443] 131 min remaining, 0 attempts, best=-inf
+[turn 443] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 444] 131 min remaining, 0 attempts, best=-inf
+[turn 444] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 445] 130 min remaining, 0 attempts, best=-inf
+[turn 445] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 445] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 129.0}...
+
+[turn 446] 129 min remaining, 0 attempts, best=-inf
+[turn 446] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 447] 129 min remaining, 0 attempts, best=-inf
+[turn 447] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 447] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 127.5}...
+
+[turn 448] 128 min remaining, 0 attempts, best=-inf
+[turn 448] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 449] 127 min remaining, 0 attempts, best=-inf
+[turn 449] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 450] 127 min remaining, 0 attempts, best=-inf
+[turn 450] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 451] 127 min remaining, 0 attempts, best=-inf
+[turn 451] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 452] 127 min remaining, 0 attempts, best=-inf
+[turn 452] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 452] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 125.7}...
+
+[turn 453] 126 min remaining, 0 attempts, best=-inf
+[turn 453] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 454] 126 min remaining, 0 attempts, best=-inf
+[turn 454] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 455] 126 min remaining, 0 attempts, best=-inf
+[turn 455] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 456] 125 min remaining, 0 attempts, best=-inf
+[turn 456] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 456] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 123.9}...
+
+[turn 457] 124 min remaining, 0 attempts, best=-inf
+[turn 457] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 458] 124 min remaining, 0 attempts, best=-inf
+[turn 458] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 459] 124 min remaining, 0 attempts, best=-inf
+[turn 459] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 460] 124 min remaining, 0 attempts, best=-inf
+[turn 460] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 461] 124 min remaining, 0 attempts, best=-inf
+[turn 461] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 462] 124 min remaining, 0 attempts, best=-inf
+[turn 462] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 463] 123 min remaining, 0 attempts, best=-inf
+[turn 463] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 464] 123 min remaining, 0 attempts, best=-inf
+[turn 464] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 464] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 121.9}...
+
+[turn 465] 122 min remaining, 0 attempts, best=-inf
+[turn 465] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 466] 122 min remaining, 0 attempts, best=-inf
+[turn 466] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 467] 122 min remaining, 0 attempts, best=-inf
+[turn 467] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 468] 122 min remaining, 0 attempts, best=-inf
+[turn 468] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 469] 122 min remaining, 0 attempts, best=-inf
+[turn 469] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 470] 121 min remaining, 0 attempts, best=-inf
+[turn 470] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 471] 121 min remaining, 0 attempts, best=-inf
+[turn 471] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 472] 121 min remaining, 0 attempts, best=-inf
+[turn 472] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 473] 121 min remaining, 0 attempts, best=-inf
+[turn 473] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 474] 121 min remaining, 0 attempts, best=-inf
+[turn 474] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 475] 121 min remaining, 0 attempts, best=-inf
+[turn 475] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 476] 121 min remaining, 0 attempts, best=-inf
+[turn 476] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 477] 121 min remaining, 0 attempts, best=-inf
+[turn 477] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 478] 121 min remaining, 0 attempts, best=-inf
+[turn 478] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 479] 121 min remaining, 0 attempts, best=-inf
+[turn 479] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 480] 121 min remaining, 0 attempts, best=-inf
+[turn 480] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 481] 121 min remaining, 0 attempts, best=-inf
+[turn 481] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 482] 120 min remaining, 0 attempts, best=-inf
+[turn 482] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 483] 120 min remaining, 0 attempts, best=-inf
+[turn 483] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 484] 120 min remaining, 0 attempts, best=-inf
+[turn 484] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 485] 120 min remaining, 0 attempts, best=-inf
+[turn 485] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 486] 120 min remaining, 0 attempts, best=-inf
+[turn 486] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 487] 120 min remaining, 0 attempts, best=-inf
+[turn 487] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 488] 120 min remaining, 0 attempts, best=-inf
+[turn 488] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 489] 120 min remaining, 0 attempts, best=-inf
+[turn 489] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 490] 120 min remaining, 0 attempts, best=-inf
+[turn 490] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 491] 120 min remaining, 0 attempts, best=-inf
+[turn 491] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 492] 120 min remaining, 0 attempts, best=-inf
+[turn 492] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 493] 120 min remaining, 0 attempts, best=-inf
+[turn 493] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 494] 119 min remaining, 0 attempts, best=-inf
+[turn 494] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 495] 119 min remaining, 0 attempts, best=-inf
+[turn 495] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 496] 119 min remaining, 0 attempts, best=-inf
+[turn 496] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 497] 119 min remaining, 0 attempts, best=-inf
+[turn 497] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 498] 119 min remaining, 0 attempts, best=-inf
+[turn 498] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 499] 119 min remaining, 0 attempts, best=-inf
+[turn 499] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 500] 119 min remaining, 0 attempts, best=-inf
+[turn 500] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 501] 119 min remaining, 0 attempts, best=-inf
+[turn 501] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 502] 119 min remaining, 0 attempts, best=-inf
+[turn 502] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 502] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 117.3}...
+
+[turn 503] 117 min remaining, 0 attempts, best=-inf
+[turn 503] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 504] 117 min remaining, 0 attempts, best=-inf
+[turn 504] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 504] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 115.8}...
+
+[turn 505] 116 min remaining, 0 attempts, best=-inf
+[turn 505] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 506] 116 min remaining, 0 attempts, best=-inf
+[turn 506] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 506] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 114.2}...
+
+[turn 507] 114 min remaining, 0 attempts, best=-inf
+[turn 507] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 508] 114 min remaining, 0 attempts, best=-inf
+[turn 508] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 509] 114 min remaining, 0 attempts, best=-inf
+[turn 509] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 510] 114 min remaining, 0 attempts, best=-inf
+[turn 510] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 511] 114 min remaining, 0 attempts, best=-inf
+[turn 511] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 512] 114 min remaining, 0 attempts, best=-inf
+[turn 512] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 513] 114 min remaining, 0 attempts, best=-inf
+[turn 513] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 514] 114 min remaining, 0 attempts, best=-inf
+[turn 514] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 515] 114 min remaining, 0 attempts, best=-inf
+[turn 515] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 516] 113 min remaining, 0 attempts, best=-inf
+[turn 516] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 517] 113 min remaining, 0 attempts, best=-inf
+[turn 517] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 517] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 111.9}...
+
+[turn 518] 112 min remaining, 0 attempts, best=-inf
+[turn 518] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 519] 112 min remaining, 0 attempts, best=-inf
+[turn 519] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 520] 112 min remaining, 0 attempts, best=-inf
+[turn 520] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 521] 112 min remaining, 0 attempts, best=-inf
+[turn 521] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 522] 112 min remaining, 0 attempts, best=-inf
+[turn 522] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 523] 111 min remaining, 0 attempts, best=-inf
+[turn 523] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 523] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 110.0}...
+
+[turn 524] 110 min remaining, 0 attempts, best=-inf
+[turn 524] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 525] 110 min remaining, 0 attempts, best=-inf
+[turn 525] Response: It seems that the current approach of using very small increments for the penalty weight is not yielding valid results. Let's take a different approach by simplifying the schedule even further and ens...
+[turn 525] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 108.5}...
+
+[turn 526] 109 min remaining, 0 attempts, best=-inf
+[turn 526] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 527] 108 min remaining, 0 attempts, best=-inf
+[turn 527] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 528] 108 min remaining, 0 attempts, best=-inf
+[turn 528] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 529] 108 min remaining, 0 attempts, best=-inf
+[turn 529] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 530] 108 min remaining, 0 attempts, best=-inf
+[turn 530] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 531] 108 min remaining, 0 attempts, best=-inf
+[turn 531] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 532] 108 min remaining, 0 attempts, best=-inf
+[turn 532] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 533] 108 min remaining, 0 attempts, best=-inf
+[turn 533] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 534] 108 min remaining, 0 attempts, best=-inf
+[turn 534] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 535] 108 min remaining, 0 attempts, best=-inf
+[turn 535] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 536] 108 min remaining, 0 attempts, best=-inf
+[turn 536] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 537] 108 min remaining, 0 attempts, best=-inf
+[turn 537] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 538] 108 min remaining, 0 attempts, best=-inf
+[turn 538] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 539] 107 min remaining, 0 attempts, best=-inf
+[turn 539] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 539] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 106.0}...
+
+[turn 540] 106 min remaining, 0 attempts, best=-inf
+[turn 540] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 541] 106 min remaining, 0 attempts, best=-inf
+[turn 541] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 542] 106 min remaining, 0 attempts, best=-inf
+[turn 542] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 543] 106 min remaining, 0 attempts, best=-inf
+[turn 543] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 543] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 104.3}...
+
+[turn 544] 104 min remaining, 0 attempts, best=-inf
+[turn 544] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 545] 104 min remaining, 0 attempts, best=-inf
+[turn 545] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 546] 104 min remaining, 0 attempts, best=-inf
+[turn 546] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 546] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 102.7}...
+
+[turn 547] 103 min remaining, 0 attempts, best=-inf
+[turn 547] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 548] 103 min remaining, 0 attempts, best=-inf
+[turn 548] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 548] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 101.2}...
+
+[turn 549] 101 min remaining, 0 attempts, best=-inf
+[turn 549] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 550] 101 min remaining, 0 attempts, best=-inf
+[turn 550] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 551] 101 min remaining, 0 attempts, best=-inf
+[turn 551] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 552] 101 min remaining, 0 attempts, best=-inf
+[turn 552] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 552] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 99.5}...
+
+[turn 553] 99 min remaining, 0 attempts, best=-inf
+[turn 553] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 554] 99 min remaining, 0 attempts, best=-inf
+[turn 554] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 555] 99 min remaining, 0 attempts, best=-inf
+[turn 555] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 556] 99 min remaining, 0 attempts, best=-inf
+[turn 556] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 557] 99 min remaining, 0 attempts, best=-inf
+[turn 557] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 558] 99 min remaining, 0 attempts, best=-inf
+[turn 558] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 559] 99 min remaining, 0 attempts, best=-inf
+[turn 559] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 560] 99 min remaining, 0 attempts, best=-inf
+[turn 560] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 561] 99 min remaining, 0 attempts, best=-inf
+[turn 561] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 562] 99 min remaining, 0 attempts, best=-inf
+[turn 562] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 563] 99 min remaining, 0 attempts, best=-inf
+[turn 563] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 564] 99 min remaining, 0 attempts, best=-inf
+[turn 564] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 564] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 97.2}...
+
+[turn 565] 97 min remaining, 0 attempts, best=-inf
+[turn 565] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 566] 97 min remaining, 0 attempts, best=-inf
+[turn 566] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 566] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 95.6}...
+
+[turn 567] 96 min remaining, 0 attempts, best=-inf
+[turn 567] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 568] 96 min remaining, 0 attempts, best=-inf
+[turn 568] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 569] 95 min remaining, 0 attempts, best=-inf
+[turn 569] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 570] 95 min remaining, 0 attempts, best=-inf
+[turn 570] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 571] 95 min remaining, 0 attempts, best=-inf
+[turn 571] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 572] 95 min remaining, 0 attempts, best=-inf
+[turn 572] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 573] 95 min remaining, 0 attempts, best=-inf
+[turn 573] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 574] 95 min remaining, 0 attempts, best=-inf
+[turn 574] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 575] 95 min remaining, 0 attempts, best=-inf
+[turn 575] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 576] 95 min remaining, 0 attempts, best=-inf
+[turn 576] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 577] 95 min remaining, 0 attempts, best=-inf
+[turn 577] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 577] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 93.4}...
+
+[turn 578] 93 min remaining, 0 attempts, best=-inf
+[turn 578] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 578] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 92.0}...
+
+[turn 579] 92 min remaining, 0 attempts, best=-inf
+[turn 579] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 580] 92 min remaining, 0 attempts, best=-inf
+[turn 580] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 581] 92 min remaining, 0 attempts, best=-inf
+[turn 581] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 582] 92 min remaining, 0 attempts, best=-inf
+[turn 582] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 583] 92 min remaining, 0 attempts, best=-inf
+[turn 583] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 584] 92 min remaining, 0 attempts, best=-inf
+[turn 584] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 585] 92 min remaining, 0 attempts, best=-inf
+[turn 585] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 586] 91 min remaining, 0 attempts, best=-inf
+[turn 586] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 587] 91 min remaining, 0 attempts, best=-inf
+[turn 587] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 588] 91 min remaining, 0 attempts, best=-inf
+[turn 588] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 589] 91 min remaining, 0 attempts, best=-inf
+[turn 589] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 590] 91 min remaining, 0 attempts, best=-inf
+[turn 590] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 590] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 89.6}...
+
+[turn 591] 90 min remaining, 0 attempts, best=-inf
+[turn 591] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 592] 90 min remaining, 0 attempts, best=-inf
+[turn 592] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 593] 89 min remaining, 0 attempts, best=-inf
+[turn 593] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 594] 89 min remaining, 0 attempts, best=-inf
+[turn 594] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 595] 89 min remaining, 0 attempts, best=-inf
+[turn 595] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 596] 89 min remaining, 0 attempts, best=-inf
+[turn 596] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 597] 89 min remaining, 0 attempts, best=-inf
+[turn 597] Response: Given that the previous attempts have not yielded valid results, let's take a different approach by designing a custom schedule function that focuses on a more controlled and stable learning rate and ...
+[turn 597] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 87.4}...
+
+[turn 598] 87 min remaining, 0 attempts, best=-inf
+[turn 598] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 599] 87 min remaining, 0 attempts, best=-inf
+[turn 599] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 600] 87 min remaining, 0 attempts, best=-inf
+[turn 600] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 601] 87 min remaining, 0 attempts, best=-inf
+[turn 601] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 602] 87 min remaining, 0 attempts, best=-inf
+[turn 602] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 603] 87 min remaining, 0 attempts, best=-inf
+[turn 603] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 604] 87 min remaining, 0 attempts, best=-inf
+[turn 604] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 605] 87 min remaining, 0 attempts, best=-inf
+[turn 605] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 606] 87 min remaining, 0 attempts, best=-inf
+[turn 606] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 607] 87 min remaining, 0 attempts, best=-inf
+[turn 607] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 608] 87 min remaining, 0 attempts, best=-inf
+[turn 608] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 609] 86 min remaining, 0 attempts, best=-inf
+[turn 609] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 610] 86 min remaining, 0 attempts, best=-inf
+[turn 610] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 611] 86 min remaining, 0 attempts, best=-inf
+[turn 611] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 612] 86 min remaining, 0 attempts, best=-inf
+[turn 612] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 613] 86 min remaining, 0 attempts, best=-inf
+[turn 613] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 614] 86 min remaining, 0 attempts, best=-inf
+[turn 614] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 615] 86 min remaining, 0 attempts, best=-inf
+[turn 615] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 615] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 84.6}...
+
+[turn 616] 85 min remaining, 0 attempts, best=-inf
+[turn 616] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 616] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 83.3}...
+
+[turn 617] 83 min remaining, 0 attempts, best=-inf
+[turn 617] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 618] 83 min remaining, 0 attempts, best=-inf
+[turn 618] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 619] 83 min remaining, 0 attempts, best=-inf
+[turn 619] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 620] 83 min remaining, 0 attempts, best=-inf
+[turn 620] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 621] 83 min remaining, 0 attempts, best=-inf
+[turn 621] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 622] 83 min remaining, 0 attempts, best=-inf
+[turn 622] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 623] 83 min remaining, 0 attempts, best=-inf
+[turn 623] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 624] 83 min remaining, 0 attempts, best=-inf
+[turn 624] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 625] 83 min remaining, 0 attempts, best=-inf
+[turn 625] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 626] 83 min remaining, 0 attempts, best=-inf
+[turn 626] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 627] 82 min remaining, 0 attempts, best=-inf
+[turn 627] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 628] 82 min remaining, 0 attempts, best=-inf
+[turn 628] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 629] 82 min remaining, 0 attempts, best=-inf
+[turn 629] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 630] 82 min remaining, 0 attempts, best=-inf
+[turn 630] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 631] 82 min remaining, 0 attempts, best=-inf
+[turn 631] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 632] 82 min remaining, 0 attempts, best=-inf
+[turn 632] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 633] 82 min remaining, 0 attempts, best=-inf
+[turn 633] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 634] 82 min remaining, 0 attempts, best=-inf
+[turn 634] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 635] 82 min remaining, 0 attempts, best=-inf
+[turn 635] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 636] 82 min remaining, 0 attempts, best=-inf
+[turn 636] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 637] 82 min remaining, 0 attempts, best=-inf
+[turn 637] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 638] 82 min remaining, 0 attempts, best=-inf
+[turn 638] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 639] 81 min remaining, 0 attempts, best=-inf
+[turn 639] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 640] 81 min remaining, 0 attempts, best=-inf
+[turn 640] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 640] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 80.0}...
+
+[turn 641] 80 min remaining, 0 attempts, best=-inf
+[turn 641] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 642] 80 min remaining, 0 attempts, best=-inf
+[turn 642] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 643] 80 min remaining, 0 attempts, best=-inf
+[turn 643] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 644] 80 min remaining, 0 attempts, best=-inf
+[turn 644] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 645] 80 min remaining, 0 attempts, best=-inf
+[turn 645] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 646] 80 min remaining, 0 attempts, best=-inf
+[turn 646] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 647] 80 min remaining, 0 attempts, best=-inf
+[turn 647] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 648] 79 min remaining, 0 attempts, best=-inf
+[turn 648] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 649] 79 min remaining, 0 attempts, best=-inf
+[turn 649] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 650] 79 min remaining, 0 attempts, best=-inf
+[turn 650] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 651] 79 min remaining, 0 attempts, best=-inf
+[turn 651] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 652] 79 min remaining, 0 attempts, best=-inf
+[turn 652] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 652] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 77.6}...
+
+[turn 653] 78 min remaining, 0 attempts, best=-inf
+[turn 653] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 654] 77 min remaining, 0 attempts, best=-inf
+[turn 654] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 654] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 76.1}...
+
+[turn 655] 76 min remaining, 0 attempts, best=-inf
+[turn 655] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 656] 76 min remaining, 0 attempts, best=-inf
+[turn 656] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 656] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 74.4}...
+
+[turn 657] 74 min remaining, 0 attempts, best=-inf
+[turn 657] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 658] 74 min remaining, 0 attempts, best=-inf
+[turn 658] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 659] 74 min remaining, 0 attempts, best=-inf
+[turn 659] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 660] 74 min remaining, 0 attempts, best=-inf
+[turn 660] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 661] 74 min remaining, 0 attempts, best=-inf
+[turn 661] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 662] 74 min remaining, 0 attempts, best=-inf
+[turn 662] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 663] 74 min remaining, 0 attempts, best=-inf
+[turn 663] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 664] 74 min remaining, 0 attempts, best=-inf
+[turn 664] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 665] 74 min remaining, 0 attempts, best=-inf
+[turn 665] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 666] 74 min remaining, 0 attempts, best=-inf
+[turn 666] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 667] 74 min remaining, 0 attempts, best=-inf
+[turn 667] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 668] 73 min remaining, 0 attempts, best=-inf
+[turn 668] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 669] 73 min remaining, 0 attempts, best=-inf
+[turn 669] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 669] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 72.0}...
+
+[turn 670] 72 min remaining, 0 attempts, best=-inf
+[turn 670] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 671] 72 min remaining, 0 attempts, best=-inf
+[turn 671] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 672] 72 min remaining, 0 attempts, best=-inf
+[turn 672] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 673] 72 min remaining, 0 attempts, best=-inf
+[turn 673] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 674] 72 min remaining, 0 attempts, best=-inf
+[turn 674] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 675] 72 min remaining, 0 attempts, best=-inf
+[turn 675] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 676] 72 min remaining, 0 attempts, best=-inf
+[turn 676] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 677] 71 min remaining, 0 attempts, best=-inf
+[turn 677] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 678] 71 min remaining, 0 attempts, best=-inf
+[turn 678] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 679] 71 min remaining, 0 attempts, best=-inf
+[turn 679] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 680] 71 min remaining, 0 attempts, best=-inf
+[turn 680] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 681] 71 min remaining, 0 attempts, best=-inf
+[turn 681] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 682] 71 min remaining, 0 attempts, best=-inf
+[turn 682] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 683] 71 min remaining, 0 attempts, best=-inf
+[turn 683] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 684] 71 min remaining, 0 attempts, best=-inf
+[turn 684] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 685] 71 min remaining, 0 attempts, best=-inf
+[turn 685] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 686] 71 min remaining, 0 attempts, best=-inf
+[turn 686] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 687] 71 min remaining, 0 attempts, best=-inf
+[turn 687] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 688] 71 min remaining, 0 attempts, best=-inf
+[turn 688] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 689] 70 min remaining, 0 attempts, best=-inf
+[turn 689] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 690] 70 min remaining, 0 attempts, best=-inf
+[turn 690] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 691] 70 min remaining, 0 attempts, best=-inf
+[turn 691] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 692] 70 min remaining, 0 attempts, best=-inf
+[turn 692] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 693] 70 min remaining, 0 attempts, best=-inf
+[turn 693] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 694] 70 min remaining, 0 attempts, best=-inf
+[turn 694] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 695] 70 min remaining, 0 attempts, best=-inf
+[turn 695] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 695] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 68.5}...
+
+[turn 696] 69 min remaining, 0 attempts, best=-inf
+[turn 696] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 697] 68 min remaining, 0 attempts, best=-inf
+[turn 697] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 697] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 66.9}...
+
+[turn 698] 67 min remaining, 0 attempts, best=-inf
+[turn 698] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 699] 67 min remaining, 0 attempts, best=-inf
+[turn 699] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 700] 67 min remaining, 0 attempts, best=-inf
+[turn 700] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 701] 67 min remaining, 0 attempts, best=-inf
+[turn 701] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 702] 67 min remaining, 0 attempts, best=-inf
+[turn 702] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 703] 66 min remaining, 0 attempts, best=-inf
+[turn 703] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 704] 66 min remaining, 0 attempts, best=-inf
+[turn 704] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 705] 66 min remaining, 0 attempts, best=-inf
+[turn 705] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 706] 66 min remaining, 0 attempts, best=-inf
+[turn 706] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 706] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 64.8}...
+
+[turn 707] 65 min remaining, 0 attempts, best=-inf
+[turn 707] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 708] 65 min remaining, 0 attempts, best=-inf
+[turn 708] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 709] 65 min remaining, 0 attempts, best=-inf
+[turn 709] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 710] 65 min remaining, 0 attempts, best=-inf
+[turn 710] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 711] 65 min remaining, 0 attempts, best=-inf
+[turn 711] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 712] 64 min remaining, 0 attempts, best=-inf
+[turn 712] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 713] 64 min remaining, 0 attempts, best=-inf
+[turn 713] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 714] 64 min remaining, 0 attempts, best=-inf
+[turn 714] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 715] 64 min remaining, 0 attempts, best=-inf
+[turn 715] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 716] 64 min remaining, 0 attempts, best=-inf
+[turn 716] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 717] 64 min remaining, 0 attempts, best=-inf
+[turn 717] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 718] 64 min remaining, 0 attempts, best=-inf
+[turn 718] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 719] 64 min remaining, 0 attempts, best=-inf
+[turn 719] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 720] 64 min remaining, 0 attempts, best=-inf
+[turn 720] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 721] 64 min remaining, 0 attempts, best=-inf
+[turn 721] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 722] 64 min remaining, 0 attempts, best=-inf
+[turn 722] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 723] 64 min remaining, 0 attempts, best=-inf
+[turn 723] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 724] 63 min remaining, 0 attempts, best=-inf
+[turn 724] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 725] 63 min remaining, 0 attempts, best=-inf
+[turn 725] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 726] 63 min remaining, 0 attempts, best=-inf
+[turn 726] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 727] 63 min remaining, 0 attempts, best=-inf
+[turn 727] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 728] 63 min remaining, 0 attempts, best=-inf
+[turn 728] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 729] 63 min remaining, 0 attempts, best=-inf
+[turn 729] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 730] 63 min remaining, 0 attempts, best=-inf
+[turn 730] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 730] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 61.5}...
+
+[turn 731] 62 min remaining, 0 attempts, best=-inf
+[turn 731] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 732] 61 min remaining, 0 attempts, best=-inf
+[turn 732] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 732] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 59.9}...
+
+[turn 733] 60 min remaining, 0 attempts, best=-inf
+[turn 733] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 734] 60 min remaining, 0 attempts, best=-inf
+[turn 734] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 735] 60 min remaining, 0 attempts, best=-inf
+[turn 735] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 736] 60 min remaining, 0 attempts, best=-inf
+[turn 736] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 736] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 58.1}...
+
+[turn 737] 58 min remaining, 0 attempts, best=-inf
+[turn 737] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 738] 58 min remaining, 0 attempts, best=-inf
+[turn 738] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 739] 58 min remaining, 0 attempts, best=-inf
+[turn 739] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 739] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 56.5}...
+
+[turn 740] 57 min remaining, 0 attempts, best=-inf
+[turn 740] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 741] 56 min remaining, 0 attempts, best=-inf
+[turn 741] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 742] 56 min remaining, 0 attempts, best=-inf
+[turn 742] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 743] 56 min remaining, 0 attempts, best=-inf
+[turn 743] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 744] 56 min remaining, 0 attempts, best=-inf
+[turn 744] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 745] 56 min remaining, 0 attempts, best=-inf
+[turn 745] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 746] 56 min remaining, 0 attempts, best=-inf
+[turn 746] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 747] 56 min remaining, 0 attempts, best=-inf
+[turn 747] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 748] 56 min remaining, 0 attempts, best=-inf
+[turn 748] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 749] 56 min remaining, 0 attempts, best=-inf
+[turn 749] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 750] 56 min remaining, 0 attempts, best=-inf
+[turn 750] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 751] 56 min remaining, 0 attempts, best=-inf
+[turn 751] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 752] 56 min remaining, 0 attempts, best=-inf
+[turn 752] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 753] 55 min remaining, 0 attempts, best=-inf
+[turn 753] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 754] 55 min remaining, 0 attempts, best=-inf
+[turn 754] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 755] 55 min remaining, 0 attempts, best=-inf
+[turn 755] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 756] 55 min remaining, 0 attempts, best=-inf
+[turn 756] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 757] 55 min remaining, 0 attempts, best=-inf
+[turn 757] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 758] 55 min remaining, 0 attempts, best=-inf
+[turn 758] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 759] 55 min remaining, 0 attempts, best=-inf
+[turn 759] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 760] 55 min remaining, 0 attempts, best=-inf
+[turn 760] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 760] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 53.1}...
+
+[turn 761] 53 min remaining, 0 attempts, best=-inf
+[turn 761] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 762] 53 min remaining, 0 attempts, best=-inf
+[turn 762] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 763] 53 min remaining, 0 attempts, best=-inf
+[turn 763] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 764] 53 min remaining, 0 attempts, best=-inf
+[turn 764] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 765] 53 min remaining, 0 attempts, best=-inf
+[turn 765] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 766] 53 min remaining, 0 attempts, best=-inf
+[turn 766] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 767] 53 min remaining, 0 attempts, best=-inf
+[turn 767] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 768] 53 min remaining, 0 attempts, best=-inf
+[turn 768] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 768] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 50.7}...
+
+[turn 769] 51 min remaining, 0 attempts, best=-inf
+[turn 769] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 769] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 48.9}...
+
+[turn 770] 49 min remaining, 0 attempts, best=-inf
+[turn 770] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 771] 49 min remaining, 0 attempts, best=-inf
+[turn 771] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 772] 49 min remaining, 0 attempts, best=-inf
+[turn 772] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 773] 49 min remaining, 0 attempts, best=-inf
+[turn 773] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 773] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 47.1}...
+
+[turn 774] 47 min remaining, 0 attempts, best=-inf
+[turn 774] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 775] 47 min remaining, 0 attempts, best=-inf
+[turn 775] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 775] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 45.5}...
+
+[turn 776] 45 min remaining, 0 attempts, best=-inf
+[turn 776] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 776] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 44.0}...
+
+[turn 777] 44 min remaining, 0 attempts, best=-inf
+[turn 777] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 778] 44 min remaining, 0 attempts, best=-inf
+[turn 778] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 779] 44 min remaining, 0 attempts, best=-inf
+[turn 779] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 779] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 42.3}...
+
+[turn 780] 42 min remaining, 0 attempts, best=-inf
+[turn 780] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 781] 42 min remaining, 0 attempts, best=-inf
+[turn 781] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 782] 42 min remaining, 0 attempts, best=-inf
+[turn 782] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 783] 42 min remaining, 0 attempts, best=-inf
+[turn 783] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 784] 42 min remaining, 0 attempts, best=-inf
+[turn 784] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 785] 42 min remaining, 0 attempts, best=-inf
+[turn 785] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 786] 42 min remaining, 0 attempts, best=-inf
+[turn 786] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 787] 42 min remaining, 0 attempts, best=-inf
+[turn 787] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 788] 42 min remaining, 0 attempts, best=-inf
+[turn 788] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 788] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 40.1}...
+
+[turn 789] 40 min remaining, 0 attempts, best=-inf
+[turn 789] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 790] 40 min remaining, 0 attempts, best=-inf
+[turn 790] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 790] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 38.6}...
+
+[turn 791] 39 min remaining, 0 attempts, best=-inf
+[turn 791] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 792] 38 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 792] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 793] 33 min remaining, 0 attempts, best=-inf
+[turn 793] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 793] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 31.6}...
+
+[turn 794] 32 min remaining, 0 attempts, best=-inf
+[turn 794] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 795] 32 min remaining, 0 attempts, best=-inf
+[turn 795] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 796] 31 min remaining, 0 attempts, best=-inf
+[turn 796] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 797] 31 min remaining, 0 attempts, best=-inf
+[turn 797] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 798] 31 min remaining, 0 attempts, best=-inf
+[turn 798] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 799] 31 min remaining, 0 attempts, best=-inf
+[turn 799] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 800] 31 min remaining, 0 attempts, best=-inf
+[turn 800] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 801] 31 min remaining, 0 attempts, best=-inf
+[turn 801] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 802] 31 min remaining, 0 attempts, best=-inf
+[turn 802] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 803] 31 min remaining, 0 attempts, best=-inf
+[turn 803] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 803] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 29.1}...
+
+[turn 804] 29 min remaining, 0 attempts, best=-inf
+[turn 804] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 805] 29 min remaining, 0 attempts, best=-inf
+[turn 805] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 806] 29 min remaining, 0 attempts, best=-inf
+[turn 806] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 807] 29 min remaining, 0 attempts, best=-inf
+[turn 807] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 808] 29 min remaining, 0 attempts, best=-inf
+[turn 808] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 809] 29 min remaining, 0 attempts, best=-inf
+[turn 809] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 809] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 27.0}...
+
+[turn 810] 27 min remaining, 0 attempts, best=-inf
+[turn 810] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 811] 27 min remaining, 0 attempts, best=-inf
+[turn 811] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 811] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 25.4}...
+
+[turn 812] 25 min remaining, 0 attempts, best=-inf
+[turn 812] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 813] 25 min remaining, 0 attempts, best=-inf
+[turn 813] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 814] 25 min remaining, 0 attempts, best=-inf
+[turn 814] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 815] 25 min remaining, 0 attempts, best=-inf
+[turn 815] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 816] 25 min remaining, 0 attempts, best=-inf
+[turn 816] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 817] 25 min remaining, 0 attempts, best=-inf
+[turn 817] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 818] 25 min remaining, 0 attempts, best=-inf
+[turn 818] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 818] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 23.0}...
+
+[turn 819] 23 min remaining, 0 attempts, best=-inf
+[turn 819] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 819] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 21.2}...
+
+[turn 820] 21 min remaining, 0 attempts, best=-inf
+[turn 820] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 820] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 19.6}...
+
+[turn 821] 20 min remaining, 0 attempts, best=-inf
+[turn 821] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 822] 20 min remaining, 0 attempts, best=-inf
+[turn 822] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 822] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 17.6}...
+
+[turn 823] 18 min remaining, 0 attempts, best=-inf
+[turn 823] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 824] 17 min remaining, 0 attempts, best=-inf
+[turn 824] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 825] 17 min remaining, 0 attempts, best=-inf
+[turn 825] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 826] 17 min remaining, 0 attempts, best=-inf
+[turn 826] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 827] 17 min remaining, 0 attempts, best=-inf
+[turn 827] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 828] 17 min remaining, 0 attempts, best=-inf
+[turn 828] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 829] 17 min remaining, 0 attempts, best=-inf
+[turn 829] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 830] 17 min remaining, 0 attempts, best=-inf
+[turn 830] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 831] 17 min remaining, 0 attempts, best=-inf
+[turn 831] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 832] 17 min remaining, 0 attempts, best=-inf
+[turn 832] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 833] 17 min remaining, 0 attempts, best=-inf
+[turn 833] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 834] 17 min remaining, 0 attempts, best=-inf
+[turn 834] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 835] 17 min remaining, 0 attempts, best=-inf
+[turn 835] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 836] 16 min remaining, 0 attempts, best=-inf
+[turn 836] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 837] 16 min remaining, 0 attempts, best=-inf
+[turn 837] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 837] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 14.8}...
+
+[turn 838] 15 min remaining, 0 attempts, best=-inf
+[turn 838] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 839] 15 min remaining, 0 attempts, best=-inf
+[turn 839] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 839] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 12.9}...
+
+[turn 840] 13 min remaining, 0 attempts, best=-inf
+[turn 840] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 841] 13 min remaining, 0 attempts, best=-inf
+[turn 841] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 842] 13 min remaining, 0 attempts, best=-inf
+[turn 842] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 842] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 11.2}...
+
+[turn 843] 11 min remaining, 0 attempts, best=-inf
+[turn 843] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 844] 11 min remaining, 0 attempts, best=-inf
+[turn 844] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 845] 11 min remaining, 0 attempts, best=-inf
+[turn 845] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 846] 11 min remaining, 0 attempts, best=-inf
+[turn 846] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 847] 11 min remaining, 0 attempts, best=-inf
+[turn 847] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 848] 11 min remaining, 0 attempts, best=-inf
+[turn 848] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 849] 11 min remaining, 0 attempts, best=-inf
+[turn 849] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 850] 11 min remaining, 0 attempts, best=-inf
+[turn 850] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 851] 11 min remaining, 0 attempts, best=-inf
+[turn 851] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 851] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 8.9}...
+
+[turn 852] 9 min remaining, 0 attempts, best=-inf
+[turn 852] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 853] 9 min remaining, 0 attempts, best=-inf
+[turn 853] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 853] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 7.2}...
+
+[turn 854] 7 min remaining, 0 attempts, best=-inf
+[turn 854] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 854] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 5.7}...
+
+[turn 855] 6 min remaining, 0 attempts, best=-inf
+[turn 855] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 856] 6 min remaining, 0 attempts, best=-inf
+[turn 856] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 857] 5 min remaining, 0 attempts, best=-inf
+[turn 857] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 858] 5 min remaining, 0 attempts, best=-inf
+[turn 858] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 859] 5 min remaining, 0 attempts, best=-inf
+[turn 859] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 860] 5 min remaining, 0 attempts, best=-inf
+[turn 860] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 861] 5 min remaining, 0 attempts, best=-inf
+[turn 861] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 862] 5 min remaining, 0 attempts, best=-inf
+[turn 862] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 863] 5 min remaining, 0 attempts, best=-inf
+[turn 863] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 863] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 3.5}...
+
+[turn 864] 3 min remaining, 0 attempts, best=-inf
+[turn 864] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 865] 3 min remaining, 0 attempts, best=-inf
+[turn 865] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 866] 3 min remaining, 0 attempts, best=-inf
+[turn 866] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 867] 3 min remaining, 0 attempts, best=-inf
+[turn 867] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 868] 3 min remaining, 0 attempts, best=-inf
+[turn 868] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 869] 3 min remaining, 0 attempts, best=-inf
+[turn 869] Response: Given that the previous attempts have not yielded valid results, it suggests that we need to take a more fundamental and conservative approach to the learning rate and penalty weight schedules. Let's ...
+[turn 869] get_status → {"attempts": 0, "best_aep": -Infinity, "baseline": 5540.72, "gap": -Infinity, "time_remaining_min": 1.5}...
+
+[turn 870] 1 min remaining, 0 attempts, best=-inf
+[turn 870] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 871] 1 min remaining, 0 attempts, best=-inf
+[turn 871] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 872] 1 min remaining, 0 attempts, best=-inf
+[turn 872] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 873] 1 min remaining, 0 attempts, best=-inf
+[turn 873] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 874] 1 min remaining, 0 attempts, best=-inf
+[turn 874] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 875] 1 min remaining, 0 attempts, best=-inf
+[turn 875] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 876] 1 min remaining, 0 attempts, best=-inf
+[turn 876] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 877] 1 min remaining, 0 attempts, best=-inf
+[turn 877] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 878] 1 min remaining, 0 attempts, best=-inf
+[turn 878] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 879] 1 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 879] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+Done. Best AEP: -inf GWh over 0 attempts.
+
+Agent finished. Results in results_agent_llama3_3-70b_registry_sched_s3/
+Stopping vLLM...

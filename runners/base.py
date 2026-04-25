@@ -24,6 +24,8 @@ class RunConfig:
     hot_start: Optional[str] = None  # seed optimizer path
     timeout_per_run: int = 60        # per-optimizer timeout
     pixwake_src: str = "playground/pixwake/src"
+    schedule_only: bool = False      # schedule_fn interface (vs full optimize())
+    max_attempts: int = 0            # 0 = unlimited (use time_budget only)
 
     # Phase-2 / diversity nudge thresholds
     phase2_fraction: float = 0.3     # switch to custom optimizer nudge
@@ -32,6 +34,10 @@ class RunConfig:
     @property
     def pythonpath(self):
         return f"{self.pixwake_src}:{os.environ.get('PYTHONPATH', '')}"
+
+    @property
+    def taxonomy_mode(self) -> str:
+        return "schedule" if self.schedule_only else "fullopt"
 
 
 @dataclass
@@ -47,11 +53,17 @@ class AttemptResult:
     rowp_time: Optional[float] = None
     strategy: Optional[str] = None
     error: Optional[str] = None
+    # Agent-authored metadata extracted from the script source (if present)
+    hypothesis: Optional[str] = None       # why this attempt / what axis it tests
+    axis: Optional[str] = None             # short name of the axis being varied
+    lesson: Optional[str] = None           # takeaway written AFTER seeing result
+    families: Optional[list[str]] = None   # classified taxonomy families
 
     def to_dict(self):
         d = {"attempt": self.attempt, "timestamp": self.timestamp}
         for k in ["train_aep", "train_feasible", "train_time", "train_baseline",
-                   "rowp_aep", "rowp_feasible", "rowp_time", "strategy", "error"]:
+                   "rowp_aep", "rowp_feasible", "rowp_time", "strategy", "error",
+                   "hypothesis", "axis", "lesson", "families"]:
             v = getattr(self, k)
             if v is not None:
                 d[k] = v
@@ -68,14 +80,18 @@ class BaseRunner(ABC):
         self.attempts: list[AttemptResult] = []
         self.best_aep: float = -float("inf")
         self.best_script: Optional[str] = None
-        self.start_time: float = 0
+        # Initialize start_time to now so the initial agent_memory.md render
+        # shows elapsed=0 / remaining=full-budget rather than 56 years from
+        # epoch=0. Subclasses may overwrite this at the start of run() if
+        # they want to exclude __init__-time from the budget.
+        self.start_time: float = time.time()
 
         # Memory scaffolding
         self.history = HistoryLog()
         self.transcript = TranscriptStore()
         self.session = SessionState(
             session_id=f"{config.output_dir}_{int(time.time())}",
-            start_time=0,  # set in run()
+            start_time=self.start_time,
             time_budget=config.time_budget,
             baseline_aep=self._get_baseline_aep(),
         )
@@ -96,6 +112,20 @@ class BaseRunner(ABC):
                 best = max(successes, key=lambda e: e["train_aep"])
                 self.best_aep = best["train_aep"]
 
+        # Write initial agent_memory.md with the portable template
+        from .memory_template import refresh_memory
+        try:
+            refresh_memory(
+                memory_path=self.memory_path,
+                attempt_log=self.attempts,
+                baseline_aep=self._get_baseline_aep(),
+                time_budget_s=self.config.time_budget,
+                elapsed_s=0,
+            )
+        except Exception as e:
+            Path(self.memory_path).write_text(
+                f"# Agent Memory (initial)\n\n(init failed: {e})\n")
+
     def time_remaining(self) -> float:
         return max(0, self.config.time_budget - (time.time() - self.start_time))
 
@@ -108,7 +138,8 @@ class BaseRunner(ABC):
 
     def log_attempt(self, result: AttemptResult):
         """Append to attempt log, update session state and history."""
-        from .memory import save_session, render_agent_memory
+        from .memory import save_session
+        from .memory_template import refresh_memory
         from pathlib import Path
 
         self.attempts.append(result.to_dict())
@@ -136,7 +167,6 @@ class BaseRunner(ABC):
             self.history.add("milestone",
                            f"New best: {result.train_aep:.1f} GWh",
                            f"Attempt {result.attempt}, strategy: {result.strategy}")
-            # Copy best script
             best_path = os.path.join(self.config.output_dir, "best_optimizer.py")
             src = os.path.join(self.config.output_dir,
                                f"iter_{result.attempt:03d}.py")
@@ -144,18 +174,22 @@ class BaseRunner(ABC):
                 import shutil
                 shutil.copy2(src, best_path)
 
-        # Update phase
         if self.in_phase2():
             self.session.phase = "exploit"
 
-        # Persist everything
+        # Persist attempt log + session
         with open(self.log_path, "w") as f:
             json.dump(self.attempts, f, indent=2)
         save_session(self.session, Path(self.session_path))
 
-        # Refresh agent_memory.md for Claude Code
-        memory_md = render_agent_memory(self.session, self.history, self.attempts)
-        Path(self.memory_path).write_text(memory_md)
+        # Refresh agent_memory.md (portable template — preserves agent notes)
+        refresh_memory(
+            memory_path=self.memory_path,
+            attempt_log=self.attempts,
+            baseline_aep=self._get_baseline_aep(),
+            time_budget_s=self.config.time_budget,
+            elapsed_s=time.time() - self.start_time,
+        )
 
     def build_system_prompt(self) -> str:
         """Build the system prompt / CLAUDE.md content. Shared across backends."""
@@ -165,6 +199,7 @@ class BaseRunner(ABC):
             timeout_per_run=self.config.timeout_per_run,
             baseline_aep=self._get_baseline_aep(),
         )
+        prompt += STRATEGY_REGISTRY_RULE
         if self.in_phase2():
             prompt += PHASE2_NUDGE
         return prompt
@@ -236,18 +271,80 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 - Time budget: {time_budget_min} minutes total
 - Each optimizer run times out at {timeout_per_run}s
 - Baseline (500 multi-start SGD): {baseline_aep:.1f} GWh — beat this
-- You can read files in `playground/` (pixwake source, problem.json)
+- You can read files in `playground/` (pixwake source)
 - Write optimizers to the workspace directory
 - You CANNOT modify the wake model, harness, or scorer
+- Do NOT import `os`, `subprocess`, or read files inside your optimizer.
+  All problem data is passed through the function arguments.
+  Your script must generalize to unseen farms with different turbine
+  counts, polygons, and wind roses.
 
 ## Strategy tips
 
-- Start by reading the problem JSON and pixwake source to understand the API
+- The function arguments give you everything: `sim` (wake model),
+  `n_target` (turbine count), `boundary` (polygon vertices),
+  `min_spacing`, `wd`/`ws`/`weights` (wind rose)
+- Read `playground/pixwake/src/pixwake/optim/sgd.py` to understand the
+  baseline solver API
 - The `topfarm_sgd_solve` function handles boundary/spacing constraints
 - Multi-start with diverse initializations helps find better optima
 - Consider how wind direction affects wake losses
 - Test on the held-out farm periodically to check generalization
 """
+
+STRATEGY_REGISTRY_RULE = """
+
+## Strategy registry rule (HARD CONSTRAINT)
+
+On EVERY iteration, before writing any code, read the **Strategy
+Registry** section in `agent_memory.md`. It contains three lists:
+UNEXPLORED, PARTIALLY EXPLORED, and CLOSED.
+
+The rule is:
+
+**If UNEXPLORED has any entries, your next attempt MUST introduce a
+family from UNEXPLORED.** You may not submit another variant of a
+family in PARTIALLY EXPLORED or CLOSED until UNEXPLORED is empty.
+
+Before writing any code for an attempt, output (as plain text, not a
+comment):
+
+1. The family name you picked from UNEXPLORED.
+2. Why that family is a plausible fit for this constrained
+   non-convex wake-interaction problem (1-2 sentences).
+3. What observable result would tell you to CLOSE the family vs.
+   keep iterating on it.
+
+Then write the script. Include a top-level docstring block of the form:
+
+```python
+\"\"\"
+HYPOTHESIS: <one sentence describing what this attempt tests>
+AXIS: <short tag identifying the axis being varied>
+\"\"\"
+```
+
+After the attempt runs and you see the result, if you want to mark a
+family CLOSED, write a LESSON docstring in your NEXT attempt:
+
+```python
+\"\"\"
+LESSON: <axis tag from previous attempt>: <one sentence takeaway>
+\"\"\"
+```
+
+The harness parses HYPOTHESIS / AXIS / LESSON from the script source
+and stores them in the attempt log. This builds the shared knowledge
+base across seeds — you are contributing to a registry that other
+seeds (and future runs of this seed) will read.
+
+Do not write exploratory variants that differ only in hyperparameters
+(e.g. "SGDR with 3 cycles" vs "SGDR with 4 cycles"). Those are the
+same family. A new family means a qualitatively different search
+mechanism (different optimizer library, different schedule shape,
+different initialization strategy, different constraint handling).
+"""
+
 
 PHASE2_NUDGE = """
 

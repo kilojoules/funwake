@@ -1,0 +1,241 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1776554290.6888084,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1776555072.3136861,
+    "error": "Timeout after 180s"
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1776555225.3827145,
+    "error": "ror: Cannot allocate memory\nE0419 01:33:42.570319   66988 execution_engine.cc:54] LLVM compilation error: Cannot allocate memory\nTraceback (most recent call last):\n  File \"/work/users/juqu/funwake/tools/../playground/harness.py\", line 143, in <module>\n    main()\n    ~~~~^^\n  File \"/work/users/juqu/funwake/tools/../playground/harness.py\", line 137, in main\n    \"x\": [float(v) for v in opt_x],\n                            ^^^^^\n  File \"/work/users/juqu/funwake/.pixi/envs/default/lib/python3.13/site-"
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1776555331.061016,
+    "train_aep": 5553.03,
+    "train_feasible": true,
+    "train_time": 50.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 59.6
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1776555524.122909,
+    "train_aep": 5558.54,
+    "train_feasible": true,
+    "train_time": 72.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 87.0
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1776555759.1870437,
+    "train_aep": 5556.87,
+    "train_feasible": true,
+    "train_time": 89.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1776555984.803493,
+    "train_aep": 5476.02,
+    "train_feasible": true,
+    "train_time": 19.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1776556230.252684,
+    "train_aep": 5539.42,
+    "train_feasible": true,
+    "train_time": 21.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1776556387.79869,
+    "train_aep": 5547.05,
+    "train_feasible": true,
+    "train_time": 102.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1776556547.8064742,
+    "train_aep": 5540.31,
+    "train_feasible": true,
+    "train_time": 112.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1776556655.678006,
+    "train_aep": 5556.87,
+    "train_feasible": true,
+    "train_time": 88.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1776556799.7426393,
+    "train_aep": 5555.87,
+    "train_feasible": true,
+    "train_time": 103.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1776556911.4143062,
+    "train_aep": 5559.08,
+    "train_feasible": true,
+    "train_time": 78.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 89.0
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1776557103.2262557,
+    "train_aep": 5551.86,
+    "train_feasible": true,
+    "train_time": 60.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1776557226.7195413,
+    "train_aep": 5552.94,
+    "train_feasible": true,
+    "train_time": 89.3,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1776557341.2234507,
+    "train_aep": 5558.22,
+    "train_feasible": true,
+    "train_time": 78.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1776557480.7125576,
+    "train_aep": 5555.45,
+    "train_feasible": true,
+    "train_time": 101.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1776557593.7446487,
+    "train_aep": 5559.54,
+    "train_feasible": true,
+    "train_time": 79.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 86.8
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1776557803.4198306,
+    "train_aep": 5551.27,
+    "train_feasible": true,
+    "train_time": 79.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1776557943.6754599,
+    "train_aep": 5558.33,
+    "train_feasible": true,
+    "train_time": 104.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1776558052.7735412,
+    "train_aep": 5559.54,
+    "train_feasible": true,
+    "train_time": 76.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "_classify_error:FileNotFoundError:[Errno 2] No such file or directory: '/work/users/juqu/funwake/runners/strategy_"
+    ]
+  }
+]

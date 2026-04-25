@@ -1,0 +1,410 @@
+{
+  "axes": {
+    "farms": [
+      "dei",
+      "rowp"
+    ],
+    "ns": [
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      200,
+      300
+    ],
+    "roses": [
+      "uniform",
+      "omnidir",
+      "dei",
+      "rowp"
+    ]
+  },
+  "cells": [
+    {
+      "farm": "dei",
+      "n": 30,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n30_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 30,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n30_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 30,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n30_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 30,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n30_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 40,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n40_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 40,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n40_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 40,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n40_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 40,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n40_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 50,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n50_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 50,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n50_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 50,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n50_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 50,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n50_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 60,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n60_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 60,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n60_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 60,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n60_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 60,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n60_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 70,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n70_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 70,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n70_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 70,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n70_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 70,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n70_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 80,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n80_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 80,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n80_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 80,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n80_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 80,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n80_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 200,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n200_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 200,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n200_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 200,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n200_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 200,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n200_roserowp.json"
+    },
+    {
+      "farm": "dei",
+      "n": 300,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n300_roseuniform.json"
+    },
+    {
+      "farm": "dei",
+      "n": 300,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n300_roseomnidir.json"
+    },
+    {
+      "farm": "dei",
+      "n": 300,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n300_rosedei.json"
+    },
+    {
+      "farm": "dei",
+      "n": 300,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n300_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n30_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n30_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n30_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n30_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n40_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n40_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n40_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n40_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n50_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n50_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n50_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n50_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n60_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n60_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n60_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n60_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n70_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n70_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n70_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n70_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n80_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n80_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n80_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n80_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 200,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n200_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 200,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n200_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 200,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n200_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 200,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n200_roserowp.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 300,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n300_roseuniform.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 300,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n300_roseomnidir.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 300,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n300_rosedei.json"
+    },
+    {
+      "farm": "rowp",
+      "n": 300,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n300_roserowp.json"
+    }
+  ]
+}

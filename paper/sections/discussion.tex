@@ -1,0 +1,213 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Held-Out Selection vs.\ Overfitting}
+\label{sec:overfit}
+
+The schedule-only interface constrains the LLM to a 4-dimensional
+function space---trivial to implement, cheap to evaluate
+(30--60\,s CPU)---yet the two winning frontier schedules use
+qualitatively different mechanisms (Gaussian bumps vs.\ sinusoidal
+shake), suggesting the space is rich.
+
+\emph{Held-out selection materially improves the deployed result.}
+For each top run we compare two deployment strategies: deploy the
+\textbf{train-selected} script (highest training AEP) vs.\ the
+\textbf{held-out-selected} script (highest feasible ROWP AEP among
+those the run produced). Across six top runs, held-out selection
+gains an average of $+14.4$\,GWh, with gains as large as $+38.2$
+(Claude 6hr). For several runs, the training-optimal script is
+\emph{infeasible} on ROWP; deploying it without the held-out check
+would produce broken layouts (per-run detail:
+Appendix~\ref{app:deploy_gap}).
+
+\emph{Overfitting is the default, not the exception.} Of six top
+runs, five produced training-optimal schedules that are either
+infeasible on ROWP or score below the run's own best-feasible
+schedule. LLMs efficiently push training AEP toward the ceiling
+and along the way find schedules that exploit the training
+polygon's slack. The spacious 5-vertex DEI polygon permits mild
+constraint violations without significantly reducing AEP; the
+tighter ROWP polygon makes such violations expensive. This
+asymmetry---easy training, hard held-out---is not a bug, it is
+what makes the held-out signal informative.
+
+\subsection{Why the Held-Out Farm Matters}
+
+Two specific failure modes are invisible without held-out evaluation:
+
+\paragraph{Penalty weight affects quality, not feasibility.}
+A controlled ablation multiplies Claude iter~192's $\alpha$
+trajectory by factors from 0.01$\times$ to 10$\times$ while holding
+the LR schedule, bumps, and Adam betas fixed. All nine factors
+produce feasible ROWP layouts---contrary to the original hypothesis
+that low terminal $\alpha$ causes infeasibility. The effect is on
+\emph{quality}: ROWP AEP peaks at the original scale
+(factor$\,=\,1.0$, 4271.5\,GWh) and degrades symmetrically at both
+extremes (4263.4 at 0.01$\times$, 4261.8 at 10$\times$), spanning
+11.2\,GWh. Under-penalizing allows mild constraint violations that
+waste polygon area; over-penalizing forces turbines away from
+boundaries unnecessarily, also wasting area. The schedule's LR
+dynamics (dual Gaussian bumps, cosine decay) are sufficient for
+feasibility; the penalty trajectory controls how efficiently the
+optimizer uses the available polygon area.
+
+\paragraph{Training-optimal $\neq$ held-out-optimal.}
+Gemini's training-best schedule (AEP = 5600.0) reaches a high
+\emph{nominal} ROWP score but produces an infeasible held-out
+layout (boundary or spacing constraint violated); after filtering
+to feasible layouts only, its best feasible ROWP is 4272.7\,GWh
+from a different schedule (training AEP = 5542.2). The schedules
+that maximize training AEP do so partly by under-enforcing
+constraints---gaining a few GWh from near-boundary placement that
+happens to be feasible on DEI but not ROWP. This divergence cannot
+be detected without (a)~a physically distinct held-out problem and
+(b)~a feasibility filter applied to held-out layouts before
+selecting a deployed schedule.
+
+\subsection{Benchmark Properties}
+
+\paragraph{Cost and compute equalization.}
+Evaluating a submitted schedule requires only a CPU and takes
+30--60 seconds at the training scale ($N\!=\!50$). Running an LLM
+agent through the benchmark costs \$5--50 for a 5-hour session
+depending on model. The 500-multi-start baseline costs
+$\sim$2.5 GPU-hours per farm. Full paper reproduction costs
+$\sim$\$500. This is 5--10$\times$ cheaper than SWE-bench
+evaluations at comparable scope.
+
+A key design property of the schedule-only interface is
+\emph{compute equalization}: every schedule runs the identical
+8000-step Adam loop, so evaluation cost depends only on problem
+size, not on the schedule's complexity. This eliminates the
+confound present in full-optimizer mode, where different strategies
+have different compute profiles and the timeout itself shapes which
+approaches are viable. In our full-optimizer experiments, 14 of 18
+scored scripts exceeded the schedule-only 60\,s budget; without
+evaluation feedback, all 19 scripts from a separate run timed out.
+The schedule-only interface makes the benchmark \emph{timeout-invariant}:
+the same evaluation budget applies to every submission.
+
+\paragraph{Difficulty scaling and cheap-to-expensive transfer.}
+The DEI farm variants ($N = 30$--$300$) provide a natural difficulty
+axis. Low $N$ is easy (sparse turbines, weak wake interactions);
+high $N$ is hard (tight packing, strong constraint pressure,
+and increasing evaluation cost---$\sim$30\,s at $N\!=\!50$ vs.\
+$\sim$340\,s at $N\!=\!200$). The ROWP held-out farm adds a
+cross-physics axis (different turbine, polygon, wind). Crucially,
+the LLM's search is conducted entirely in the cheap regime
+($N\!=\!50$, 30\,s per evaluation), but the discovered schedules
+transfer to the expensive regime ($N\!=\!200$--$300$) without
+modification. This \emph{cheap-to-expensive transfer} means the
+benchmark's low cost is not a limitation: search happens at
+low $N$, deployment happens at high $N$.
+
+\paragraph{Saturated within the schedule-only space.}
+Four distinct search strategies (Gemini's hand-found schedule,
+Claude's hand-found schedule, bump-family DE, and random search at
+matched compute) all reach feasible held-out scores within a
+4.3\,GWh band at 4272.7\,GWh, establishing a shared local optimum
+for the DEI/ROWP train/test pair. The two winning frontier schedules
+are qualitatively different (dual Gaussian bumps vs.\ decaying
+sinusoidal shake), suggesting that within this optimum,
+multiple distinct mechanism regions exist. We expect that exceeding
+this optimum requires either a richer interface (full optimizer mode
+with novel constraint handling) or a different train/test pair.
+
+\subsection{Applicability Beyond Wind Farms}
+
+The schedule-only interface requires three ingredients: (i)~a
+differentiable physics simulation, (ii)~constraint functions
+expressible as penalties, and (iii)~a gradient optimizer whose
+schedule can be separated from its update rule. Any system meeting
+these requirements can instantiate the same skeleton: swap the wake
+model for a finite-element solver, a molecular dynamics engine, or a
+differentiable renderer; keep the 4-scalar control surface
+\texttt{(lr, alpha, beta1, beta2)} unchanged. The LLM-discovered
+schedule structures---non-monotonic LR dynamics coupled to penalty
+ramps---address a meta-problem (how to trade exploration for
+constraint satisfaction over a fixed optimization horizon) that is
+domain-independent.
+
+Two domains are immediate candidates. \emph{Topology optimization}
+(SIMP) uses Adam or MMA with a penalty exponent $p$ ramped from 1 to
+3 via a ``continuation strategy'' that is directly analogous to the
+$\alpha$ schedule; the 30-year debate over monotonic vs.\ adaptive
+continuation~\cite{rojas2015continuation} parallels our finding that
+non-monotonic penalty dynamics improve held-out quality.
+\emph{Trajectory optimization} for robotics uses differentiable
+physics with collision-avoidance penalties and hand-tuned schedule
+decay. Both share the same 4-scalar control surface and could be
+evaluated with the same train/held-out protocol. Cross-domain
+transfer---whether schedules discovered on one physics simulation
+generalize to another---is the most important open question this
+benchmark raises.
+
+\subsection{Limitations}
+
+\paragraph{Single training farm.}
+The LLM trains on one farm (DEI) and generalizes to variants of it
+plus one distinct held-out farm (ROWP). The DEI turbine-count sweep
+($N=30$--$80$, Sec.~\ref{sec:generalization}) tests only \emph{scaling}
+generalization---the polygon, turbine model, and wind resource are all
+held fixed---so it cannot distinguish schedule structures that
+generalize across physics from structures that happen to work on this
+particular DEI--ROWP pair. A stronger test would use multiple training
+farms and multiple distinct held-out farms drawn from different wind
+regimes, rotor classes, and polygon geometries. We flag this as the
+most important next-step extension of the benchmark; the current
+train/test pair is best read as an existence proof of the held-out
+signal, not as a full characterization of cross-physics
+generalization.
+
+\paragraph{Schedule-only mode fixes initialization.}
+The skeleton uses wind-aware grid initialization. In full-optimizer
+mode, agents improve initialization (hexagonal lattice, K-means
+clustering). The schedule-only interface cannot express initialization
+innovations, which limits what it measures.
+
+\paragraph{Random-search and within-family ablations.}
+To isolate the LLM's contribution from the richness of the
+parameterized schedule family, we run two ablations with matched
+compute budgets (Sec.~\ref{sec:ablations}): a random search over a
+parameterized schedule family (decay type, perturbation type,
+warmup, penalty ramp, Adam betas) at $N=320$ samples, matching
+Claude's schedule-only attempt count; and a differential-evolution
+search over the 14 parameters of Claude's dual-bump family
+(Sec.~\ref{sec:structures}), which establishes an in-family upper
+bound. These ablations help distinguish "the LLM found a good point
+in an easy space" from "the LLM found a qualitatively different
+structure that random search does not reach".
+
+\paragraph{Single-cell training as a design choice.}
+The single-cell training protocol surfaces a tension between
+training generality and evaluation cleanness. Training on multiple
+cells (e.g., varying $N$ or wind rose) could produce more robust
+schedules but would weaken the held-out signal: positive
+generalization from a diverse training set is expected, while
+positive generalization from a single training instance is
+noteworthy. We chose the latter to make the generalization claim
+falsifiable on every held-out cell individually.
+
+\paragraph{Open-source model gap.}
+DeepSeek R1 Distill 32B, the strongest open-source model we
+tested, consistently underperforms the 500-multi-start baseline
+despite using the same portable scaffold and iterative seed
+tournament. Its best schedule uses a structurally simpler
+constant-then-cosine decay without the non-monotonic dynamics
+(bumps, restarts) that frontier models discover. Running the
+same scaffold with two versions of the memory template produced
+identical outcomes, confirming the bottleneck is model capability.
+
+\paragraph{Single-agent-class study.}
+This paper reports two frontier-tier LLM agents (Claude Code
+and Gemini CLI) under their rich CLI scaffolds and one
+open-source model (DeepSeek R1 32B) under a portable scaffold. We
+attempted additional open-source models (Llama 70B, Qwen 32B)
+through the same VLLMRunner scaffold but the
+cross-scaffold comparison would have conflated model capability
+with scaffold capability, and the open-source runs hit engineering
+issues (vLLM context-window limits and dependency incompatibility)
+that we did not have time to resolve before the deadline. A
+clean multi-tier comparison requires running all models inside the
+same scaffold, which we leave to future work.

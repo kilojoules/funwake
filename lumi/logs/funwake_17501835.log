@@ -1,0 +1,991 @@
+=== FunWake Benchmark ===
+Model:  llama3.3-70b (ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4)
+GPUs:   1
+Seed:   2
+Budget: 300 min
+
+Container: /appl/local/laifs/containers/lumi-multitorch-u24r64f21m43t29-20260319_153422/lumi-multitorch-full-u24r64f21m43t29-20260319_153422.sif
+Starting vLLM: --model /scratch/project_465002609/models/llama3.3-70b --tensor-parallel-size 1 --dtype float16 --max-model-len 16384 --port 8000 --host 0.0.0.0 --quantization awq
+vLLM log: /scratch/project_465002609/julian/funwake/lumi/logs/vllm_17501835.log
+vLLM PID: 5394
+Waiting for vLLM server...
+Server ready after 200s
+Serving: /scratch/project_465002609/models/qwen2.5-coder-32b
+
+Running: pixi run python agent_cli.py --provider vllm --model /scratch/project_465002609/models/qwen2.5-coder-32b --base-url http://localhost:8000 --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv --time-budget 18000 --hot-start results/seed_optimizer.py --output-dir results_agent_llama3_3-70b_registry_s2 --timeout-per-run 60
+[vLLM] Connected to http://localhost:8000, models: ['/scratch/project_465002609/models/qwen2.5-coder-32b']
+Starting vllm agent
+  Time budget: 300 min
+  Output: results_agent_llama3_3-70b_registry_s2/
+  Hot-start: results/seed_optimizer.py
+
+
+[turn 1] 300 min remaining, 0 attempts, best=-inf
+[turn 1] Response: ACTION: read_file
+ARGS: {"path": "playground/pixwake/src/pixwake/optim/sgd.py"}...
+[turn 1] read_file → """JAX-native constrained SGD optimizer mirroring TopFarm's EasySGDDriver.
+
+This module provides a fully differentiable SGD solver that enables bilevel
+optimization through the Implicit Function Theor...
+
+[turn 2] 300 min remaining, 0 attempts, best=-inf
+[turn 2] Response: ACTION: read_file
+ARGS: {"path": "playground/pixwake/src/pixwake/optim/sgd.py"}...
+[turn 2] read_file → """JAX-native constrained SGD optimizer mirroring TopFarm's EasySGDDriver.
+
+This module provides a fully differentiable SGD solver that enables bilevel
+optimization through the Implicit Function Theor...
+
+[turn 3] 300 min remaining, 0 attempts, best=-inf
+[turn 3] Response: Based on the provided `sgd.py` file, we can see that the SGD implementation includes ADAM momentum and handles constraints through differentiable penalty functions. Given the Strategy Registry rule, l...
+[turn 3] submit_code → BLOCKED: Blocked import: from deap
+Please fix and resubmit....
+
+[turn 4] 298 min remaining, 0 attempts, best=-inf
+[turn 4] Response: Given the restriction that we cannot use external libraries like `DEAP`, we need to implement a Genetic Algorithm (GA) using only the available tools and libraries. We can use JAX to handle the random...
+[turn 4] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+IMPORT FAILED: cannot import name 'index_update' from 'jax.ops' (/pfs...
+
+[turn 5] 295 min remaining, 0 attempts, best=-inf
+[turn 5] Response: It appears that the `index_update` function has been deprecated or removed from `jax.ops`. Instead, we can use `jax.ops.index` and `jax.ops.index_add` for similar operations. However, since our curren...
+[turn 5] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 6] 290 min remaining, 0 attempts, best=-inf
+[turn 6] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 7] 290 min remaining, 0 attempts, best=-inf
+[turn 7] Response: The errors indicate that there are internal issues with the JAX operations, specifically related to JIT compilation and symbol materialization. This could be due to the way certain operations are bein...
+[turn 7] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 8] 285 min remaining, 0 attempts, best=-inf
+[turn 8] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 9] 285 min remaining, 0 attempts, best=-inf
+[turn 9] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 10] 285 min remaining, 0 attempts, best=-inf
+[turn 10] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 11] 285 min remaining, 0 attempts, best=-inf
+[turn 11] Response: Given the persistent internal errors related to JIT compilation, it seems that the current implementation might still be triggering complex operations that JAX's JIT compiler struggles with. To addres...
+[turn 11] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 12] 282 min remaining, 0 attempts, best=-inf
+[turn 12] Response: The error indicates that the `random.uniform` function is receiving an array of keys instead of a single key. This is because we are passing an array of keys to `random.uniform` in the `initialize_pop...
+[turn 12] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 13] 277 min remaining, 0 attempts, best=-inf
+[turn 13] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 14] 277 min remaining, 0 attempts, best=-inf
+[turn 14] Response: Given the persistent internal errors related to JIT compilation, it seems that the current implementation is still triggering complex operations that JAX's JIT compiler struggles with. To address this...
+[turn 14] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 15] 273 min remaining, 0 attempts, best=-inf
+[turn 15] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 16] 273 min remaining, 0 attempts, best=-inf
+[turn 16] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 17] 273 min remaining, 0 attempts, best=-inf
+[turn 17] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 18] 273 min remaining, 0 attempts, best=-inf
+[turn 18] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 19] 272 min remaining, 0 attempts, best=-inf
+[turn 19] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 20] 272 min remaining, 0 attempts, best=-inf
+[turn 20] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 21] 272 min remaining, 0 attempts, best=-inf
+[turn 21] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 22] 272 min remaining, 0 attempts, best=-inf
+[turn 22] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 23] 272 min remaining, 0 attempts, best=-inf
+[turn 23] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 24] 272 min remaining, 0 attempts, best=-inf
+[turn 24] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 25] 272 min remaining, 0 attempts, best=-inf
+[turn 25] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 26] 272 min remaining, 0 attempts, best=-inf
+[turn 26] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 27] 272 min remaining, 0 attempts, best=-inf
+[turn 27] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 28] 272 min remaining, 0 attempts, best=-inf
+[turn 28] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 29] 272 min remaining, 0 attempts, best=-inf
+[turn 29] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 30] 272 min remaining, 0 attempts, best=-inf
+[turn 30] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 31] 271 min remaining, 0 attempts, best=-inf
+[turn 31] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 32] 271 min remaining, 0 attempts, best=-inf
+[turn 32] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 33] 271 min remaining, 0 attempts, best=-inf
+[turn 33] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 34] 271 min remaining, 0 attempts, best=-inf
+[turn 34] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 35] 271 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 35] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 36] 261 min remaining, 0 attempts, best=-inf
+[turn 36] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 37] 261 min remaining, 0 attempts, best=-inf
+[turn 37] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 38] 261 min remaining, 0 attempts, best=-inf
+[turn 38] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 39] 261 min remaining, 0 attempts, best=-inf
+[turn 39] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 40] 261 min remaining, 0 attempts, best=-inf
+[turn 40] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 41] 261 min remaining, 0 attempts, best=-inf
+[turn 41] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 42] 260 min remaining, 0 attempts, best=-inf
+[turn 42] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 43] 260 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 43] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 44] 255 min remaining, 0 attempts, best=-inf
+[turn 44] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 45] 255 min remaining, 0 attempts, best=-inf
+[turn 45] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 46] 255 min remaining, 0 attempts, best=-inf
+[turn 46] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 47] 255 min remaining, 0 attempts, best=-inf
+[turn 47] Response: The error message "tuple index out of range" suggests that there is an issue with how the results are being indexed or handled, particularly in the `crossover` and `mutate` functions. Let's carefully ...
+[turn 47] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 48] 251 min remaining, 0 attempts, best=-inf
+[turn 48] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 49] 251 min remaining, 0 attempts, best=-inf
+[turn 49] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 50] 251 min remaining, 0 attempts, best=-inf
+[turn 50] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 51] 251 min remaining, 0 attempts, best=-inf
+[turn 51] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 52] 250 min remaining, 0 attempts, best=-inf
+[turn 52] Response: Given the persistent "tuple index out of range" errors, it seems that the issue lies in how the `crossover` and `mutate` functions are handling the population and indices. Specifically, the way we are...
+[turn 52] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 53] 246 min remaining, 0 attempts, best=-inf
+[turn 53] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 54] 246 min remaining, 0 attempts, best=-inf
+[turn 54] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 55] 246 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 55] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 56] 241 min remaining, 0 attempts, best=-inf
+[turn 56] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 57] 240 min remaining, 0 attempts, best=-inf
+[turn 57] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 58] 240 min remaining, 0 attempts, best=-inf
+[turn 58] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 59] 240 min remaining, 0 attempts, best=-inf
+[turn 59] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 60] 240 min remaining, 0 attempts, best=-inf
+[turn 60] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 61] 240 min remaining, 0 attempts, best=-inf
+[turn 61] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 62] 240 min remaining, 0 attempts, best=-inf
+[turn 62] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 63] 240 min remaining, 0 attempts, best=-inf
+[turn 63] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 64] 240 min remaining, 0 attempts, best=-inf
+[turn 64] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 65] 240 min remaining, 0 attempts, best=-inf
+[turn 65] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 66] 240 min remaining, 0 attempts, best=-inf
+[turn 66] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 67] 240 min remaining, 0 attempts, best=-inf
+[turn 67] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 68] 240 min remaining, 0 attempts, best=-inf
+[turn 68] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 69] 239 min remaining, 0 attempts, best=-inf
+[turn 69] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 70] 239 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 70] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 71] 234 min remaining, 0 attempts, best=-inf
+[turn 71] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 72] 234 min remaining, 0 attempts, best=-inf
+[turn 72] Response: Given the persistent "tuple index out of range" errors, it seems that the issue lies in how the `crossover` and `mutate` functions are handling the population and indices. Specifically, the way we are...
+[turn 72] submit_code → Tests FAILED:
+Loading /pfs/lustrep2/scratch/project_465002609/julian/funwake/results_agent_llama3_3-70b_registry_s2/iter_001.py...
+
+=== Signature Check ===
+  [PASS] has_function: optimize() found
+  [P...
+
+[turn 73] 229 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 73] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 74] 224 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 74] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 75] 219 min remaining, 0 attempts, best=-inf
+[turn 75] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 76] 219 min remaining, 0 attempts, best=-inf
+[turn 76] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 77] 219 min remaining, 0 attempts, best=-inf
+[turn 77] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 78] 219 min remaining, 0 attempts, best=-inf
+[turn 78] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 79] 219 min remaining, 0 attempts, best=-inf
+[turn 79] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 80] 219 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 80] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 81] 213 min remaining, 0 attempts, best=-inf
+[turn 81] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 82] 213 min remaining, 0 attempts, best=-inf
+[turn 82] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 83] 213 min remaining, 0 attempts, best=-inf
+[turn 83] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 84] 213 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 84] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 85] 208 min remaining, 0 attempts, best=-inf
+[turn 85] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 86] 208 min remaining, 0 attempts, best=-inf
+[turn 86] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 87] 208 min remaining, 0 attempts, best=-inf
+[turn 87] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 88] 208 min remaining, 0 attempts, best=-inf
+[turn 88] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 89] 208 min remaining, 0 attempts, best=-inf
+[turn 89] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 90] 208 min remaining, 0 attempts, best=-inf
+[turn 90] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 91] 208 min remaining, 0 attempts, best=-inf
+[turn 91] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 92] 207 min remaining, 0 attempts, best=-inf
+[turn 92] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 93] 207 min remaining, 0 attempts, best=-inf
+[turn 93] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 94] 207 min remaining, 0 attempts, best=-inf
+[turn 94] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 95] 207 min remaining, 0 attempts, best=-inf
+[turn 95] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 96] 207 min remaining, 0 attempts, best=-inf
+[turn 96] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 97] 207 min remaining, 0 attempts, best=-inf
+[turn 97] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 98] 207 min remaining, 0 attempts, best=-inf
+[turn 98] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 99] 207 min remaining, 0 attempts, best=-inf
+[turn 99] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 100] 207 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 100] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 101] 197 min remaining, 0 attempts, best=-inf
+[turn 101] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 102] 197 min remaining, 0 attempts, best=-inf
+[turn 102] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 103] 197 min remaining, 0 attempts, best=-inf
+[turn 103] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 104] 196 min remaining, 0 attempts, best=-inf
+[turn 104] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 105] 196 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 105] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 106] 191 min remaining, 0 attempts, best=-inf
+[turn 106] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 107] 191 min remaining, 0 attempts, best=-inf
+[turn 107] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 108] 191 min remaining, 0 attempts, best=-inf
+[turn 108] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 109] 191 min remaining, 0 attempts, best=-inf
+[turn 109] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 110] 191 min remaining, 0 attempts, best=-inf
+[turn 110] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 111] 191 min remaining, 0 attempts, best=-inf
+[turn 111] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 112] 191 min remaining, 0 attempts, best=-inf
+[turn 112] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 113] 191 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 113] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 114] 186 min remaining, 0 attempts, best=-inf
+[turn 114] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 115] 185 min remaining, 0 attempts, best=-inf
+[turn 115] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 116] 185 min remaining, 0 attempts, best=-inf
+[turn 116] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 117] 185 min remaining, 0 attempts, best=-inf
+[turn 117] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 118] 185 min remaining, 0 attempts, best=-inf
+[turn 118] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 119] 185 min remaining, 0 attempts, best=-inf
+[turn 119] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 120] 185 min remaining, 0 attempts, best=-inf
+[turn 120] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 121] 185 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 121] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 122] 180 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 122] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 123] 175 min remaining, 0 attempts, best=-inf
+[turn 123] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 124] 175 min remaining, 0 attempts, best=-inf
+[turn 124] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 125] 175 min remaining, 0 attempts, best=-inf
+[turn 125] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 126] 175 min remaining, 0 attempts, best=-inf
+[turn 126] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 127] 174 min remaining, 0 attempts, best=-inf
+[turn 127] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 128] 174 min remaining, 0 attempts, best=-inf
+[turn 128] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 129] 174 min remaining, 0 attempts, best=-inf
+[turn 129] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 130] 174 min remaining, 0 attempts, best=-inf
+[turn 130] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 131] 174 min remaining, 0 attempts, best=-inf
+[turn 131] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 132] 174 min remaining, 0 attempts, best=-inf
+[turn 132] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 133] 174 min remaining, 0 attempts, best=-inf
+[turn 133] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 134] 174 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 134] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 135] 164 min remaining, 0 attempts, best=-inf
+[turn 135] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 136] 164 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 136] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 137] 159 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 137] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 138] 153 min remaining, 0 attempts, best=-inf
+[turn 138] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 139] 153 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 139] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 140] 148 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 140] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 141] 143 min remaining, 0 attempts, best=-inf
+[turn 141] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 142] 143 min remaining, 0 attempts, best=-inf
+[turn 142] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 143] 143 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 143] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 144] 138 min remaining, 0 attempts, best=-inf
+[turn 144] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 145] 138 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 145] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 146] 133 min remaining, 0 attempts, best=-inf
+[turn 146] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 147] 133 min remaining, 0 attempts, best=-inf
+[turn 147] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 148] 133 min remaining, 0 attempts, best=-inf
+[turn 148] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 149] 132 min remaining, 0 attempts, best=-inf
+[turn 149] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 150] 132 min remaining, 0 attempts, best=-inf
+[turn 150] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 151] 132 min remaining, 0 attempts, best=-inf
+[turn 151] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 152] 132 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 152] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 153] 127 min remaining, 0 attempts, best=-inf
+[turn 153] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 154] 127 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 154] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 155] 117 min remaining, 0 attempts, best=-inf
+[turn 155] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 156] 117 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 156] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 157] 112 min remaining, 0 attempts, best=-inf
+[turn 157] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 158] 112 min remaining, 0 attempts, best=-inf
+[turn 158] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 159] 112 min remaining, 0 attempts, best=-inf
+[turn 159] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 160] 111 min remaining, 0 attempts, best=-inf
+[turn 160] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 161] 111 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 161] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 162] 106 min remaining, 0 attempts, best=-inf
+[turn 162] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 163] 106 min remaining, 0 attempts, best=-inf
+[turn 163] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 164] 106 min remaining, 0 attempts, best=-inf
+[turn 164] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 165] 106 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 165] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 166] 96 min remaining, 0 attempts, best=-inf
+[turn 166] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 167] 96 min remaining, 0 attempts, best=-inf
+[turn 167] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 168] 96 min remaining, 0 attempts, best=-inf
+[turn 168] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 169] 96 min remaining, 0 attempts, best=-inf
+[turn 169] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 170] 96 min remaining, 0 attempts, best=-inf
+[turn 170] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 171] 95 min remaining, 0 attempts, best=-inf
+[turn 171] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 172] 95 min remaining, 0 attempts, best=-inf
+[turn 172] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 173] 95 min remaining, 0 attempts, best=-inf
+[turn 173] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 174] 95 min remaining, 0 attempts, best=-inf
+[turn 174] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 175] 95 min remaining, 0 attempts, best=-inf
+[turn 175] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 176] 95 min remaining, 0 attempts, best=-inf
+[turn 176] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 177] 95 min remaining, 0 attempts, best=-inf
+[turn 177] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 178] 95 min remaining, 0 attempts, best=-inf
+[turn 178] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 179] 95 min remaining, 0 attempts, best=-inf
+[turn 179] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 180] 95 min remaining, 0 attempts, best=-inf
+[turn 180] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 181] 95 min remaining, 0 attempts, best=-inf
+[turn 181] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 182] 95 min remaining, 0 attempts, best=-inf
+[turn 182] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 183] 94 min remaining, 0 attempts, best=-inf
+[turn 183] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 184] 94 min remaining, 0 attempts, best=-inf
+[turn 184] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 185] 94 min remaining, 0 attempts, best=-inf
+[turn 185] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 186] 94 min remaining, 0 attempts, best=-inf
+[turn 186] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 187] 94 min remaining, 0 attempts, best=-inf
+[turn 187] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 188] 94 min remaining, 0 attempts, best=-inf
+[turn 188] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 189] 94 min remaining, 0 attempts, best=-inf
+[turn 189] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 190] 94 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 4s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 190] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 191] 79 min remaining, 0 attempts, best=-inf
+[turn 191] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 192] 79 min remaining, 0 attempts, best=-inf
+[turn 192] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 193] 79 min remaining, 0 attempts, best=-inf
+[turn 193] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 194] 78 min remaining, 0 attempts, best=-inf
+[turn 194] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 195] 78 min remaining, 0 attempts, best=-inf
+[turn 195] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 196] 78 min remaining, 0 attempts, best=-inf
+[turn 196] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 197] 78 min remaining, 0 attempts, best=-inf
+[turn 197] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 198] 78 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 198] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 199] 73 min remaining, 0 attempts, best=-inf
+[turn 199] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 200] 73 min remaining, 0 attempts, best=-inf
+[turn 200] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 201] 73 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 201] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 202] 63 min remaining, 0 attempts, best=-inf
+[turn 202] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 203] 63 min remaining, 0 attempts, best=-inf
+[turn 203] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 204] 63 min remaining, 0 attempts, best=-inf
+[turn 204] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 205] 62 min remaining, 0 attempts, best=-inf
+[turn 205] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 206] 62 min remaining, 0 attempts, best=-inf
+[turn 206] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 207] 62 min remaining, 0 attempts, best=-inf
+[turn 207] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 208] 62 min remaining, 0 attempts, best=-inf
+[turn 208] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 209] 62 min remaining, 0 attempts, best=-inf
+[turn 209] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 210] 62 min remaining, 0 attempts, best=-inf
+[turn 210] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 211] 62 min remaining, 0 attempts, best=-inf
+[turn 211] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 212] 62 min remaining, 0 attempts, best=-inf
+[turn 212] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 213] 62 min remaining, 0 attempts, best=-inf
+[turn 213] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 214] 62 min remaining, 0 attempts, best=-inf
+[turn 214] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 215] 62 min remaining, 0 attempts, best=-inf
+[turn 215] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 216] 62 min remaining, 0 attempts, best=-inf
+[turn 216] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 217] 61 min remaining, 0 attempts, best=-inf
+[turn 217] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 218] 61 min remaining, 0 attempts, best=-inf
+[turn 218] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 219] 61 min remaining, 0 attempts, best=-inf
+[turn 219] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 220] 61 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 220] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 221] 51 min remaining, 0 attempts, best=-inf
+[turn 221] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 222] 51 min remaining, 0 attempts, best=-inf
+[turn 222] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 223] 51 min remaining, 0 attempts, best=-inf
+[turn 223] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 224] 51 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 224] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 225] 46 min remaining, 0 attempts, best=-inf
+[turn 225] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 226] 46 min remaining, 0 attempts, best=-inf
+[turn 226] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 227] 46 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 227] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 228] 40 min remaining, 0 attempts, best=-inf
+[turn 228] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 229] 40 min remaining, 0 attempts, best=-inf
+[turn 229] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 230] 40 min remaining, 0 attempts, best=-inf
+[turn 230] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 231] 40 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 231] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 232] 35 min remaining, 0 attempts, best=-inf
+[turn 232] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 233] 35 min remaining, 0 attempts, best=-inf
+[turn 233] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 234] 35 min remaining, 0 attempts, best=-inf
+[turn 234] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 235] 35 min remaining, 0 attempts, best=-inf
+[turn 235] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 236] 35 min remaining, 0 attempts, best=-inf
+[turn 236] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 237] 35 min remaining, 0 attempts, best=-inf
+[turn 237] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 238] 35 min remaining, 0 attempts, best=-inf
+[turn 238] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 239] 34 min remaining, 0 attempts, best=-inf
+[turn 239] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 240] 34 min remaining, 0 attempts, best=-inf
+[turn 240] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 241] 34 min remaining, 0 attempts, best=-inf
+[turn 241] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 242] 34 min remaining, 0 attempts, best=-inf
+[turn 242] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 243] 34 min remaining, 0 attempts, best=-inf
+[turn 243] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 244] 34 min remaining, 0 attempts, best=-inf
+[turn 244] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 245] 34 min remaining, 0 attempts, best=-inf
+[turn 245] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 246] 34 min remaining, 0 attempts, best=-inf
+[turn 246] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 247] 34 min remaining, 0 attempts, best=-inf
+[turn 247] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 248] 34 min remaining, 0 attempts, best=-inf
+[turn 248] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 249] 34 min remaining, 0 attempts, best=-inf
+[turn 249] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 250] 34 min remaining, 0 attempts, best=-inf
+[turn 250] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 251] 33 min remaining, 0 attempts, best=-inf
+[turn 251] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 252] 33 min remaining, 0 attempts, best=-inf
+[turn 252] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 253] 33 min remaining, 0 attempts, best=-inf
+[turn 253] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 254] 33 min remaining, 0 attempts, best=-inf
+[turn 254] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 255] 33 min remaining, 0 attempts, best=-inf
+[turn 255] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 256] 33 min remaining, 0 attempts, best=-inf
+[turn 256] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 257] 33 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 257] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 258] 28 min remaining, 0 attempts, best=-inf
+[turn 258] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 259] 28 min remaining, 0 attempts, best=-inf
+[turn 259] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 260] 28 min remaining, 0 attempts, best=-inf
+[turn 260] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 261] 28 min remaining, 0 attempts, best=-inf
+[turn 261] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 262] 28 min remaining, 0 attempts, best=-inf
+[turn 262] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 263] 27 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 263] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 264] 22 min remaining, 0 attempts, best=-inf
+[turn 264] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 265] 22 min remaining, 0 attempts, best=-inf
+[turn 265] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 266] 22 min remaining, 0 attempts, best=-inf
+[turn 266] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 267] 22 min remaining, 0 attempts, best=-inf
+[turn 267] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 268] 22 min remaining, 0 attempts, best=-inf
+[turn 268] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 269] 22 min remaining, 0 attempts, best=-inf
+[turn 269] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 270] 22 min remaining, 0 attempts, best=-inf
+[turn 270] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 271] 22 min remaining, 0 attempts, best=-inf
+[turn 271] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 272] 22 min remaining, 0 attempts, best=-inf
+[turn 272] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 273] 22 min remaining, 0 attempts, best=-inf
+[turn 273] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 274] 22 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[vLLM] Connection error, retrying in 2s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 274] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 275] 11 min remaining, 0 attempts, best=-inf
+[turn 275] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 276] 11 min remaining, 0 attempts, best=-inf
+[turn 276] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 277] 11 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 277] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 278] 6 min remaining, 0 attempts, best=-inf
+[turn 278] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 279] 6 min remaining, 0 attempts, best=-inf
+[turn 279] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 280] 6 min remaining, 0 attempts, best=-inf
+[turn 280] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 281] 6 min remaining, 0 attempts, best=-inf
+[turn 281] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 282] 6 min remaining, 0 attempts, best=-inf
+[turn 282] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 283] 6 min remaining, 0 attempts, best=-inf
+[turn 283] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 284] 6 min remaining, 0 attempts, best=-inf
+[vLLM] Connection error, retrying in 1s: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=300)
+[turn 284] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+[turn 285] 1 min remaining, 0 attempts, best=-inf
+[turn 285] API error: 404 Client Error: Not Found for url: http://localhost:8000/v1/chat/completions
+
+Done. Best AEP: -inf GWh over 0 attempts.
+
+Agent finished. Results in results_agent_llama3_3-70b_registry_s2/
+Stopping vLLM...

@@ -1,0 +1,482 @@
+{
+  "dei_n30_roseuniform": {
+    "farm": "dei",
+    "n": 30,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 3359.98,
+    "mean_aep": 3359.931,
+    "feasible_rate": 0.996,
+    "total_time_s": 1383.0
+  },
+  "dei_n30_roseomnidir": {
+    "farm": "dei",
+    "n": 30,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 3347.36,
+    "mean_aep": 3340.645,
+    "feasible_rate": 1.0,
+    "total_time_s": 1339.3
+  },
+  "dei_n30_rosedei": {
+    "farm": "dei",
+    "n": 30,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 3347.62,
+    "mean_aep": 3340.518,
+    "feasible_rate": 1.0,
+    "total_time_s": 1330.0
+  },
+  "dei_n30_roserowp": {
+    "farm": "dei",
+    "n": 30,
+    "rose": "rowp",
+    "n_seeds": 268,
+    "best_aep": 2607.53,
+    "mean_aep": 2602.295,
+    "feasible_rate": 1.0,
+    "total_time_s": 1554.4
+  },
+  "dei_n40_roseuniform": {
+    "farm": "dei",
+    "n": 40,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 4479.97,
+    "mean_aep": 4478.616,
+    "feasible_rate": 0.924,
+    "total_time_s": 4215.1
+  },
+  "dei_n40_roseomnidir": {
+    "farm": "dei",
+    "n": 40,
+    "rose": "omnidir",
+    "n_seeds": 499,
+    "best_aep": 4449.37,
+    "mean_aep": 4438.425,
+    "feasible_rate": 1.0,
+    "total_time_s": 4628.4
+  },
+  "dei_n40_rosedei": {
+    "farm": "dei",
+    "n": 40,
+    "rose": "dei",
+    "n_seeds": 413,
+    "best_aep": 4450.04,
+    "mean_aep": 4438.144,
+    "feasible_rate": 1.0,
+    "total_time_s": 4265.8
+  },
+  "dei_n40_roserowp": {
+    "farm": "dei",
+    "n": 40,
+    "rose": "rowp",
+    "n_seeds": 490,
+    "best_aep": 3468.09,
+    "mean_aep": 3459.652,
+    "feasible_rate": 1.0,
+    "total_time_s": 2978.4
+  },
+  "dei_n50_roseuniform": {
+    "farm": "dei",
+    "n": 50,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 5599.79,
+    "mean_aep": 5594.736,
+    "feasible_rate": 0.694,
+    "total_time_s": 5199.2
+  },
+  "dei_n50_roseomnidir": {
+    "farm": "dei",
+    "n": 50,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 5541.52,
+    "mean_aep": 5526.233,
+    "feasible_rate": 1.0,
+    "total_time_s": 5205.3
+  },
+  "dei_n50_rosedei": {
+    "farm": "dei",
+    "n": 50,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 5544.09,
+    "mean_aep": 5525.823,
+    "feasible_rate": 1.0,
+    "total_time_s": 5204.6
+  },
+  "dei_n50_roserowp": {
+    "farm": "dei",
+    "n": 50,
+    "rose": "rowp",
+    "n_seeds": 495,
+    "best_aep": 4323.01,
+    "mean_aep": 4309.41,
+    "feasible_rate": 0.998,
+    "total_time_s": 3597.2
+  },
+  "dei_n60_roseuniform": {
+    "farm": "dei",
+    "n": 60,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 6715.06,
+    "mean_aep": 6708.83,
+    "feasible_rate": 0.414,
+    "total_time_s": 5456.7
+  },
+  "dei_n60_roseomnidir": {
+    "farm": "dei",
+    "n": 60,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 6626.36,
+    "mean_aep": 6604.551,
+    "feasible_rate": 1.0,
+    "total_time_s": 5230.7
+  },
+  "dei_n60_rosedei": {
+    "farm": "dei",
+    "n": 60,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 6628.5,
+    "mean_aep": 6603.205,
+    "feasible_rate": 1.0,
+    "total_time_s": 5280.9
+  },
+  "dei_n60_roserowp": {
+    "farm": "dei",
+    "n": 60,
+    "rose": "rowp",
+    "n_seeds": 95,
+    "best_aep": 5165.29,
+    "mean_aep": 5152.395,
+    "feasible_rate": 1.0,
+    "total_time_s": 1859.5
+  },
+  "dei_n70_roseuniform": {
+    "farm": "dei",
+    "n": 70,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 7829.07,
+    "mean_aep": 7820.19,
+    "feasible_rate": 0.292,
+    "total_time_s": 6866.6
+  },
+  "dei_n70_roseomnidir": {
+    "farm": "dei",
+    "n": 70,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 7695.43,
+    "mean_aep": 7672.31,
+    "feasible_rate": 0.992,
+    "total_time_s": 7874.0
+  },
+  "dei_n70_rosedei": {
+    "farm": "dei",
+    "n": 70,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 7695.39,
+    "mean_aep": 7670.665,
+    "feasible_rate": 1.0,
+    "total_time_s": 7697.1
+  },
+  "dei_n70_roserowp": {
+    "farm": "dei",
+    "n": 70,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 6008.77,
+    "mean_aep": 5987.332,
+    "feasible_rate": 0.99,
+    "total_time_s": 5528.2
+  },
+  "dei_n80_roseuniform": {
+    "farm": "dei",
+    "n": 80,
+    "rose": "uniform",
+    "n_seeds": 481,
+    "best_aep": 8936.75,
+    "mean_aep": 8927.164,
+    "feasible_rate": 0.1538,
+    "total_time_s": 6653.4
+  },
+  "dei_n80_roseomnidir": {
+    "farm": "dei",
+    "n": 80,
+    "rose": "omnidir",
+    "n_seeds": 476,
+    "best_aep": 8764.38,
+    "mean_aep": 8730.935,
+    "feasible_rate": 0.9811,
+    "total_time_s": 6510.8
+  },
+  "dei_n80_rosedei": {
+    "farm": "dei",
+    "n": 80,
+    "rose": "dei",
+    "n_seeds": 448,
+    "best_aep": 8759.89,
+    "mean_aep": 8726.937,
+    "feasible_rate": 0.9955,
+    "total_time_s": 5697.8
+  },
+  "dei_n80_roserowp": {
+    "farm": "dei",
+    "n": 80,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 6840.6,
+    "mean_aep": 6813.985,
+    "feasible_rate": 0.974,
+    "total_time_s": 5460.7
+  },
+  "rowp_n30_roseuniform": {
+    "farm": "rowp",
+    "n": 30,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 2330.16,
+    "mean_aep": 2330.16,
+    "feasible_rate": 1.0,
+    "total_time_s": 2686.8
+  },
+  "rowp_n30_roseomnidir": {
+    "farm": "rowp",
+    "n": 30,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 2316.35,
+    "mean_aep": 2308.545,
+    "feasible_rate": 1.0,
+    "total_time_s": 3073.8
+  },
+  "rowp_n30_rosedei": {
+    "farm": "rowp",
+    "n": 30,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 2314.87,
+    "mean_aep": 2308.436,
+    "feasible_rate": 1.0,
+    "total_time_s": 3081.8
+  },
+  "rowp_n30_roserowp": {
+    "farm": "rowp",
+    "n": 30,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 1749.41,
+    "mean_aep": 1744.657,
+    "feasible_rate": 1.0,
+    "total_time_s": 2886.4
+  },
+  "rowp_n40_roseuniform": {
+    "farm": "rowp",
+    "n": 40,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 3106.88,
+    "mean_aep": 3106.875,
+    "feasible_rate": 1.0,
+    "total_time_s": 3064.7
+  },
+  "rowp_n40_roseomnidir": {
+    "farm": "rowp",
+    "n": 40,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 3073.54,
+    "mean_aep": 3060.12,
+    "feasible_rate": 1.0,
+    "total_time_s": 3399.8
+  },
+  "rowp_n40_rosedei": {
+    "farm": "rowp",
+    "n": 40,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 3071.54,
+    "mean_aep": 3060.05,
+    "feasible_rate": 1.0,
+    "total_time_s": 3421.8
+  },
+  "rowp_n40_roserowp": {
+    "farm": "rowp",
+    "n": 40,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 2324.67,
+    "mean_aep": 2318.049,
+    "feasible_rate": 0.994,
+    "total_time_s": 3105.8
+  },
+  "rowp_n50_roseuniform": {
+    "farm": "rowp",
+    "n": 50,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 3883.6,
+    "mean_aep": 3883.039,
+    "feasible_rate": 0.976,
+    "total_time_s": 4085.9
+  },
+  "rowp_n50_roseomnidir": {
+    "farm": "rowp",
+    "n": 50,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 3821.15,
+    "mean_aep": 3801.267,
+    "feasible_rate": 1.0,
+    "total_time_s": 4133.5
+  },
+  "rowp_n50_rosedei": {
+    "farm": "rowp",
+    "n": 50,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 3816.95,
+    "mean_aep": 3801.11,
+    "feasible_rate": 1.0,
+    "total_time_s": 4161.0
+  },
+  "rowp_n50_roserowp": {
+    "farm": "rowp",
+    "n": 50,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 2896.92,
+    "mean_aep": 2885.937,
+    "feasible_rate": 0.994,
+    "total_time_s": 3327.7
+  },
+  "rowp_n60_roseuniform": {
+    "farm": "rowp",
+    "n": 60,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 4660.32,
+    "mean_aep": 4656.229,
+    "feasible_rate": 0.718,
+    "total_time_s": 4798.2
+  },
+  "rowp_n60_roseomnidir": {
+    "farm": "rowp",
+    "n": 60,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 4557.84,
+    "mean_aep": 4531.13,
+    "feasible_rate": 1.0,
+    "total_time_s": 5009.8
+  },
+  "rowp_n60_rosedei": {
+    "farm": "rowp",
+    "n": 60,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 4552.99,
+    "mean_aep": 4530.852,
+    "feasible_rate": 1.0,
+    "total_time_s": 5063.9
+  },
+  "rowp_n60_roserowp": {
+    "farm": "rowp",
+    "n": 60,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 3463.48,
+    "mean_aep": 3447.897,
+    "feasible_rate": 0.986,
+    "total_time_s": 3860.1
+  },
+  "rowp_n70_roseuniform": {
+    "farm": "rowp",
+    "n": 70,
+    "rose": "uniform",
+    "n_seeds": 500,
+    "best_aep": 5434.51,
+    "mean_aep": 5426.618,
+    "feasible_rate": 0.366,
+    "total_time_s": 5615.2
+  },
+  "rowp_n70_roseomnidir": {
+    "farm": "rowp",
+    "n": 70,
+    "rose": "omnidir",
+    "n_seeds": 500,
+    "best_aep": 5285.48,
+    "mean_aep": 5251.786,
+    "feasible_rate": 0.97,
+    "total_time_s": 5821.3
+  },
+  "rowp_n70_rosedei": {
+    "farm": "rowp",
+    "n": 70,
+    "rose": "dei",
+    "n_seeds": 500,
+    "best_aep": 5279.04,
+    "mean_aep": 5249.668,
+    "feasible_rate": 0.994,
+    "total_time_s": 5694.3
+  },
+  "rowp_n70_roserowp": {
+    "farm": "rowp",
+    "n": 70,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 4023.23,
+    "mean_aep": 4004.084,
+    "feasible_rate": 0.978,
+    "total_time_s": 4554.9
+  },
+  "rowp_n80_roseuniform": {
+    "farm": "rowp",
+    "n": 80,
+    "rose": "uniform",
+    "n_seeds": 473,
+    "best_aep": 6202.69,
+    "mean_aep": 6193.916,
+    "feasible_rate": 0.1459,
+    "total_time_s": 5541.4
+  },
+  "rowp_n80_roseomnidir": {
+    "farm": "rowp",
+    "n": 80,
+    "rose": "omnidir",
+    "n_seeds": 458,
+    "best_aep": 5994.83,
+    "mean_aep": 5961.58,
+    "feasible_rate": 0.8493,
+    "total_time_s": 5389.6
+  },
+  "rowp_n80_rosedei": {
+    "farm": "rowp",
+    "n": 80,
+    "rose": "dei",
+    "n_seeds": 463,
+    "best_aep": 5989.12,
+    "mean_aep": 5958.063,
+    "feasible_rate": 0.9784,
+    "total_time_s": 5579.5
+  },
+  "rowp_n80_roserowp": {
+    "farm": "rowp",
+    "n": 80,
+    "rose": "rowp",
+    "n_seeds": 500,
+    "best_aep": 4576.61,
+    "mean_aep": 4553.71,
+    "feasible_rate": 0.96,
+    "total_time_s": 5414.5
+  }
+}
