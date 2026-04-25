@@ -1,342 +1,400 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
+
 \usepackage[T1]{fontenc}
-\usepackage{hyperref}
-\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
 \usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{hyperref}
+
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+\usepackage{icml2026}
+
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{enumitem}
-\usepackage{microtype}
-\usepackage[margin=0.85in]{geometry}
-\usepackage{natbib}
-\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage{amsthm}
 
-\title{FunWake: A Low-Cost Benchmark for LLM-Discovered\\Optimization Algorithms}
+\usepackage[capitalize,noabbrev]{cleveref}
 
-\author{
-  Julian Quick \\
-  DTU Wind and Energy Systems \\
-  Technical University of Denmark \\
-  \texttt{juqu@dtu.dk}
-}
+\icmltitlerunning{FunWake: A Benchmark for LLM-Discovered Optimization Algorithms}
 
 \begin{document}
-\maketitle
+
+\twocolumn[
+\icmltitle{FunWake: A Low-Cost Benchmark for\\
+LLM-Discovered Optimization Algorithms}
+
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{Anonymous Authors}{anon}
+\end{icmlauthorlist}
+
+\icmlaffiliation{anon}{Anonymous Institution}
+
+\icmlcorrespondingauthor{Anonymous Authors}{anon@example.com}
+
+\icmlkeywords{LLM agents, algorithm discovery, wind farm optimization, benchmark}
+
+\vskip 0.3in
+]
+
+\printAffiliationsAndNotice{}
 
 \begin{abstract}
-\noindent
 Can LLM agents discover novel optimization algorithms, or do they
 default to reimplementing known methods? We introduce FunWake, a
-benchmark that answers this by comparing two modes of LLM
-interaction on the same physics problem (wind farm layout
-optimization). In \emph{schedule-only} mode, the LLM writes a
-4-output function controlling the learning rate, penalty weight,
-and Adam momentum of a fixed gradient optimizer. In
-\emph{full-optimizer} mode, the LLM writes an arbitrary optimization
-routine from scratch. Schedule-only agents discover genuinely novel
-structures (dual Gaussian LR bumps, decaying sinusoidal shake) that
-generalize across turbine counts ($N\!=\!30$ to $300$) and to a
-physics-distinct held-out farm. Full-optimizer agents instead
-converge on wrapping community-standard solvers (SLSQP, TopFarm
-SGD) with better initialization: valid engineering but not new
-optimization knowledge. The schedule-only interface succeeds because
-it constrains the search space to force creative exploration and
-equalizes compute, since every submission runs the identical
-8000-step loop. FunWake is open-source, evaluates on CPU in
-30--60\,s, and costs \$5--50 per model.
+benchmark that tests this by exposing two tool interfaces to the same
+LLM agent on the same physics problem (wind farm layout optimization).
+A \emph{narrow} interface restricts the agent to writing a 4-output
+schedule function controlling the learning rate, penalty weight, and
+Adam momentum of a fixed gradient optimizer; a \emph{broad} interface
+lets the agent write an arbitrary optimization routine from scratch.
+Given the narrow interface, agents propose novel schedule
+\emph{parameterizations} (dual Gaussian LR bumps, cyclic Adam betas
+synchronized with cosine restarts) that generalize across turbine
+counts ($N{=}30$ to $300$) and to a physics-distinct held-out farm;
+ablations show non-LLM search inside the proposed parameter family
+matches the LLM's scores, isolating the LLM's contribution to
+parameterization design rather than numerical tuning. Given the broad
+interface, agents converge on reimplementing community-standard
+solvers (SLSQP) with better initialization, valid engineering but not
+new algorithmic knowledge. FunWake evaluates on CPU in
+30--45\,s per candidate at training scale ($N{=}50$) and scales
+predictably (340\,s at $N{=}200$; SLSQP exceeds 1600\,s at the same
+size), making iterative search practical at workshop budgets.
 \end{abstract}
 
-%% ────────────────────────────────────────────────────────────────
 \section{Benchmark Design}
 
 \paragraph{Problem.}
 Place $N$ wind turbines inside a polygon to maximize annual energy
-production (AEP) subject to boundary and minimum-spacing
-constraints, using a differentiable Gaussian wake
+production (AEP) subject to boundary and minimum-spacing constraints,
+using a differentiable Gaussian wake
 model~\cite{bastankhah2014new} implemented in JAX.
 
 \paragraph{Two interfaces.}
 In \emph{schedule-only} mode, the LLM writes
-\texttt{schedule\_fn(step, total\_steps, lr0, alpha0)}
-$\to$ \texttt{(lr, alpha, beta1, beta2)}, controlling a fixed
-8000-step Adam skeleton. In \emph{full-optimizer} mode, the LLM
-writes an arbitrary \texttt{optimize(sim, n\_target, boundary,
-min\_spacing, wd, ws, weights)} $\to$ \texttt{(x, y)} function.
-Both modes receive the same physics simulation and problem
-parameters.  A key design property of schedule-only mode is
-\emph{compute equalization}: every schedule runs the identical
-loop, so evaluation cost depends only on problem size, not on the
-schedule's complexity.
+\texttt{schedule\_fn(step, total\_steps, lr0, alpha0)} $\to$
+\texttt{(lr, alpha, beta1, beta2)}, controlling a fixed 8000-step Adam
+skeleton. In \emph{full-optimizer} mode, the LLM writes an arbitrary
+\texttt{optimize(sim, n\_target, boundary, min\_spacing, wd, ws,
+weights)} $\to$ \texttt{(x, y)} function. Both modes receive the same
+physics simulation and problem parameters. A key design property of
+schedule-only mode is \emph{compute equalization}: every schedule runs
+the identical loop, so evaluation cost depends only on problem size,
+not on the schedule's complexity.
 
 \paragraph{Train/test protocol.}
-The agent trains on a single cell: DEI polygon, $N\!=\!50$
-turbines, observed wind rose.  We evaluate on a
-$2 \times 8 \times 4 = 64$-cell matrix crossing two polygons
-(DEI and held-out ROWP), eight turbine counts
-($N\!=\!30$ to $300$), and four wind roses.  The held-out ROWP
-polygon differs in turbine model ($-17.5\%$ rotor), geometry
-(4-vertex vs.\ 5-vertex), and wind resource (Weibull vs.\
-observed).  The LLM never sees held-out AEP.
+The agent trains on a single cell: DEI polygon, $N{=}50$ turbines,
+observed wind rose. We evaluate on a $2 \times 8 \times 4 = 64$-cell
+matrix crossing two polygons (DEI and held-out ROWP), eight turbine
+counts ($N{=}30$ to $300$), and four wind roses. The held-out ROWP
+polygon differs in turbine model ($-17.5\%$ rotor), geometry (4-vertex
+vs.\ 5-vertex), and wind resource (Weibull vs.\ observed). The LLM
+never sees held-out AEP.
 
 \paragraph{Baseline.}
-500 multi-start TopFarm SGD~\cite{pedersen2019topfarm}:
-5540.7\,GWh on DEI, 4246.7\,GWh on ROWP.
+500 multi-start TopFarm SGD~\cite{pedersen2019topfarm}: 5540.7\,GWh on
+DEI, 4246.7\,GWh on ROWP.
 
-%% ────────────────────────────────────────────────────────────────
 \section{Results}
 
-We evaluate Claude Code and Gemini~2.5 Flash (via Gemini~CLI)
-in both modes with a 5-hour wall-clock budget.
+We evaluate Claude Code and Gemini~2.5 Flash (via Gemini~CLI) in both
+modes with a 5-hour wall-clock budget.
 
-\subsection{Schedule-Only: Novel Structures That Generalize}
+\subsection{Schedule-Only: Novel Parameterizations That Generalize}
 
-Figure~\ref{fig:convergence} shows the search process.  Training
-AEP saturates within approximately 100 attempts, but the deployed
-script's held-out AEP is non-monotonic: improving training does not
-guarantee improving generalization, motivating the physics-based
-held-out design.
+\Cref{fig:convergence} shows the search process. Training AEP
+saturates within approximately 100 attempts, but the deployed script's
+held-out AEP is non-monotonic: improving training does not guarantee
+improving generalization, motivating the physics-based held-out
+design.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figs/fig_short_convergence.png}
-\caption{Top: running-best feasible training AEP (monotonic).
-Bottom: held-out AEP of the currently deployed script (the one with
-the best training AEP so far). The deployed line is \emph{not}
-monotonic: a new training record can have worse held-out
-performance. This divergence motivates physics-based held-out
-evaluation.}
+\includegraphics[width=\columnwidth]{figs/fig_short_convergence.png}
+\caption{Top: running-best feasible training AEP (monotonic). Bottom:
+held-out AEP of the currently deployed script (the one with the best
+training AEP so far). The deployed line is not monotonic: a new
+training record can have worse held-out performance.}
 \label{fig:convergence}
 \end{figure}
 
-The deployed schedules (Fig.~\ref{fig:schedules}) use qualitatively
-different mechanisms.
-Claude's \emph{dual Gaussian LR bumps} temporarily increase the
-learning rate at $t\!=\!0.5$ and $t\!=\!0.75$, escaping local
-optima; a coordinated penalty dip at $t\!=\!0.6$ permits turbine
-rearrangement between bumps.
-Gemini's \emph{8-cycle cosine restarts} continuously perturb the
-optimizer with cyclic Adam betas that reset at each restart, while
-an aggressive $\alpha$ ramp to $5\!\times\!10^6\,\alpha_0$ forces
-feasibility at convergence.  Neither structure, nor the idea of
-cycling Adam momentum in sync with LR restarts, appears in the
-standard schedule
-toolkit~\cite{loshchilov2017sgdr,smith2017cyclical}.
+The deployed schedules (\cref{fig:schedules}) use qualitatively
+different mechanisms. Claude's \emph{dual Gaussian LR bumps}
+temporarily increase the learning rate at $t{=}0.5$ and $t{=}0.75$,
+escaping local optima; a coordinated penalty dip at $t{=}0.6$ permits
+turbine rearrangement between bumps. Gemini's \emph{8-cycle cosine
+restarts} continuously perturb the optimizer with cyclic Adam betas
+that reset at each restart, while an aggressive $\alpha$ ramp to
+$5{\times}10^6\,\alpha_0$ forces feasibility at convergence. We take ``novel'' to mean: not available as a built-in scheduler in
+PyTorch's \texttt{torch.optim.lr\_scheduler} or Optax
+(\texttt{optax.schedules}) as of their 2024 releases, and not a
+direct instantiation of a named schedule we are aware of in the LR
+/ momentum schedule
+literature~\cite{loshchilov2017sgdr,smith2017cyclical,smith2019superconvergence,izmailov2018swa,jastrzebski2018factors}.
+By that test, neither the dual Gaussian LR bump with coordinated
+penalty dip, nor the synchronized cyclic $(\beta_1,\beta_2)$ reset
+at cosine-restart boundaries, is available out-of-the-box or
+described as a recipe in the cited works. We do not claim
+exhaustive novelty; the point is that the agents, given the narrow
+interface, compose schedule structures that are not the first thing
+a practitioner reaches for.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figs/fig_short_schedules.png}
-\caption{Deployed schedule parameters over optimization progress.
-The baseline (dashed) uses monotonic cosine decay with coupled
-$\alpha \propto 1/\eta$ and fixed Adam betas.
-Claude (red) adds dual Gaussian LR bumps and a penalty dip.
-Gemini (blue) uses 8-cycle cosine restarts with cyclic betas
-and an aggressive terminal penalty ramp.  Note log-scale $\alpha$.}
+\includegraphics[width=\columnwidth]{figs/fig_short_schedules.png}
+\caption{Deployed schedule parameters over optimization progress. The
+baseline (dashed) uses monotonic cosine decay with coupled
+$\alpha \propto 1/\eta$ and fixed Adam betas. Claude (red) adds dual
+Gaussian LR bumps and a penalty dip. Gemini (blue) uses 8-cycle cosine
+restarts with cyclic betas and an aggressive terminal penalty ramp.
+Note log-scale $\alpha$.}
 \label{fig:schedules}
 \end{figure}
 
 These schedules generalize across the 64-cell evaluation matrix
-(Fig.~\ref{fig:matrix}): gains increase with packing density
-($<\!1\%$ at $N\!=\!30$, up to $0.6\%$ at $N\!=\!80$) and transfer
-to the physically distinct held-out polygon the agent never saw
-during training.  Schedules discovered at $N\!=\!50$ (30\,s per
-evaluation) generalize to $N\!=\!200$ (340\,s) without
-modification, enabling cheap search and expensive deployment.
+(\cref{fig:matrix}): gains increase with packing density ($<1\%$ at
+$N{=}30$, up to $0.6\%$ at $N{=}80$) and transfer to the physically
+distinct held-out polygon. Schedules discovered at $N{=}50$ (30\,s per
+evaluation) generalize to $N{=}200$ (340\,s) without modification,
+enabling cheap search and expensive deployment.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\linewidth]{figs/fig_short_matrix.png}
+\includegraphics[width=\textwidth]{figs/fig_short_matrix.png}
 \caption{Generalization across the evaluation matrix (\% gap over
-per-cell 500-start baseline). Top: DEI (training geometry);
-bottom: ROWP (held-out). LLM schedules gain most at high $N$.
-Uniform wind (column 1) is a failure case: the 1D optimal layout
-differs qualitatively from multi-directional cases.}
+per-cell 500-start baseline). Top: DEI (training geometry); bottom:
+ROWP (held-out). LLM schedules gain most at high $N$. Uniform wind
+(column 1) is a failure case: the 1D optimal layout differs
+qualitatively from multi-directional cases. A cross ($\times$)
+indicates the schedule produced an infeasible layout (violating
+boundary or spacing constraints) in that cell; blank cells are
+feasible and the color encodes $\Delta$AEP vs.\ baseline.}
 \label{fig:matrix}
-\end{figure}
+\end{figure*}
 
 \subsection{Full-Optimizer: Engineering, Not Discovery}
 
 Given the full interface, both agents converge on wrapping
 community-standard solvers rather than inventing new algorithms.
 
-Gemini independently rediscovers
-SLSQP~\cite{kraft1988software}, the established method in the wind
-energy community, implementing it with JAX-computed constraint
-Jacobians and multi-start hexagonal initialization. Across five
-independent seeds with 5-hour budgets, every Gemini full-optimizer
-run converges to an SLSQP variant. The best seed reaches
-4272.7\,GWh on the held-out farm, matching the schedule-only
-result, but the median (+17.3) and worst (+4.2) are substantially
-lower, reflecting high variance in initialization quality rather
-than algorithmic innovation.
+Gemini independently rediscovers SLSQP~\cite{kraft1988software}, the
+established method in the wind energy community, implementing it with
+JAX-computed constraint Jacobians and multi-start hexagonal
+initialization. Across five independent seeds with 5-hour budgets,
+every Gemini full-optimizer run converges to an SLSQP variant. The
+best seed reaches 4272.7\,GWh on the held-out farm, matching the
+schedule-only result, but the median (+17.3) and worst (+4.2) are
+substantially lower, reflecting high variance in initialization
+quality rather than algorithmic innovation.
 
-Claude takes a different path but arrives at a similar outcome.
-Given 18 scored attempts with evaluation feedback, every script
-wraps \texttt{topfarm\_sgd\_solve} with improved initialization
-strategies: hexagonal grids aligned to the dominant wind direction,
-random perturbations with varying seed, and tuned hyperparameters
-(higher learning rates, longer constant-LR phases, stronger penalty
-weights). The best wrapper reaches 5559.5\,GWh on training but only
-4264.9\,GWh on the held-out farm, well below the schedule-only
-result (4271.5). In a separate run without evaluation feedback
-(no MCP tooling), Claude produced 19 scripts that all exceeded the
-timeout and were never tested during the 5-hour session.
+Claude takes a different path but arrives at a similar outcome. Given
+18 scored attempts with evaluation feedback, every script wraps
+\texttt{topfarm\_sgd\_solve} with improved initialization strategies:
+hexagonal grids aligned to the dominant wind direction, random
+perturbations with varying seed, and tuned hyperparameters (higher
+learning rates, longer constant-LR phases, stronger penalty weights).
+The best wrapper reaches 5559.5\,GWh on training but only 4264.9\,GWh
+on the held-out farm, well below the schedule-only result (4271.5).
+In a separate run without evaluation feedback, Claude produced 19
+scripts that all exceeded the timeout and were never tested during the
+5-hour session.
 
 When hot-started from the SLSQP solution, Gemini explores more
 creative territory: a JAX-native genetic algorithm with K-means
 initialization, surplus-turbine pruning, and Augmented Lagrangian
-refinement. This approach reaches 5583.4\,GWh on training (the
-highest of any method) and produces feasible held-out layouts, but
-its best held-out AEP (4271.9) does not exceed the schedule-only
-result. The agent iterates \emph{on} a given algorithm effectively
-but does not propose fundamentally new optimization structures from
-scratch.
+refinement. This approach reaches 5583.4\,GWh on training (the highest
+of any method) and produces feasible held-out layouts, but its best
+held-out AEP (4271.9) does not exceed the schedule-only result. The
+agent iterates on a given algorithm effectively but does not propose
+fundamentally new optimization structures from scratch.
 
-The full-optimizer results (Table~\ref{tab:main}) occasionally match
+The full-optimizer results (\cref{tab:main}) occasionally match
 schedule-only on score but never produce novel optimization
-structures. The schedule-only interface forces agents into
-unfamiliar territory (the less-explored SGD schedule space) where
-they discover genuinely novel dynamics. In full-optimizer mode,
-they retreat to what they know.
+structures. The schedule-only interface forces agents into unfamiliar
+territory (the less-explored SGD schedule space) where they discover
+novel dynamics. In full-optimizer mode, they retreat to what they
+know.
 
 \paragraph{SLSQP does not scale.}
-The agents' preference for SLSQP is understandable: it outperforms
-SGD at small $N$ (16\,s vs.\ 31\,s at $N\!=\!50$;
-Table~\ref{tab:scaling}). However, SLSQP's per-iteration cost
-scales poorly with turbine count. At $N\!=\!200$, multi-start SLSQP
-exceeds 1600\,s while the LLM-discovered schedules finish in
-approximately 350\,s on the same hardware (Fig.~\ref{fig:scaling}).
-This crossover is consistent with Quick et
-al.~\cite{quick2023sgd}, who showed SLSQP's computational cost
-exceeds SGD's beyond $N\!\approx\!225$ while SGD produces
-0.3--0.5\% higher AEP. The schedule-only interface constrains
-agents to the more scalable SGD skeleton, forcing discovery of
-novel schedule structures rather than reimplementation of SLSQP,
-which does not scale to the regime where the discovered schedules
-are most valuable.
+The agents' preference for SLSQP is understandable: it outperforms SGD
+at small $N$ (16\,s vs.\ 31\,s at $N{=}50$; \cref{tab:scaling}).
+However, SLSQP's per-iteration cost scales poorly with turbine count.
+At $N{=}200$, multi-start SLSQP exceeds 1600\,s while the
+LLM-discovered schedules finish in approximately 350\,s on the same
+hardware (\cref{fig:scaling}). This crossover is consistent with Quick
+et al.~\cite{quick2023sgd}, who showed SLSQP's computational cost
+exceeds SGD's beyond $N{\approx}225$ while SGD produces 0.3--0.5\%
+higher AEP. The schedule-only interface constrains agents to the more
+scalable SGD skeleton, forcing discovery of novel schedule structures
+rather than reimplementation of SLSQP, which does not scale to the
+regime where the discovered schedules are most valuable.
 
 \begin{table}[t]
-\centering
-\small
-\caption{Single-seed execution time and AEP by method and farm
-size.  SLSQP is fastest at small $N$ but exceeds 1600\,s at
-$N\!=\!200$; schedule-only scales predictably.}
+\caption{Single-seed execution time and total farm AEP (summed over
+all $N$ turbines; larger $N$ yields larger totals) by method and farm
+size. SLSQP is fastest at small $N$ but exceeds 1600\,s at $N{=}200$;
+schedule-only scales predictably.}
 \label{tab:scaling}
+\vskip 0.1in
+\begin{center}
+\begin{small}
+\begin{sc}
 \begin{tabular}{llrrr}
 \toprule
-& & $N\!=\!50$ & $N\!=\!80$ & $N\!=\!200$ \\
+& & $N{=}50$ & $N{=}80$ & $N{=}200$ \\
 \midrule
 \multirow{2}{*}{SLSQP}
-& Time (s)   & 16 & 21 & $>$1644 \\
-& AEP (GWh)  & 5557 & 8836 & --- \\
+& Time (s)  & 16   & 21   & $>$1644 \\
+& AEP (GWh) & 5557 & 8836 & ---     \\
 \midrule
 \multirow{2}{*}{Claude sched.}
-& Time (s)   & 31 & 67 & 341 \\
-& AEP (GWh)  & 5562 & 8827 & 20909 \\
+& Time (s)  & 31   & 67   & 341   \\
+& AEP (GWh) & 5562 & 8827 & 20909 \\
 \midrule
 \multirow{2}{*}{Gemini sched.}
-& Time (s)   & 43 & 83 & 362 \\
-& AEP (GWh)  & 5553 & 8801 & 20873 \\
+& Time (s)  & 43   & 83   & 362   \\
+& AEP (GWh) & 5553 & 8801 & 20873 \\
 \bottomrule
 \end{tabular}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
 \end{table}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figs/fig_short_scaling.png}
+\includegraphics[width=\columnwidth]{figs/fig_short_scaling.png}
 \caption{Left: execution time vs.\ turbine count (log-log, same
-hardware). SLSQP (black) is fastest at small $N$ but exceeds
-1600\,s at $N\!=\!200$ ($\blacktriangle$ = lower bound; run did
-not complete within 1800\,s). LLM-discovered schedules (red, blue)
-scale smoothly. Right: per-turbine AEP; SLSQP has no result at
-$N\!=\!200$.}
+hardware). SLSQP (black) is fastest at small $N$ but exceeds 1600\,s
+at $N{=}200$ ($\blacktriangle$ = lower bound; run did not complete
+within 1800\,s). LLM-discovered schedules (red, blue) scale smoothly.
+Right: per-turbine AEP; SLSQP has no result at $N{=}200$.}
 \label{fig:scaling}
 \end{figure}
 
 \subsection{Ablations}
 
-\begin{table}[t]
-\centering
-\small
-\caption{Best feasible held-out (ROWP) AEP.
-$\Delta$ vs.\ 500-start baseline (4246.7\,GWh).
-LLM scores are single runs; full-opt cross-seed variance
-spans $6\times$.}
+\begin{table*}[t]
+\caption{Held-out (ROWP) AEP. Schedule-only rows: mean~$\pm$~std
+across 5 initialization seeds, with best/worst seed in brackets;
+full-optimizer rows: best/median/worst across 5 agent-run seeds.
+$\Delta$ vs.\ 500-start baseline (4246.7\,GWh) using the mean where
+available. All schedule-only seeds were 100\% feasible.}
 \label{tab:main}
+\vskip 0.1in
+\begin{center}
+\begin{small}
+\begin{sc}
 \begin{tabular}{lrrr}
 \toprule
-\textbf{Method} & \textbf{Train} & \textbf{ROWP} & $\Delta$ \\
+Method & Train & ROWP & $\Delta$ \\
 \midrule
-\emph{Schedule-only (novel structures)} \\
-Claude Code (dual Gaussian bumps)   & 5555.7 & 4271.5 & +24.8 \\
-Gemini CLI (cosine restarts+squeeze) & 5565.1 & 4269.3 & +22.6 \\
+\multicolumn{4}{l}{\emph{Schedule-only (novel structures, 5 init.\ seeds)}} \\
+Claude (dual bumps), mean          & 5559.6 & 4266.3 & +19.6 \\
+\quad $\pm$std                     & 2.7    & 2.8    &       \\
+\quad [best/worst seed]            & [5562.3/5555.4] & [4271.5/4263.5] & \\
+Gemini (restarts+squeeze), mean    & 5554.4 & 4262.2 & +15.5 \\
+\quad $\pm$std                     & 3.5    & 5.4    &       \\
+\quad [best/worst seed]            & [5559.7/5549.6] & [4269.3/4253.9] & \\
 \midrule
-\emph{Full-optimizer (known solvers)} \\
-Gemini CLI (SLSQP, best of 5 seeds) & 5557.1 & 4272.7 & +26.0 \\
-Claude Code (SGD wrapper, best/18)  & 5559.5 & 4264.9 & +18.2 \\
+\multicolumn{4}{l}{\emph{Full-optimizer (known solvers, 5 agent seeds)}} \\
+Gemini (SLSQP), best/median/worst  & 5557.1 & 4272.7/4264.0/4250.9 & +26.0/+17.3/+4.2 \\
+Claude (SGD wrapper, best/18)      & 5559.5 & 4264.9 & +18.2 \\
 \midrule
-\emph{Non-LLM ablations} \\
-Bump-family DE (Claude-seeded)      & 5566.3 & 4272.9 & +26.2 \\
-Bump-family DE (zero-bump baseline) & 5562.7 & 4271.9 & +25.2 \\
-Random search (320 samples)         & 5561.8 & 4268.6 & +21.9 \\
-CMA-ES warm-start (6000 evals)      & ---    & 4272.2 & +25.5 \\
+\multicolumn{4}{l}{\emph{Non-LLM ablations}} \\
+Bump-family DE (Claude-seed)       & 5566.3 & 4272.9 & +26.2 \\
+Bump-family DE (zero bump)         & 5562.7 & 4271.9 & +25.2 \\
+Random search (320 samples)        & 5561.8 & 4268.6 & +21.9 \\
+CMA-ES warm-start (6000 ev.)       & ---    & 4272.2 & +25.5 \\
 \midrule
-500-start SGD baseline              & 5540.7 & 4246.7 & --- \\
+500-start SGD baseline             & 5540.7 & 4246.7 & ---   \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{sc}
+\end{small}
+\end{center}
+\vskip -0.1in
+\end{table*}
 
-Six methods cluster within 4.3\,GWh at approximately 4272\,GWh on
-ROWP (Table~\ref{tab:main}).  Substrate-independent CMA-ES confirms
-this is a real landscape feature (+0.7\,GWh in 6000 evals from warm
-start).
+Across 5 initialization seeds, both LLM schedules beat the 500-start
+baseline on every seed (worst: +16.8\,GWh Claude, +7.2\,GWh Gemini
+on ROWP). The schedules the agents selected (based on their single
+training evaluation) sit near the \emph{top} of their seed
+distributions, indicating mild selection bias: mean performance
+(+19.6, +15.5) is 5--7\,GWh below best-seed performance. The ranking
+between Claude and Gemini on ROWP is robust across seeds.
 
-The LLM contribution is \emph{parameterization discovery}, not
-score improvement.  Claude proposed a 14-parameter dual-bump
-schedule family; differential evolution starting from zero bumps
-(no LLM structural hint) reaches 4271.9 within the same family.
-The random-search family was designed post-hoc after inspecting LLM
-outputs, so the ablation tests whether LLM structures are findable
-by random search, not whether random search would have proposed
-them.
+Substrate-independent CMA-ES confirms the ceiling is a real landscape
+feature (+0.7\,GWh in 6000 evals from warm start).
+
+The LLM contribution is \emph{parameterization discovery}, not score
+improvement. Claude proposed a 14-parameter dual-bump schedule family;
+differential evolution starting from zero bumps (no LLM structural
+hint) reaches 4271.9 within the same family. The random-search family
+was designed post-hoc after inspecting LLM outputs, so the ablation
+tests whether LLM structures are findable by random search, not
+whether random search would have proposed them.
 
 A controlled ablation varying penalty weight ($0.01\times$ to
 $10\times$) while holding LR fixed shows all nine variants produce
 feasible held-out layouts: the LR dynamics drive feasibility, while
-penalty scale affects AEP quality ($\pm$11\,GWh).
+penalty scale affects AEP quality ($\pm11$\,GWh).
 
-%% ────────────────────────────────────────────────────────────────
 \section{Discussion and Conclusion}
 
-LLM agents discover novel optimizer schedule structures that
-improve performance on unseen cases but struggle to design
-completely new optimization algorithms.  The schedule-only interface
-succeeds for two complementary reasons: it constrains the agent to
-an unfamiliar search space where known methods do not apply, and it
-produces algorithms that scale to large problem instances where the
-community-standard SLSQP approach becomes computationally
-infeasible.
+LLM agents discover novel optimizer schedule structures that improve
+performance on unseen cases but struggle to design new optimization
+algorithms. The schedule-only interface succeeds for two complementary
+reasons: it constrains the agent to an unfamiliar search space where
+known methods do not apply, and it produces algorithms that scale to
+large problem instances where the community-standard SLSQP approach
+becomes computationally infeasible.
 
 The interface requires three ingredients: a differentiable physics
-simulation, penalty-expressible constraints, and a gradient
-optimizer.  Topology optimization (SIMP penalty
-continuation~\cite{rojas2015continuation}) and trajectory
-optimization are immediate candidates for the same benchmark
-pattern.
+simulation, penalty-expressible constraints, and a gradient optimizer.
+Topology optimization (SIMP penalty
+continuation~\cite{rojas2015continuation}) and trajectory optimization
+are immediate candidates for the same benchmark pattern.
 
-\paragraph{Limitations.}
-Single training farm ($N\!=\!1$ held-out polygon); single agent run
-per frontier model; post-hoc random-search family design.
-Full-optimizer results are confounded by scaffold differences
-(CLI agents vs.\ structured-output prompting).
-Multi-farm, multi-seed, pre-registered ablation studies are needed.
+\paragraph{Limitations and future work.}
+\emph{Agent-run asymmetry.} Of the four (agent $\times$ interface)
+cells in the study, only Gemini $\times$ full-optimizer has
+$n{=}5$ agent-run seeds; Claude $\times$ full-optimizer, Claude
+$\times$ schedule-only, and Gemini $\times$ schedule-only are
+$n{=}1$ each. Our 5-seed evaluation of the best Claude and Gemini
+schedules measures initialization variance only. Re-running the
+5-hour agent loop with different RNG seeds (budget
+$\approx$20~GPU-hrs per cell) is left to follow-up work.
+\emph{Scaffold confound.} The narrow-interface agents and the
+broad-interface agents used different scaffolds (structured-output
+harness vs.\ full CLI). The experiment that would cleanly isolate
+interface from scaffold is: run each agent under each scaffold on
+each interface. We view this as the most important follow-up before
+the narrow-vs-broad causal claim can be promoted from suggestive to
+conclusive. Other open items: single training farm ($N{=}1$
+held-out polygon); post-hoc random-search family design; per-seed
+uniform-wind behavior not resolved.
 
-Code and 700+ generated schedules:
-\url{https://github.com/kilojoules/funwake}.
+\paragraph{Reproducibility.}
+Claude Code CLI v1.x and Gemini CLI with \texttt{gemini-2.5-flash}
+(snapshot retrieved March--April 2026) were used; exact versions,
+prompts, and generated scripts are released with the code.
 
-\small
-\bibliographystyle{plainnat}
+\section*{Impact Statement}
+
+This paper presents work whose goal is to advance the field of Machine
+Learning. There are many potential societal consequences of our work,
+none which we feel must be specifically highlighted here.
+
+\bibliographystyle{icml2026}
 \bibliography{references}
 
 \end{document}

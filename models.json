@@ -1,4 +1,52 @@
 {
+  "deepseek-r1-distill-qwen-7b": {
+    "hf_id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+    "quantization": null,
+    "num_gpus": 1,
+    "gpu_ram_gb": 20,
+    "vllm_args": {
+      "tensor-parallel-size": 1,
+      "max-model-len": 32768,
+      "dtype": "bfloat16"
+    },
+    "reasoning": true,
+    "reasoning_parser": "deepseek_r1",
+    "context_length": 131072,
+    "lumi_partition": "small-g",
+    "notes": "DeepSeek R1 distilled into Qwen 7B. Outputs <think>...</think> reasoning traces. Prototype for full R1 architecture — tests reasoning-separated context management before scaling to 671B."
+  },
+  "deepseek-r1-distill-qwen-14b": {
+    "hf_id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+    "quantization": null,
+    "num_gpus": 1,
+    "gpu_ram_gb": 40,
+    "vllm_args": {
+      "tensor-parallel-size": 1,
+      "max-model-len": 32768,
+      "dtype": "bfloat16"
+    },
+    "reasoning": true,
+    "reasoning_parser": "deepseek_r1",
+    "context_length": 131072,
+    "lumi_partition": "small-g",
+    "notes": "Mid-size R1 distillate. Second prototype step between 7B and full R1 if needed."
+  },
+  "deepseek-r1-distill-qwen-32b": {
+    "hf_id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+    "quantization": null,
+    "num_gpus": 2,
+    "gpu_ram_gb": 128,
+    "vllm_args": {
+      "tensor-parallel-size": 2,
+      "max-model-len": 16384,
+      "dtype": "bfloat16"
+    },
+    "reasoning": true,
+    "reasoning_parser": "deepseek_r1",
+    "context_length": 131072,
+    "lumi_partition": "small-g",
+    "notes": "R1 distilled into Qwen2.5-32B base. bf16 (~65 GB weights) needs 2 GCDs on LUMI. Strong enough to actually solve FunWake tasks (vs 7B/14B which hallucinate). Primary target for iterative seed experiments."
+  },
   "gemma4-26b": {
     "hf_id": "google/gemma-4-26B-A4B-it",
     "quantization": null,

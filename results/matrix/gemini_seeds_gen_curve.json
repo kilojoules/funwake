@@ -1,0 +1,261 @@
+{
+  "Gemini CLI|dei_n30_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "dei",
+    "n": 30,
+    "aep_gwh": 3349.06,
+    "feasible": true
+  },
+  "Gemini CLI|dei_n40_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "dei",
+    "n": 40,
+    "aep_gwh": 4458.41,
+    "feasible": true
+  },
+  "Gemini CLI|dei_n50_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "dei",
+    "n": 50,
+    "aep_gwh": 5552.82,
+    "feasible": true
+  },
+  "Gemini CLI|dei_n60_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "dei",
+    "n": 60,
+    "aep_gwh": 6647.96,
+    "feasible": true
+  },
+  "Gemini CLI|dei_n70_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "dei",
+    "n": 70,
+    "aep_gwh": 7726.84,
+    "feasible": true
+  },
+  "Gemini CLI|dei_n80_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "dei",
+    "n": 80,
+    "aep_gwh": 8801.12,
+    "feasible": true
+  },
+  "Gemini CLI|rowp_n30_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "rowp",
+    "n": 30,
+    "aep_gwh": 2319.18,
+    "feasible": true
+  },
+  "Gemini CLI|rowp_n40_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "rowp",
+    "n": 40,
+    "aep_gwh": 3082.91,
+    "feasible": true
+  },
+  "Gemini CLI|rowp_n50_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "rowp",
+    "n": 50,
+    "aep_gwh": 3830.61,
+    "feasible": true
+  },
+  "Gemini CLI|rowp_n60_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "rowp",
+    "n": 60,
+    "aep_gwh": 4580.42,
+    "feasible": true
+  },
+  "Gemini CLI|rowp_n70_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "rowp",
+    "n": 70,
+    "aep_gwh": 5319.73,
+    "feasible": true
+  },
+  "Gemini CLI|rowp_n80_rosedei": {
+    "label": "Gemini CLI",
+    "farm": "rowp",
+    "n": 80,
+    "aep_gwh": 6046.07,
+    "feasible": true
+  },
+  "No hot-start|dei_n30_rosedei": {
+    "label": "No hot-start",
+    "farm": "dei",
+    "n": 30,
+    "aep_gwh": 3348.22,
+    "feasible": true
+  },
+  "No hot-start|dei_n40_rosedei": {
+    "label": "No hot-start",
+    "farm": "dei",
+    "n": 40,
+    "aep_gwh": 4457.44,
+    "feasible": true
+  },
+  "No hot-start|dei_n50_rosedei": {
+    "label": "No hot-start",
+    "farm": "dei",
+    "n": 50,
+    "aep_gwh": 5553.42,
+    "feasible": true
+  },
+  "No hot-start|rowp_n30_rosedei": {
+    "label": "No hot-start",
+    "farm": "rowp",
+    "n": 30,
+    "aep_gwh": 2318.69,
+    "feasible": true
+  },
+  "No hot-start|rowp_n40_rosedei": {
+    "label": "No hot-start",
+    "farm": "rowp",
+    "n": 40,
+    "aep_gwh": 3075.47,
+    "feasible": true
+  },
+  "No hot-start|rowp_n50_rosedei": {
+    "label": "No hot-start",
+    "farm": "rowp",
+    "n": 50,
+    "aep_gwh": 3828.97,
+    "feasible": false
+  },
+  "Seed 4|dei_n30_rosedei": {
+    "label": "Seed 4",
+    "farm": "dei",
+    "n": 30,
+    "aep_gwh": 3349.05,
+    "feasible": true
+  },
+  "Seed 4|dei_n40_rosedei": {
+    "label": "Seed 4",
+    "farm": "dei",
+    "n": 40,
+    "aep_gwh": 4457.99,
+    "feasible": true
+  },
+  "Seed 4|dei_n50_rosedei": {
+    "label": "Seed 4",
+    "farm": "dei",
+    "n": 50,
+    "aep_gwh": 5563.49,
+    "feasible": true
+  },
+  "Seed 4|dei_n60_rosedei": {
+    "label": "Seed 4",
+    "farm": "dei",
+    "n": 60,
+    "aep_gwh": 6657.82,
+    "feasible": true
+  },
+  "Seed 4|rowp_n30_rosedei": {
+    "label": "Seed 4",
+    "farm": "rowp",
+    "n": 30,
+    "aep_gwh": 2320.06,
+    "feasible": true
+  },
+  "Seed 4|rowp_n40_rosedei": {
+    "label": "Seed 4",
+    "farm": "rowp",
+    "n": 40,
+    "aep_gwh": 3082.42,
+    "feasible": true
+  },
+  "Seed 4|rowp_n50_rosedei": {
+    "label": "Seed 4",
+    "farm": "rowp",
+    "n": 50,
+    "aep_gwh": 3839.12,
+    "feasible": true
+  },
+  "Seed 6|dei_n30_rosedei": {
+    "label": "Seed 6",
+    "farm": "dei",
+    "n": 30,
+    "aep_gwh": 3345.97,
+    "feasible": true
+  },
+  "Seed 6|dei_n40_rosedei": {
+    "label": "Seed 6",
+    "farm": "dei",
+    "n": 40,
+    "aep_gwh": 4451.88,
+    "feasible": true
+  },
+  "Seed 6|dei_n50_rosedei": {
+    "label": "Seed 6",
+    "farm": "dei",
+    "n": 50,
+    "aep_gwh": 5551.52,
+    "feasible": true
+  },
+  "Seed 6|dei_n60_rosedei": {
+    "label": "Seed 6",
+    "farm": "dei",
+    "n": 60,
+    "aep_gwh": 6640.28,
+    "feasible": true
+  },
+  "Seed 6|dei_n70_rosedei": {
+    "label": "Seed 6",
+    "farm": "dei",
+    "n": 70,
+    "aep_gwh": 7728.77,
+    "feasible": true
+  },
+  "Seed 6|dei_n80_rosedei": {
+    "label": "Seed 6",
+    "farm": "dei",
+    "n": 80,
+    "aep_gwh": 8810.67,
+    "feasible": true
+  },
+  "Seed 6|rowp_n30_rosedei": {
+    "label": "Seed 6",
+    "farm": "rowp",
+    "n": 30,
+    "aep_gwh": 2319.38,
+    "feasible": true
+  },
+  "Seed 6|rowp_n40_rosedei": {
+    "label": "Seed 6",
+    "farm": "rowp",
+    "n": 40,
+    "aep_gwh": 3078.58,
+    "feasible": true
+  },
+  "Seed 6|rowp_n50_rosedei": {
+    "label": "Seed 6",
+    "farm": "rowp",
+    "n": 50,
+    "aep_gwh": 3831.68,
+    "feasible": true
+  },
+  "Seed 6|rowp_n60_rosedei": {
+    "label": "Seed 6",
+    "farm": "rowp",
+    "n": 60,
+    "aep_gwh": 4576.56,
+    "feasible": true
+  },
+  "Seed 6|rowp_n70_rosedei": {
+    "label": "Seed 6",
+    "farm": "rowp",
+    "n": 70,
+    "aep_gwh": 5312.09,
+    "feasible": true
+  },
+  "Seed 6|rowp_n80_rosedei": {
+    "label": "Seed 6",
+    "farm": "rowp",
+    "n": 80,
+    "aep_gwh": 6034.62,
+    "feasible": true
+  }
+}

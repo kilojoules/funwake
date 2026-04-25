@@ -21,6 +21,10 @@ MODEL_PRESET=${MODEL_PRESET:-gemma4-26b}
 TIME_BUDGET=${TIME_BUDGET:-18000}
 SEED=${SEED:-1}
 SCHEDULE_ONLY=${SCHEDULE_ONLY:-}
+# Hot-start script the agent begins from. Default matches the
+# paper's original behavior; overridden by the iterative seed
+# driver to point at the previous generation's best script.
+HOT_START=${HOT_START:-results/seed_optimizer.py}
 
 cd /scratch/project_465002609/julian/funwake
 mkdir -p lumi/logs
@@ -31,6 +35,8 @@ NUM_GPUS=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON')
 MAX_MODEL_LEN=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args']['max-model-len'])")
 DTYPE=$(pixi run python -c "import json; print(json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args']['dtype'])")
 QUANT=$(pixi run python -c "import json; q=json.load(open('$MODELS_JSON'))['$MODEL_PRESET']['vllm_args'].get('quantization'); print(q if q else '')")
+REASONING=$(pixi run python -c "import json; m=json.load(open('$MODELS_JSON'))['$MODEL_PRESET']; print('1' if m.get('reasoning') else '')")
+REASONING_PARSER=$(pixi run python -c "import json; m=json.load(open('$MODELS_JSON'))['$MODEL_PRESET']; print(m.get('reasoning_parser', 'deepseek_r1'))")
 MODEL_DIR="/scratch/project_465002609/models/${MODEL_PRESET}"
 
 echo "=== FunWake Benchmark ==="
@@ -66,6 +72,10 @@ VLLM_ARGS="--model $MODEL_DIR --tensor-parallel-size $NUM_GPUS --dtype $DTYPE --
 if [ -n "$QUANT" ]; then
     VLLM_ARGS="$VLLM_ARGS --quantization $QUANT"
 fi
+if [ -n "$REASONING" ]; then
+    VLLM_ARGS="$VLLM_ARGS --reasoning-parser $REASONING_PARSER"
+    echo "Reasoning mode enabled (parser: $REASONING_PARSER)"
+fi
 
 VLLM_LOG="$(pwd)/lumi/logs/vllm_${SLURM_JOB_ID}.log"
 echo "Starting vLLM: $VLLM_ARGS"
@@ -100,10 +110,16 @@ echo "Serving: $MODEL"
 
 # ── Run the agent ────────────────────────────────────────────────────
 
+EXP_TAG=${EXP_TAG:-}  # optional suffix to distinguish scaffolding versions
+TAG_SUFFIX=""
+if [ -n "$EXP_TAG" ]; then
+    TAG_SUFFIX="_${EXP_TAG}"
+fi
+
 if [ -n "$SCHEDULE_ONLY" ]; then
-    OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_sched_s${SEED}"
+    OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}${TAG_SUFFIX}_sched_s${SEED}"
 else
-    OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}_s${SEED}"
+    OUTPUT_DIR="results_agent_${MODEL_PRESET//./_}${TAG_SUFFIX}_s${SEED}"
 fi
 
 # Provider: set via PROVIDER env var, default to vllm
@@ -118,13 +134,17 @@ CLI_ARGS=(
     --base-url http://localhost:8000
     --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv
     --time-budget "$TIME_BUDGET"
-    --hot-start results/seed_optimizer.py
+    --hot-start "$HOT_START"
     --output-dir "$OUTPUT_DIR"
     --timeout-per-run 60
 )
 
 if [ -n "$SCHEDULE_ONLY" ]; then
-    CLI_ARGS+=(--schedule-only --hot-start results/seed_schedule.py)
+    CLI_ARGS+=(--schedule-only)
+    # Default to schedule-only seed if caller didn't override HOT_START
+    if [ "$HOT_START" = "results/seed_optimizer.py" ]; then
+        CLI_ARGS+=(--hot-start results/seed_schedule.py)
+    fi
 fi
 
 echo ""

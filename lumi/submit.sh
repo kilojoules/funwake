@@ -42,14 +42,26 @@ echo "Budget:    $((TIME_BUDGET / 60)) min per seed"
 echo "Mode:      ${SCHEDULE_ONLY:+schedule-only}${SCHEDULE_ONLY:-full optimizer}"
 echo ""
 
+EXP_TAG=${EXP_TAG:-}
+TAG_SUFFIX=""
+if [ -n "$EXP_TAG" ]; then
+    TAG_SUFFIX="_${EXP_TAG}"
+fi
+
 for SEED in $(seq 1 $NUM_SEEDS); do
-    JOBID=$(MODEL_PRESET=$MODEL_PRESET TIME_BUDGET=$TIME_BUDGET SEED=$SEED SCHEDULE_ONLY=$SCHEDULE_ONLY \
+    JOBID=$(MODEL_PRESET=$MODEL_PRESET TIME_BUDGET=$TIME_BUDGET SEED=$SEED \
+        SCHEDULE_ONLY=$SCHEDULE_ONLY EXP_TAG=$EXP_TAG \
         sbatch \
         --partition="$PARTITION" \
         --gpus-per-node="$NUM_GPUS" \
         --parsable \
         lumi/run_benchmark.sbatch)
-    echo "Seed $SEED: job $JOBID (output: results_agent_${MODEL_PRESET//./_}_s${SEED}/)"
+    if [ -n "$SCHEDULE_ONLY" ]; then
+        DIR="results_agent_${MODEL_PRESET//./_}${TAG_SUFFIX}_sched_s${SEED}"
+    else
+        DIR="results_agent_${MODEL_PRESET//./_}${TAG_SUFFIX}_s${SEED}"
+    fi
+    echo "Seed $SEED: job $JOBID (output: $DIR/)"
 done
 
 echo ""

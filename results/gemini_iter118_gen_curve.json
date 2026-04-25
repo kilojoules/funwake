@@ -1,0 +1,74 @@
+[
+  {
+    "farm": "dei",
+    "n": 30,
+    "aep_gwh": 3349.06,
+    "feasible": true
+  },
+  {
+    "farm": "dei",
+    "n": 40,
+    "aep_gwh": 4458.41,
+    "feasible": true
+  },
+  {
+    "farm": "dei",
+    "n": 50,
+    "aep_gwh": 5552.82,
+    "feasible": true
+  },
+  {
+    "farm": "dei",
+    "n": 60,
+    "aep_gwh": 6647.96,
+    "feasible": true
+  },
+  {
+    "farm": "dei",
+    "n": 70,
+    "aep_gwh": 7726.84,
+    "feasible": true
+  },
+  {
+    "farm": "dei",
+    "n": 80,
+    "aep_gwh": 8801.12,
+    "feasible": true
+  },
+  {
+    "farm": "rowp",
+    "n": 30,
+    "aep_gwh": 2319.18,
+    "feasible": true
+  },
+  {
+    "farm": "rowp",
+    "n": 40,
+    "aep_gwh": 3082.91,
+    "feasible": true
+  },
+  {
+    "farm": "rowp",
+    "n": 50,
+    "aep_gwh": 3830.61,
+    "feasible": true
+  },
+  {
+    "farm": "rowp",
+    "n": 60,
+    "aep_gwh": 4580.42,
+    "feasible": true
+  },
+  {
+    "farm": "rowp",
+    "n": 70,
+    "aep_gwh": 5319.73,
+    "feasible": true
+  },
+  {
+    "farm": "rowp",
+    "n": 80,
+    "aep_gwh": 6046.07,
+    "feasible": true
+  }
+]

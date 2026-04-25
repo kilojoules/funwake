@@ -78,3 +78,75 @@ results/history.json
 results/iter_*.py
 results/problem_farm[2-9].json
 results/problem_farm0.json
+
+# macOS / cruft
+.DS_Store
+*/.DS_Store
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/main.pdf
+paper/short.pdf
+paper/__pycache__/
+
+# ICML download artifacts (style files kept; examples ignored)
+paper/icml2026.zip
+paper/example_paper.bib
+paper/example_paper.pdf
+paper/example_paper.tex
+
+# Stray top-level files
+/agent_memory.md
+/Funwake_mcp_wiring.txt
+/none
+/texput.log
+/GEMINI.md
+/.claude/scheduled_tasks.lock
+
+# Throwaway analysis scripts at repo root
+/_*.py
+/tmp_*.py
+/_tmp_*.py
+/backfill_rowp.py
+/check_feas.py
+/test_vmap.py
+/test_sdf_grad.py
+/resume_claude.sh
+
+# Run logs at root
+/logs_*.log
+
+# Big results dirs not tracked in git (regenerable from agent runs)
+/results_agent_3hr/
+/results_agent_4hr/
+/results_agent_5hr_v4/
+/results_agent_5hr_v5/
+/results_agent_5hr_v6/
+/results_agent_6hr/
+/results_agent_7hr/
+/results_agent_claude_*/
+/results_agent_gemini_*/
+/results_agent_schedule_*/
+/results_agent_deepseek*/
+/results_agent_qwen*/
+/results_agent_llama*/
+/results_agent_opencode*/
+/results_agent_vllm*/
+/results_agent_mcp_*/
+/results_alpha_ablation/
+/results_bump_opt*/
+/results_substrate_tiebreaker*/
+/results_random_search_320/
+/results_local_*/
+/results_multi_seed/
+
+# CMA-ES output
+/outcmaes/
