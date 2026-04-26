@@ -14,7 +14,7 @@ cd "$(dirname "$0")/../.."
 
 # Default target: codex (since user has it running). Override for Opus etc.
 PROVIDER=${PROVIDER:-codex}
-MODEL=${MODEL:-gpt-5-codex}
+MODEL=${MODEL:-gpt-5.5}
 MODE=${MODE:-sched}                       # sched | full
 TIME_BUDGET=${TIME_BUDGET:-10800}          # 3 hr default for sched
 WIND_CSV=${WIND_CSV:-~/clusters/energy_island_10y_daily_av_wind.csv}

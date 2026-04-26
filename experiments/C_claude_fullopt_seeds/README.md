@@ -21,7 +21,7 @@ Non-determinism comes from API temperature and timing.
 this week; defer the other if budget tight.
 
 ## Inputs
-- `agent_cli.py --provider claude-code` (or `--provider codex --model gpt-5-codex`)
+- `agent_cli.py --provider claude-code` (or `--provider codex --model gpt-5.5`)
 - Hot-start: `results/seed_optimizer.py`
 
 ## Outputs

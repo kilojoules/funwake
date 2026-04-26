@@ -21,7 +21,7 @@ PARALLEL=${PARALLEL:-1}
 TIME_BUDGET=${TIME_BUDGET:-16200}      # 4.5 hr
 WIND_CSV=${WIND_CSV:-~/clusters/energy_island_10y_daily_av_wind.csv}
 HOT_START=${HOT_START:-results/seed_optimizer.py}
-CODEX_MODEL=${CODEX_MODEL:-gpt-5-codex}
+CODEX_MODEL=${CODEX_MODEL:-gpt-5.5}
 
 provider_for() {
     case "$1" in

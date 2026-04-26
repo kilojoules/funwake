@@ -19,7 +19,7 @@ Usage:
       --time-budget 3600 --hot-start results/seed_optimizer.py
 
   # Codex CLI
-  python agent_cli.py --provider codex --model gpt-5-codex \\
+  python agent_cli.py --provider codex --model gpt-5.5 \\
       --time-budget 3600 --hot-start results/seed_optimizer.py
 """
 import argparse
@@ -134,7 +134,7 @@ def main():
             sys.exit(1)
         runner = CodexRunner(
             config,
-            model=args.model or "gpt-5-codex",
+            model=args.model or "gpt-5.5",
             iterations=args.cc_iterations,
             schedule_only=args.schedule_only,
         )

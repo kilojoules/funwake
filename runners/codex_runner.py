@@ -26,7 +26,7 @@ class CodexRunner(BaseRunner):
     """Codex CLI agent via `codex exec` invocations."""
 
     def __init__(self, config: RunConfig,
-                 model: str = "gpt-5-codex",
+                 model: str = "gpt-5.5",
                  iterations: int = 0,            # 0 = auto (fill time budget)
                  schedule_only: bool = False,
                  sandbox_mode: str = "workspace-write"):

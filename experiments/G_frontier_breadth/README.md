@@ -14,7 +14,7 @@ Run one additional frontier model under the schedule-only interface,
 same hot-start, same time budget (5 hr).
 
 Candidates (pick 1, ordered by integration cost):
-1. **Codex CLI** (`gpt-5-codex` via OpenAI's `codex` binary) — drop-in
+1. **Codex CLI** (`gpt-5.5` via OpenAI's `codex` binary) — drop-in
    via `runners/codex_runner.py`. Recommended default. Lets us compare
    three frontier *agentic CLIs* on the same task.
 2. **Claude Opus 4.x** via the existing `claude-code` runner — drop-in,
@@ -29,7 +29,7 @@ For week-2, default is option 1 (Codex). Run schedule-only first
 1 × 3 hr agent run + scoring overhead ≈ 3.5 hr (sched) or 4.5 hr (full).
 
 ## Inputs
-- `agent_cli.py --provider codex --model gpt-5-codex` (default)
+- `agent_cli.py --provider codex --model gpt-5.5` (default)
 - Hot-start: `results/seed_schedule.py` (sched) or `results/seed_optimizer.py` (full)
 
 ## Outputs
