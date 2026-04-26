@@ -19,17 +19,21 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 
-AGENTS=${AGENTS:-"claude gemini"}
+AGENTS=${AGENTS:-"claude gemini codex"}
 RUNS=${RUNS:-"2 3 4 5"}
 PARALLEL=${PARALLEL:-1}
-TIME_BUDGET=${TIME_BUDGET:-18000}     # 5 hr
+# Schedule-only saturates around iter 150. Empirical 5hr run hit 316 iter.
+# Use formula: t = 2 * 150 * 30s ~= 9000s. Allow 3 hr (10800s) for margin.
+TIME_BUDGET=${TIME_BUDGET:-10800}     # 3 hr
 WIND_CSV=${WIND_CSV:-~/clusters/energy_island_10y_daily_av_wind.csv}
 HOT_START=${HOT_START:-results/seed_schedule.py}
+CODEX_MODEL=${CODEX_MODEL:-gpt-5-codex}
 
 provider_for() {
     case "$1" in
         claude) echo "claude-code" ;;
         gemini) echo "gemini-cli" ;;
+        codex)  echo "codex" ;;
         *) echo "unknown"; return 1 ;;
     esac
 }
@@ -49,8 +53,13 @@ run_one() {
     local log="$out_dir/launch.log"
     echo "[A] Launching $agent run $run -> $out_dir"
 
+    local provider_args=(--provider "$provider")
+    if [[ "$provider" == "codex" ]]; then
+        provider_args+=(--model "$CODEX_MODEL")
+    fi
+
     pixi run python agent_cli.py \
-        --provider "$provider" \
+        "${provider_args[@]}" \
         --schedule-only \
         --wind-csv "$WIND_CSV" \
         --time-budget "$TIME_BUDGET" \

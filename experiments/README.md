@@ -6,13 +6,18 @@ its README and the master prelaunch checklist below.**
 
 | Exp | Addresses                                         | Cost (hr) | Status     | Eng prereq |
 |-----|---------------------------------------------------|-----------|------------|------------|
-| A   | "Single agent run per cell"                       | 40        | drafted    | none       |
+| A   | "Single agent run per cell"                       | 24–40     | drafted, codex agent wired | none |
 | B   | "Scaffold confound (CLI vs structured-output)"    | 10        | drafted    | new runner: `runners/anthropic_api_runner.py` + `agent_cli.py` provider choice |
-| C   | "Claude full-opt is n=1 while Gemini full-opt n=5"| 20        | drafted    | none       |
+| C   | "Full-opt asymmetry across agents"                | 12–20     | drafted, supports claude or codex | none |
 | D   | "Uniform-wind failure: systematic or seed-noise?" | 30 (CPU)  | drafted    | none       |
 | E   | "Random-search family is post-hoc"                | 3         | drafted, smoke-tested | family.py renders + executes |
 | F   | "Single held-out polygon"                         | 10        | drafted, polygon-builder smoke-tested | none |
-| G   | "Discovery is model-specific?"                    | 5         | drafted    | none, but verify the chosen model alias is supported by the chosen runner |
+| G   | "Discovery is model-specific?"                    | 3.5–4.5   | drafted, codex default | none |
+
+Three frontier *agentic CLIs* are now wired in:
+`claude-code` (Anthropic), `gemini-cli` (Google), `codex` (OpenAI).
+Plus open-source paths via `vllm` and `opencode`. The narrow-vs-broad
+interface comparison in the paper now spans 3 frontier providers (A, C, G).
 
 `drafted` = scripts exist, no run executed.
 `launched` = run started (note SLURM JID / local PID in the subdir status file).

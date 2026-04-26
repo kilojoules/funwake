@@ -9,3 +9,8 @@ try:
     from .gemini_cli_runner import GeminiCLIRunner
 except ImportError:
     GeminiCLIRunner = None
+
+try:
+    from .codex_runner import CodexRunner
+except ImportError:
+    CodexRunner = None

@@ -109,6 +109,7 @@ paper/example_paper.tex
 /none
 /texput.log
 /GEMINI.md
+/AGENTS.md
 /.claude/scheduled_tasks.lock
 
 # Throwaway analysis scripts at repo root

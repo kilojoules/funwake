@@ -82,15 +82,17 @@ def best_in_run(run_dir):
 def main():
     summary = {"by_agent": {}}
 
-    for agent in ("claude", "gemini"):
+    run1_dirs = {
+        "claude": "results_agent_schedule_only_5hr",
+        "gemini": "results_agent_gemini_cli_5hr",
+        "codex":  "results_agent_codex_sched_run1",
+    }
+
+    for agent in ("claude", "gemini", "codex"):
         runs = []
         for n in range(1, 6):
-            # run 1 reuses the existing logged result dir
             if n == 1:
-                if agent == "claude":
-                    run_dir = os.path.join(PROJECT_ROOT, "results_agent_schedule_only_5hr")
-                else:
-                    run_dir = os.path.join(PROJECT_ROOT, "results_agent_gemini_cli_5hr")
+                run_dir = os.path.join(PROJECT_ROOT, run1_dirs[agent])
             else:
                 run_dir = os.path.join(PROJECT_ROOT, f"results_agent_{agent}_sched_run{n}")
             if not os.path.isdir(run_dir):

@@ -17,6 +17,10 @@ Usage:
   # Gemini CLI
   python agent_cli.py --provider gemini-cli \\
       --time-budget 3600 --hot-start results/seed_optimizer.py
+
+  # Codex CLI
+  python agent_cli.py --provider codex --model gpt-5-codex \\
+      --time-budget 3600 --hot-start results/seed_optimizer.py
 """
 import argparse
 import json
@@ -37,7 +41,7 @@ def main():
 
     # Shared arguments
     p.add_argument("--provider", required=True,
-                   choices=["gemini", "claude-code", "gemini-cli", "vllm", "opencode"],
+                   choices=["gemini", "claude-code", "gemini-cli", "codex", "vllm", "opencode"],
                    help="LLM backend to use")
     p.add_argument("--wind-csv", required=True,
                    help="Path to wind resource CSV")
@@ -120,6 +124,17 @@ def main():
         runner = GeminiCLIRunner(
             config,
             max_turns_per_iter=args.cc_max_turns,
+            iterations=args.cc_iterations,
+            schedule_only=args.schedule_only,
+        )
+    elif args.provider == "codex":
+        from runners import CodexRunner
+        if CodexRunner is None:
+            print("Codex runner not available (import failed). Check runners/codex_runner.py.", file=sys.stderr)
+            sys.exit(1)
+        runner = CodexRunner(
+            config,
+            model=args.model or "gpt-5-codex",
             iterations=args.cc_iterations,
             schedule_only=args.schedule_only,
         )

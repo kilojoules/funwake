@@ -18,10 +18,19 @@ network timing all vary even with no seed). We record what the agent
 discovered each time and compare structures (qualitatively) and best AEP
 (quantitatively).
 
+Three frontier *agentic CLI* providers in scope:
+1. `claude` → Anthropic Claude Code CLI
+2. `gemini` → Google Gemini CLI (`gemini -p`)
+3. `codex`  → OpenAI Codex CLI (`codex exec`)
+
+Set `AGENTS=claude gemini codex` (default) or pick a subset.
+
 ## Cost
-8 runs × 5 hr = 40 hr wall-clock. Can run 2 in parallel locally (CPU-bound
-agent loops, evaluation-bound). Total real time ≈ 20 hr if 2-way parallel,
-40 hr serial.
+With 3-hr time budget per run (saturation-anchored, see `experiments/README.md`):
+3 agents × 4 extra runs × 3 hr = 36 hr serial wall-clock.
+Subscription-funded (Claude Max, Gemini, ChatGPT Plus); zero per-token cost
+within plan limits. Single-account concurrency caps Claude/Codex to 1
+session at a time.
 
 ## Inputs
 - `agent_cli.py --provider claude-code --schedule-only`

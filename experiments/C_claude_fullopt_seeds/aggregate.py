@@ -42,10 +42,18 @@ def score_rowp(script_path, timeout=180):
 
 
 def main():
+    import argparse
+    p = argparse.ArgumentParser()
+    p.add_argument("--agent", choices=("claude", "codex"), default="claude")
+    args = p.parse_args()
+
+    run1 = ("results_agent_claude_fullopt" if args.agent == "claude"
+            else "results_agent_codex_fullopt_run1")
+
     runs = []
     for n in range(1, 6):
-        run_dir = (os.path.join(PROJECT_ROOT, "results_agent_claude_fullopt") if n == 1
-                   else os.path.join(PROJECT_ROOT, f"results_agent_claude_fullopt_run{n}"))
+        run_dir = (os.path.join(PROJECT_ROOT, run1) if n == 1
+                   else os.path.join(PROJECT_ROOT, f"results_agent_{args.agent}_fullopt_run{n}"))
         log_path = os.path.join(run_dir, "attempt_log.json")
         if not os.path.exists(log_path):
             continue
@@ -87,7 +95,8 @@ def main():
     summary["fraction_slsqp"] = (sum(r["wraps_slsqp"] for r in runs) / len(runs)) if runs else None
     summary["fraction_sgd"]   = (sum(r["wraps_sgd"]   for r in runs) / len(runs)) if runs else None
 
-    out = os.path.join(EXP_DIR, "summary.json")
+    summary["agent"] = args.agent
+    out = os.path.join(EXP_DIR, f"summary_{args.agent}.json")
     with open(out, "w") as f:
         json.dump(summary, f, indent=2)
     print(json.dumps(summary, indent=2))

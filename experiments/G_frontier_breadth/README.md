@@ -14,24 +14,27 @@ Run one additional frontier model under the schedule-only interface,
 same hot-start, same time budget (5 hr).
 
 Candidates (pick 1, ordered by integration cost):
-1. **Claude Opus 4.x** via the existing `claude-code` runner — drop-in,
+1. **Codex CLI** (`gpt-5-codex` via OpenAI's `codex` binary) — drop-in
+   via `runners/codex_runner.py`. Recommended default. Lets us compare
+   three frontier *agentic CLIs* on the same task.
+2. **Claude Opus 4.x** via the existing `claude-code` runner — drop-in,
    only the model alias changes.
-2. **GPT-class** — requires writing an OpenAI Responses-API runner
-   following the `vllm_runner.py` pattern. ~1 day eng.
 3. **A larger open-weight model** (Llama 3.3 405B) — already supported
    by `vllm_runner.py` but requires LUMI GPU budget (~5–10 GPU-hr).
 
-For week-2, default is option 1 (lowest engineering cost).
+For week-2, default is option 1 (Codex). Run schedule-only first
+(`MODE=sched`); then full-opt (`MODE=full`) if budget allows.
 
 ## Cost
-1 × 5 hr agent run + scoring overhead ≈ 5.5 hr.
+1 × 3 hr agent run + scoring overhead ≈ 3.5 hr (sched) or 4.5 hr (full).
 
 ## Inputs
-- `agent_cli.py --provider claude-code --model claude-opus-4-x`
-- Hot-start: `results/seed_schedule.py`
+- `agent_cli.py --provider codex --model gpt-5-codex` (default)
+- Hot-start: `results/seed_schedule.py` (sched) or `results/seed_optimizer.py` (full)
 
 ## Outputs
-- `results_agent_claude_opus_sched/`
+- `results_agent_gpt_5_codex_sched/`
+- `results_agent_gpt_5_codex_full/` (if MODE=full)
 
 ## Success criteria
 - Best feasible ROWP ≥ baseline + 10 GWh: confirms breadth.
