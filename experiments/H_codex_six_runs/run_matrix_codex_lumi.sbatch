@@ -31,7 +31,7 @@ SHARD=${SLURM_ARRAY_TASK_ID:-0}
 
 OUT="experiments/H_codex_six_runs/matrix_lumi_shard${SHARD}.json"
 
-pixi run python experiments/H_codex_six_runs/matrix_eval.py \
+pixi run --frozen python experiments/H_codex_six_runs/matrix_eval.py \
     --n-seeds "$N_SEEDS" \
     --shard "$SHARD" \
     --num-shards "$NUM_SHARDS" \
