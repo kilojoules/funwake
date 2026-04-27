@@ -148,21 +148,28 @@ def run_with_traj(schedule_fn, sim, n_target, boundary, min_spacing,
     mx = jnp.zeros_like(x); my = jnp.zeros_like(y)
     vx = jnp.zeros_like(x); vy = jnp.zeros_like(y)
 
+    # Pre-compute the schedule trajectory so we can show it.
+    schedule_trace = []
+    for i in range(total_steps):
+        lr_i, alpha_i, b1_i, b2_i = schedule_fn(jnp.array(i), total_steps, lr0, alpha0)
+        schedule_trace.append((float(lr_i), float(alpha_i), float(b1_i), float(b2_i)))
+    schedule_trace = np.array(schedule_trace)
+
     frames = [(np.array(x), np.array(y), 0)]
     for i in range(total_steps):
         x, y, mx, my, vx, vy = step(jnp.array(i), x, y, mx, my, vx, vy)
         if (i + 1) % frame_every == 0 or i + 1 == total_steps:
             frames.append((np.array(x), np.array(y), i + 1))
-    return frames, lr0, alpha0
+    return frames, lr0, alpha0, schedule_trace
 
 
-def render_animation(frames, boundary, wd, weights, out_path,
-                     title="", rotor_radius=120.0, fps=30):
-    fig, (ax_lay, ax_rose) = plt.subplots(
-        1, 2, figsize=(12, 6),
-        gridspec_kw={"width_ratios": [3, 1]})
+def render_animation(frames, boundary, wd, weights, schedule_trace,
+                     out_path, title="", fps=30):
+    fig = plt.figure(figsize=(13, 7))
+    gs = fig.add_gridspec(2, 2, width_ratios=[3, 1], height_ratios=[2, 1])
 
-    # Layout panel
+    # Layout panel (top-left, taller)
+    ax_lay = fig.add_subplot(gs[:, 0])
     bnd = MplPoly(np.asarray(boundary), closed=True, fill=False,
                   edgecolor="0.2", lw=1.5)
     ax_lay.add_patch(bnd)
@@ -180,13 +187,12 @@ def render_animation(frames, boundary, wd, weights, out_path,
                         va="top", fontsize=10,
                         bbox=dict(boxstyle="round,pad=0.3", fc="white", alpha=0.85))
 
-    # Wind rose panel
-    wd_arr = np.asarray(wd); w_arr = np.asarray(weights)
-    n_dirs = len(wd_arr)
-    ax_rose.remove()
-    ax_rose = fig.add_subplot(1, 2, 2, projection="polar")
+    # Wind-rose panel (top-right)
+    ax_rose = fig.add_subplot(gs[0, 1], projection="polar")
     ax_rose.set_theta_zero_location("N")
     ax_rose.set_theta_direction(-1)
+    wd_arr = np.asarray(wd); w_arr = np.asarray(weights)
+    n_dirs = len(wd_arr)
     width = 2 * np.pi / max(n_dirs, 1)
     theta = np.deg2rad(wd_arr)
     if w_arr.ndim > 1:
@@ -200,18 +206,43 @@ def render_animation(frames, boundary, wd, weights, out_path,
     ax_rose.set_yticklabels([])
     ax_rose.set_title("Wind rose", fontsize=10)
 
+    # Schedule panel (bottom-right): lr (left axis) + alpha (right axis, log)
+    ax_sched = fig.add_subplot(gs[1, 1])
+    total_steps = schedule_trace.shape[0]
+    steps_axis = np.arange(total_steps)
+    lr_trace    = schedule_trace[:, 0]
+    alpha_trace = schedule_trace[:, 1]
+    ax_sched.plot(steps_axis, lr_trace, color="C0", lw=1.2, label="lr")
+    ax_sched.set_ylabel("lr", color="C0", fontsize=9)
+    ax_sched.tick_params(axis="y", labelcolor="C0", labelsize=8)
+    ax_sched.tick_params(axis="x", labelsize=8)
+    ax_sched.set_xlabel("step", fontsize=9)
+    ax_sched.set_title("Schedule", fontsize=10)
+    ax_sched_a = ax_sched.twinx()
+    ax_sched_a.plot(steps_axis, np.maximum(alpha_trace, 1e-30), color="C3", lw=1.2, label="alpha")
+    ax_sched_a.set_yscale("log")
+    ax_sched_a.set_ylabel("alpha (log)", color="C3", fontsize=9)
+    ax_sched_a.tick_params(axis="y", labelcolor="C3", labelsize=8)
+    cursor = ax_sched.axvline(0, color="0.4", lw=1.0, linestyle="--")
+
     def update(frame_idx):
         x, y, step_idx = frames[frame_idx]
         scat.set_offsets(np.column_stack([x, y]))
+        cursor.set_xdata([step_idx, step_idx])
+        cur_lr    = lr_trace[min(step_idx, total_steps - 1)]
+        cur_alpha = alpha_trace[min(step_idx, total_steps - 1)]
         label.set_text(f"step {step_idx} / {frames[-1][2]}\n"
-                       f"N = {len(x)} turbines")
-        return scat, label
+                       f"N = {len(x)} turbines\n"
+                       f"lr = {cur_lr:.3g}\n"
+                       f"alpha = {cur_alpha:.3g}")
+        return scat, label, cursor
 
     anim = animation.FuncAnimation(
         fig, update, frames=len(frames),
         interval=1000.0 / max(fps, 1), blit=False)
 
     print(f"[anim] writing {out_path} ...")
+    fig.tight_layout()
     anim.save(out_path, writer="ffmpeg", fps=fps, dpi=120)
     plt.close(fig)
 
@@ -238,13 +269,13 @@ def main():
     title = args.title or os.path.basename(args.schedule)
 
     print(f"[anim] running {args.schedule} on {args.problem} ...")
-    frames, lr0, alpha0 = run_with_traj(
+    frames, lr0, alpha0, schedule_trace = run_with_traj(
         schedule_fn, sim, n_target, boundary, min_spacing, wd, ws, weights,
         total_steps=args.total_steps, frame_every=args.frame_every, seed=args.seed)
     print(f"[anim] {len(frames)} frames captured (lr0={lr0:.2f}, alpha0={alpha0:.4g})")
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-    render_animation(frames, boundary, wd, weights, args.out,
+    render_animation(frames, boundary, wd, weights, schedule_trace, args.out,
                      title=title, fps=args.fps)
     print(f"[anim] done: {args.out}")
 
