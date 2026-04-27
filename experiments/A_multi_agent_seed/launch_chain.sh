@@ -67,17 +67,20 @@ run_one() {
     mkdir -p "$out"
     hide_siblings "$out"
 
-    local model_args=()
+    # Build optional --model arg as a string; bash 3.2 (macOS) errors on
+    # ${arr[@]} expansion of empty arrays under set -u, so use a flat string.
+    local model_arg=""
     if [[ "$PROVIDER" == "codex" ]]; then
-        model_args=(--model "$CODEX_MODEL")
+        model_arg="--model $CODEX_MODEL"
     fi
 
     echo "[A] $(date -u +%FT%TZ) Launching $AGENT seed $n -> $out"
 
     set +e
+    # shellcheck disable=SC2086
     pixi run python agent_cli.py \
         --provider "$PROVIDER" \
-        "${model_args[@]}" \
+        $model_arg \
         --schedule-only \
         --wind-csv "$WIND_CSV" \
         --time-budget "$TIME_BUDGET" \
