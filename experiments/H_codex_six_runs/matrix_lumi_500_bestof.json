@@ -1,0 +1,382 @@
+{
+  "Codex run 1|dei_n30_roseuniform": {
+    "best_of_n": 3359.98,
+    "mean": 3359.98,
+    "n_seeds": 317
+  },
+  "Codex run 1|dei_n30_roseomnidir": {
+    "best_of_n": 3352.68,
+    "mean": 3350.133,
+    "n_seeds": 215
+  },
+  "Codex run 1|dei_n30_rosedei": {
+    "best_of_n": 3352.61,
+    "mean": 3349.933,
+    "n_seeds": 243
+  },
+  "Codex run 1|dei_n30_roserowp": {
+    "best_of_n": 2609.17,
+    "mean": 2606.86,
+    "n_seeds": 260
+  },
+  "Codex run 1|dei_n40_roseuniform": {
+    "best_of_n": 4479.97,
+    "mean": 4479.29,
+    "n_seeds": 174
+  },
+  "Codex run 1|dei_n40_roseomnidir": {
+    "best_of_n": 4462.61,
+    "mean": 4458.834,
+    "n_seeds": 212
+  },
+  "Codex run 1|dei_n40_rosedei": {
+    "best_of_n": 4461.7,
+    "mean": 4458.367,
+    "n_seeds": 231
+  },
+  "Codex run 1|dei_n40_roserowp": {
+    "best_of_n": 3473.59,
+    "mean": 3468.931,
+    "n_seeds": 231
+  },
+  "Codex run 1|dei_n50_roseomnidir": {
+    "best_of_n": 5566.96,
+    "mean": 5560.872,
+    "n_seeds": 187
+  },
+  "Codex run 1|dei_n50_roserowp": {
+    "best_of_n": 4331.27,
+    "mean": 4325.143,
+    "n_seeds": 212
+  },
+  "Codex run 1|dei_n60_roseomnidir": {
+    "best_of_n": 6661.45,
+    "mean": 6654.57,
+    "n_seeds": 179
+  },
+  "Codex run 1|dei_n60_rosedei": {
+    "best_of_n": 6659.8,
+    "mean": 6653.131,
+    "n_seeds": 174
+  },
+  "Codex run 1|dei_n60_roserowp": {
+    "best_of_n": 5182.6,
+    "mean": 5174.943,
+    "n_seeds": 212
+  },
+  "Codex run 1|dei_n70_roseomnidir": {
+    "best_of_n": 7746.93,
+    "mean": 7739.83,
+    "n_seeds": 128
+  },
+  "Codex run 1|dei_n70_rosedei": {
+    "best_of_n": 7744.43,
+    "mean": 7737.357,
+    "n_seeds": 152
+  },
+  "Codex run 1|dei_n70_roserowp": {
+    "best_of_n": 6029.03,
+    "mean": 6018.432,
+    "n_seeds": 194
+  },
+  "Codex run 1|dei_n80_roseomnidir": {
+    "best_of_n": 8822.67,
+    "mean": 8814.839,
+    "n_seeds": 131
+  },
+  "Codex run 1|dei_n80_rosedei": {
+    "best_of_n": 8821.62,
+    "mean": 8812.649,
+    "n_seeds": 119
+  },
+  "Codex run 1|dei_n80_roserowp": {
+    "best_of_n": 6865.26,
+    "mean": 6854.562,
+    "n_seeds": 159
+  },
+  "Codex run 1|rowp_n30_roseuniform": {
+    "best_of_n": 2330.16,
+    "mean": 2330.16,
+    "n_seeds": 295
+  },
+  "Codex run 1|rowp_n30_roseomnidir": {
+    "best_of_n": 2321.71,
+    "mean": 2319.111,
+    "n_seeds": 202
+  },
+  "Codex run 1|rowp_n30_rosedei": {
+    "best_of_n": 2321.51,
+    "mean": 2319.144,
+    "n_seeds": 200
+  },
+  "Codex run 1|rowp_n30_roserowp": {
+    "best_of_n": 1750.35,
+    "mean": 1748.736,
+    "n_seeds": 216
+  },
+  "Codex run 1|rowp_n40_roseuniform": {
+    "best_of_n": 3106.88,
+    "mean": 3106.88,
+    "n_seeds": 295
+  },
+  "Codex run 1|rowp_n40_roseomnidir": {
+    "best_of_n": 3085.48,
+    "mean": 3081.752,
+    "n_seeds": 184
+  },
+  "Codex run 1|rowp_n40_rosedei": {
+    "best_of_n": 3085.7,
+    "mean": 3082.032,
+    "n_seeds": 155
+  },
+  "Codex run 1|rowp_n40_roserowp": {
+    "best_of_n": 2329.09,
+    "mean": 2326.032,
+    "n_seeds": 220
+  },
+  "Codex run 1|rowp_n50_roseuniform": {
+    "best_of_n": 3883.6,
+    "mean": 3882.099,
+    "n_seeds": 184
+  },
+  "Codex run 1|rowp_n50_roseomnidir": {
+    "best_of_n": 3841.68,
+    "mean": 3836.915,
+    "n_seeds": 142
+  },
+  "Codex run 1|rowp_n50_rosedei": {
+    "best_of_n": 3842.03,
+    "mean": 3836.4,
+    "n_seeds": 171
+  },
+  "Codex run 1|rowp_n50_roserowp": {
+    "best_of_n": 2903.53,
+    "mean": 2899.203,
+    "n_seeds": 182
+  },
+  "Codex run 1|rowp_n60_roseuniform": {
+    "best_of_n": 4656.86,
+    "mean": 4650.795,
+    "n_seeds": 37
+  },
+  "Codex run 1|rowp_n60_roseomnidir": {
+    "best_of_n": 4590.41,
+    "mean": 4583.075,
+    "n_seeds": 127
+  },
+  "Codex run 1|rowp_n60_rosedei": {
+    "best_of_n": 4588.1,
+    "mean": 4582.929,
+    "n_seeds": 112
+  },
+  "Codex run 1|rowp_n70_rosedei": {
+    "best_of_n": 5329.5,
+    "mean": 5318.403,
+    "n_seeds": 123
+  },
+  "Codex run 1|rowp_n70_roserowp": {
+    "best_of_n": 4039.49,
+    "mean": 4033.072,
+    "n_seeds": 133
+  },
+  "Codex run 1|rowp_n80_roseuniform": {
+    "best_of_n": 6187.35,
+    "mean": 6180.617,
+    "n_seeds": 3
+  },
+  "Codex run 1|rowp_n80_roseomnidir": {
+    "best_of_n": 6057.49,
+    "mean": 6045.42,
+    "n_seeds": 77
+  },
+  "Codex run 1|rowp_n80_rosedei": {
+    "best_of_n": 6054.73,
+    "mean": 6046.153,
+    "n_seeds": 69
+  },
+  "Codex run 1|rowp_n80_roserowp": {
+    "best_of_n": 4602.51,
+    "mean": 4593.616,
+    "n_seeds": 117
+  },
+  "Codex run 1|dei_n50_roseuniform": {
+    "best_of_n": 5599.82,
+    "mean": 5592.483,
+    "n_seeds": 51
+  },
+  "Codex run 1|dei_n50_rosedei": {
+    "best_of_n": 5565.67,
+    "mean": 5560.265,
+    "n_seeds": 198
+  },
+  "Codex run 1|rowp_n60_roserowp": {
+    "best_of_n": 3474.02,
+    "mean": 3468.276,
+    "n_seeds": 153
+  },
+  "Codex run 1|rowp_n70_roseomnidir": {
+    "best_of_n": 5328.16,
+    "mean": 5319.904,
+    "n_seeds": 89
+  },
+  "Codex run 1|dei_n200_rosedei": {
+    "best_of_n": 20932.43,
+    "mean": 20895.55,
+    "n_seeds": 4
+  },
+  "Codex run 1|dei_n200_roserowp": {
+    "best_of_n": 16388.9,
+    "mean": 16364.139,
+    "n_seeds": 21
+  },
+  "Codex run 2|dei_n30_roseuniform": {
+    "best_of_n": 3359.98,
+    "mean": 3359.98,
+    "n_seeds": 97
+  },
+  "Codex run 2|dei_n30_roseomnidir": {
+    "best_of_n": 3351.68,
+    "mean": 3348.863,
+    "n_seeds": 74
+  },
+  "Codex run 2|dei_n30_rosedei": {
+    "best_of_n": 3351.69,
+    "mean": 3348.782,
+    "n_seeds": 74
+  },
+  "Codex run 2|dei_n30_roserowp": {
+    "best_of_n": 2608.76,
+    "mean": 2606.564,
+    "n_seeds": 65
+  },
+  "Codex run 2|dei_n40_roseuniform": {
+    "best_of_n": 4479.97,
+    "mean": 4479.948,
+    "n_seeds": 69
+  },
+  "Codex run 2|dei_n40_roseomnidir": {
+    "best_of_n": 4460.9,
+    "mean": 4456.869,
+    "n_seeds": 61
+  },
+  "Codex run 2|dei_n40_rosedei": {
+    "best_of_n": 4460.61,
+    "mean": 4456.447,
+    "n_seeds": 59
+  },
+  "Codex run 2|dei_n40_roserowp": {
+    "best_of_n": 3472.84,
+    "mean": 3468.76,
+    "n_seeds": 65
+  },
+  "Codex run 2|dei_n50_roseuniform": {
+    "best_of_n": 5599.97,
+    "mean": 5598.276,
+    "n_seeds": 28
+  },
+  "Codex run 2|dei_n50_roseomnidir": {
+    "best_of_n": 5564.94,
+    "mean": 5558.04,
+    "n_seeds": 56
+  },
+  "Codex run 2|dei_n50_rosedei": {
+    "best_of_n": 5564.07,
+    "mean": 5557.544,
+    "n_seeds": 47
+  },
+  "Codex run 2|dei_n50_roserowp": {
+    "best_of_n": 4329.86,
+    "mean": 4325.173,
+    "n_seeds": 42
+  },
+  "Codex run 2|dei_n60_roseomnidir": {
+    "best_of_n": 6659.49,
+    "mean": 6650.951,
+    "n_seeds": 34
+  },
+  "Codex run 2|dei_n60_rosedei": {
+    "best_of_n": 6658.8,
+    "mean": 6650.45,
+    "n_seeds": 28
+  },
+  "Codex run 2|dei_n60_roserowp": {
+    "best_of_n": 5184.34,
+    "mean": 5177.118,
+    "n_seeds": 33
+  },
+  "Codex run 1|rowp_n70_roseuniform": {
+    "best_of_n": 5421.6,
+    "mean": 5413.788,
+    "n_seeds": 11
+  },
+  "Codex run 2|dei_n70_roseomnidir": {
+    "best_of_n": 7739.77,
+    "mean": 7733.95,
+    "n_seeds": 14
+  },
+  "Codex run 2|dei_n70_rosedei": {
+    "best_of_n": 7741.5,
+    "mean": 7731.011,
+    "n_seeds": 30
+  },
+  "Codex run 2|dei_n70_roserowp": {
+    "best_of_n": 6026.61,
+    "mean": 6021.587,
+    "n_seeds": 22
+  },
+  "Codex run 2|dei_n80_roseomnidir": {
+    "best_of_n": 8819.52,
+    "mean": 8809.649,
+    "n_seeds": 10
+  },
+  "Codex run 2|dei_n80_rosedei": {
+    "best_of_n": 8811.69,
+    "mean": 8806.463,
+    "n_seeds": 13
+  },
+  "Codex run 2|dei_n80_roserowp": {
+    "best_of_n": 6866.93,
+    "mean": 6858.547,
+    "n_seeds": 4
+  },
+  "Codex run 1|dei_n70_roseuniform": {
+    "best_of_n": 7820.96,
+    "mean": 7810.71,
+    "n_seeds": 7
+  },
+  "Codex run 1|rowp_n200_roserowp": {
+    "best_of_n": 10874.91,
+    "mean": 10847.936,
+    "n_seeds": 7
+  },
+  "Codex run 2|dei_n80_roseuniform": {
+    "best_of_n": 8936.72,
+    "mean": 8935.005,
+    "n_seeds": 2
+  },
+  "Codex run 2|dei_n200_roseomnidir": {
+    "best_of_n": 20926.61,
+    "mean": 20926.61,
+    "n_seeds": 1
+  },
+  "Codex run 1|dei_n60_roseuniform": {
+    "best_of_n": 6710.47,
+    "mean": 6699.944,
+    "n_seeds": 10
+  },
+  "Codex run 1|rowp_n200_rosedei": {
+    "best_of_n": 13890.21,
+    "mean": 13886.1,
+    "n_seeds": 2
+  },
+  "Codex run 2|dei_n60_roseuniform": {
+    "best_of_n": 6715.13,
+    "mean": 6710.912,
+    "n_seeds": 5
+  },
+  "Codex run 1|dei_n200_roseomnidir": {
+    "best_of_n": 20921.42,
+    "mean": 20904.38,
+    "n_seeds": 2
+  }
+}
