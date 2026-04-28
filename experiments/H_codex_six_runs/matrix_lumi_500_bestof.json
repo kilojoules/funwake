@@ -2,182 +2,182 @@
   "Codex run 1|dei_n30_roseuniform": {
     "best_of_n": 3359.98,
     "mean": 3359.98,
-    "n_seeds": 317
+    "n_seeds": 354
   },
   "Codex run 1|dei_n30_roseomnidir": {
     "best_of_n": 3352.68,
-    "mean": 3350.133,
-    "n_seeds": 215
+    "mean": 3350.113,
+    "n_seeds": 243
   },
   "Codex run 1|dei_n30_rosedei": {
     "best_of_n": 3352.61,
-    "mean": 3349.933,
-    "n_seeds": 243
+    "mean": 3349.952,
+    "n_seeds": 266
   },
   "Codex run 1|dei_n30_roserowp": {
     "best_of_n": 2609.17,
-    "mean": 2606.86,
-    "n_seeds": 260
+    "mean": 2606.872,
+    "n_seeds": 295
   },
   "Codex run 1|dei_n40_roseuniform": {
     "best_of_n": 4479.97,
-    "mean": 4479.29,
-    "n_seeds": 174
+    "mean": 4479.288,
+    "n_seeds": 188
   },
   "Codex run 1|dei_n40_roseomnidir": {
     "best_of_n": 4462.61,
-    "mean": 4458.834,
-    "n_seeds": 212
+    "mean": 4458.806,
+    "n_seeds": 242
   },
   "Codex run 1|dei_n40_rosedei": {
     "best_of_n": 4461.7,
-    "mean": 4458.367,
-    "n_seeds": 231
+    "mean": 4458.322,
+    "n_seeds": 258
   },
   "Codex run 1|dei_n40_roserowp": {
     "best_of_n": 3473.59,
-    "mean": 3468.931,
-    "n_seeds": 231
+    "mean": 3468.868,
+    "n_seeds": 260
   },
   "Codex run 1|dei_n50_roseomnidir": {
     "best_of_n": 5566.96,
-    "mean": 5560.872,
-    "n_seeds": 187
+    "mean": 5560.838,
+    "n_seeds": 211
   },
   "Codex run 1|dei_n50_roserowp": {
     "best_of_n": 4331.27,
-    "mean": 4325.143,
-    "n_seeds": 212
+    "mean": 4325.201,
+    "n_seeds": 241
   },
   "Codex run 1|dei_n60_roseomnidir": {
     "best_of_n": 6661.45,
-    "mean": 6654.57,
-    "n_seeds": 179
+    "mean": 6654.557,
+    "n_seeds": 209
   },
   "Codex run 1|dei_n60_rosedei": {
     "best_of_n": 6659.8,
-    "mean": 6653.131,
-    "n_seeds": 174
+    "mean": 6653.247,
+    "n_seeds": 199
   },
   "Codex run 1|dei_n60_roserowp": {
     "best_of_n": 5182.6,
-    "mean": 5174.943,
-    "n_seeds": 212
+    "mean": 5174.965,
+    "n_seeds": 235
   },
   "Codex run 1|dei_n70_roseomnidir": {
     "best_of_n": 7746.93,
-    "mean": 7739.83,
-    "n_seeds": 128
+    "mean": 7739.848,
+    "n_seeds": 145
   },
   "Codex run 1|dei_n70_rosedei": {
     "best_of_n": 7744.43,
-    "mean": 7737.357,
-    "n_seeds": 152
+    "mean": 7737.339,
+    "n_seeds": 168
   },
   "Codex run 1|dei_n70_roserowp": {
     "best_of_n": 6029.03,
-    "mean": 6018.432,
-    "n_seeds": 194
+    "mean": 6018.516,
+    "n_seeds": 218
   },
   "Codex run 1|dei_n80_roseomnidir": {
     "best_of_n": 8822.67,
-    "mean": 8814.839,
-    "n_seeds": 131
+    "mean": 8814.796,
+    "n_seeds": 146
   },
   "Codex run 1|dei_n80_rosedei": {
     "best_of_n": 8821.62,
-    "mean": 8812.649,
-    "n_seeds": 119
+    "mean": 8812.477,
+    "n_seeds": 140
   },
   "Codex run 1|dei_n80_roserowp": {
     "best_of_n": 6865.26,
-    "mean": 6854.562,
-    "n_seeds": 159
+    "mean": 6854.59,
+    "n_seeds": 182
   },
   "Codex run 1|rowp_n30_roseuniform": {
     "best_of_n": 2330.16,
     "mean": 2330.16,
-    "n_seeds": 295
+    "n_seeds": 330
   },
   "Codex run 1|rowp_n30_roseomnidir": {
     "best_of_n": 2321.71,
-    "mean": 2319.111,
-    "n_seeds": 202
+    "mean": 2319.091,
+    "n_seeds": 227
   },
   "Codex run 1|rowp_n30_rosedei": {
     "best_of_n": 2321.51,
-    "mean": 2319.144,
-    "n_seeds": 200
+    "mean": 2319.151,
+    "n_seeds": 233
   },
   "Codex run 1|rowp_n30_roserowp": {
     "best_of_n": 1750.35,
-    "mean": 1748.736,
-    "n_seeds": 216
+    "mean": 1748.749,
+    "n_seeds": 246
   },
   "Codex run 1|rowp_n40_roseuniform": {
     "best_of_n": 3106.88,
     "mean": 3106.88,
-    "n_seeds": 295
+    "n_seeds": 331
   },
   "Codex run 1|rowp_n40_roseomnidir": {
     "best_of_n": 3085.48,
-    "mean": 3081.752,
-    "n_seeds": 184
+    "mean": 3081.73,
+    "n_seeds": 205
   },
   "Codex run 1|rowp_n40_rosedei": {
     "best_of_n": 3085.7,
-    "mean": 3082.032,
-    "n_seeds": 155
+    "mean": 3082.093,
+    "n_seeds": 179
   },
   "Codex run 1|rowp_n40_roserowp": {
     "best_of_n": 2329.09,
-    "mean": 2326.032,
-    "n_seeds": 220
+    "mean": 2325.985,
+    "n_seeds": 248
   },
   "Codex run 1|rowp_n50_roseuniform": {
     "best_of_n": 3883.6,
-    "mean": 3882.099,
-    "n_seeds": 184
+    "mean": 3882.112,
+    "n_seeds": 214
   },
   "Codex run 1|rowp_n50_roseomnidir": {
     "best_of_n": 3841.68,
-    "mean": 3836.915,
-    "n_seeds": 142
+    "mean": 3836.907,
+    "n_seeds": 161
   },
   "Codex run 1|rowp_n50_rosedei": {
     "best_of_n": 3842.03,
-    "mean": 3836.4,
-    "n_seeds": 171
+    "mean": 3836.475,
+    "n_seeds": 187
   },
   "Codex run 1|rowp_n50_roserowp": {
     "best_of_n": 2903.53,
-    "mean": 2899.203,
-    "n_seeds": 182
+    "mean": 2899.218,
+    "n_seeds": 210
   },
   "Codex run 1|rowp_n60_roseuniform": {
     "best_of_n": 4656.86,
-    "mean": 4650.795,
-    "n_seeds": 37
+    "mean": 4651.065,
+    "n_seeds": 46
   },
   "Codex run 1|rowp_n60_roseomnidir": {
     "best_of_n": 4590.41,
-    "mean": 4583.075,
-    "n_seeds": 127
+    "mean": 4583.067,
+    "n_seeds": 141
   },
   "Codex run 1|rowp_n60_rosedei": {
     "best_of_n": 4588.1,
-    "mean": 4582.929,
-    "n_seeds": 112
+    "mean": 4582.833,
+    "n_seeds": 125
   },
   "Codex run 1|rowp_n70_rosedei": {
     "best_of_n": 5329.5,
-    "mean": 5318.403,
-    "n_seeds": 123
+    "mean": 5318.381,
+    "n_seeds": 131
   },
   "Codex run 1|rowp_n70_roserowp": {
     "best_of_n": 4039.49,
-    "mean": 4033.072,
-    "n_seeds": 133
+    "mean": 4033.181,
+    "n_seeds": 145
   },
   "Codex run 1|rowp_n80_roseuniform": {
     "best_of_n": 6187.35,
@@ -186,48 +186,48 @@
   },
   "Codex run 1|rowp_n80_roseomnidir": {
     "best_of_n": 6057.49,
-    "mean": 6045.42,
-    "n_seeds": 77
+    "mean": 6045.371,
+    "n_seeds": 92
   },
   "Codex run 1|rowp_n80_rosedei": {
     "best_of_n": 6054.73,
-    "mean": 6046.153,
-    "n_seeds": 69
+    "mean": 6046.045,
+    "n_seeds": 74
   },
   "Codex run 1|rowp_n80_roserowp": {
     "best_of_n": 4602.51,
-    "mean": 4593.616,
-    "n_seeds": 117
+    "mean": 4593.594,
+    "n_seeds": 124
   },
   "Codex run 1|dei_n50_roseuniform": {
     "best_of_n": 5599.82,
-    "mean": 5592.483,
-    "n_seeds": 51
+    "mean": 5592.354,
+    "n_seeds": 57
   },
   "Codex run 1|dei_n50_rosedei": {
     "best_of_n": 5565.67,
-    "mean": 5560.265,
-    "n_seeds": 198
+    "mean": 5560.255,
+    "n_seeds": 217
   },
   "Codex run 1|rowp_n60_roserowp": {
     "best_of_n": 3474.02,
-    "mean": 3468.276,
-    "n_seeds": 153
+    "mean": 3468.286,
+    "n_seeds": 168
   },
   "Codex run 1|rowp_n70_roseomnidir": {
     "best_of_n": 5328.16,
-    "mean": 5319.904,
-    "n_seeds": 89
-  },
-  "Codex run 1|dei_n200_rosedei": {
-    "best_of_n": 20932.43,
-    "mean": 20895.55,
-    "n_seeds": 4
+    "mean": 5319.954,
+    "n_seeds": 97
   },
   "Codex run 1|dei_n200_roserowp": {
     "best_of_n": 16388.9,
-    "mean": 16364.139,
-    "n_seeds": 21
+    "mean": 16361.553,
+    "n_seeds": 26
+  },
+  "Codex run 1|dei_n200_rosedei": {
+    "best_of_n": 20932.43,
+    "mean": 20899.324,
+    "n_seeds": 5
   },
   "Codex run 2|dei_n30_roseuniform": {
     "best_of_n": 3359.98,
@@ -306,8 +306,8 @@
   },
   "Codex run 1|rowp_n70_roseuniform": {
     "best_of_n": 5421.6,
-    "mean": 5413.788,
-    "n_seeds": 11
+    "mean": 5413.666,
+    "n_seeds": 12
   },
   "Codex run 2|dei_n70_roseomnidir": {
     "best_of_n": 7739.77,
@@ -341,8 +341,8 @@
   },
   "Codex run 1|dei_n70_roseuniform": {
     "best_of_n": 7820.96,
-    "mean": 7810.71,
-    "n_seeds": 7
+    "mean": 7811.885,
+    "n_seeds": 8
   },
   "Codex run 1|rowp_n200_roserowp": {
     "best_of_n": 10874.91,
@@ -360,9 +360,9 @@
     "n_seeds": 1
   },
   "Codex run 1|dei_n60_roseuniform": {
-    "best_of_n": 6710.47,
-    "mean": 6699.944,
-    "n_seeds": 10
+    "best_of_n": 6710.6,
+    "mean": 6701.448,
+    "n_seeds": 12
   },
   "Codex run 1|rowp_n200_rosedei": {
     "best_of_n": 13890.21,
