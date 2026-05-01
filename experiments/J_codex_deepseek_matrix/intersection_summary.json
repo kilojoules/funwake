@@ -1,0 +1,128 @@
+{
+  "n_runs": 12,
+  "n_cells_any_data": 64,
+  "n_cells_full_intersection": 18,
+  "intersection_cells": [
+    "dei_n30_rosedei",
+    "dei_n30_roseomnidir",
+    "dei_n30_roserowp",
+    "dei_n30_roseuniform",
+    "dei_n40_rosedei",
+    "dei_n40_roseomnidir",
+    "dei_n40_roseuniform",
+    "dei_n50_rosedei",
+    "dei_n50_roseomnidir",
+    "dei_n50_roserowp",
+    "dei_n60_rosedei",
+    "dei_n70_roserowp",
+    "rowp_n30_roserowp",
+    "rowp_n30_roseuniform",
+    "rowp_n40_roseuniform",
+    "rowp_n50_roserowp",
+    "rowp_n60_roserowp",
+    "rowp_n60_roseuniform"
+  ],
+  "per_run": {
+    "codex fullopt run1": {
+      "mean": 4006.704,
+      "std": 1291.74,
+      "min": 1746.41,
+      "max": 6612.6
+    },
+    "codex fullopt run2": {
+      "mean": 4029.154,
+      "std": 1308.095,
+      "min": 1751.18,
+      "max": 6682.15
+    },
+    "codex fullopt run3": {
+      "mean": 4016.741,
+      "std": 1294.483,
+      "min": 1750.56,
+      "max": 6618.18
+    },
+    "codex sched run1": {
+      "mean": 4022.2,
+      "std": 1302.073,
+      "min": 1749.01,
+      "max": 6659.42
+    },
+    "codex sched run2": {
+      "mean": 4022.924,
+      "std": 1302.026,
+      "min": 1749.33,
+      "max": 6651.81
+    },
+    "codex sched run3": {
+      "mean": 4023.541,
+      "std": 1303.228,
+      "min": 1750.01,
+      "max": 6662.38
+    },
+    "deepseek fullopt run1": {
+      "mean": 4018.284,
+      "std": 1299.398,
+      "min": 1748.97,
+      "max": 6643.76
+    },
+    "deepseek fullopt run2": {
+      "mean": 4020.202,
+      "std": 1301.618,
+      "min": 1746.12,
+      "max": 6651.91
+    },
+    "deepseek fullopt run3": {
+      "mean": 4021.832,
+      "std": 1304.903,
+      "min": 1748.95,
+      "max": 6686.44
+    },
+    "deepseek sched run1": {
+      "mean": 4011.373,
+      "std": 1293.482,
+      "min": 1746.05,
+      "max": 6623.34
+    },
+    "deepseek sched run2": {
+      "mean": 4012.716,
+      "std": 1295.18,
+      "min": 1745.83,
+      "max": 6629.81
+    },
+    "deepseek sched run3": {
+      "mean": 4006.721,
+      "std": 1293.656,
+      "min": 1741.98,
+      "max": 6623.76
+    }
+  },
+  "per_group": {
+    "codex fullopt": {
+      "mean": 4017.533,
+      "std": 1298.158,
+      "n_obs": 54
+    },
+    "codex sched": {
+      "mean": 4022.888,
+      "std": 1302.442,
+      "n_obs": 54
+    },
+    "deepseek fullopt": {
+      "mean": 4020.106,
+      "std": 1301.976,
+      "n_obs": 54
+    },
+    "deepseek sched": {
+      "mean": 4010.27,
+      "std": 1294.109,
+      "n_obs": 54
+    }
+  },
+  "head_to_head_codex_vs_deepseek": {
+    "codex_wins": 13,
+    "deepseek_wins": 1,
+    "ties": 4,
+    "mean_codex_minus_deepseek": 6.07,
+    "median_codex_minus_deepseek": 4.76
+  }
+}
