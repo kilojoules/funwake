@@ -79,6 +79,16 @@ def main():
                    help="Key in baselines JSON (default: 1)")
     p.add_argument("--max-attempts", type=int, default=0,
                    help="Stop after N scored attempts (0 = use time budget only)")
+    p.add_argument("--adversarial-stress", default=None,
+                   help="Path to a stress problem JSON. When set, every "
+                        "attempt is scored on both the train problem and this "
+                        "stress problem, and the deployment criterion is "
+                        "min(train_gap, stress_gap). See tools/run_optimizer.py.")
+    p.add_argument("--adversarial-stress-baseline", type=float, default=None,
+                   help="Baseline AEP (GWh) for the stress problem, used to "
+                        "compute stress_gap. Look up in "
+                        "results/matrix/baselines_matrix.json under "
+                        "<farm>_n<N>_rose<rose>.best_aep.")
 
     args = p.parse_args()
 
@@ -108,6 +118,8 @@ def main():
         baselines=args.baselines,
         train_farm=args.train_farm,
         max_attempts=args.max_attempts,
+        adversarial_stress=args.adversarial_stress,
+        adversarial_stress_baseline=args.adversarial_stress_baseline,
     )
 
     # Create runner

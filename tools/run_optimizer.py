@@ -98,6 +98,61 @@ def _count_attempts(log_path):
         return 0
 
 
+def _run_harness(script_path, problem_path, schedule_only, timeout,
+                 harness, pixwake_src, project_root, seed):
+    """Run the harness on a single problem and return (layout_dict, elapsed_s)
+    or raise RuntimeError with the failure reason."""
+    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
+        output_path = f.name
+
+    env = {
+        "PATH": os.environ.get("PATH", ""),
+        "PYTHONPATH": f"{pixwake_src}:{os.environ.get('PYTHONPATH', '')}",
+        "JAX_ENABLE_X64": "True",
+        "FUNWAKE_PROBLEM": os.path.abspath(problem_path),
+        "FUNWAKE_OUTPUT": output_path,
+        "FUNWAKE_SEED": str(seed),
+        "HOME": os.environ.get("HOME", ""),
+        "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
+    }
+
+    t0 = time.time()
+    try:
+        result = subprocess.run(
+            [sys.executable, harness, os.path.abspath(script_path)]
+            + (["--schedule-only"] if schedule_only else []),
+            capture_output=True, text=True, timeout=timeout,
+            cwd=os.path.join(project_root, "playground"), env=env)
+    except subprocess.TimeoutExpired:
+        if os.path.exists(output_path):
+            os.unlink(output_path)
+        raise RuntimeError(f"Timeout after {timeout}s")
+    elapsed = time.time() - t0
+
+    if result.returncode != 0:
+        if os.path.exists(output_path):
+            os.unlink(output_path)
+        raise RuntimeError(result.stderr[-500:])
+
+    if not os.path.exists(output_path):
+        raise RuntimeError("No output written")
+
+    with open(output_path) as f:
+        layout = json.load(f)
+    os.unlink(output_path)
+    return layout, elapsed
+
+
+def _score_layout(layout, problem_path):
+    """Score a layout against a problem. Returns (aep_gwh, feasible)."""
+    from dei_layout import ProblemBenchmark
+    bm = ProblemBenchmark(os.path.abspath(problem_path))
+    aep = bm.score(layout["x"], layout["y"])
+    feas = bm.check_feasibility(layout["x"], layout["y"])
+    feasible = feas["spacing_ok"] and feas["boundary_ok"]
+    return aep, feasible
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("script", help="Path to optimizer module")
@@ -111,6 +166,14 @@ def main():
                    help="Require schedule_fn() only — reject optimize()")
     p.add_argument("--seed", type=int, default=0,
                    help="Initialization seed (grid subsampling in the skeleton)")
+    p.add_argument("--stress-problem", default=None,
+                   help="Second problem to score on (adversarial stress cell). "
+                        "When set, scores on this problem after the main one "
+                        "and reports stress_aep_gwh, stress_feasible, stress_gap, "
+                        "and min_gap = min(gap, stress_gap) in stdout/log.")
+    p.add_argument("--stress-baseline", type=float, default=None,
+                   help="Baseline AEP for the stress problem (GWh). If unset, "
+                        "stress_gap is reported as None.")
     args = p.parse_args()
 
     # Auto-detect log path from script directory
@@ -144,122 +207,117 @@ def main():
     except ImportError:
         pass  # sandbox module not available
 
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as f:
-        output_path = f.name
+    sys.path.insert(0, pixwake_src)
+    sys.path.insert(0, os.path.join(project_root, "benchmarks"))
 
-    env = {
-        "PATH": os.environ.get("PATH", ""),
-        "PYTHONPATH": f"{pixwake_src}:{os.environ.get('PYTHONPATH', '')}",
-        "JAX_ENABLE_X64": "True",
-        "FUNWAKE_PROBLEM": os.path.abspath(args.problem),
-        "FUNWAKE_OUTPUT": output_path,
-        "FUNWAKE_SEED": str(args.seed),
-        "HOME": os.environ.get("HOME", ""),
-        "TMPDIR": os.environ.get("TMPDIR", "/tmp"),
-    }
-
-    t0 = time.time()
+    # Train evaluation
     try:
-        result = subprocess.run(
-            [sys.executable, harness, os.path.abspath(args.script)]
-            + (["--schedule-only"] if args.schedule_only else []),
-            capture_output=True, text=True, timeout=args.timeout,
-            cwd=os.path.join(project_root, "playground"), env=env)
-    except subprocess.TimeoutExpired:
-        os.unlink(output_path) if os.path.exists(output_path) else None
-        entry = {"attempt": attempt_num, "timestamp": time.time(),
-                 "error": f"Timeout after {args.timeout}s"}
-        _append_to_log(log_path, entry)
-        print(json.dumps({"error": f"Timeout after {args.timeout}s"}))
-        return
-    elapsed = time.time() - t0
-
-    if result.returncode != 0:
-        os.unlink(output_path) if os.path.exists(output_path) else None
-        err = result.stderr[-1000:]
-        entry = {"attempt": attempt_num, "timestamp": time.time(),
-                 "error": err[:500]}
-        _append_to_log(log_path, entry)
-        print(json.dumps({"error": err}))
-        return
-
-    if not os.path.exists(output_path):
-        entry = {"attempt": attempt_num, "timestamp": time.time(),
-                 "error": "No output written"}
-        _append_to_log(log_path, entry)
-        print(json.dumps({"error": "No output written"}))
-        return
-
-    # Score via ProblemBenchmark
-    try:
-        sys.path.insert(0, pixwake_src)
-        sys.path.insert(0, os.path.join(project_root, "benchmarks"))
-        from dei_layout import ProblemBenchmark
-
-        with open(output_path) as f:
-            layout = json.load(f)
-        os.unlink(output_path)
-
-        bm = ProblemBenchmark(os.path.abspath(args.problem))
-        aep = bm.score(layout["x"], layout["y"])
-        feas = bm.check_feasibility(layout["x"], layout["y"])
-        feasible = feas["spacing_ok"] and feas["boundary_ok"]
-
-        # Load baseline
-        baseline = 0
-        try:
-            with open(os.path.join(project_root, args.baselines)) as f:
-                baselines = json.load(f)
-            baseline = baselines.get(args.train_farm, {}).get("aep_gwh", 0)
-        except FileNotFoundError:
-            pass
-
-        # Classify strategy + parse agent-authored metadata from the source
-        hypothesis = axis = lesson = None
-        families = None
-        try:
-            code = open(args.script).read()
-            strategy = "sgd_solve" if "topfarm_sgd_solve" in code else "custom"
-            hypothesis, axis, lesson = _parse_metadata(code)
-            families = _classify_source(code, args.schedule_only)
-        except IOError:
-            strategy = "unknown"
-
-        output = {
-            "aep_gwh": round(aep, 2),
-            "feasible": feasible,
-            "time_s": round(elapsed, 1),
-            "baseline": round(baseline, 2),
-            "gap": round(aep - baseline, 2),
-        }
-
-        # Log attempt
-        entry = {
-            "attempt": attempt_num,
-            "timestamp": time.time(),
-            "train_aep": round(aep, 2),
-            "train_feasible": feasible,
-            "train_time": round(elapsed, 1),
-            "train_baseline": round(baseline, 2),
-            "strategy": strategy,
-        }
-        if hypothesis:
-            entry["hypothesis"] = hypothesis
-        if axis:
-            entry["axis"] = axis
-        if lesson:
-            entry["lesson"] = lesson
-        if families:
-            entry["families"] = families
-        _append_to_log(log_path, entry)
-
-        print(json.dumps(output))
-    except Exception as e:
-        os.unlink(output_path) if os.path.exists(output_path) else None
+        layout, elapsed = _run_harness(
+            args.script, args.problem, args.schedule_only,
+            args.timeout, harness, pixwake_src, project_root, args.seed)
+        aep, feasible = _score_layout(layout, args.problem)
+    except RuntimeError as e:
         entry = {"attempt": attempt_num, "timestamp": time.time(),
                  "error": str(e)[:500]}
         _append_to_log(log_path, entry)
         print(json.dumps({"error": str(e)[:500]}))
+        return
+    except Exception as e:
+        entry = {"attempt": attempt_num, "timestamp": time.time(),
+                 "error": str(e)[:500]}
+        _append_to_log(log_path, entry)
+        print(json.dumps({"error": str(e)[:500]}))
+        return
+
+    # Load baseline
+    baseline = 0
+    try:
+        with open(os.path.join(project_root, args.baselines)) as f:
+            baselines = json.load(f)
+        baseline = baselines.get(args.train_farm, {}).get("aep_gwh", 0)
+    except FileNotFoundError:
+        pass
+
+    # Classify strategy + parse agent-authored metadata from the source
+    hypothesis = axis = lesson = None
+    families = None
+    try:
+        code = open(args.script).read()
+        strategy = "sgd_solve" if "topfarm_sgd_solve" in code else "custom"
+        hypothesis, axis, lesson = _parse_metadata(code)
+        families = _classify_source(code, args.schedule_only)
+    except IOError:
+        strategy = "unknown"
+
+    gap = round(aep - baseline, 2) if baseline else None
+    output = {
+        "aep_gwh": round(aep, 2),
+        "feasible": feasible,
+        "time_s": round(elapsed, 1),
+        "baseline": round(baseline, 2),
+        "gap": gap,
+    }
+    entry = {
+        "attempt": attempt_num,
+        "timestamp": time.time(),
+        "train_aep": round(aep, 2),
+        "train_feasible": feasible,
+        "train_time": round(elapsed, 1),
+        "train_baseline": round(baseline, 2),
+        "strategy": strategy,
+    }
+
+    # Optional stress evaluation on a second problem
+    if args.stress_problem:
+        try:
+            s_layout, s_elapsed = _run_harness(
+                args.script, args.stress_problem, args.schedule_only,
+                args.timeout, harness, pixwake_src, project_root, args.seed)
+            s_aep, s_feasible = _score_layout(s_layout, args.stress_problem)
+            s_gap = (round(s_aep - args.stress_baseline, 2)
+                     if args.stress_baseline is not None else None)
+            output["stress_aep_gwh"] = round(s_aep, 2)
+            output["stress_feasible"] = s_feasible
+            output["stress_time_s"] = round(s_elapsed, 1)
+            output["stress_baseline"] = (round(args.stress_baseline, 2)
+                                          if args.stress_baseline is not None else None)
+            output["stress_gap"] = s_gap
+            entry["stress_aep"] = round(s_aep, 2)
+            entry["stress_feasible"] = s_feasible
+            entry["stress_time"] = round(s_elapsed, 1)
+            entry["stress_baseline"] = (round(args.stress_baseline, 2)
+                                         if args.stress_baseline is not None else None)
+            # Deployment criterion: worst of the two gaps (only meaningful if
+            # both baselines and both feasible).
+            if (gap is not None and s_gap is not None
+                    and feasible and s_feasible):
+                output["min_gap"] = min(gap, s_gap)
+                entry["min_gap"] = min(gap, s_gap)
+            else:
+                output["min_gap"] = None
+                entry["min_gap"] = None
+        except RuntimeError as e:
+            output["stress_error"] = str(e)[:500]
+            entry["stress_error"] = str(e)[:500]
+            output["min_gap"] = None
+            entry["min_gap"] = None
+        except Exception as e:
+            output["stress_error"] = str(e)[:500]
+            entry["stress_error"] = str(e)[:500]
+            output["min_gap"] = None
+            entry["min_gap"] = None
+
+    if hypothesis:
+        entry["hypothesis"] = hypothesis
+    if axis:
+        entry["axis"] = axis
+    if lesson:
+        entry["lesson"] = lesson
+    if families:
+        entry["families"] = families
+    _append_to_log(log_path, entry)
+
+    print(json.dumps(output))
 
 
 if __name__ == "__main__":

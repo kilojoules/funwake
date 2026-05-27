@@ -110,6 +110,35 @@ PYTHONPATH includes `playground/pixwake/src`. JAX_ENABLE_X64=True is set.
 
     def _build_schedule_claude_md(self) -> str:
         """CLAUDE.md for schedule-only mode."""
+        adv_path = self.config.adversarial_stress
+        adv_baseline = self.config.adversarial_stress_baseline
+        if adv_path:
+            sched_score_cmd = (
+                f"python tools/run_optimizer.py <script> --schedule-only "
+                f"--stress-problem {adv_path}"
+                + (f" --stress-baseline {adv_baseline}"
+                   if adv_baseline is not None else "")
+            )
+            adv_section = f"""\
+
+## Adversarial selection (ACTIVE)
+
+Every score returns BOTH a `gap` (train) and a `stress_gap`. The
+deployment criterion is `min_gap = min(gap, stress_gap)` — a candidate
+is deployed only if `min_gap` improves over the current best.
+
+The stress problem is `{adv_path}` (baseline {adv_baseline} GWh): same
+training polygon, but a different wind rose chosen because previous
+schedules fail there. A schedule that wins on train but breaks on stress
+will NOT be deployed; you must find schedules that work on both.
+
+Read current best `min_gap` via `python tools/get_status.py --log {{log}}`
+(field `best_min_gap`).
+""".replace("{log}", self.log_path)
+        else:
+            sched_score_cmd = "python tools/run_optimizer.py <script> --schedule-only"
+            adv_section = ""
+
         return f"""\
 # FunWake Schedule Designer
 
@@ -163,15 +192,17 @@ This ensures feasibility in late iterations. Can you do better?
 
 ## Rules
 - Write schedule files to `{self.config.output_dir}/iter_NNN.py`
+- NEVER overwrite an existing `iter_NNN.py`. Always increment N.
 - Each file must define ONLY `schedule_fn(step, total_steps, lr0, alpha0)`
 - Do NOT write `optimize()` — it will be rejected
 - Do NOT import topfarm_sgd_solve — you are replacing it
-- Score: `python tools/run_optimizer.py <script> --schedule-only`
+- Score: `{sched_score_cmd}`
 - Test: `python tools/run_tests.py <script> --quick`
 - Generalize: `python tools/test_generalization.py <script> --schedule-only`
 - Status: `python tools/get_status.py --log {self.log_path}`
 - Baseline: {self._get_baseline_aep():.1f} GWh
 - Timeout: {self.config.timeout_per_run}s per run
+{adv_section}
 
 ## Ideas to try
 - Cosine annealing of lr with warm restarts

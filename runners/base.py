@@ -31,6 +31,12 @@ class RunConfig:
     phase2_fraction: float = 0.3     # switch to custom optimizer nudge
     diversity_after: int = 5         # nudge after N consecutive sgd_solve
 
+    # Adversarial selection: when set, every attempt is scored on both the
+    # train problem and this stress problem; deployment criterion becomes
+    # min(train_gap, stress_gap). See tools/run_optimizer.py --stress-problem.
+    adversarial_stress: Optional[str] = None
+    adversarial_stress_baseline: Optional[float] = None
+
     @property
     def pythonpath(self):
         return f"{self.pixwake_src}:{os.environ.get('PYTHONPATH', '')}"

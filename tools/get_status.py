@@ -34,14 +34,31 @@ def main():
     errors = [a for a in attempts if "error" in a]
     best_aep = max((a["train_aep"] for a in successes), default=0)
 
-    print(json.dumps({
+    summary = {
         "attempts": len(attempts),
         "successes": len(successes),
         "errors": len(errors),
         "best_aep": round(best_aep, 2),
         "baseline": round(baseline, 2),
         "gap": round(best_aep - baseline, 2),
-    }, indent=2))
+    }
+
+    # If any attempts used --stress-problem, surface adversarial-selection state.
+    stress_attempts = [a for a in successes if "stress_aep" in a]
+    if stress_attempts:
+        feasible_both = [a for a in stress_attempts
+                          if a.get("train_feasible") and a.get("stress_feasible")
+                          and a.get("min_gap") is not None]
+        summary["stress_attempts"] = len(stress_attempts)
+        summary["stress_feasible_both"] = len(feasible_both)
+        if feasible_both:
+            best_min = max(feasible_both, key=lambda a: a["min_gap"])
+            summary["best_min_gap"] = round(best_min["min_gap"], 2)
+            summary["best_min_gap_attempt"] = best_min["attempt"]
+            summary["best_min_gap_train_aep"] = best_min["train_aep"]
+            summary["best_min_gap_stress_aep"] = best_min["stress_aep"]
+
+    print(json.dumps(summary, indent=2))
 
 
 if __name__ == "__main__":

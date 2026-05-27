@@ -348,6 +348,47 @@ $10\times$) while holding LR fixed shows all nine variants produce
 feasible held-out layouts: the LR dynamics drive feasibility, while
 penalty scale affects AEP quality ($\pm11$\,GWh).
 
+\paragraph{Robust selection across the matrix.}
+Selecting the deployed schedule by best training-cell AEP does not
+identify the schedule with the best worst-case behavior across the
+48 cells of the matrix on which 500-start baselines are computed
+(Table~\ref{tab:robust}). All three deployed schedules post
+$\Delta\textsc{AEP}\le 0$ or infeasible layouts on three or more
+\texttt{*\_roseuniform} cells; selection by worst-cell $\Delta$
+would prefer Gemini's restarts-and-squeeze schedule over Claude's
+dual-bump schedule, but only because the $N{=}30$ ROWP cells
+saturate within $1$\,GWh across all schedules. On every other
+non-uniform cell Claude wins. The robust conclusion is that
+uniform wind is a \emph{universal} failure mode for SGD-schedule
+optimizers under the current FunWake protocol, not that one
+discovered schedule is more robust than another. An adversarial
+selection rule restricted to non-uniform cells would not change
+the deployed-schedule ranking.
+
+\begin{table}[t]
+\caption{Worst-cell behavior across the 48-cell matrix subset (single
+initialization seed). The worst cell is uniform-wind for all three
+deployed schedules. Infeasible cells are excluded from the
+worst-cell minimum and reported separately.}
+\label{tab:robust}
+\vskip 0.1in
+\centering
+\begin{small}
+\begin{sc}
+\begin{tabular}{lrrr}
+\toprule
+Schedule & Train & Worst $\Delta$ & \# infeas \\
+\midrule
+Claude (iter 179, deploy) & 5560.9 & $-$2.80 & 4 \\
+Claude (iter 192, oracle) & 5561.6 & $-$3.80 & 3 \\
+Gemini (iter 118)         & 5552.8 & $-$21.84 & 3 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\vskip -0.1in
+\end{table}
+
 \section{Discussion and Conclusion}
 
 LLM agents discover novel optimizer schedule structures that improve
