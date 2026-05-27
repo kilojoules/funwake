@@ -10,10 +10,9 @@
 # Usage:
 #   sbatch lumi/run_agent_adversarial.sbatch
 #
-# Requires: Claude Code CLI installed and authenticated on LUMI for user.
-# If that's not available, run on a machine where it is (e.g. Sophia or
-# local) — the agent loop itself doesn't need GPU; only the matrix
-# replay (lumi/replay_candidates_matrix.sbatch) does.
+# Requires: codex CLI installed and authenticated on LUMI. The agent
+# loop itself doesn't need GPU; only the matrix replay
+# (lumi/replay_candidates_matrix.sbatch) does.
 #
 #SBATCH --account=project_465002609
 #SBATCH --job-name=funwake-adv
@@ -49,9 +48,8 @@ echo "Stress: $STRESS_PROBLEM (baseline $STRESS_BASELINE GWh)"
 echo "Output: $OUTDIR"
 
 pixi run python agent_cli.py \
-    --provider opencode \
-    --model "${MODEL:-vllm/qwen2.5-coder-32b}" \
-    --base-url "${VLLM_URL:-http://localhost:8000}" \
+    --provider codex \
+    --model "${MODEL:-gpt-5.5}" \
     --schedule-only \
     --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv \
     --hot-start results/seed_schedule.py \

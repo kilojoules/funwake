@@ -93,6 +93,32 @@ PYTHONPATH includes `playground/pixwake/src`. JAX_ENABLE_X64=True is set.
 """
 
     def _build_schedule_agents_md(self) -> str:
+        adv_path = self.config.adversarial_stress
+        adv_baseline = self.config.adversarial_stress_baseline
+        if adv_path:
+            score_cmd = (
+                f"python tools/run_optimizer.py <script> --schedule-only "
+                f"--stress-problem {adv_path}"
+                + (f" --stress-baseline {adv_baseline}"
+                   if adv_baseline is not None else "")
+            )
+            adv_section = f"""
+## Adversarial selection (ACTIVE)
+
+Every score returns BOTH `gap` (train) and `stress_gap`. The
+deployment criterion is `min_gap = min(gap, stress_gap)` — deploy
+only if `min_gap` improves over current best (see `best_min_gap`
+in `get_status.py`).
+
+Stress problem: {adv_path} (baseline {adv_baseline} GWh, same N=50
+DEI polygon, different wind rose chosen because previous schedules
+fail there). A schedule that wins on train but breaks on stress
+will NOT be deployed.
+"""
+        else:
+            score_cmd = "python tools/run_optimizer.py <script> --schedule-only"
+            adv_section = ""
+
         return f"""\
 # FunWake Schedule Designer
 
@@ -122,14 +148,15 @@ def schedule_fn(step, total_steps, lr0, alpha0):
 
 ## Rules
 - Write schedule files to `{self.config.output_dir}/iter_NNN.py`.
+- NEVER overwrite an existing iter_NNN.py. Always increment N.
 - Each file defines ONLY `schedule_fn(step, total_steps, lr0, alpha0)`.
 - Do NOT write `optimize()`. Do NOT import topfarm_sgd_solve.
-- Score: `python tools/run_optimizer.py <script> --schedule-only`
+- Score: `{score_cmd}`
 - Test: `python tools/run_tests.py <script> --quick`
 - Generalize: `python tools/test_generalization.py <script> --schedule-only`
 - Status: `python tools/get_status.py --log {self.log_path}`
 - Baseline: {self._get_baseline_aep():.1f} GWh.
-
+{adv_section}
 ## Workflow
 1. Read `{self.config.output_dir}/agent_memory.md` for status.
 2. Read `results/seed_schedule.py` for the starting schedule.
