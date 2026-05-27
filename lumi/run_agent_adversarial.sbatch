@@ -27,7 +27,7 @@
 #SBATCH --error=lumi/logs/agent_adversarial_%j.err
 
 set -e
-cd /scratch/project_465002609/julian/funwake_adv
+cd /scratch/project_465002609/julian/funwake
 mkdir -p lumi/logs
 
 # Ensure pixwake is cloned (idempotent)
@@ -49,7 +49,9 @@ echo "Stress: $STRESS_PROBLEM (baseline $STRESS_BASELINE GWh)"
 echo "Output: $OUTDIR"
 
 pixi run python agent_cli.py \
-    --provider claude-code \
+    --provider opencode \
+    --model "${MODEL:-vllm/qwen2.5-coder-32b}" \
+    --base-url "${VLLM_URL:-http://localhost:8000}" \
     --schedule-only \
     --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv \
     --hot-start results/seed_schedule.py \

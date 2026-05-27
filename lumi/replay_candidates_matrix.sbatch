@@ -20,7 +20,7 @@
 #SBATCH --error=lumi/logs/replay_matrix_%j.err
 
 set -e
-cd /scratch/project_465002609/julian/funwake_adv
+cd /scratch/project_465002609/julian/funwake
 mkdir -p lumi/logs
 
 SCRIPTS_DIR="results_agent_schedule_adversarial"
