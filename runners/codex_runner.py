@@ -29,12 +29,22 @@ class CodexRunner(BaseRunner):
                  model: str = "gpt-5.5",
                  iterations: int = 0,            # 0 = auto (fill time budget)
                  schedule_only: bool = False,
-                 sandbox_mode: str = "workspace-write"):
+                 sandbox_mode: str = "workspace-write",
+                 model_provider: str = None,
+                 provider_base_url: str = None,
+                 provider_env_key: str = "OPENAI_API_KEY",
+                 provider_wire_api: str = "responses"):
         super().__init__(config)
         self.model = model
         self.iterations = iterations
         self.schedule_only = schedule_only
         self.sandbox_mode = sandbox_mode
+        # Optional custom provider — injected via `codex -c model_providers.<name>=...`
+        # so we don't have to mutate ~/.codex/config.toml.
+        self.model_provider = model_provider
+        self.provider_base_url = provider_base_url
+        self.provider_env_key = provider_env_key
+        self.provider_wire_api = provider_wire_api
 
         try:
             result = subprocess.run(["codex", "--version"],
@@ -180,8 +190,26 @@ def schedule_fn(step, total_steps, lr0, alpha0):
     # -- inner loop ------------------------------------------------------------
 
     def _invoke_codex(self, prompt: str) -> str:
-        cmd = [
-            "codex", "exec",
+        cmd = ["codex"]
+        if self.model_provider and self.provider_base_url:
+            # Inline-define a custom provider for this exec call. Avoids
+            # mutating ~/.codex/config.toml. Codex requires wire_api in
+            # {"responses"} as of 0.125; for vLLM backends use a translator
+            # (e.g. LiteLLM with use_chat_completions_api: true) in front.
+            provider_block = (
+                f'{self.model_provider}={{'
+                f'name="{self.model_provider}",'
+                f'base_url="{self.provider_base_url}",'
+                f'env_key="{self.provider_env_key}",'
+                f'wire_api="{self.provider_wire_api}"'
+                f'}}'
+            )
+            cmd += [
+                "-c", f"model_providers.{provider_block}",
+                "-c", f"model_provider={self.model_provider}",
+            ]
+        cmd += [
+            "exec",
             "--sandbox", self.sandbox_mode,
             "--skip-git-repo-check",
             "--color", "never",

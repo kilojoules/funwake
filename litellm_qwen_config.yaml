@@ -1,0 +1,15 @@
+# LiteLLM proxy config: codex -> LiteLLM (/v1/responses) -> vLLM (/v1/chat/completions)
+#
+# Backend api_base assumes vLLM is reachable at localhost:8000 (SSH tunnel
+# from laptop to the LUMI compute node running serve_vllm.sbatch).
+#
+# Start with: ~/.litellm-venv/bin/litellm --config litellm_qwen_config.yaml --port 4000
+model_list:
+  - model_name: qwen-coder
+    litellm_params:
+      # The model name vLLM expects: matches `--model` in serve_vllm.sbatch
+      # which uses the local model dir; vLLM reports the dir basename.
+      model: "openai//scratch/project_465002609/models/qwen2.5-coder-32b"
+      api_base: "http://localhost:8000/v1"
+      api_key: "dummy"  # vLLM ignores
+      use_chat_completions_api: true  # bridge Responses -> Chat

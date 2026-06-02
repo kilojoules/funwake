@@ -90,6 +90,17 @@ def main():
                         "results/matrix/baselines_matrix.json under "
                         "<farm>_n<N>_rose<rose>.best_aep.")
 
+    # Codex custom provider (e.g. LiteLLM-proxied vLLM) — only used when
+    # --provider=codex. Lets you point codex at any Responses-API endpoint
+    # without editing ~/.codex/config.toml.
+    p.add_argument("--codex-model-provider", default=None,
+                   help="Name of a custom codex provider to register inline.")
+    p.add_argument("--codex-provider-base-url", default=None,
+                   help="Base URL of the custom provider (e.g. "
+                        "http://localhost:4000/v1 for a local LiteLLM proxy).")
+    p.add_argument("--codex-provider-env-key", default="OPENAI_API_KEY",
+                   help="Name of the env var holding the provider API key.")
+
     args = p.parse_args()
 
     # Resolve model preset
@@ -149,6 +160,9 @@ def main():
             model=args.model or "gpt-5.5",
             iterations=args.cc_iterations,
             schedule_only=args.schedule_only,
+            model_provider=args.codex_model_provider,
+            provider_base_url=args.codex_provider_base_url,
+            provider_env_key=args.codex_provider_env_key,
         )
     elif args.provider == "vllm":
         runner = VLLMRunner(

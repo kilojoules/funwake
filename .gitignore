@@ -151,3 +151,4 @@ paper/example_paper.tex
 
 # CMA-ES output
 /outcmaes/
+logs/
