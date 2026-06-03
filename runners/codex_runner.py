@@ -258,10 +258,18 @@ def schedule_fn(step, total_steps, lr0, alpha0):
             seed = Path(self.config.hot_start).read_text()
             seed_context = f"\n\nHere's a seed optimizer to start from:\n```python\n{seed}\n```"
 
+        # Back-off so back-to-back fast failures don't hammer codex / trip
+        # rate limits. Grows on consecutive sub-30s exits, resets after a
+        # real-work iter.
+        backoff_s = 0
         for i in range(n_iters):
             if self.time_remaining() <= 30:
                 print(f"[iter {i+1}] Time's up.")
                 break
+
+            if backoff_s:
+                print(f"[iter {i+1}] backing off {backoff_s}s after fast exit...")
+                time.sleep(backoff_s)
 
             self._write_memory_file()
 
@@ -283,7 +291,9 @@ def schedule_fn(step, total_steps, lr0, alpha0):
                     f"Test it, score it, and check generalization."
                 )
 
+            iter_t0 = time.time()
             output = self._invoke_codex(prompt)
+            iter_secs = time.time() - iter_t0
 
             if output:
                 print(f"[iter {i+1}] codex output ({len(output)} chars). Tail:")
@@ -294,6 +304,15 @@ def schedule_fn(step, total_steps, lr0, alpha0):
             print(f"[iter {i+1}] Attempts: {len(self.attempts)}, "
                   f"Best: {self.best_aep:.1f} GWh, "
                   f"Elapsed: {self.elapsed_minutes():.1f} min\n")
+
+            # Fast-exit back-off: codex exec normally takes minutes per
+            # call when it does real work. If it returned in <30s the
+            # call almost certainly failed (rate limit / auth blip).
+            # Double the wait each consecutive failure, capped at 5 min.
+            if iter_secs < 30:
+                backoff_s = min(max(backoff_s * 2, 30), 300)
+            else:
+                backoff_s = 0
 
         print(f"\nDone. Best AEP: {self.best_aep:.1f} GWh "
               f"over {len(self.attempts)} attempts.")
