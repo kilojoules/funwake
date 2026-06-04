@@ -1,0 +1,418 @@
+{
+  "iter_008": {
+    "script": "results_agent_schedule_adversarial_local/iter_008.py",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "rows": [
+      {
+        "aep_gwh": 5543.01,
+        "feasible": false,
+        "time_s": 49.8,
+        "baseline": 5540.72,
+        "gap": 2.3,
+        "stress_aep_gwh": 5598.75,
+        "stress_feasible": true,
+        "stress_time_s": 33.3,
+        "stress_baseline": 5599.79,
+        "stress_gap": -1.04,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5537.47,
+        "feasible": true,
+        "time_s": 31.2,
+        "baseline": 5540.72,
+        "gap": -3.25,
+        "stress_aep_gwh": 5595.81,
+        "stress_feasible": false,
+        "stress_time_s": 28.1,
+        "stress_baseline": 5599.79,
+        "stress_gap": -3.98,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5530.71,
+        "feasible": false,
+        "time_s": 38.9,
+        "baseline": 5540.72,
+        "gap": -10.01,
+        "stress_aep_gwh": 5597.26,
+        "stress_feasible": false,
+        "stress_time_s": 28.9,
+        "stress_baseline": 5599.79,
+        "stress_gap": -2.53,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5535.62,
+        "feasible": false,
+        "time_s": 30.2,
+        "baseline": 5540.72,
+        "gap": -5.09,
+        "stress_aep_gwh": 5598.04,
+        "stress_feasible": true,
+        "stress_time_s": 28.3,
+        "stress_baseline": 5599.79,
+        "stress_gap": -1.75,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5528.58,
+        "feasible": true,
+        "time_s": 34.0,
+        "baseline": 5540.72,
+        "gap": -12.14,
+        "stress_aep_gwh": 5599.97,
+        "stress_feasible": true,
+        "stress_time_s": 28.8,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.18,
+        "min_gap": -12.14
+      }
+    ],
+    "summary": {
+      "n_seeds": 5,
+      "train_aep": {
+        "n": 5,
+        "mean": 5535.078,
+        "std": 5.706,
+        "min": 5528.58,
+        "max": 5543.01
+      },
+      "stress_aep": {
+        "n": 5,
+        "mean": 5597.966,
+        "std": 1.5639,
+        "min": 5595.81,
+        "max": 5599.97
+      },
+      "min_gap": {
+        "n": 1,
+        "mean": -12.14,
+        "std": 0.0,
+        "min": -12.14,
+        "max": -12.14
+      },
+      "train_feasible_rate": 0.4,
+      "stress_feasible_rate": 0.6,
+      "both_feasible_rate": 0.2
+    }
+  },
+  "iter_011": {
+    "script": "results_agent_schedule_adversarial_local/iter_011.py",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "rows": [
+      {
+        "aep_gwh": 5542.21,
+        "feasible": true,
+        "time_s": 33.5,
+        "baseline": 5540.72,
+        "gap": 1.5,
+        "stress_aep_gwh": 5599.87,
+        "stress_feasible": false,
+        "stress_time_s": 27.0,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.08,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5543.77,
+        "feasible": true,
+        "time_s": 29.9,
+        "baseline": 5540.72,
+        "gap": 3.06,
+        "stress_aep_gwh": 5599.22,
+        "stress_feasible": true,
+        "stress_time_s": 25.0,
+        "stress_baseline": 5599.79,
+        "stress_gap": -0.57,
+        "min_gap": -0.57
+      },
+      {
+        "aep_gwh": 5529.08,
+        "feasible": true,
+        "time_s": 29.0,
+        "baseline": 5540.72,
+        "gap": -11.64,
+        "stress_aep_gwh": 5595.64,
+        "stress_feasible": false,
+        "stress_time_s": 27.2,
+        "stress_baseline": 5599.79,
+        "stress_gap": -4.15,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5531.69,
+        "feasible": false,
+        "time_s": 29.7,
+        "baseline": 5540.72,
+        "gap": -9.03,
+        "stress_aep_gwh": 5599.3,
+        "stress_feasible": true,
+        "stress_time_s": 24.7,
+        "stress_baseline": 5599.79,
+        "stress_gap": -0.49,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5525.87,
+        "feasible": true,
+        "time_s": 30.1,
+        "baseline": 5540.72,
+        "gap": -14.84,
+        "stress_aep_gwh": 5599.97,
+        "stress_feasible": true,
+        "stress_time_s": 22.0,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.18,
+        "min_gap": -14.84
+      }
+    ],
+    "summary": {
+      "n_seeds": 5,
+      "train_aep": {
+        "n": 5,
+        "mean": 5534.524,
+        "std": 8.0175,
+        "min": 5525.87,
+        "max": 5543.77
+      },
+      "stress_aep": {
+        "n": 5,
+        "mean": 5598.8,
+        "std": 1.7976,
+        "min": 5595.64,
+        "max": 5599.97
+      },
+      "min_gap": {
+        "n": 2,
+        "mean": -7.705,
+        "std": 10.0904,
+        "min": -14.84,
+        "max": -0.57
+      },
+      "train_feasible_rate": 0.8,
+      "stress_feasible_rate": 0.6,
+      "both_feasible_rate": 0.4
+    }
+  },
+  "iter_013": {
+    "script": "results_agent_schedule_adversarial_local/iter_013.py",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "rows": [
+      {
+        "aep_gwh": 5541.94,
+        "feasible": false,
+        "time_s": 30.1,
+        "baseline": 5540.72,
+        "gap": 1.22,
+        "stress_aep_gwh": 5599.83,
+        "stress_feasible": true,
+        "stress_time_s": 24.5,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.04,
+        "min_gap": null
+      },
+      {
+        "aep_gwh": 5543.82,
+        "feasible": true,
+        "time_s": 29.9,
+        "baseline": 5540.72,
+        "gap": 3.1,
+        "stress_aep_gwh": 5599.22,
+        "stress_feasible": true,
+        "stress_time_s": 24.9,
+        "stress_baseline": 5599.79,
+        "stress_gap": -0.57,
+        "min_gap": -0.57
+      },
+      {
+        "aep_gwh": 5529.12,
+        "feasible": true,
+        "time_s": 28.6,
+        "baseline": 5540.72,
+        "gap": -11.59,
+        "stress_aep_gwh": 5595.28,
+        "stress_feasible": true,
+        "stress_time_s": 26.1,
+        "stress_baseline": 5599.79,
+        "stress_gap": -4.51,
+        "min_gap": -11.59
+      },
+      {
+        "aep_gwh": 5531.0,
+        "feasible": true,
+        "time_s": 29.6,
+        "baseline": 5540.72,
+        "gap": -9.72,
+        "stress_aep_gwh": 5599.29,
+        "stress_feasible": true,
+        "stress_time_s": 24.6,
+        "stress_baseline": 5599.79,
+        "stress_gap": -0.5,
+        "min_gap": -9.72
+      },
+      {
+        "aep_gwh": 5526.21,
+        "feasible": true,
+        "time_s": 29.4,
+        "baseline": 5540.72,
+        "gap": -14.5,
+        "stress_aep_gwh": 5599.97,
+        "stress_feasible": true,
+        "stress_time_s": 21.9,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.18,
+        "min_gap": -14.5
+      }
+    ],
+    "summary": {
+      "n_seeds": 5,
+      "train_aep": {
+        "n": 5,
+        "mean": 5534.418,
+        "std": 7.9388,
+        "min": 5526.21,
+        "max": 5543.82
+      },
+      "stress_aep": {
+        "n": 5,
+        "mean": 5598.718,
+        "std": 1.9496,
+        "min": 5595.28,
+        "max": 5599.97
+      },
+      "min_gap": {
+        "n": 4,
+        "mean": -9.095,
+        "std": 6.014,
+        "min": -14.5,
+        "max": -0.57
+      },
+      "train_feasible_rate": 0.8,
+      "stress_feasible_rate": 1.0,
+      "both_feasible_rate": 0.8
+    }
+  },
+  "iter_014": {
+    "script": "results_agent_schedule_adversarial_local/iter_014.py",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "rows": [
+      {
+        "aep_gwh": 5542.08,
+        "feasible": true,
+        "time_s": 29.1,
+        "baseline": 5540.72,
+        "gap": 1.36,
+        "stress_aep_gwh": 5599.82,
+        "stress_feasible": true,
+        "stress_time_s": 24.3,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.03,
+        "min_gap": 0.03
+      },
+      {
+        "aep_gwh": 5544.02,
+        "feasible": true,
+        "time_s": 29.1,
+        "baseline": 5540.72,
+        "gap": 3.31,
+        "stress_aep_gwh": 5599.22,
+        "stress_feasible": true,
+        "stress_time_s": 24.4,
+        "stress_baseline": 5599.79,
+        "stress_gap": -0.57,
+        "min_gap": -0.57
+      },
+      {
+        "aep_gwh": 5528.92,
+        "feasible": true,
+        "time_s": 29.0,
+        "baseline": 5540.72,
+        "gap": -11.79,
+        "stress_aep_gwh": 5595.0,
+        "stress_feasible": true,
+        "stress_time_s": 26.3,
+        "stress_baseline": 5599.79,
+        "stress_gap": -4.79,
+        "min_gap": -11.79
+      },
+      {
+        "aep_gwh": 5531.38,
+        "feasible": true,
+        "time_s": 29.3,
+        "baseline": 5540.72,
+        "gap": -9.33,
+        "stress_aep_gwh": 5599.24,
+        "stress_feasible": true,
+        "stress_time_s": 23.9,
+        "stress_baseline": 5599.79,
+        "stress_gap": -0.55,
+        "min_gap": -9.33
+      },
+      {
+        "aep_gwh": 5526.29,
+        "feasible": false,
+        "time_s": 29.4,
+        "baseline": 5540.72,
+        "gap": -14.43,
+        "stress_aep_gwh": 5599.97,
+        "stress_feasible": true,
+        "stress_time_s": 21.6,
+        "stress_baseline": 5599.79,
+        "stress_gap": 0.18,
+        "min_gap": null
+      }
+    ],
+    "summary": {
+      "n_seeds": 5,
+      "train_aep": {
+        "n": 5,
+        "mean": 5534.538,
+        "std": 8.0055,
+        "min": 5526.29,
+        "max": 5544.02
+      },
+      "stress_aep": {
+        "n": 5,
+        "mean": 5598.65,
+        "std": 2.068,
+        "min": 5595.0,
+        "max": 5599.97
+      },
+      "min_gap": {
+        "n": 4,
+        "mean": -5.415,
+        "std": 6.0302,
+        "min": -11.79,
+        "max": 0.03
+      },
+      "train_feasible_rate": 0.8,
+      "stress_feasible_rate": 1.0,
+      "both_feasible_rate": 0.8
+    }
+  }
+}

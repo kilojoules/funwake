@@ -11,6 +11,18 @@
 
 \newcommand{\theHalgorithm}{\arabic{algorithm}}
 
+% Adversarial-selection numbers — multi-seed validation of iter_014
+% (the best of four tied in-loop top candidates by both-feasibility
+% rate). See results/adversarial_validation.json.
+\newcommand{\AdvValSeeds}{5}
+\newcommand{\AdvValTrainGapMean}{$-$6.16}
+\newcommand{\AdvValTrainGapStd}{8.01}
+\newcommand{\AdvValStressGapMean}{$-$1.14}
+\newcommand{\AdvValStressGapStd}{2.07}
+\newcommand{\AdvValMinGapMean}{$-$5.42}
+\newcommand{\AdvValMinGapStd}{6.03}
+\newcommand{\AdvValBothFeasPct}{80\%}
+
 \usepackage{icml2026}
 
 \usepackage{amsmath}
@@ -382,6 +394,72 @@ Schedule & Train & Worst $\Delta$ & \# infeas \\
 Claude (iter 179, deploy) & 5560.9 & $-$2.80 & 4 \\
 Claude (iter 192, oracle) & 5561.6 & $-$3.80 & 3 \\
 Gemini (iter 118)         & 5552.8 & $-$21.84 & 3 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+\end{small}
+\vskip -0.1in
+\end{table}
+
+\paragraph{Adversarial selection in the loop.}
+We re-ran the schedule-only loop (codex CLI, \texttt{gpt-5.5},
+\texttt{model\_reasoning\_effort=xhigh}) with the deployment
+criterion changed to $\min(\text{train\_gap},\
+\text{stress\_gap})$, where the stress cell is the dei polygon at
+$N{=}50$ with uniform wind --- the documented failure mode in
+Table~\ref{tab:robust}. The run terminated at 15 attempts when
+the ChatGPT-Codex usage limit was reached. $10/15$ attempts were
+feasible on both cells and the in-loop best candidate (iter~014,
+tied across iter~008/011/013 at the same \texttt{min\_gap})
+reached $\min\_gap=+0.18$\,GWh on the in-loop seed
+(Table~\ref{tab:adversarial}). However,
+\AdvValSeeds-seed re-evaluation of this candidate shows that the
+in-loop positive $\min\_gap$ does \emph{not} survive seed
+variation: mean $\min\_gap=\AdvValMinGapMean\pm\AdvValMinGapStd$\,GWh,
+matching the \emph{seed-bias} mechanism the original
+schedule-only ablations document for Table~\ref{tab:main} but
+substantially amplified by the $\min$ rule (the agent can
+overfit to lucky seed-induced quirks on either cell).
+The result is therefore not a strict improvement over
+Table~\ref{tab:main}; it is a Pareto-distinct point: across seeds
+the adversarial schedule is feasible on the stress cell
+\AdvValBothFeasPct{} of the time
+(vs.\ infeasibility or $\Delta\le 0$ for two of the three
+schedules in Table~\ref{tab:robust} on \texttt{dei\_n50\_roseuniform}
+specifically), and its mean stress-cell $\Delta=\AdvValStressGapMean$\,GWh
+sits between Claude iter~192 ($-0.41$) and Gemini iter~118
+($-4.78$) on the same cell, while losing roughly $-6$\,GWh on the
+training cell. We read this as a methodological finding:
+\emph{adversarial selection during agent search requires
+multi-seed scoring of every candidate to avoid lucky-seed
+artifacts}. With single-seed scoring the agent does find
+candidates with a higher rate of stress-cell feasibility than the
+original deployments, but the in-loop $\min\_gap$ over-claims;
+multi-seed scoring is a clean follow-up that is now compute-bound
+rather than codex-bound.
+
+\begin{table}[t]
+\caption{Adversarial-selection result. Top: single-seed numbers
+from the in-loop deployment (the criterion the agent saw). Bottom:
+\AdvValSeeds-seed re-evaluation showing the in-loop $\min\_gap$
+does not survive seed variation. All $\Delta$ are vs.\ the
+500-start baseline for the corresponding cell
+(train $5540.7$\,GWh; stress $5599.79$\,GWh).}
+\label{tab:adversarial}
+\vskip 0.1in
+\centering
+\begin{small}
+\begin{sc}
+\begin{tabular}{lrrr}
+\toprule
+                                  & Train $\Delta$ & Stress $\Delta$ & min\_gap \\
+\midrule
+\multicolumn{4}{l}{\emph{In-loop deployment (single seed)}} \\
+Codex (iter 014, adv.\ sel.)      & $+$7.37 & $+$0.18 & $+$0.18 \\
+\midrule
+\multicolumn{4}{l}{\emph{\AdvValSeeds-seed re-evaluation of iter 014}} \\
+Mean $\pm$ std                    & \AdvValTrainGapMean$\pm$\AdvValTrainGapStd & \AdvValStressGapMean$\pm$\AdvValStressGapStd & \AdvValMinGapMean$\pm$\AdvValMinGapStd \\
+Both-feasible fraction            & \multicolumn{3}{r}{\AdvValBothFeasPct} \\
 \bottomrule
 \end{tabular}
 \end{sc}
