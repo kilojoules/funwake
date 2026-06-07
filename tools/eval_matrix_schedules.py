@@ -5,6 +5,7 @@ feasibility) rows to results/matrix/schedules_matrix.json.
 Usage:
     pixi run python tools/eval_matrix_schedules.py
 """
+import argparse
 import json
 import os
 import subprocess
@@ -21,6 +22,8 @@ SCHEDULES = [
      "results_agent_schedule_only_5hr/iter_192.py"),
     ("Gemini schedule",
      "results_agent_gemini_cli_5hr/iter_192.py"),
+    ("Gemini schedule (fixed beta)",
+     "results/ablations/gemini_iter192_fixed_betas.py"),
 ]
 
 
@@ -54,8 +57,15 @@ def score_one(script_rel, problem_rel, timeout=180):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--max-n", type=int, default=None,
+                    help="Skip cells with turbine count > max-n (matches fig_short_matrix coverage when 80).")
+    args = ap.parse_args()
+
     manifest = json.load(
         open(os.path.join(PROJECT_ROOT, "results", "matrix", "manifest.json")))
+    if args.max_n is not None:
+        manifest["cells"] = [c for c in manifest["cells"] if c["n"] <= args.max_n]
     out_path = os.path.join(PROJECT_ROOT, "results", "matrix",
                             "schedules_matrix.json")
 
