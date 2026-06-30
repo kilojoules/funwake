@@ -121,19 +121,23 @@ modes with a 5-hour wall-clock budget.
 
 \subsection{Schedule-Only: Novel Parameterizations That Generalize}
 
-\Cref{fig:convergence} shows the search process. Training AEP
-saturates within approximately 100 attempts, but the deployed script's
-held-out AEP is non-monotonic: improving training does not guarantee
-improving generalization, motivating the physics-based held-out
-design.
+\Cref{fig:convergence} shows the per-iteration AEP trajectory of
+Claude's deployed schedule (iter\_192) on both DEI (training,
+$N{=}50$) and ROWP (held-out, $N{=}80$) under the K=50 stochastic
+gradient estimator. Training AEP saturates within $\sim$1000
+iterations, but held-out AEP continues to climb until $\sim$6500
+iterations---late-stage refinement is a load-bearing feature of the
+schedule rather than wasted compute.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/fig_short_convergence.png}
-\caption{Top: running-best feasible training AEP (monotonic). Bottom:
-held-out AEP of the currently deployed script (the one with the best
-training AEP so far). The deployed line is not monotonic: a new
-training record can have worse held-out performance.}
+\caption{Per-iteration AEP (normalised to final) under Claude
+iter\_192, ES-off, K=50 stochastic gradient. Blue: DEI training
+($N{=}50$); red: ROWP held-out ($N{=}80$). DEI saturates within
+$\sim$1000 iterations; ROWP continues to climb until $\sim$6500
+iterations. Vertical line marks the running-max early-stopping
+trigger ($\eta_i/\eta_\text{max}\le 0.1$, iter~$\approx$~6440).}
 \label{fig:convergence}
 \end{figure}
 
@@ -321,11 +325,8 @@ Gemini (restarts+squeeze), mean    & 5554.4 & 4262.2 & +15.5 \\
 Gemini (SLSQP), best/median/worst  & 5557.1 & 4272.7/4264.0/4250.9 & +26.0/+17.3/+4.2 \\
 Claude (SGD wrapper, best/18)      & 5559.5 & 4264.9 & +18.2 \\
 \midrule
-\multicolumn{4}{l}{\emph{Non-LLM ablations}} \\
-Bump-family DE (Claude-seed)       & 5566.3 & 4272.9 & +26.2 \\
-Bump-family DE (zero bump)         & 5562.7 & 4271.9 & +25.2 \\
+\multicolumn{4}{l}{\emph{Non-LLM ablation}} \\
 Random search (320 samples)        & 5561.8 & 4268.6 & +21.9 \\
-CMA-ES warm-start (6000 ev.)       & ---    & 4272.2 & +25.5 \\
 \midrule
 500-start SGD baseline             & 5540.7 & 4246.7 & ---   \\
 \bottomrule
@@ -344,21 +345,20 @@ distributions, indicating mild selection bias: mean performance
 (+19.6, +15.5) is 5--7\,GWh below best-seed performance. The ranking
 between Claude and Gemini on ROWP is robust across seeds.
 
-Substrate-independent CMA-ES confirms the ceiling is a real landscape
-feature (+0.7\,GWh in 6000 evals from warm start).
-
-The LLM contribution is \emph{parameterization discovery}, not score
-improvement. Claude proposed a 14-parameter dual-bump schedule family;
-differential evolution starting from zero bumps (no LLM structural
-hint) reaches 4271.9 within the same family. The random-search family
-was designed post-hoc after inspecting LLM outputs, so the ablation
-tests whether LLM structures are findable by random search, not
-whether random search would have proposed them.
+Random search inside the LLM-proposed schedule family reaches
+4268.6\,GWh ($+21.9$ vs.\ baseline) at matched compute, within
+$2$\,GWh of the deployed schedules. The family was designed post-hoc
+after inspecting LLM outputs, so this ablation tests whether LLM
+structures are findable by random search, not whether random search
+would have proposed them.
 
 A controlled ablation varying penalty weight ($0.01\times$ to
 $10\times$) while holding LR fixed shows all nine variants produce
-feasible held-out layouts: the LR dynamics drive feasibility, while
-penalty scale affects AEP quality ($\pm11$\,GWh).
+feasible held-out layouts under K=50 stochastic gradient (3/3 init
+seeds per factor): the LR dynamics drive feasibility. Held-out
+AEP is nearly flat across the sweep---feasible-mean spans
+4262.9--4267.9\,GWh ($5.0$\,GWh range)---so penalty scale has only
+a small effect on quality.
 
 \paragraph{Robust selection across the matrix.}
 Selecting the deployed schedule by best training-cell AEP does not

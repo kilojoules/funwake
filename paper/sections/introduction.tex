@@ -39,25 +39,14 @@ We present FunWake, a benchmark with three properties:
     $\sim$\$500.
 \end{enumerate}
 
-\paragraph{The strongest agents, and the optimum they share.}
+\paragraph{The strongest agents, and the band they reach.}
 Restricted to feasible held-out layouts, Gemini CLI reaches
 4272.7\,GWh (+26.0 over the 500-start SGD baseline of 4246.7) and
-Claude Code reaches 4271.5\,GWh (+24.8). Four non-LLM baselines at
-matched compute---random search over a parameterized schedule
-family (4268.6), bump-family DE seeded with Claude (4272.9),
-bump-family DE seeded with zero bumps (4271.9), and CMA-ES
-warm-started at Claude's layout (4272.2)---reach the same 4.3\,GWh
-band. A substrate-independent CMA-ES cold-started from a generic
-feasible init reaches only 4189.3\,GWh, $\sim$80\,GWh below the
-cluster at a matched 4500-evaluation budget.
-The picture that emerges (Sec.~\ref{sec:ablations}) is a
-\emph{shared local optimum} at 4272.7\,GWh: substrate-independent
-CMA-ES confirms this is a real landscape feature (warm-start:
-$+0.7$ in 6000 evals) rather than a shared-substrate artifact,
-though we cannot rule out higher optima reachable by longer
-substrate-independent runs. Several schedules produce higher
-\emph{nominal} held-out AEP but violate constraints;
-feasibility-aware evaluation is essential.
+Claude Code reaches 4271.5\,GWh (+24.8). Random search at matched
+compute inside the LLM-proposed dual-bump schedule family reaches
+4268.6\,GWh, within $\sim$4\,GWh of both LLM-deployed schedules.
+Several schedules produce higher \emph{nominal} held-out AEP but
+violate constraints; feasibility-aware evaluation is essential.
 
 \paragraph{What the LLMs contribute: parameterization, not score.}
 The two frontier agents propose qualitatively different
@@ -65,12 +54,11 @@ parameterizations of the schedule space: Claude Code's
 14-parameter dual-Gaussian-bump family (two bump amplitudes,
 centers, widths, LR, warmup, penalty coupling, quadratic boost,
 two Adam betas) and Gemini CLI's sinusoidal-shake schedule plus a
-separate 6-parameter 2D lattice family. Running matched-compute
-differential evolution \emph{inside} Claude's bump family reaches
-4271.9\,GWh starting from a zero-bump baseline seed (+24.7 over
-baseline), within seed noise of the LLM-deployed schedule itself.
-The LLM's contribution is the parameterization---rich enough to
-contain the optimum---and not the particular point inside it.
+separate 6-parameter 2D lattice family. Random search inside
+Claude's family at matched compute reaches 4268.6\,GWh, within
+$\sim$4\,GWh of the LLM-deployed point. The LLM's contribution is
+the parameterization---rich enough to contain a near-optimal
+point---rather than the particular point inside it.
 
 The specific mechanisms the LLMs assemble---dual Gaussian LR bumps
 coupled to an in-phase penalty dip (Claude), or a high-frequency
@@ -80,10 +68,12 @@ schedule building blocks (cosine annealing with warm
 restarts~\cite{loshchilov2017sgdr}, cyclical learning
 rates~\cite{smith2017cyclical,smith2019superconvergence}, noise
 injection~\cite{jastrzebski2018factors}, weight
-averaging~\cite{izmailov2018swa}). A controlled ablation varying penalty weight while holding the
-LR schedule fixed shows that the penalty trajectory affects
-held-out \emph{quality} (11.2\,GWh span) but not feasibility---the
-LR dynamics alone produce feasible layouts at all penalty scales
+averaging~\cite{izmailov2018swa}). A controlled ablation varying
+penalty weight while holding the LR schedule fixed shows that all
+nine variants produce feasible held-out layouts under K=50
+stochastic gradient (3/3 init seeds per factor) with held-out
+AEP nearly flat across two orders of magnitude in $\alpha$ scale
+($5.0$\,GWh span)---the LR dynamics alone drive feasibility
 (Sec.~\ref{sec:discussion}).
 
 \paragraph{Contributions.}

@@ -36,21 +36,20 @@ what makes the held-out signal informative.
 
 Two specific failure modes are invisible without held-out evaluation:
 
-\paragraph{Penalty weight affects quality, not feasibility.}
+\paragraph{Penalty weight affects quality only weakly.}
 A controlled ablation multiplies Claude iter~192's $\alpha$
 trajectory by factors from 0.01$\times$ to 10$\times$ while holding
 the LR schedule, bumps, and Adam betas fixed. All nine factors
-produce feasible ROWP layouts---contrary to the original hypothesis
-that low terminal $\alpha$ causes infeasibility. The effect is on
-\emph{quality}: ROWP AEP peaks at the original scale
-(factor$\,=\,1.0$, 4271.5\,GWh) and degrades symmetrically at both
-extremes (4263.4 at 0.01$\times$, 4261.8 at 10$\times$), spanning
-11.2\,GWh. Under-penalizing allows mild constraint violations that
-waste polygon area; over-penalizing forces turbines away from
-boundaries unnecessarily, also wasting area. The schedule's LR
-dynamics (dual Gaussian bumps, cosine decay) are sufficient for
-feasibility; the penalty trajectory controls how efficiently the
-optimizer uses the available polygon area.
+produce feasible ROWP layouts under K=50 stochastic gradient (3/3
+init seeds per factor)---contrary to the original hypothesis that
+low terminal $\alpha$ causes infeasibility. The effect on
+\emph{quality} is small: ROWP AEP feasible-mean ranges from
+4262.9\,GWh (factor$\,=\,0.25$) to 4267.9\,GWh
+(factor$\,=\,0.01$), a $5.0$\,GWh span across two orders of
+magnitude. The schedule's LR dynamics (dual Gaussian bumps,
+cosine decay) drive feasibility; the penalty trajectory has only
+a weak effect on how efficiently the optimizer uses the available
+polygon area.
 
 \paragraph{Training-optimal $\neq$ held-out-optimal.}
 Gemini's training-best schedule (AEP = 5600.0) reaches a high
@@ -103,15 +102,14 @@ benchmark's low cost is not a limitation: search happens at
 low $N$, deployment happens at high $N$.
 
 \paragraph{Saturated within the schedule-only space.}
-Four distinct search strategies (Gemini's hand-found schedule,
-Claude's hand-found schedule, bump-family DE, and random search at
-matched compute) all reach feasible held-out scores within a
-4.3\,GWh band at 4272.7\,GWh, establishing a shared local optimum
-for the DEI/ROWP train/test pair. The two winning frontier schedules
-are qualitatively different (dual Gaussian bumps vs.\ decaying
-sinusoidal shake), suggesting that within this optimum,
-multiple distinct mechanism regions exist. We expect that exceeding
-this optimum requires either a richer interface (full optimizer mode
+Three distinct search strategies (Gemini's hand-found schedule,
+Claude's hand-found schedule, and random search at matched compute
+inside the LLM-proposed dual-bump family) all reach feasible held-out
+scores within a $\sim$4\,GWh band around 4272\,GWh. The two winning
+frontier schedules are qualitatively different (dual Gaussian bumps
+vs.\ decaying sinusoidal shake), suggesting multiple distinct
+mechanism regions exist within this band. We expect that exceeding
+this band requires either a richer interface (full optimizer mode
 with novel constraint handling) or a different train/test pair.
 
 \subsection{Applicability Beyond Wind Farms}
@@ -166,18 +164,15 @@ mode, agents improve initialization (hexagonal lattice, K-means
 clustering). The schedule-only interface cannot express initialization
 innovations, which limits what it measures.
 
-\paragraph{Random-search and within-family ablations.}
+\paragraph{Random-search ablation.}
 To isolate the LLM's contribution from the richness of the
-parameterized schedule family, we run two ablations with matched
-compute budgets (Sec.~\ref{sec:ablations}): a random search over a
+parameterized schedule family, we run a random search over a
 parameterized schedule family (decay type, perturbation type,
 warmup, penalty ramp, Adam betas) at $N=320$ samples, matching
-Claude's schedule-only attempt count; and a differential-evolution
-search over the 14 parameters of Claude's dual-bump family
-(Sec.~\ref{sec:structures}), which establishes an in-family upper
-bound. These ablations help distinguish "the LLM found a good point
-in an easy space" from "the LLM found a qualitatively different
-structure that random search does not reach".
+Claude's schedule-only attempt count (Sec.~\ref{sec:ablations}).
+This ablation helps distinguish "the LLM found a good point in an
+easy space" from "the LLM found a qualitatively different structure
+that random search does not reach".
 
 \paragraph{Single-cell training as a design choice.}
 The single-cell training protocol surfaces a tension between

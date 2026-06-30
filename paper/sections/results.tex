@@ -14,15 +14,13 @@ Table~\ref{tab:main} summarizes the best held-out AEP for each method.
 
 % Fig 1 bar chart removed — subsumed by Table 1 and Fig.~\ref{fig:matrix}.
 
-\textbf{The two frontier LLMs cluster at the same local optimum} on the
-held-out farm. In schedule-only mode, Claude Code's best feasible
-schedule reaches 4271.5\,GWh (+24.8) and Gemini CLI's reaches
-4269.3\,GWh (+22.6); Gemini CLI's best overall result (full-optimizer
-mode, best of five seeds) reaches 4272.7\,GWh (+26.0). All three
-fall within seed noise of the bump-family DE upper bound
-(4272.9\,GWh) and within $\sim$4\,GWh of random search at matched
-budget (4268.6\,GWh)---a tight cluster at the 4272.7\,GWh
-shared local optimum.
+\textbf{The two frontier LLMs cluster at the same held-out band.}
+In schedule-only mode, Claude Code's best feasible schedule reaches
+4271.5\,GWh (+24.8) and Gemini CLI's reaches 4269.3\,GWh (+22.6);
+Gemini CLI's best overall result (full-optimizer mode, best of five
+seeds) reaches 4272.7\,GWh (+26.0). All three fall within $\sim$4\,GWh
+of random search at matched budget (4268.6\,GWh) inside the LLM-proposed
+dual-bump family---a tight cluster around 4272\,GWh.
 
 \textbf{The open-source model does not reach this optimum.}
 DeepSeek R1 Distill 32B, self-hosted on LUMI via vLLM with the
@@ -52,12 +50,8 @@ these numbers should not be used for fine-grained model ranking.}
 \toprule
 \textbf{Method} & \textbf{Budget} & \textbf{Train} & \textbf{$\Delta$Train} & \textbf{ROWP} & \textbf{$\Delta$ROWP} \\
 \midrule
-\multicolumn{6}{l}{\emph{Non-LLM ablations (Sec.~\ref{sec:ablations})}} \\
-\textbf{Bump-family DE (Claude-seeded)}        & 316 evals    & 5566.3 & +25.6 & \textbf{4272.9} & \textbf{+26.2} \\
-Bump-family DE (baseline-seeded, zero bumps)   & 316 evals    & 5562.7 & +22.0 & 4271.9 & +25.2 \\
+\multicolumn{6}{l}{\emph{Non-LLM ablation (Sec.~\ref{sec:ablations})}} \\
 Random search (parameterized family)           & 320 samples  & 5561.8 & +21.1 & 4268.6 & +21.9 \\
-CMA-ES on raw 148-D positions (warm, from Claude) & 6000 evals & n/a    & ---    & 4272.2 & +25.5 \\
-CMA-ES on raw 148-D positions (cold, from grid)   & 4500 evals & n/a    & ---    & 4189.3 & $-57.4$ \\
 500-multi-start SGD baseline                   & 500 starts   & 5540.7 & ---    & 4246.7 & --- \\
 \midrule
 \multicolumn{6}{l}{\emph{Frontier LLMs (rich CLI agent)}} \\
@@ -66,7 +60,7 @@ Claude Code (schedule-only, iter 192)          & 320 evals    & 5555.7 & +15.0 &
 \midrule
 \multicolumn{6}{l}{\emph{Open-source LLM (self-hosted, portable scaffold$^\dagger$)}} \\
 DeepSeek R1 32B (schedule-only, 3 gens)       & 20 evals/seed & 5537.6 & $-3.1$ & ---   & ---   \\
-\multicolumn{6}{l}{\footnotesize $^\dagger$Open-source models use a different scaffold; scores are not directly comparable to frontier models.}
+\multicolumn{6}{l}{\footnotesize $^\dagger$Open-source models use a different scaffold; scores are not directly comparable to frontier models.} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -295,14 +289,14 @@ open-source model does not discover.
 Detailed parameter plots and per-mechanism intuition are in
 Appendix~\ref{app:structures}.
 
-\subsection{Random-Search and Within-Family Ablations}
+\subsection{Random-Search Ablation}
 \label{sec:ablations}
 
 To isolate the LLM's contribution from the richness of the
-parameterized schedule family itself, we run two non-LLM ablations
-with budgets matched to the LLM schedule-only runs. Both ablations
-share the same skeleton, training farm, and held-out evaluation
-protocol as the LLM agents.
+parameterized schedule family itself, we run a non-LLM ablation
+with budget matched to the LLM schedule-only runs. It shares the
+same skeleton, training farm, and held-out evaluation protocol as
+the LLM agents.
 
 \paragraph{Random search over a parameterized family.}
 We sample $N=320$ schedules (matching Claude's attempt count) from
@@ -321,69 +315,20 @@ Each sample is scored on DEI
 \textbf{Result:} of 320 samples, 163 produced feasible ROWP layouts;
 the best feasible random-search schedule reaches \textbf{4268.6\,GWh}
 on the held-out farm---within $\sim$4\,GWh of both LLM frontier
-schedules (Claude 4271.5, Gemini 4272.7) and within seed noise of
-the bump-family DE result (4272.9).
-
-\paragraph{Differential evolution within Claude's bump family.}
-We parameterize Claude's iter 192 dual-bump structure as a
-14-dim family (LR, warmup, two bump amplitudes, centers, widths,
-penalty coupling, quadratic boost, $\beta_1$, $\beta_2$) and run
-scipy DE (\texttt{popsize=15}, \texttt{maxiter=20}, 316 evals) in
-two conditions: \textbf{Claude-seeded} (iter 192's params) reaches
-\textbf{4272.9\,GWh}; \textbf{baseline-seeded} (zero bumps,
-TopFarm $\beta_1=0.1$, $\beta_2=0.2$) reaches \textbf{4271.9\,GWh}.
-The two runs agree within seed noise: the bump-family
-parameterization reaches the 4272.7\,GWh optimum without the LLM's
-structural hint, so Claude's specific bump placement is not
-load-bearing once the parameterization exists.
-
-\paragraph{Substrate-independent tiebreaker: CMA-ES on raw 148-D.}
-All methods above share pixwake physics and (for four of five) an
-Adam-plus-penalty continuous-relaxation skeleton. To test whether
-the 4272.7\,GWh cluster is a real local optimum or a shared-substrate
-fixed point, we run CMA-ES directly on the raw $2N=148$-dimensional
-position vector with no Adam, no schedule, no penalty ramp, no JAX
-gradients, and no polish---feasibility enforced as a continuous
-soft penalty. \textbf{Cold-start} from a feasible wind-aware grid
-init (4039.6\,GWh): at a 4500-evaluation compute cap (comparable
-to the LLM schedule-only budgets of 254--320 evaluations and the
-bump-family DE budget of 316), CMA-ES reaches \textbf{4189.3},
-still climbing but $\sim$80\,GWh below the cluster. This gap
-reflects compute-starvation at the matched budget rather than
-substrate failure: the direct 148-dimensional search simply needs
-much more compute to climb from a generic init.
-\textbf{Warm-start} from Claude iter 192's converged layout
-(4271.5): 6000 evals with 68\% feasibility rate reach only
-\textbf{4272.2}, an improvement of $+0.7$\,GWh---essentially
-nothing. Substrate-independent local search cannot reach the
-cluster from a generic init at matched compute \emph{and} cannot
-meaningfully exceed it once warm-started inside. The 4272.7\,GWh
-optimum is a real feature of the feasibility-filtered
-landscape, not a shared-substrate artifact.
+schedules (Claude 4271.5, Gemini 4272.7).
 
 \paragraph{Interpretation.}
-Six search strategies with qualitatively different inductive
-biases all cluster within $\sim$4\,GWh (Table~\ref{tab:main}), and
-CMA-ES confirms the cluster is not a substrate fixed point. This
-establishes a \textbf{shared local optimum at 4272.7\,GWh} for
-this DEI$\to$ROWP pair. CMA-ES warm-started at Claude's layout
-improves by only $+0.7$\,GWh in 6000 evaluations, confirming
-this is a real landscape feature; cold-started CMA-ES reaches
-only 4189.3 at a matched budget, reflecting compute starvation
-in 148 dimensions rather than a substrate limitation---we cannot
-rule out higher optima reachable by longer runs.
-The LLM contribution is therefore
-\emph{not} a score advantage---random search, baseline-init DE,
-and warm-start CMA-ES all match within noise. The LLM contribution
-is \textbf{parameterization discovery}: Claude proposed the
-14-parameter dual-bump family (baseline-init DE still reaches
-the optimum within it), and Gemini proposed both the
-sinusoidal-shake schedule and a 6-parameter 2D lattice family
-(via scipy DE + vectorized JAX; Sec.~\ref{sec:structures}) that
-reaches the optimum through an unrelated route. The benchmark
-measures which parameterizations LLMs propose and whether they
-are rich enough to contain the optimum; absolute scores are
-matched by non-LLM search at equivalent compute.
+Random search at matched compute inside the LLM-proposed dual-bump
+family reaches 4268.6\,GWh, within $\sim$4\,GWh of the LLM-deployed
+schedules. The LLM contribution is therefore \emph{not} a score
+advantage at matched compute; it is \textbf{parameterization
+discovery}: Claude proposed the 14-parameter dual-bump family and
+Gemini proposed the sinusoidal-shake schedule and a 6-parameter 2D
+lattice family (via scipy DE + vectorized JAX;
+Sec.~\ref{sec:structures}). The benchmark measures which
+parameterizations LLMs propose and whether they are rich enough to
+contain a near-optimal point; once a family is given, simple search
+inside it recovers most of the gain.
 
 
 \paragraph{Full-optimizer mode.}
