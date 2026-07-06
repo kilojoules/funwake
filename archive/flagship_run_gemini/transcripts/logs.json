@@ -1,0 +1,37 @@
+[
+  {
+    "sessionId": "127468a4-7e4a-4703-bb4f-b14eff65f371",
+    "messageId": 0,
+    "type": "user",
+    "message": "@.devcatrc is supposed to say what files to exclude from context being fed to LLMs. Is there anything in this\n   repo we should exclude or is it all important?",
+    "timestamp": "2026-04-07T21:44:00.559Z"
+  },
+  {
+    "sessionId": "deecbcf1-7f2f-4fc9-8739-07eb96b0e20f",
+    "messageId": 0,
+    "type": "user",
+    "message": "I think we still are pulling some un-needed data. Use devcat yourself to see what we're picking up!",
+    "timestamp": "2026-04-07T22:02:37.425Z"
+  },
+  {
+    "sessionId": "72c88fc7-70d2-4a1a-b333-6660a3a4c357",
+    "messageId": 0,
+    "type": "user",
+    "message": "Add an option to run this with gemini CLI instead of claude CLI ``` $ gemini -h\nUsage: gemini [options] [command]\n\nGemini CLI - Defaults to interactive mode. Use -p/--prompt for non-interactive\n (headless) mode.\n\nCommands:\n  gemini mcp                   Manage MCP servers\n  gemini extensions <command>  Manage Gemini CLI extensions.                                 [aliases: extension]\n  gemini skills <command>      Manage agent skills.                                              [aliases: skill]\n  gemini hooks <command>       Manage Gemini CLI hooks.                                           [aliases: hook]\n  gemini [query..]             Launch Gemini CLI                                                        [default]\n\nPositionals:\n  query  Initial prompt. Runs in interactive mode by default; use -p/--prompt for non-interactive.\n\nOptions:\n  -d, --debug                     Run in debug mode (open debug console with F12)      [boolean] [default: false]\n  -m, --model                     Model                                                                  [string]\n  -p, --prompt                    Run in non-interactive (headless) mode with the given prompt. Appended to input\n                                   on stdin (if any).                                                    [string]\n  -i, --prompt-interactive        Execute the provided prompt and continue in interactive mode           [string]\n  -w, --worktree                  Start Gemini in a new git worktree. If no name is provided, one is generated au\n                                  tomatically.                                                           [string]\n  -s, --sandbox                   Run in sandbox?                                                       [boolean]\n  -y, --yolo                      Automatically accept all actions (aka YOLO mode, see https://www.youtube.com/wa\n                                  tch?v=xvFZjo5PgG0 for more details)?                 [boolean] [default: false]\n      --approval-mode             Set the approval mode: default (prompt for approval), auto_edit (auto-approve e\n                                  dit tools), yolo (auto-approve all tools), plan (read-only mode)\n                                                       [string] [choices: \"default\", \"auto_edit\", \"yolo\", \"plan\"]\n      --policy                    Additional policy files or directories to load (comma-separated or multiple --p\n                                  olicy)                                                                  [array]\n      --admin-policy              Additional admin policy files or directories to load (comma-separated or multip\n                                  le --admin-policy)                                                      [array]\n      --acp                       Starts the agent in ACP mode                                          [boolean]\n      --experimental-acp          Starts the agent in ACP mode (deprecated, use --acp instead)          [boolean]\n      --allowed-mcp-server-names  Allowed MCP server names                                                [array]\n      --allowed-tools             [DEPRECATED: Use Policy Engine instead See https://geminicli.com/docs/core/poli\n                                  cy-engine] Tools that are allowed to run without confirmation           [array]\n  -e, --extensions                A list of extensions to use. If not provided, all extensions are used.  [array]\n  -l, --list-extensions           List all available extensions and exit.                               [boolean]\n  -r, --resume                    Resume a previous session. Use \"latest\" for most recent or index number (e.g. -\n                                  -resume 5)                                                             [string]\n      --list-sessions             List available sessions for the current project and exit.             [boolean]\n      --delete-session            Delete a session by index number (use --list-sessions to see available sessions\n                                  ).                                                                     [string]\n      --include-directories       Additional directories to include in the workspace (comma-separated or multiple\n                                   --include-directories)                                                 [array]\n      --screen-reader             Enable screen reader mode for accessibility.                          [boolean]\n  -o, --output-format             The format of the CLI output. [string] [choices: \"text\", \"json\", \"stream-json\"]\n      --raw-output                Disable sanitization of model output (e.g. allow ANSI escape sequences). WARNIN\n                                  G: This can be a security risk if the model output is untrusted.      [boolean]\n      --accept-raw-output-risk    Suppress the security warning when using --raw-output.                [boolean]\n  -v, --version                   Show version number                                                   [boolean]\n  -h, --help           ```",
+    "timestamp": "2026-04-08T02:20:11.723Z"
+  },
+  {
+    "sessionId": "72c88fc7-70d2-4a1a-b333-6660a3a4c357",
+    "messageId": 1,
+    "type": "user",
+    "message": "Launch the proces using gemini for 5 minutes. Iterate until it works as expected. Then launch for 5 hours.",
+    "timestamp": "2026-04-08T02:20:40.088Z"
+  },
+  {
+    "sessionId": "deecbcf1-7f2f-4fc9-8739-07eb96b0e20f",
+    "messageId": 1,
+    "type": "user",
+    "message": "/rewind",
+    "timestamp": "2026-04-09T03:22:12.288Z"
+  }
+]
