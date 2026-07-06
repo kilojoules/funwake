@@ -50,9 +50,11 @@ sessions had no auto-memory feature regardless of config.
 
 Gemini's search transcripts (2026-04-07/08) **do** cover its deployed iteration
 (attempt 192, 2026-04-08 02:12). Single model throughout: **`gemini-3-flash-preview`**
-(660 messages, no mix). Gemini CLI **0.47.0** (`@google/gemini-cli`, current
-install; the exact run-time version is not separately logged). The deployed
-Gemini schedule is therefore attributable; the Claude one is not.
+(660 messages, no mix). Gemini CLI version: **`@google/gemini-cli@0.47.0` — this
+is the *current* local install; the run-time version is not separately logged**
+(the session JSON carries `sessionId/projectHash/startTime/lastUpdated/messages/
+kind` — no version field). So the model is attributable, the CLI version only
+approximately. The Claude dual-bump model is not attributable at all.
 
 ## Honest paper sentence
 

@@ -19,7 +19,19 @@
 
 ## Provenance
 
-- **Host**: `sophia.dtu.dk` (`sophia1.hpc.ait.dtu.dk`), user `juqu`
+**Two different things live here, from two different hosts/dates:**
+
+- `run_record/` (the deployed Apr-5 schedule search) was **run locally, copied
+  to sophia.** Its content timestamps are all 2026-04-05 (the run), but the
+  files' mtime on sophia is 2026-04-18 23:12 — identical for `attempt_log.json`
+  and `iter_192.py`, i.e. a single batch copy onto sophia, at the same moment
+  the *unrelated* full-opt/benchmark work began there. So the host that holds
+  these files (sophia) is **not** the host that produced them (local mac). The
+  local run's transcripts were never copied and are now gone.
+- `transcripts/` (the Apr-18 full-opt/benchmark sessions) **were** produced on
+  sophia:
+
+- **Host (transcripts)**: `sophia.dtu.dk` (`sophia1.hpc.ait.dtu.dk`), user `juqu`
 - **Working dir**: `/work/users/juqu/funwake`
 - **Config dir**: default `~/.claude` (no `CLAUDE_CONFIG_DIR`, no isolation)
 - **Dates**: 2026-04-18 → 2026-04-19 (`iter_192.py` mtime 2026-04-18 23:12).

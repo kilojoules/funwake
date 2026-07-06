@@ -12,6 +12,10 @@ document both deployed agents.
 - **Dates**: 2026-04-07 → 2026-04-08 (`iter_192.py` mtime 2026-04-08 02:15)
 - **Agent**: `gemini -p` headless invocations, one per search iteration, driven
   by `runners/gemini_cli_runner.py`.
+- **Model / CLI version**: single model `gemini-3-flash-preview` throughout
+  (transcript `model` field). Gemini CLI `@google/gemini-cli@0.47.0` — the
+  *current install*; the run-time version is **not separately logged** (session
+  JSON has no version field).
 
 ## Memory / context audit — the Claude↔Gemini asymmetry
 
