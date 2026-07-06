@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(sbatch:*)",
+      "Bash(squeue:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(scancel:*)",
+      "Bash(git pull:*)",
+      "Bash(pixi install:*)",
+      "Bash(ssh sn414 \"ps aux | grep -E ''claude|node'' | grep -v grep\")",
+      "Bash(ssh:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd 19 LLM-generated optimizer iterations for full-opt discovery\n\nPortfolio of wind farm layout optimizers exploring diverse strategies:\n\n- iter_001-008: Initial approaches \\(SGD variants, DE hybrid\\)\n- iter_009: Multi-start SLSQP with JAX gradients\n- iter_010: Aggressive 10-start SGD with high LR\n- iter_011: Two-stage L-BFGS-B \\(feasibility then AEP\\)\n- iter_012: Three-stage coarse-to-fine constraint relaxation\n- iter_013: Trust-region constrained optimization\n- iter_014: Augmented Lagrangian with multiplier updates\n- iter_015: Basin-hopping + SGD refinement\n- iter_016: Adaptive coordinate descent with line search\n- iter_017: Particle swarm optimization + SGD\n- iter_018: Wake-aware greedy sequential placement\n- iter_019: Ensemble meta-optimizer \\(runs 4 methods\\)\n\nAlso includes run scripts and PROGRESS.md with detailed taxonomy.\nEOF\n\\)\")",
+      "Bash(git push)",
+      "Bash(pixi --version:*)",
+      "Bash(CONDA_OVERRIDE_GLIBC=2.28 pixi run python:*)",
+      "Bash(git commit:*)",
+      "Bash(python3:*)"
+    ]
+  }
+}

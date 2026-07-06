@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "funwake": {
+      "type": "stdio",
+      "command": "pixi",
+      "args": [
+        "run", "python", "funwake_mcp.py",
+        "--output-dir", "results_agent_claude_fullopt"
+      ],
+      "env": {
+        "JAX_ENABLE_X64": "True",
+        "PYTHONPATH": "playground/pixwake/src"
+      }
+    }
+  }
+}
