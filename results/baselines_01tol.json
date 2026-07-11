@@ -1,0 +1,18 @@
+{
+ "dei_n50": {
+  "n_starts": 500,
+  "tol_m": 0.1,
+  "best_aep_01tol": 5545.01,
+  "n_feasible_01tol": 500,
+  "best_aep_strict": 5529.68,
+  "n_feasible_strict": 3
+ },
+ "rowp_n74": {
+  "n_starts": 500,
+  "tol_m": 0.1,
+  "best_aep_01tol": 4243.55,
+  "n_feasible_01tol": 492,
+  "best_aep_strict": null,
+  "n_feasible_strict": 0
+ }
+}

@@ -194,6 +194,30 @@ constant-then-cosine decay without the non-monotonic dynamics
 same scaffold with two versions of the memory template produced
 identical outcomes, confirming the bottleneck is model capability.
 
+\paragraph{Wind-resource resolution and the wake-light regime.}
+The wind climates are represented by one sector-mean speed per
+direction, and the two farms are high-wind sites (mean 9.4--10.6\,m\,s$^{-1}$,
+close to the turbines' rated speed). Both properties make the AEP
+landscape \emph{wake-light}: for the deployed schedule the
+energy-weighted wake loss is only $\approx$1\% (0.3\% on the
+unidirectional climate, where the polygon holds roughly four times as
+many non-waking staggered positions as turbines and every wake is
+routed into open space). This bounds the achievable
+schedule-vs-baseline AEP gap to a few percent and explains why the
+unidirectional column shows no gap at all. To check that this is not
+an artifact of the single-speed simplification, we re-ran the ROWP
+farm under a per-direction Weibull distribution ($k{=}2$, scale set to
+the sector-mean speed, twelve speed bins) for the DEI and unidirectional
+climates. Resolving the speed distribution \emph{reduces} the wake loss
+further (1.25\%$\rightarrow$0.83\% at $N{=}50$) and shrinks the gaps by
+roughly half, but preserves every qualitative conclusion: the schedules
+still beat the baseline on the directional climate and still tie exactly
+on the unidirectional one. The wake-light regime is therefore a property
+of the high-wind sites, not of the wind-rose discretization; a
+genuinely low-wind site (mean $\approx$7\,m\,s$^{-1}$) would be required
+to reach the 10--40\% wake losses typical of commercial offshore farms,
+and we expect it would widen the gaps rather than change their sign.
+
 \paragraph{Single-agent-class study.}
 This paper reports two frontier-tier LLM agents (Claude Code
 and Gemini CLI) under their rich CLI scaffolds and one

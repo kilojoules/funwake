@@ -72,6 +72,7 @@ def main():
     from pixwake import Curve, Turbine, WakeSimulation
     from pixwake.deficit import BastankhahGaussianDeficit
     from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve, boundary_penalty
+    from pixwake.optim.boundary import polygon_sdf
 
     t_load = time.time()
     info = json.load(open(args.problem))
@@ -156,6 +157,7 @@ def main():
                                              boundary, min_spacing, settings)
             aep = float(-objective(opt_x, opt_y))
             bnd_pen = float(boundary_penalty(opt_x, opt_y, boundary))
+            max_out = float(jnp.max(polygon_sdf(opt_x, opt_y, boundary)))
             dx = opt_x[:, None] - opt_x[None, :]
             dy = opt_y[:, None] - opt_y[None, :]
             dist = jnp.sqrt(dx ** 2 + dy ** 2 + jnp.eye(n_target) * 1e10)
@@ -166,6 +168,8 @@ def main():
                 "seed": int(seed),
                 "aep": round(aep, 2),
                 "feasible": bool(feasible),
+                "max_out_m": round(max_out, 4),
+                "min_dist_m": round(min_dist, 2),
                 "time": round(elapsed, 1),
             }
         except Exception as e:
