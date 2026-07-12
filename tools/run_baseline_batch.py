@@ -46,6 +46,8 @@ def main():
     p.add_argument("--out-key", required=True,
                    help="file prefix; outputs <out-dir>/<out-key>_seed<K>.out")
     p.add_argument("--skip-existing", action="store_true", default=True)
+    p.add_argument("--early-stopping", action="store_true")
+    p.add_argument("--es-threshold", type=float, default=0.1)
     args = p.parse_args()
 
     seeds = parse_seed_range(args.seeds)
@@ -129,6 +131,8 @@ def main():
         learning_rate=50.0, max_iter=4000,
         additional_constant_lr_iterations=2000,
         beta1=0.1, beta2=0.2,
+        early_stopping=args.early_stopping,
+        early_stop_threshold=args.es_threshold,
     )
 
     print(f"[{args.out_key}] problem loaded in {time.time()-t_load:.1f}s, "

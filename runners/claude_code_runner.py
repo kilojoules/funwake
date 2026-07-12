@@ -243,6 +243,9 @@ This ensures feasibility in late iterations. Can you do better?
             "--max-turns", str(self.max_turns_per_iter),
             "--output-format", "text",
         ]
+        # Pin the model explicitly (reproducibility: model identity logged)
+        if getattr(self.config, "model", None):
+            cmd.extend(["--model", self.config.model])
 
         # Add allowed tools
         for tool in allowed:
@@ -253,6 +256,9 @@ This ensures feasibility in late iterations. Can you do better?
             "PYTHONPATH": self.config.pythonpath,
             "JAX_ENABLE_X64": "True",
         }
+        # Disable Claude Code's automatic project memory (closes the audit gap)
+        if getattr(self.config, "disable_auto_memory", False):
+            env["CLAUDE_CODE_DISABLE_AUTO_MEMORY"] = "1"
 
         # Timeout: generous but bounded
         timeout = min(self.max_turns_per_iter * 120, int(self.time_remaining()) + 60)

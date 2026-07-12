@@ -26,6 +26,8 @@ class RunConfig:
     pixwake_src: str = "playground/pixwake/src"
     schedule_only: bool = False      # schedule_fn interface (vs full optimize())
     max_attempts: int = 0            # 0 = unlimited (use time_budget only)
+    model: Optional[str] = None      # explicit model pin for CLI backends
+    disable_auto_memory: bool = False  # set CLAUDE_CODE_DISABLE_AUTO_MEMORY=1
 
     # Phase-2 / diversity nudge thresholds
     phase2_fraction: float = 0.3     # switch to custom optimizer nudge

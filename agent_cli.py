@@ -71,6 +71,8 @@ def main():
                    help="Number of Claude Code invocations. 0=auto (default: 0)")
     p.add_argument("--schedule-only", action="store_true",
                    help="Constrain LLM to write only schedule_fn(), not optimize()")
+    p.add_argument("--disable-auto-memory", action="store_true",
+                   help="Set CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 for the run")
     p.add_argument("--train-problem", default="playground/problem.json",
                    help="Training problem JSON (default: playground/problem.json)")
     p.add_argument("--baselines", default="results/baselines.json",
@@ -131,6 +133,8 @@ def main():
         max_attempts=args.max_attempts,
         adversarial_stress=args.adversarial_stress,
         adversarial_stress_baseline=args.adversarial_stress_baseline,
+        model=args.model,
+        disable_auto_memory=args.disable_auto_memory,
     )
 
     # Create runner
