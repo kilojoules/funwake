@@ -175,7 +175,7 @@ zc = np.vstack(zk).mean(axis=0)
 ax_pq.set_xlim(zc[0] - pq_half, zc[0] + pq_half)
 ax_pq.set_ylim(zc[1] - pq_half, zc[1] + pq_half)
 ax_pq.set_aspect("equal")
-ax_pq.set_title("Test — ParqueFicticio", fontsize=9.6, weight="bold",
+ax_pq.set_title("Test — Parque Ficticio", fontsize=9.6, weight="bold",
                 color=INK, pad=5)
 ax_pq.text(0.03, 0.97,
            f"V80 · D = {PARQO_D:.0f} m\n$N$ = {len(px)} shown · 5 zones "
@@ -249,7 +249,7 @@ axd.text((COMM_LO * COMM_HI) ** 0.5, 1.72, "commercial\noffshore",
 lane_defs = [
     (C_DEI, areas[0], 15.0, N_SWEEP, 50, "DEI", 1.45),
     (C_ROWP, areas[1], 10.0, N_SWEEP, 74, "ROWP", 0.90),
-    (C_PARQO, pq_area, PARQO_MW, [10, 15, 20, 25, 30], None, "Parqo\n(V80)", 0.35),
+    (C_PARQO, pq_area, PARQO_MW, [10, 15, 20, 25, 30], None, "Parque\nFicticio\n(V80)", 0.35),
 ]
 for color, area, mw, nsweep, n_flag, label, y in lane_defs:
     dens = [n * mw / area for n in nsweep]
@@ -280,7 +280,7 @@ axd.xaxis.set_major_locator(FixedLocator([1, 2, 5, 10, 20, 50, 100]))
 axd.set_xticklabels([1, 2, 5, 10, 20, 50, 100])
 for s in ["left", "right", "top"]:
     axd.spines[s].set_visible(False)
-axd.text(128, 1.80, "DEI/ROWP $N$=30–300 · Parqo $N$=10–30 (zone cap $\\approx$34)",
+axd.text(128, 1.80, "DEI/ROWP $N$=30–300 · Parque Ficticio $N$=10–30 (zone cap $\\approx$34)",
          fontsize=6.8, color=MUT, ha="right", va="top")
 
 for ext in ("pdf", "png"):
