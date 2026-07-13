@@ -77,6 +77,11 @@ CELLS = {}
 for sub in ("results/matrix/ms_v2", "results/matrix/ms_highn_v2"):
     for f in glob.glob(os.path.join(ROOT, sub, "*.json")):
         d = json.load(open(f)); CELLS[d["cell"]] = d["schedules"]
+# matched-budget random-search champion (non-LLM control) — merge as a schedule
+for f in glob.glob(os.path.join(ROOT, "results/matrix/random_scale/*.random.json")):
+    d = json.load(open(f))
+    CELLS.setdefault(d["cell"], {}).update(d["schedules"])
+C_RAND = "#27ae60"
 
 MINSP = {}
 for f in glob.glob(os.path.join(ROOT, "results/matrix/problem_*.json")):
@@ -120,6 +125,8 @@ def gap_pct(farm, rose, n, who, tol):
 
 
 def parqo_gap_pct(rose, n, who, tol):
+    if who not in PQ:            # no parqo data for the random control
+        return None
     bc = PQ["baseline"].get(f"{rose}|n{n}")
     sc = PQ[who].get(f"{rose}|n{n}")
     if not bc or not sc:
@@ -145,7 +152,8 @@ for ri, (farm, slabel, nrange, gapf) in enumerate(SITES):
     for ci, rose in enumerate(ROSES):
         ax = axes[ri, ci]
         ax.axhline(0, color=MUT, lw=1.0, ls=(0, (4, 2)), zorder=1)
-        for who, color in [("claude", C_CLAUDE), ("gemini", C_GEM)]:
+        for who, color in [("claude", C_CLAUDE), ("gemini", C_GEM),
+                           ("random", C_RAND)]:
             for tol, style, pe in TOL_STYLE:
                 xs, ys = [], []
                 for n in nrange:
@@ -175,11 +183,13 @@ for ri, (farm, slabel, nrange, gapf) in enumerate(SITES):
 
 # two-key legend: color = schedule, linestyle = constraint tolerance (both sides)
 leg_sched = [Line2D([0], [0], color=C_CLAUDE, lw=1.6, label="Claude dual-bump"),
-             Line2D([0], [0], color=C_GEM, lw=1.6, label="Gemini schedule")]
+             Line2D([0], [0], color=C_GEM, lw=1.6, label="Gemini schedule"),
+             Line2D([0], [0], color=C_RAND, lw=1.6,
+                    label="random search (matched budget)")]
 leg_tol = [Line2D([0], [0], color=MUT, lw=1.4, ls=st, path_effects=pe,
                   label=f"tolerance {t:g} m") for t, st, pe in TOL_STYLE]
 l1 = fig.legend(handles=leg_sched, loc="upper center", bbox_to_anchor=(0.5, 1.075),
-                ncol=2, fontsize=7.6, frameon=False)
+                ncol=3, fontsize=7.6, frameon=False)
 fig.add_artist(l1)
 fig.legend(handles=leg_tol, loc="upper center", bbox_to_anchor=(0.5, 1.035),
            ncol=3, fontsize=7.6, frameon=False)
