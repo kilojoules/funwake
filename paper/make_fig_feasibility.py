@@ -18,6 +18,7 @@ import glob
 import json
 import os
 
+import matplotlib.patheffects as pe
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.patches import PathPatch
@@ -56,6 +57,19 @@ _fp = os.path.join(ROOT, "paper/rowp_flowfields.json")
 if os.path.exists(_fp):
     FLOWFIELDS = json.load(open(_fp))
 
+# early-stopping (production) baseline: per-seed .out files -> {cell: [seeds]}
+ES = {}
+for f in glob.glob(os.path.join(ROOT, "results/es_baseline/*_es_seed*.out")):
+    try:
+        d = json.load(open(f))
+    except Exception:
+        continue
+    if "max_out_m" not in d:
+        continue
+    d.setdefault("aep_gwh", d.get("aep"))   # .out files use key "aep"
+    cell = os.path.basename(f).split("_es_seed")[0]
+    ES.setdefault(cell, []).append(d)
+
 
 def feas_frac(seeds, tol, minsp, vk="max_out_m"):
     tot = [r for r in seeds if "aep_gwh" in r]
@@ -81,14 +95,22 @@ fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.9), sharey=True,
 
 for ax, (title, rose) in zip(axes, PANELS):
     key = f"{FARM}_n{NMAX}_rose{rose}"
+    ms = MINSP.get(key, 0.0)
     for sched in ["baseline", "claude", "gemini"]:
         sc = MS.get(key, {}).get(sched)
         if not sc or "seeds" not in sc:
             continue
-        ms = MINSP.get(key, 0.0)
         y = [feas_frac(sc["seeds"], t, ms, "max_out_m") * 100 for t in TOLS]
         ax.plot(TOLS, y, color=COL[sched], lw=1.8, zorder=3,
                 marker="o", ms=3.0, markevery=[0])
+    # early-stopping (production) baseline overlay — dashed green, above inset
+    es_seeds = ES.get(key)
+    if es_seeds:
+        y = [feas_frac(es_seeds, t, ms, "max_out_m") * 100 for t in TOLS]
+        ax.plot(TOLS, y, color="#27ae60", lw=2.0, ls=(0, (4, 2)), zorder=10,
+                marker="o", ms=3.2, markevery=[0],
+                path_effects=[pe.Stroke(linewidth=3.4, foreground="white"),
+                              pe.Normal()])
     ax.set_xscale("symlog", linthresh=0.001, linscale=0.4)
     ax.axvline(0.0007, color=MUT, lw=0.6, ls=":", alpha=0.7, zorder=1)
     ax.set_title(f"{title}  ($N{{=}}{NMAX}$)", fontsize=8.6, weight="bold",
@@ -125,8 +147,10 @@ axes[0].set_ylabel("feasible restarts (%)", fontsize=8.3)
 from matplotlib.lines import Line2D
 legend = [Line2D([0], [0], color=COL[s], lw=1.9, label=LABEL[s])
           for s in ["baseline", "claude", "gemini"]]
-fig.legend(handles=legend, loc="upper center", bbox_to_anchor=(0.5, 1.11),
-           ncol=3, fontsize=8, frameon=False)
+legend.append(Line2D([0], [0], color="#27ae60", lw=1.9, ls=(0, (4, 2)),
+                     label="baseline + early stopping"))
+fig.legend(handles=legend, loc="upper center", bbox_to_anchor=(0.5, 1.13),
+           ncol=4, fontsize=8, frameon=False)
 
 for ext in ("pdf", "png"):
     out = os.path.join(ROOT, "paper/figs", f"fig_feasibility.{ext}")
