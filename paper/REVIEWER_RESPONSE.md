@@ -1,15 +1,34 @@
 # Reviewer response + experiment action plan — WES_Funwake-12
 
-## TL;DR
+## TL;DR (revised after running the controls)
 
-- **Most requested experiments already exist in the repo** (random search over
-  the schedule family, early-stopping machinery, alpha/beta/bump ablations).
-  The only genuinely-new experiment is **replicated reruns** (Major #2).
-- **The single most important finding is uncomfortable and must be surfaced
-  honestly**: the matched-budget random search over the schedule family
+- **Most requested experiments already exist / are now run**: matched-budget
+  random search over the schedule family (**scaled to N=300**), the production
+  early-stopping baseline, alpha/beta/bump ablations. The only genuinely-new
+  agent experiment is **replicated reruns** (Major #2, infra ready).
+- **The corrected #1 result FAVORS the LLM.** Random search over the schedule
+  family ties the LLMs on *raw AEP at loose tolerance* — but its **strict-tolerance
+  feasibility collapses with scale** (~40% at N=80 → **0–14%** at N=200/300),
+  while the LLM schedules hold **54–100%**. So the LLM's advantage is not raw
+  AEP; it is **discovering schedules that stay feasible at deployable tolerance
+  as N grows** — the constraint work the no-early-stopping skeleton no longer
+  does. See `fig_random_control` (Panel A concedes AEP parity; Panel B shows
+  the feasibility collapse). An earlier read that "random wins" was an artifact
+  of comparing AEP at 5 m tolerance, which erases exactly this advantage.
+- **#3 is confirmed and softens a different claim.** The production
+  (early-stopping) baseline is 72–92% feasible at strict-0 (vs ~0% no-ES), so
+  Fig 5's feasibility gap was largely a no-ES-baseline artifact; the LLM
+  **matches** the production baseline (having discovered the constraint-satisfying
+  structure without being given early stopping).
+
+### Superseded pre-control note (kept for the record)
+
+- The matched-budget random search over the schedule family
   **essentially ties the LLMs on final AEP** (val 4268.6 vs Claude 4271.5,
-  Gemini 4269.3; baseline 4243.6). The reviewer's worst-case is real. The
-  paper's central claim needs reframing from *"LLMs beat search"* to *"LLMs
+  Gemini 4269.3; baseline 4243.6) *at N=74 and at loose tolerance*. Taken alone
+  this looked like the reviewer's worst case; the tolerance-resolved,
+  scaled result above overturns it. The paper's central claim reframes from
+  *"LLMs beat search on AEP"* to *"LLMs
   discover the search space / structure; cheap search matches once the space
   is known."*
 
@@ -17,7 +36,19 @@
 
 ## Major points
 
-### #1 Non-LLM search baseline at matched budget — HAVE IT; reframe required
+### #1 Non-LLM search baseline at matched budget — DONE, favors the LLM
+
+**FINAL VERDICT (tolerance-resolved, scaled to N=300):** random search matches
+the LLM on AEP but its **strict-tolerance feasibility collapses at scale**
+(0.1 m: ~40% at N=80 → 0–14% at N=200/300; LLM holds 54–100%). The LLM wins on
+**self-feasibility at scale**, not raw AEP. Dedicated figure: `fig_random_control`
+(Panel A = AEP parity at 5 m; Panel B = feasibility collapse at 0.1 m). Random
+line removed from `fig_aep_dominance` to avoid implying parity without the
+feasibility caveat. Caveat to disclose: the random family *includes* the
+LLM-discovered motifs (gaussian-bumps, cosine) — a generous control that still
+fails on feasibility, which only strengthens the point.
+
+---
 
 **Status: experiment done** (`tools/random_search_ablation.py`,
 `results_random_search_320/`, described in `discussion.tex:167`).
@@ -80,7 +111,20 @@
   n=1 vs n=1 — should not be read as a model comparison, and we should say so).
 - **Priority: HIGH.**
 
-### #3 Early-stopping (production) baseline — HAVE machinery; add the line
+### #3 Early-stopping (production) baseline — DONE, confirms the reviewer
+
+**FINAL VERDICT:** ran the production ES baseline (K=50, rowp × {uniform,rowp,
+omnidir} × N=50/80/200/300). It is **72–92% feasible at strict-0** on
+rowp/omnidir (vs ~0% no-ES) — at N=300 it beats both LLM schedules on
+feasibility. So Fig 5's feasibility gap was **largely a no-ES-baseline
+artifact**. Added as a green dashed line in `fig_feasibility`. Honest reframe:
+the LLM **matches** the production baseline (both strict-feasible + similar AEP)
+having discovered the constraint-satisfying structure without early stopping;
+the constraint-precision *advantage* is over the naive baseline and random
+search, not the production one. Exception: unidirectional N=300 (ES ~8%), where
+the schedules genuinely win.
+
+---
 
 **Status: ES implementation built + validated** (`validation/early_stopping/`:
 pixwake ES vs TopFarm2, bit-for-bit tests, threshold 0.1). **Not yet a third
@@ -97,7 +141,22 @@ baseline line in Figs 4–5.**
 - Cost: baseline-only matrix rerun with ES ≈ same as one matrix baseline pass
   (few hours gbar). **Priority: HIGH.**
 
-### #4 Ablate the discovered schedules — HAVE partial; consolidate + caption
+### #4 Ablate the discovered schedules — consolidated; scale-ablation recommended
+
+**CONSOLIDATED FINDING:** the alpha-ablation (`results_alpha_ablation/`) sweeps
+the penalty weight 0.01×–10× and val AEP moves **< 0.3%** (4260–4272 GWh), all
+feasible **at N=74**. So the schedule components (alpha coupling/terminal slam,
+Gaussian bumps, betas) are **not about AEP** — they do **constraint enforcement**,
+which is invisible at the deployed scale but decisive at N=300 (see #1: the
+LLM's feasibility holds at scale, random's collapses). **Recommended follow-up
+(machinery ready in `validation/stochastic_aep/schedules_ablation.py`:
+`no_bumps`, `alpha_scaled`):** run iter_192 vs {no-bumps, no-terminal-alpha-slam,
+constant-betas} through the K=50 matrix **at N=300** and measure strict
+feasibility — this isolates *which* component gives Claude its feasibility-at-scale.
+That is the scientifically valuable version of Fig 3's ablation, and it directly
+explains the #1 result. ~1 slow gbar cell per variant.
+
+---
 
 **Status: partial.** Have alpha-ablation (`results_alpha_ablation/`),
 fixed-betas (`results/ablations/gemini_iter192_fixed_betas.py`), bump ablations
