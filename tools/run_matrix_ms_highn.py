@@ -53,6 +53,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--redo", default="", help="comma-sep schedules to recompute")
     ap.add_argument("--only", default="", help="run ONLY this schedule")
+    ap.add_argument("--es", action="store_true", help="apply early stopping on top of the schedule")
     args = ap.parse_args()
     global SCHEDULES
     if args.only:
@@ -103,7 +104,7 @@ def main():
         seeds_out = []
         for seed in range(args.K):
             try:
-                x, y = run_with_schedule(fn, sim, n, bnd, ms, wd, ws, wts, seed=seed)
+                x, y = run_with_schedule(fn, sim, n, bnd, ms, wd, ws, wts, seed=seed, early_stopping=args.es)
             except Exception as e:
                 seeds_out.append({"seed": seed, "error": str(e)[:80]}); continue
             ok, mo, md = feas(x, y)
