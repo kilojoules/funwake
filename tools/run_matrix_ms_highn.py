@@ -33,6 +33,9 @@ SCHEDULES = {
     "claude":   "results_agent_schedule_only_5hr/iter_192.py",
     "gemini":   "results_agent_gemini_cli_5hr/iter_118.py",
     "random":   "results/random_champion.py",
+    "ab_nobumps":  "results/ablations/ab_nobumps.py",
+    "ab_weakalpha":"results/ablations/ab_weakalpha.py",
+    "ab_stdbetas": "results/ablations/ab_stdbetas.py",
 }
 TOL = 0.1  # practical feasibility tolerance (m)
 
