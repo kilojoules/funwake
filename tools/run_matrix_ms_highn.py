@@ -54,6 +54,7 @@ def main():
     ap.add_argument("--redo", default="", help="comma-sep schedules to recompute")
     ap.add_argument("--only", default="", help="run ONLY this schedule")
     ap.add_argument("--es", action="store_true", help="apply early stopping on top of the schedule")
+    ap.add_argument("--score36", action="store_true", help="also score final layout at the 36-sector rose")
     args = ap.parse_args()
     global SCHEDULES
     if args.only:
@@ -83,6 +84,17 @@ def main():
         p = r.power()[:, :len(x)]
         return float(jnp.sum(jnp.sum(p, axis=1) * wts) * 8760 / 1e6)
 
+    det_aep36 = None
+    if getattr(args, "score36", False):
+        wr36 = json.load(open(os.path.join(ROOT, f"results/matrix/problem_{key}_36sec.json")))["wind_rose"]
+        wd36 = jnp.array(wr36["directions_deg"]); ws36 = jnp.array(wr36["speeds_ms"])
+        wts36 = jnp.array(wr36["weights"]); wts36 = wts36 / jnp.sum(wts36)
+
+        def det_aep36(x, y):
+            r = sim(x, y, ws_amb=ws36, wd_amb=wd36, ti_amb=None)
+            p = r.power()[:, :len(x)]
+            return float(jnp.sum(jnp.sum(p, axis=1) * wts36) * 8760 / 1e6)
+
     def feas(x, y):
         xa = np.asarray(x); ya = np.asarray(y)
         sdf = np.asarray(polygon_sdf(jnp.array(xa), jnp.array(ya), bnd))
@@ -108,8 +120,11 @@ def main():
             except Exception as e:
                 seeds_out.append({"seed": seed, "error": str(e)[:80]}); continue
             ok, mo, md = feas(x, y)
-            seeds_out.append({"seed": seed, "aep_gwh": round(det_aep(x, y), 3),
-                              "feasible": ok, "max_out_m": mo, "min_dist_m": md})
+            rec = {"seed": seed, "aep_gwh": round(det_aep(x, y), 3),
+                   "feasible": ok, "max_out_m": mo, "min_dist_m": md}
+            if det_aep36 is not None:
+                rec["aep36_gwh"] = round(det_aep36(x, y), 3)
+            seeds_out.append(rec)
         good = [r for r in seeds_out if r.get("feasible")]
         best = max(good, key=lambda r: r["aep_gwh"]) if good else None
         results["schedules"][sname] = {
