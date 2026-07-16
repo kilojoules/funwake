@@ -1,5 +1,12 @@
 # FunWake: LLM-Discovered Optimizer Schedules for Wind Farm Layout
 
+FunSearch-style algorithm discovery for physical infrastructure
+design: LLM coding agents iteratively write optimizer schedules,
+evaluated on wind farms held out from the search. A half-percent
+gain in annual energy production is worth millions of dollars per
+farm. Headline findings: constraining the agent's freedom improves
+discovery, and scaffolding explains more variance than model choice.
+
 **Bottom line:** An LLM constrained to write only a 4-parameter schedule function -- not the full optimizer -- discovers a novel learning-rate schedule with dual Gaussian bumps and a coordinated penalty dip that beats a 500-multi-start baseline by +24.8 GWh on a held-out farm the LLM never trained on. The deployed script is [`results_agent_schedule_only_5hr/iter_192.py`](results_agent_schedule_only_5hr/iter_192.py).
 
 ## Comparison: less freedom produces better results
@@ -93,6 +100,16 @@ The LLM sees only PASS/FAIL feasibility, never the AEP.
 *Pareto front: schedule-only (red) dominates the upper-right corner
 with 9 Pareto-optimal scripts.*
 
+## Limitations
+
+Held-out transfer was demonstrated across offshore farms with
+different turbines, layouts, and wind resources (DEI to IEA ROWP).
+Transfer degrades on the small multi-zone onshore case
+(ParqueFicticio): there the discovered schedules can underperform
+the baseline. Reported results come from two agent CLIs (Claude
+Code and Gemini CLI) and are agent-lane results (model plus
+scaffold), not pure model comparisons.
+
 ## Search progress
 
 ![320 schedule attempts over 5 hours](results_agent_schedule_only_5hr/progress.png)
@@ -118,6 +135,13 @@ Human writes (fixed):          LLM writes (evolved):
 
 See [`CLAUDE.md`](CLAUDE.md) for architecture details and
 [`paper/`](paper/) for the manuscript draft.
+
+## Process
+
+Coding agents helped build the evaluation infrastructure and ran
+the discovery loops. All reported numbers come from frozen
+baselines, held-out evaluation farms, and archived run logs in this
+repository.
 
 ## Reproduce
 
