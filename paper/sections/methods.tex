@@ -53,13 +53,40 @@ farm. We separately report oracle selection (best feasible
 held-out AEP) as an upper bound. The same selection criterion is
 applied to all models.
 
-\paragraph{Baseline.}
-500 multi-start runs of \texttt{topfarm\_sgd\_solve}~\cite{pedersen2019topfarm}:
-grid initialization filtered to the polygon, 4000 gradient
-iterations with Adam ($\beta_1=0.1$, $\beta_2=0.2$), preceded by
-2000 constant-LR iterations. Best layout across 500 starts is the
-baseline: 5540.7\,GWh on DEI (mean 5525.8), 4246.7\,GWh on ROWP
-(mean 4225.0, 96.2\% feasibility rate).
+\paragraph{Baselines.}
+We use two baselines, distinguished throughout by their multi-start
+count.
+\emph{(i) The 500-start \textsc{TopFarm} baseline} (the headline
+number): 500 multi-start runs of
+\texttt{topfarm\_sgd\_solve}~\cite{pedersen2019topfarm} with grid
+initialization filtered to the polygon, 4000 gradient iterations with
+Adam ($\beta_1=0.1$, $\beta_2=0.2$) preceded by 2000 constant-LR
+iterations. The best feasible layout across 500 starts, gated at a
+0.1\,m maximum-boundary-excursion tolerance (see below), is
+5545.0\,GWh on DEI ($N{=}50$) and 4243.6\,GWh on ROWP ($N{=}74$).
+We report best-\emph{feasible}, not best-overall: at strict-zero
+tolerance the \textsc{TopFarm} solver is essentially infeasible
+(3/500 feasible on DEI, 0/500 on ROWP), always landing millimetres to
+centimetres outside the polygon, so a positive tolerance is required
+for the baseline to exist at all.
+\emph{(ii) The matched $K{=}50$ multi-start baseline} (used for the
+per-cell schedule comparison): for a fair comparison, the seed
+schedule and each discovered schedule are each run through the
+\emph{same} fixed SGD skeleton from $K{=}50$ random restarts; each
+restart is then filtered by the constraint tolerance $\tau$ (maximum
+boundary excursion $\le\tau$ and minimum spacing $\ge d_{\min}-\tau$),
+and the reported AEP is the maximum over the feasible restarts. This
+isolates the effect of the learning-rate and penalty schedule, since
+baseline and schedule share initialization, step count, and solver.
+
+\paragraph{Constraint tolerance.}
+Because the SGD schedule is designed to satisfy the boundary and
+spacing constraints only to a tolerance near the terminal learning
+rate---not exactly---we report the per-cell AEP comparison as a
+function of a constraint tolerance $\tau$ rather than at a single
+feasibility threshold. A layout is $\tau$-feasible if every turbine
+lies within $\tau$ of the polygon and all pairwise spacings are at
+least $d_{\min}-\tau$.
 
 \paragraph{Unit tests.}
 A three-tier sandbox test suite validates each submission:

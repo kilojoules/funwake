@@ -189,6 +189,9 @@ This ensures feasibility in late iterations. Can you do better?
             "gemini", "-p", prompt,
             "-y", # YOLO mode
         ]
+        # Pin the model explicitly (reproducibility: model identity logged)
+        if getattr(self.config, "model", None):
+            cmd.extend(["--model", self.config.model])
 
         env = {
             **os.environ,

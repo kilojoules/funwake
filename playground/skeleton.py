@@ -21,8 +21,15 @@ from pixwake.optim.sgd import boundary_penalty, spacing_penalty
 
 
 def run_with_schedule(schedule_fn, sim, n_target, boundary, min_spacing,
-                      wd, ws, weights, total_steps=8000, seed=0):
+                      wd, ws, weights, total_steps=8000, seed=0,
+                      early_stopping=False, es_threshold=0.1):
     """Run the fixed Adam skeleton with a given schedule_fn.
+
+    early_stopping: schedule-agnostic post-hoc rule (matches pixwake sgd.py) —
+    once the learning rate has decayed below `es_threshold` x its peak, the AEP
+    (objective) gradient is dropped and the step follows the constraint-penalty
+    gradient only, driving the layout to feasibility in the low-LR regime. Off
+    by default (the paper's schedules bear the constraint burden themselves).
 
     Returns (opt_x, opt_y).
     """
@@ -95,6 +102,11 @@ def run_with_schedule(schedule_fn, sim, n_target, boundary, min_spacing,
     lr0 = 50.0
     alpha0 = jnp.mean(jnp.abs(jnp.concatenate([gox, goy]))) / lr0
 
+    # peak LR over the schedule (reference for the early-stopping trigger)
+    _steps = jnp.arange(total_steps)
+    _lrs = jax.vmap(lambda i: schedule_fn(i, total_steps, lr0, alpha0)[0])(_steps)
+    max_lr = jnp.max(_lrs)
+
     # ── JIT-compiled Adam loop with LLM's schedule ─────────────────
     @jax.jit
     def run_loop(x, y):
@@ -113,6 +125,11 @@ def run_with_schedule(schedule_fn, sim, n_target, boundary, min_spacing,
             # Gradients
             gox, goy = grad_obj(x, y)
             gcx, gcy = grad_con(x, y)
+            # early stopping: once lr <= es_threshold x peak, drop the AEP term
+            # and follow constraint gradient only (schedule-agnostic, sgd.py rule)
+            es_on = jnp.logical_and(early_stopping, lr <= es_threshold * max_lr)
+            gox = jnp.where(es_on, 0.0, gox)
+            goy = jnp.where(es_on, 0.0, goy)
             jx = gox + alpha * gcx
             jy = goy + alpha * gcy
 

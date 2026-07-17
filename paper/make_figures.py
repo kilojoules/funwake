@@ -194,7 +194,7 @@ def fig2_generalization_curve(data):
     plot_scripts = [
         ("results_agent_schedule_only_5hr/iter_192.py",
          "Claude schedule (iter 192)", COLORS["Claude Code"], "s"),
-        ("results_agent_gemini_cli_5hr/iter_192.py",
+        ("results_agent_gemini_cli_5hr/iter_118.py",
          "Gemini schedule", COLORS["Gemini CLI"], "o"),
         ("results/seed_optimizer.py",
          "Seed (single-start)", COLORS.get("Seed", "#888888"), "x"),
