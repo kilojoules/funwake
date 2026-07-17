@@ -1,0 +1,28 @@
+=== I: rowp_n80_roserowp iter192_baseline_alpha off ===
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192_baseline_alpha es=off ss=100000 ===
+  final AEP=4608.90 bp=9.5e-05 es_first_cross=0 elapsed=115.2s
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192_baseline_alpha es=off ss=200000 ===
+  final AEP=4600.37 bp=5.3e-04 es_first_cross=0 elapsed=128.9s
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192_baseline_alpha es=off ss=300000 ===
+  final AEP=4597.91 bp=2.1e-04 es_first_cross=0 elapsed=120.3s
+
+Wrote validation/stochastic_aep/gb_rowp_n80_roserowp_iter192_baselinealpha_off.json
+=== I: rowp_n80_roseomnidir iter192_baseline_alpha off ===
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192_baseline_alpha es=off ss=100000 ===
+  final AEP=6053.53 bp=1.4e-04 es_first_cross=0 elapsed=153.0s
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192_baseline_alpha es=off ss=200000 ===
+  final AEP=6046.39 bp=1.0e-03 es_first_cross=0 elapsed=154.0s
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192_baseline_alpha es=off ss=300000 ===
+  final AEP=6044.47 bp=6.5e-04 es_first_cross=0 elapsed=157.4s
+
+Wrote validation/stochastic_aep/gb_rowp_n80_roseomnidir_iter192_baselinealpha_off.json
+=== I: rowp_n70_roserowp iter192_baseline_alpha off ===
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192_baseline_alpha es=off ss=100000 ===
+  final AEP=4044.66 bp=6.2e-05 es_first_cross=0 elapsed=94.7s
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192_baseline_alpha es=off ss=200000 ===
+  final AEP=4038.48 bp=8.2e-07 es_first_cross=0 elapsed=95.9s
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192_baseline_alpha es=off ss=300000 ===
+  final AEP=4041.01 bp=0.0e+00 es_first_cross=0 elapsed=101.5s
+
+Wrote validation/stochastic_aep/gb_rowp_n70_roserowp_iter192_baselinealpha_off.json
+Done.

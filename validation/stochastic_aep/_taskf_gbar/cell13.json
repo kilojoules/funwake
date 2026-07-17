@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n80_rosedei.json",
+  "eta_t_m": 5.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n80_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 8774.942164213528,
+      "bp_init": 0.0,
+      "bp_final": 20.365776293485506,
+      "sp_final": 0.0,
+      "elapsed_s": 10.0
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n80_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 8776.701894500757,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.6
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n80_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 8765.283153562546,
+      "bp_init": 0.0,
+      "bp_final": 102.11881430893084,
+      "sp_final": 0.0,
+      "elapsed_s": 5.6
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n80_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 8765.63689159976,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.5
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n80_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 8769.493002832774,
+      "bp_init": 0.0,
+      "bp_final": 58.93363515620645,
+      "sp_final": 0.0,
+      "elapsed_s": 5.6
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n80_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 8768.334269630348,
+      "bp_init": 0.0,
+      "bp_final": 0.2132190907316393,
+      "sp_final": 0.0,
+      "elapsed_s": 5.5
+    }
+  ]
+}

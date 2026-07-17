@@ -1,0 +1,1878 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1777185990.351488,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n",
+    "rowp_feasible": false,
+    "rowp_time": 27.9
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1777186078.692328,
+    "train_aep": 5533.84,
+    "train_feasible": false,
+    "train_time": 32.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A brief anti-phase penalty dip during a mobility pulse can let the wake layout escape early local arrangements, while a late penalty recovery preserves boundary and spacing feasibility.",
+    "axis": "alpha_anti_phase_dip",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_anti_phase_dip"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 25.7
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1777186213.1529741,
+    "train_aep": 5533.39,
+    "train_feasible": false,
+    "train_time": 31.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A smaller anti-phase alpha dip can preserve the escape mechanism while a lower final objective LR and earlier alpha recovery repair boundary drift.",
+    "axis": "alpha_anti_phase_dip",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_anti_phase_dip"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 25.5
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1777186330.506065,
+    "train_aep": 5527.33,
+    "train_feasible": true,
+    "train_time": 30.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A very shallow anti-phase dip plus strong late penalty dominance should keep the mobility benefit without leaving residual boundary violations.",
+    "axis": "alpha_anti_phase_dip",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_anti_phase_dip"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 23.9
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1777186712.980305,
+    "train_aep": 5566.57,
+    "train_feasible": true,
+    "train_time": 28.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A high-mobility cosine schedule with consistently strong inverse-LR penalty coupling can outperform the anti-phase penalty dip by avoiding infeasible wake-seeking excursions while still allowing a mid-late exploration bump.",
+    "axis": "cosine_coupled_penalty_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1777186789.0756412,
+    "train_aep": 5566.22,
+    "train_feasible": true,
+    "train_time": 29.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Moving the mid-late LR bump earlier and making it narrower should harvest wake improvements sooner while leaving more steps for the strong coupled penalty to restore feasibility.",
+    "axis": "cosine_coupled_penalty_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1777186835.751868,
+    "train_aep": 5566.28,
+    "train_feasible": true,
+    "train_time": 29.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly stronger late penalty ramp on the proven cosine-bump schedule may keep the same wake-seeking path while reducing final constraint drift on both train and ROWP.",
+    "axis": "cosine_coupled_penalty_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1777186869.8164039,
+    "train_aep": 5558.91,
+    "train_feasible": true,
+    "train_time": 28.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A modestly higher initial LR can expand the search envelope while the same strong inverse-LR penalty coupling prevents the infeasibility seen in anti-phase schedules.",
+    "axis": "cosine_coupled_penalty_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 24.0
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1777186969.889434,
+    "train_aep": 5566.57,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A high-mobility cosine schedule with consistently strong inverse-LR penalty coupling can outperform the anti-phase penalty dip by avoiding infeasible wake-seeking excursions while still allowing a mid-late exploration bump.",
+    "axis": "cosine_coupled_penalty_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.7
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1777187229.8088782,
+    "train_aep": 5561.55,
+    "train_feasible": true,
+    "train_time": 27.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A long high-mobility plateau followed by smooth exponential cooling can use the successful strong inverse-LR penalty coupling without relying on the previous cosine/gaussian reheat path.",
+    "axis": "exp_plateau_coupled_penalty_momentum_anneal",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum"
+    ]
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1777187380.173366,
+    "train_aep": 5562.68,
+    "train_feasible": true,
+    "train_time": 29.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Replacing the single Gaussian reheat with a broad logistic LR shoulder can preserve mid-late mobility for longer while avoiding the infeasible penalty dips seen earlier.",
+    "axis": "cosine_logistic_shoulder_coupled_penalty",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1777187452.0881422,
+    "train_aep": 5561.84,
+    "train_feasible": true,
+    "train_time": 27.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A delayed cosine cool-down with no discrete reheat can spend more steps in the productive high-mobility regime, while the same inverse-LR penalty handles feasibility.",
+    "axis": "delayed_cosine_coupled_penalty",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1777187502.158638,
+    "train_aep": 5557.48,
+    "train_feasible": false,
+    "train_time": 29.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A rational LR decay with a mid-late logistic shelf can mimic TopFarm's stable penalty coupling but retain more controllable mobility than the failed exponential plateau.",
+    "axis": "rational_shelf_coupled_penalty",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum"
+    ]
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1777187574.199677,
+    "train_aep": 5559.41,
+    "train_feasible": true,
+    "train_time": 29.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly lower alpha coupling during the proven cosine-bump path can give the objective more authority without losing feasibility, improving over the prior 5566.57 GWh local optimum.",
+    "axis": "cosine_bump_alpha_tune",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1777187612.996949,
+    "train_aep": 5557.74,
+    "train_feasible": true,
+    "train_time": 28.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly stronger alpha coupling and later bump center can preserve the high-scoring path while reducing small late constraint corrections that may cost objective value.",
+    "axis": "cosine_bump_late_alpha_tune",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1777187648.394377,
+    "train_aep": 5555.76,
+    "train_feasible": true,
+    "train_time": 28.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Lower second-moment smoothing on the proven cosine-bump schedule can make Adam react faster to wake gradients during the bump while keeping the same constraint envelope.",
+    "axis": "cosine_bump_adam_reactivity_tune",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1777187686.040562,
+    "train_aep": 5560.46,
+    "train_feasible": true,
+    "train_time": 27.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Slightly higher momentum on the proven cosine-bump schedule can smooth noisy constraint/objective direction changes late without changing the successful LR path.",
+    "axis": "cosine_bump_adam_smoothing_tune",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1777187779.562963,
+    "train_aep": 5556.39,
+    "train_feasible": true,
+    "train_time": 29.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly lower initial LR may keep the proven cosine-bump path feasible while avoiding oversteps that reduce final wake alignment.",
+    "axis": "cosine_bump_lr_scale_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1777187810.642684,
+    "train_aep": 5560.41,
+    "train_feasible": true,
+    "train_time": 27.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A very small LR increase over the best schedule may improve exploration without the large degradation caused by the 4.25x LR attempt.",
+    "axis": "cosine_bump_lr_scale_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1777187842.3065758,
+    "train_aep": 5566.27,
+    "train_feasible": true,
+    "train_time": 28.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A smaller bump at the original center may reduce late churn while retaining enough mobility for the best basin.",
+    "axis": "cosine_bump_amplitude_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1777187873.482968,
+    "train_aep": 5565.23,
+    "train_feasible": true,
+    "train_time": 27.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly stronger bump at the original center may cross a wake-layout threshold while preserving the same late penalty repair.",
+    "axis": "cosine_bump_amplitude_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1777187905.037975,
+    "train_aep": 5566.78,
+    "train_feasible": true,
+    "train_time": 28.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Moving the proven bump slightly earlier can leave more iterations for penalty-coupled polishing than the original center.",
+    "axis": "cosine_bump_center_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1777187936.420757,
+    "train_aep": 5566.57,
+    "train_feasible": true,
+    "train_time": 28.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Moving the proven bump slightly later can improve final wake spacing before the coupled penalty fully dominates.",
+    "axis": "cosine_bump_center_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1777187968.204316,
+    "train_aep": 5566.72,
+    "train_feasible": true,
+    "train_time": 27.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A wider but softer bump can maintain mobility through the productive late window without the objective loss of a stronger peak.",
+    "axis": "cosine_bump_width_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1777188001.513495,
+    "train_aep": 5559.7,
+    "train_feasible": true,
+    "train_time": 29.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A lower final LR floor may improve final constraint polishing on the proven path without changing exploration.",
+    "axis": "cosine_bump_final_floor_sweep",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1777188074.605288,
+    "train_aep": 5566.18,
+    "train_feasible": true,
+    "train_time": 28.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Moving the improved earlier bump a little farther forward may give even more time for late penalty-coupled polishing.",
+    "axis": "cosine_bump_center_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1777188104.383856,
+    "train_aep": 5567.14,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A center just after the improved 0.685 point may balance wake movement and polishing better than either 0.685 or 0.700.",
+    "axis": "cosine_bump_center_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1777188133.769888,
+    "train_aep": 5567.12,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The improved earlier bump may prefer a slightly softer peak to reduce late correction cost.",
+    "axis": "cosine_bump_center_amp_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1777188163.0548952,
+    "train_aep": 5565.4,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The improved earlier center may benefit from a slightly stronger peak before final polishing.",
+    "axis": "cosine_bump_center_amp_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1777188193.179866,
+    "train_aep": 5565.44,
+    "train_feasible": true,
+    "train_time": 26.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A narrower version of the improved earlier bump may capture the mobility benefit while reducing disturbance.",
+    "axis": "cosine_bump_center_width_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1777188224.147072,
+    "train_aep": 5566.59,
+    "train_feasible": true,
+    "train_time": 27.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A wider version of the improved earlier bump may smooth the transition into late polishing.",
+    "axis": "cosine_bump_center_width_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1777188285.294212,
+    "train_aep": 5566.54,
+    "train_feasible": true,
+    "train_time": 27.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Centering the improved bump just before 0.692 may retain the gain while leaving slightly more polishing time.",
+    "axis": "cosine_bump_center_micro_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1777188314.234334,
+    "train_aep": 5565.82,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Centering the improved bump just after 0.692 may improve final wake alignment before the penalty-dominated finish.",
+    "axis": "cosine_bump_center_micro_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1777188343.4756951,
+    "train_aep": 5566.64,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A marginally softer peak at the improved center may keep the 5567 GWh path while reducing final correction.",
+    "axis": "cosine_bump_amp_micro_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1777188372.968435,
+    "train_aep": 5566.58,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A marginally stronger peak at the improved center may add enough mobility for a small gain without the drop seen at 0.32 amplitude.",
+    "axis": "cosine_bump_amp_micro_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.3
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1777188451.355752,
+    "train_aep": 5567.14,
+    "train_feasible": true,
+    "train_time": 25.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A center just after the improved 0.685 point may balance wake movement and polishing better than either 0.685 or 0.700.",
+    "axis": "cosine_bump_center_refine",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1777188748.864862,
+    "train_aep": 5566.9,
+    "train_feasible": true,
+    "train_time": 27.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The productive late LR bump may improve if alpha only partially relaxes during the bump, preserving more constraint pressure while still allowing wake-driven movement.",
+    "axis": "partial_alpha_decoupled_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 29.1
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1777188838.1153011,
+    "train_aep": 5564.91,
+    "train_feasible": true,
+    "train_time": 27.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A small pre-bump plus localized alpha dip can reshape the layout before the proven late bump, testing a two-kick path instead of another late-center refinement.",
+    "axis": "dual_bump_local_alpha_dip",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1777188906.930815,
+    "train_aep": 5557.9,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Keeping the best LR/alpha path but making Adam more reactive only in the final penalty-dominated polish may reduce residual constraint/objective lag without disrupting the productive basin.",
+    "axis": "late_adam_reactivity_gate",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1777189033.90735,
+    "train_aep": 5560.8,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The broad dual-bump schedule needs the late bump for polishing mobility, but alpha should mostly ignore that late bump so boundary pressure remains high.",
+    "axis": "broad_dual_bump_late_alpha_guard",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1777189148.937352,
+    "train_aep": 5558.6,
+    "train_feasible": true,
+    "train_time": 27.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best single-bump path may be over-frozen at the end; a slightly higher terminal LR floor lowers terminal alpha and leaves more useful final objective polish.",
+    "axis": "single_bump_terminal_floor_relax",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1777189223.987561,
+    "train_aep": 5561.77,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best single-bump path may benefit from an even stiffer final phase than the prior 1e-4 LR ratio, improving final constraint-coupled polishing after the bump.",
+    "axis": "single_bump_terminal_floor_stiffen",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 43,
+    "timestamp": 1777189303.4635808,
+    "train_aep": 5559.01,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best LR path may have slightly too much inverse-LR penalty pressure; a small coupling reduction can give the objective more authority without the larger alpha changes that failed before.",
+    "axis": "single_bump_alpha_coupling_micro_relax",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 44,
+    "timestamp": 1777189370.3348649,
+    "train_aep": 5562.71,
+    "train_feasible": true,
+    "train_time": 28.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best LR path may need marginally more inverse-LR penalty pressure through the bump, improving final feasible wake alignment without changing movement timing.",
+    "axis": "single_bump_alpha_coupling_micro_stiffen",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 45,
+    "timestamp": 1777189608.321223,
+    "train_aep": 5565.88,
+    "train_feasible": true,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Replacing the narrow late Gaussian kick with a raised mobility shelf may let turbines continue coordinated wake movement before the final penalty-coupled cooldown.",
+    "axis": "late_mobility_shelf",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 46,
+    "timestamp": 1777189749.099245,
+    "train_aep": 5563.94,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A staged schedule with an early LR plateau, two wake-mobility kicks, and late feasibility bursts may escape the single-bump basin while still ending with strong constraints.",
+    "axis": "plateau_multi_kick_feasibility_bursts",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 47,
+    "timestamp": 1777189835.0154262,
+    "train_aep": 5565.89,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "An asymmetric late LR kick with a sharper onset and longer trailing tail may preserve the best basin while giving more post-kick wake polishing than a symmetric Gaussian.",
+    "axis": "asymmetric_late_bump_tail",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 48,
+    "timestamp": 1777189900.706207,
+    "train_aep": 5567.14,
+    "train_feasible": true,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "After shelf, multi-kick, and asymmetric-tail variants underperformed, the strongest move is to restore the validated centered bump and remove the last attempt's alpha over-stiffening.",
+    "axis": "validated_center_bump_restore",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.0
+  },
+  {
+    "attempt": 49,
+    "timestamp": 1777190129.884067,
+    "train_aep": 5557.51,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The validated late mobility bump may work better with a local Adam",
+    "axis": "bump_local_adam_restart",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 50,
+    "timestamp": 1777190323.459818,
+    "train_aep": 5558.59,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A small broad mid-run mobility assist before the validated late",
+    "axis": "mid_assist_plus_validated_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 51,
+    "timestamp": 1777190353.245918,
+    "train_aep": 5559.23,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A short warmup into the validated schedule may reduce disruptive",
+    "axis": "warmup_validated_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 52,
+    "timestamp": 1777190383.646527,
+    "train_aep": 5561.19,
+    "train_feasible": true,
+    "train_time": 27.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly front-loaded polynomial cooldown can retain early",
+    "axis": "polynomial_base_validated_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 53,
+    "timestamp": 1777190413.2806988,
+    "train_aep": 5559.19,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A delayed polynomial cooldown may keep coordinated row movement",
+    "axis": "delayed_polynomial_validated_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 54,
+    "timestamp": 1777190442.0368772,
+    "train_aep": 5567.22,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The late bump may benefit from a locally stronger constraint",
+    "axis": "bump_constraint_counter_ramp",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 55,
+    "timestamp": 1777190568.026305,
+    "train_aep": 5565.43,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A softer local constraint counter-ramp may keep the 5567 basin",
+    "axis": "bump_constraint_counter_ramp_soft",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 56,
+    "timestamp": 1777190597.22979,
+    "train_aep": 5566.84,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A moderately stronger local constraint counter-ramp may improve",
+    "axis": "bump_constraint_counter_ramp_medium",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 57,
+    "timestamp": 1777190626.55955,
+    "train_aep": 5564.69,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A stronger local constraint counter-ramp may reveal whether the",
+    "axis": "bump_constraint_counter_ramp_strong",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 58,
+    "timestamp": 1777190655.563978,
+    "train_aep": 5565.3,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A wider local constraint counter-ramp may protect the transitions",
+    "axis": "bump_constraint_counter_ramp_wide",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 59,
+    "timestamp": 1777190684.450853,
+    "train_aep": 5567.0,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Delaying the local constraint counter-ramp slightly after the LR",
+    "axis": "bump_constraint_counter_ramp_late_shift",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 60,
+    "timestamp": 1777190775.668442,
+    "train_aep": 5566.99,
+    "train_feasible": true,
+    "train_time": 25.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A 1.1x local alpha counter-ramp may sit closer to the narrow",
+    "axis": "bump_constraint_counter_ramp_strength_1p1",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 61,
+    "timestamp": 1777190804.231039,
+    "train_aep": 5566.96,
+    "train_feasible": true,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A 1.25x local alpha counter-ramp may improve the previous best",
+    "axis": "bump_constraint_counter_ramp_strength_1p25",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 62,
+    "timestamp": 1777190832.653117,
+    "train_aep": 5566.33,
+    "train_feasible": true,
+    "train_time": 25.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A 1.35x local alpha counter-ramp tests whether the drop at 1.6x",
+    "axis": "bump_constraint_counter_ramp_strength_1p35",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 63,
+    "timestamp": 1777190861.0606122,
+    "train_aep": 5565.82,
+    "train_feasible": true,
+    "train_time": 25.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Centering the local alpha counter-ramp slightly before the LR",
+    "axis": "bump_constraint_counter_ramp_early_center",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 64,
+    "timestamp": 1777190890.256976,
+    "train_aep": 5566.98,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Centering the local alpha counter-ramp slightly after the LR peak",
+    "axis": "bump_constraint_counter_ramp_small_late_center",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 65,
+    "timestamp": 1777190919.492277,
+    "train_aep": 5567.21,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A narrower local alpha counter-ramp may target the peak of the",
+    "axis": "bump_constraint_counter_ramp_narrow",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 66,
+    "timestamp": 1777190948.107872,
+    "train_aep": 5566.18,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A slightly wider local alpha counter-ramp may smooth the same",
+    "axis": "bump_constraint_counter_ramp_width_0p055",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 67,
+    "timestamp": 1777191022.166958,
+    "train_aep": 5566.97,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "An alpha-bump width between the original and narrow variants may",
+    "axis": "bump_constraint_counter_ramp_width_0p047",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 68,
+    "timestamp": 1777191052.1811972,
+    "train_aep": 5566.72,
+    "train_feasible": true,
+    "train_time": 26.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A nearly original alpha-bump width may improve on both the exact",
+    "axis": "bump_constraint_counter_ramp_width_0p049",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 69,
+    "timestamp": 1777191080.726652,
+    "train_aep": 5567.22,
+    "train_feasible": true,
+    "train_time": 25.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The original width with a 1.18x pressure pulse may improve on",
+    "axis": "bump_constraint_counter_ramp_strength_1p18",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 70,
+    "timestamp": 1777191109.6388302,
+    "train_aep": 5566.46,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The original width with a 1.22x pressure pulse may improve on",
+    "axis": "bump_constraint_counter_ramp_strength_1p22",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 71,
+    "timestamp": 1777191138.3479848,
+    "train_aep": 5567.06,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The narrow alpha pulse may tolerate slightly more local pressure",
+    "axis": "bump_constraint_counter_ramp_narrow_strength_1p25",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.2
+  },
+  {
+    "attempt": 72,
+    "timestamp": 1777191386.838111,
+    "train_aep": 5567.03,
+    "train_feasible": true,
+    "train_time": 28.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "With the best local alpha counter-ramp in place, the mobility",
+    "axis": "lr_alpha_phase_split",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 73,
+    "timestamp": 1777191480.233954,
+    "train_aep": 5560.07,
+    "train_feasible": true,
+    "train_time": 28.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A differential-evolution-found dual-bump schedule can improve",
+    "axis": "imported_dual_bump_de_best",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 74,
+    "timestamp": 1777191550.743768,
+    "train_aep": 5566.09,
+    "train_feasible": true,
+    "train_time": 27.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best alpha counter-ramp may pair with a slightly lower,",
+    "axis": "lr_bump_broader_softer_with_best_alpha",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 75,
+    "timestamp": 1777191618.4247098,
+    "train_aep": 5560.74,
+    "train_feasible": true,
+    "train_time": 27.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best LR/alpha path may benefit from slightly less Adam",
+    "axis": "best_path_slightly_lower_adam_memory",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 76,
+    "timestamp": 1777191711.7642019,
+    "train_aep": 5567.22,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "After testing phase-split LR, transferred dual-bump, softer",
+    "axis": "consolidated_best_full_width_counter_ramp",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.8
+  },
+  {
+    "attempt": 77,
+    "timestamp": 1777191892.678206,
+    "train_aep": 5566.24,
+    "train_feasible": true,
+    "train_time": 33.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "After the proven main mobility bump settles the basin, a small",
+    "axis": "post_bump_late_polish_reheat",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 78,
+    "timestamp": 1777192022.349314,
+    "train_aep": 5557.3,
+    "train_feasible": true,
+    "train_time": 27.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best LR/alpha trajectory may be correct, but the final",
+    "axis": "post_bump_terminal_adam_smoothing",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 79,
+    "timestamp": 1777192107.5390568,
+    "train_aep": 5567.32,
+    "train_feasible": true,
+    "train_time": 27.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A previously optimized warmup plus dual-bump schedule may",
+    "axis": "transferred_optimized_warmup_dual_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 24.4
+  },
+  {
+    "attempt": 80,
+    "timestamp": 1777192206.41437,
+    "train_aep": 5560.07,
+    "train_feasible": true,
+    "train_time": 27.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The transferred warmup dual-bump schedule may gain a small",
+    "axis": "transferred_dual_bump_full_precision",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 81,
+    "timestamp": 1777192520.963712,
+    "train_aep": 5563.6,
+    "train_feasible": false,
+    "train_time": 27.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A very light beta2 gate can test Adam memory responsiveness",
+    "axis": "rounded_dual_bump_light_beta2_window_gating",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 82,
+    "timestamp": 1777192810.792323,
+    "train_aep": 5564.55,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The rounded dual-bump schedule may benefit from slightly less",
+    "axis": "rounded_dual_bump_slightly_softer_late_alpha",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 23.8
+  },
+  {
+    "attempt": 83,
+    "timestamp": 1777192961.3288279,
+    "train_aep": 5567.32,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Local ablations around the transferred dual-bump schedule showed",
+    "axis": "restored_rounded_dual_bump_after_ablation",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.4
+  },
+  {
+    "attempt": 84,
+    "timestamp": 1777193151.5249531,
+    "train_aep": 5562.92,
+    "train_feasible": false,
+    "train_time": 27.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The transferred dual-bump LR path is productive, but fully",
+    "axis": "dual_bump_partial_alpha_decouple",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 85,
+    "timestamp": 1777193262.334347,
+    "train_aep": 5563.94,
+    "train_feasible": true,
+    "train_time": 26.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A plateau-cosine schedule with explicit late feasibility bursts",
+    "axis": "plateau_double_bump_feasibility_bursts",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 86,
+    "timestamp": 1777193329.9268951,
+    "train_aep": 5563.17,
+    "train_feasible": false,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent dual-bump LR/alpha path is highly tuned, so a",
+    "axis": "dual_bump_late_beta1_smoothing_ramp",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 87,
+    "timestamp": 1777193395.4594119,
+    "train_aep": 5558.14,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The dual-bump LR/alpha path should remain fixed, but slightly",
+    "axis": "dual_bump_beta2_micro_smoothing",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.7
+  },
+  {
+    "attempt": 88,
+    "timestamp": 1777193470.9167418,
+    "train_aep": 5563.94,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A plateau-cosine schedule with explicit late feasibility bursts",
+    "axis": "plateau_double_bump_feasibility_bursts",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.1
+  },
+  {
+    "attempt": 89,
+    "timestamp": 1777193694.854325,
+    "train_aep": 5557.59,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The transferred dual-bump LR path is the strongest train",
+    "axis": "dual_bump_local_alpha_counter_ramps",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 90,
+    "timestamp": 1777193918.746652,
+    "train_aep": 5567.32,
+    "train_feasible": true,
+    "train_time": 25.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The latest different strategies show that this skeleton is",
+    "axis": "robust_transferred_warmup_dual_bump",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 91,
+    "timestamp": 1777194104.999001,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n"
+  },
+  {
+    "attempt": 92,
+    "timestamp": 1777194145.045156,
+    "train_aep": 5565.64,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The rounded dual-bump path finds the best basin, but the",
+    "axis": "dual_bump_terminal_freeze",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 93,
+    "timestamp": 1777194203.375224,
+    "train_aep": 5567.12,
+    "train_feasible": false,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Hard terminal freezing loses needed boundary repair. A softer",
+    "axis": "dual_bump_terminal_soft_taper",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 94,
+    "timestamp": 1777194253.576851,
+    "train_aep": 5566.8,
+    "train_feasible": false,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Terminal damping only works if the penalty coupling follows the",
+    "axis": "dual_bump_coupled_terminal_trust_region",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 95,
+    "timestamp": 1777194304.616236,
+    "train_aep": 5567.22,
+    "train_feasible": true,
+    "train_time": 25.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Terminal damping closed as infeasible, so use the strongest",
+    "axis": "validated_single_bump_counter_ramp_revisit",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.0
+  },
+  {
+    "attempt": 96,
+    "timestamp": 1777194539.401304,
+    "train_aep": 5567.32,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous scored attempt revisited the single late-bump",
+    "axis": "restored_dual_bump_after_failed_time_warp",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.1
+  },
+  {
+    "attempt": 97,
+    "timestamp": 1777194822.6257842,
+    "train_aep": 5567.22,
+    "train_feasible": true,
+    "train_time": 25.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Since the last restored dual-bump schedule has plateaued, switch",
+    "axis": "single_late_bump_soft_counter_ramp_return",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 98,
+    "timestamp": 1777195112.665817,
+    "train_aep": 5560.99,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The last scored single late-bump attempt underperformed the",
+    "axis": "smooth_rectangular_shelf_reheat_trust_region",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 99,
+    "timestamp": 1777195310.7798889,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The quick stress case exposes a different gradient scale than",
+    "axis": "alpha0_gated_dual_window_with_low_scale_repair",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 23.0
+  },
+  {
+    "attempt": 100,
+    "timestamp": 1777195428.694827,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The alpha0 gate improved train score and low-scale stress tests,",
+    "axis": "three_regime_alpha0_gated_schedule",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.8
+  },
+  {
+    "attempt": 101,
+    "timestamp": 1777195537.133086,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n"
+  },
+  {
+    "attempt": 102,
+    "timestamp": 1777195829.386965,
+    "train_aep": 5558.97,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous alpha0-gated schedule preserved the same Adam",
+    "axis": "dual_window_dynamic_beta2_reactivity",
+    "lesson": "Pending score.",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 103,
+    "timestamp": 1777195870.107229,
+    "train_aep": 5560.16,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The plateau family is a distinct alternative to the last gated",
+    "axis": "plateau_double_kick_with_alpha0_robust_gates",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 104,
+    "timestamp": 1777195910.2860851,
+    "train_aep": 5561.41,
+    "train_feasible": false,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The robust dual-window basin may be over-constrained during the",
+    "axis": "dual_window_late_alpha_relief_recovery",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 105,
+    "timestamp": 1777195995.235456,
+    "train_aep": 5562.99,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Hard alpha0 regime switches are brittle near farm-scale",
+    "axis": "smooth_alpha0_gated_dual_window",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.8
+  },
+  {
+    "attempt": 106,
+    "timestamp": 1777196106.509598,
+    "train_aep": 5562.99,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The broad smooth alpha0 gates in iter_114 blended the train farm",
+    "axis": "narrow_smooth_alpha0_gated_dual_window",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.1
+  },
+  {
+    "attempt": 107,
+    "timestamp": 1777196170.670978,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 25.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The alpha0 gate improved train score and low-scale stress tests,",
+    "axis": "three_regime_alpha0_gated_schedule",
+    "lesson": "Pending score.",
+    "families": [
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 108,
+    "timestamp": 1777196229.783248,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The rectangular shelf was feasible but lost too much AEP. Return",
+    "axis": "restored_validated_dual_window_after_shelf_miss",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 109,
+    "timestamp": 1777196257.97496,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 25.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The quick stress case exposes a different gradient scale than",
+    "axis": "alpha0_gated_dual_window_with_low_scale_repair",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.3
+  },
+  {
+    "attempt": 110,
+    "timestamp": 1777196928.4322162,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n"
+  },
+  {
+    "attempt": 111,
+    "timestamp": 1777196981.2914932,
+    "train_aep": 5567.22,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The late bump may benefit from a locally stronger constraint",
+    "axis": "bump_constraint_counter_ramp",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 112,
+    "timestamp": 1777197269.3083022,
+    "train_aep": 5565.64,
+    "train_feasible": true,
+    "train_time": 27.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The rounded dual-bump path finds the best basin, but the",
+    "axis": "dual_bump_terminal_freeze",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 112,
+    "timestamp": 1777197269.830246,
+    "train_aep": 5562.55,
+    "train_feasible": true,
+    "train_time": 28.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Broad or late alpha softening breaks boundary repair, but a",
+    "axis": "dual_bump_mid_alpha_micro_softening",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 112,
+    "timestamp": 1777197269.8984818,
+    "train_aep": 5560.45,
+    "train_feasible": true,
+    "train_time": 28.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Counter-pressure around the transferred dual bumps repeatedly",
+    "axis": "dual_bump_local_alpha_softening",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 115,
+    "timestamp": 1777197314.1593049,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 25.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The rectangular shelf was feasible but lost too much AEP. Return",
+    "axis": "restored_validated_dual_window_after_shelf_miss",
+    "lesson": "Pending score.",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  }
+]

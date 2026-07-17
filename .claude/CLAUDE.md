@@ -1,96 +1,77 @@
-# FunWake: Full-Optimizer Discovery Mode
+# FunWake Schedule Designer
 
-You are designing a **complete wind farm layout optimizer** that
-maximizes annual energy production (AEP) subject to boundary and
-spacing constraints. You write an `optimize()` function that receives
-the physics simulation and problem parameters, and returns turbine
-positions.
+You are designing the **learning rate and penalty schedule** for a wind
+farm layout optimizer. A fixed skeleton handles initialization, gradient
+computation, and Adam updates. You control ONLY how four parameters
+change over the course of optimization.
 
 ## Your task
 
-Write an `optimize` function:
+Write a `schedule_fn` that returns (lr, alpha, beta1, beta2) at each step:
 
 ```python
-def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
-    """Optimize turbine layout for maximum AEP.
+import jax.numpy as jnp
+
+def schedule_fn(step, total_steps, lr0, alpha0):
+    """Control the optimizer schedule.
 
     Args:
-        sim: pixwake simulation callable — sim(x, y, ws_amb, wd_amb, ti_amb)
-        n_target: number of turbines to place
-        boundary: (V, 2) array of polygon vertices
-        min_spacing: minimum distance between any pair of turbines (meters)
-        wd: wind directions (degrees)
-        ws: wind speeds (m/s)
-        weights: sector frequency weights
+        step: current iteration (0 to total_steps-1)
+        total_steps: total iterations (8000)
+        lr0: initial learning rate (50.0)
+        alpha0: initial penalty weight (from gradient magnitude)
 
     Returns:
-        x, y: optimized turbine positions as JAX arrays
+        lr: learning rate for this step
+        alpha: constraint penalty multiplier (higher = stricter constraints)
+        beta1: Adam first moment decay (0 to 1)
+        beta2: Adam second moment decay (0 to 1)
     """
+    ...
+    return lr, alpha, beta1, beta2
 ```
 
-## Important rules
+## What the skeleton does (you CANNOT change this)
+- Wind-direction-aware grid initialization inside the polygon
+- Computes gradients of AEP objective and constraint penalties (boundary + spacing)
+- Combines gradients: `grad = grad_obj + alpha * grad_constraint`
+- Adam update with your beta1, beta2 at your learning rate
+- Runs for 8000 steps total
 
-- Do NOT use `import os`, `open()`, or any file I/O inside your
-  optimizer. All inputs come through function arguments.
-- Do NOT read problem.json directly. The harness loads it for you.
-- Use `jax`, `jax.numpy`, `scipy.optimize`, and `numpy` freely.
-- Use `from pixwake.optim.boundary import polygon_sdf` for boundary
-  distance and `from pixwake.optim.sgd import boundary_penalty,
-  spacing_penalty` for differentiable penalties.
-- You may use `jax.grad`, `jax.jacobian`, `jax.vmap`, `jax.jit`.
-- Each evaluation has a **180-second timeout**. Budget your compute.
-- JAX JIT compilation takes ~20-30s on the first function call.
-  Design for ~150s of actual optimization after JIT warmup.
-- A single SLSQP run with 50 turbines takes ~30-60s after JIT.
-  Multi-start with more than 2-3 starts will timeout.
-- Prefer 1-2 high-quality starts over many cheap starts.
+## What you control
+- **lr**: learning rate — how big each step is
+- **alpha**: penalty weight — how much to prioritize feasibility vs AEP
+- **beta1**: Adam first moment decay — momentum (0.9 = high momentum, 0.1 = low)
+- **beta2**: Adam second moment decay — adaptive scaling (0.999 = standard)
 
-## Available tools
+## Key insight
+The baseline solver couples alpha to 1/lr: as lr decays, alpha increases.
+This ensures feasibility in late iterations. Can you do better?
 
-```bash
-# Score on training farm (returns AEP in GWh, feasibility, time)
-pixi run python tools/run_optimizer.py <script> --timeout 180
+## Rules
+- Write schedule files to `results_rerun_smoke_claude/iter_NNN.py`
+- NEVER overwrite an existing `iter_NNN.py`. Always increment N.
+- Each file must define ONLY `schedule_fn(step, total_steps, lr0, alpha0)`
+- Do NOT write `optimize()` — it will be rejected
+- Do NOT import topfarm_sgd_solve — you are replacing it
+- Score: `python tools/run_optimizer.py <script> --schedule-only`
+- Test: `python tools/run_tests.py <script> --quick`
+- Generalize: `python tools/test_generalization.py <script> --schedule-only`
+- Status: `python tools/get_status.py --log results_rerun_smoke_claude/attempt_log.json`
+- Baseline: 5540.7 GWh
+- Timeout: 60s per run
 
-# Run unit tests (signature check + stressed polygon)
-pixi run python tools/run_tests.py <script> --quick
 
-# Test generalization (returns PASS/FAIL, not AEP)
-pixi run python tools/test_generalization.py <script>
-
-# Check progress
-pixi run python tools/get_status.py --log results_agent_claude_fullopt/attempt_log.json
-```
-
-## Results directory
-
-Write your optimizer scripts to `results_agent_claude_fullopt/iter_NNN.py`.
-Start from iter_001.py and increment.
-
-## Baseline and seed
-
-- **Baseline**: 5540.7 GWh (500-multi-start SGD)
-- **Seed optimizer**: `results/seed_optimizer.py` — a simple SGD wrapper.
-  Read it to understand the interface, then improve on it.
-- **Known strong approach**: SLSQP with JAX Jacobians is the community
-  standard. But we want you to go beyond standard approaches.
-
-## Strategy hints
-
-- Start by understanding the seed optimizer and scoring it
-- Try gradient-based methods (Adam, L-BFGS, SLSQP) with good initialization
-- Consider multi-start or population-based approaches
-- Constraint handling is critical: penalty methods, augmented Lagrangian,
-  or SLSQP's built-in constraint support
-- Initialization matters: hexagonal grids, K-means, wind-direction-aware
-  placement
-- Always run tests before scoring — infeasible layouts waste time
-- Read your previous results via get_status to track progress
+## Ideas to try
+- Cosine annealing of lr with warm restarts
+- Cyclic alpha (high → low → high) instead of monotonic
+- Phase transitions: different beta1/beta2 in early vs late iterations
+- Exponential vs polynomial lr decay
+- Alpha proportional to gradient magnitude (adaptive)
+- Standard Adam (beta1=0.9, beta2=0.999) vs TopFarm (0.1, 0.2)
 
 ## Workflow
-
-1. Read `results/seed_optimizer.py` to understand the interface
-2. Read `playground/skeleton.py` to understand the physics
-3. Write an optimizer, test it, score it
-4. Iterate: each attempt should try something meaningfully different
-5. Always check generalization — an optimizer that only works on the
-   training farm is useless
+1. Read `results_rerun_smoke_claude/agent_memory.md` for status
+2. Read `results/seed_schedule.py` to see the starting schedule
+3. Read `playground/skeleton.py` to understand the fixed optimizer
+4. Write a new schedule, score it, iterate

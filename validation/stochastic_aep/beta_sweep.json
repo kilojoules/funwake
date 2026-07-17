@@ -1,0 +1,262 @@
+{
+  "config": {
+    "cells": [
+      "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "results/matrix/problem_dei_n60_roserowp.json",
+      "results/matrix/problem_rowp_n60_roserowp.json"
+    ],
+    "eta_t_vals": [
+      5.0,
+      15.0,
+      3.5
+    ],
+    "betas": [
+      "0.1,0.2",
+      "0.3,0.5"
+    ],
+    "sample_seeds": [
+      100000,
+      200000,
+      300000
+    ],
+    "K": 50,
+    "total_steps": 8000,
+    "out": "validation/stochastic_aep/beta_sweep.json"
+  },
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5285.783963066308,
+      "bp_init": 0.0,
+      "bp_final": 1.1530224961683344,
+      "sp_final": 0.0,
+      "elapsed_s": 4.8
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5288.191895558627,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.3
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5291.929168078351,
+      "bp_init": 0.0,
+      "bp_final": 1.1192608329007852,
+      "sp_final": 0.0,
+      "elapsed_s": 2.5
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5279.744233622822,
+      "bp_init": 0.0,
+      "bp_final": 17.641199061853666,
+      "sp_final": 0.0,
+      "elapsed_s": 2.2
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5276.859001306135,
+      "bp_init": 0.0,
+      "bp_final": 0.41812509357487637,
+      "sp_final": 0.0,
+      "elapsed_s": 2.4
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5276.942073190038,
+      "bp_init": 0.0,
+      "bp_final": 0.24836602847260422,
+      "sp_final": 0.0,
+      "elapsed_s": 2.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 15.0,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5149.111551489497,
+      "bp_init": 0.0,
+      "bp_final": 3.6922833811263596,
+      "sp_final": 0.0,
+      "elapsed_s": 3.9
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 15.0,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5150.120961091781,
+      "bp_init": 0.0,
+      "bp_final": 58.92321468637157,
+      "sp_final": 0.0,
+      "elapsed_s": 2.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 15.0,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5146.11887660938,
+      "bp_init": 0.0,
+      "bp_final": 246.02424038055932,
+      "sp_final": 0.0,
+      "elapsed_s": 2.4
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 15.0,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5150.646432144647,
+      "bp_init": 0.0,
+      "bp_final": 186.84824802699717,
+      "sp_final": 3853.892221470829,
+      "elapsed_s": 2.2
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 15.0,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5154.098807176431,
+      "bp_init": 0.0,
+      "bp_final": 262.7932670261511,
+      "sp_final": 0.0,
+      "elapsed_s": 2.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 15.0,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5151.724818445069,
+      "bp_init": 0.0,
+      "bp_final": 151.61564597594975,
+      "sp_final": 55548.03192536044,
+      "elapsed_s": 2.5
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "eta_t_m": 3.5,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 3444.261260761618,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "eta_t_m": 3.5,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 3447.5014248784755,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.4
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "eta_t_m": 3.5,
+      "beta1": 0.1,
+      "beta2": 0.2,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 3449.8004899257357,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.3
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "eta_t_m": 3.5,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 3444.4103050873173,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.5
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "eta_t_m": 3.5,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 3446.2667526909313,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.3
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "eta_t_m": 3.5,
+      "beta1": 0.3,
+      "beta2": 0.5,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 3442.36708649106,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 2.5
+    }
+  ]
+}

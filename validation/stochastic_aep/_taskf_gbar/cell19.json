@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n200_rosedei.json",
+  "eta_t_m": 5.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n200_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 20752.56796655696,
+      "bp_init": 0.0,
+      "bp_final": 314.13224831201643,
+      "sp_final": 0.0,
+      "elapsed_s": 9.6
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 20750.040753577945,
+      "bp_init": 0.0,
+      "bp_final": 66.52683747470162,
+      "sp_final": 0.0,
+      "elapsed_s": 5.5
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 20732.193240059176,
+      "bp_init": 0.0,
+      "bp_final": 350.5556640414289,
+      "sp_final": 0.0,
+      "elapsed_s": 5.6
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 20733.450751284763,
+      "bp_init": 0.0,
+      "bp_final": 24.890216850363178,
+      "sp_final": 0.0,
+      "elapsed_s": 5.5
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 20766.280328288583,
+      "bp_init": 0.0,
+      "bp_final": 368.4263669332663,
+      "sp_final": 13235.07899996289,
+      "elapsed_s": 5.7
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_rosedei.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 20759.720322577967,
+      "bp_init": 0.0,
+      "bp_final": 14.284718476912566,
+      "sp_final": 13614.273812305415,
+      "elapsed_s": 5.5
+    }
+  ]
+}

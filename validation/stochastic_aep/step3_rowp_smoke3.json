@@ -1,0 +1,229 @@
+{
+  "config": {
+    "problem": "validation/stochastic_aep/problem_740.json",
+    "resource": "validation/stochastic_aep/rowp_weibull_12.json",
+    "K": 50,
+    "total_steps": 2000,
+    "restarts": 2,
+    "es_threshold": 0.1,
+    "out": "validation/stochastic_aep/step3_rowp_smoke3.json"
+  },
+  "preflight": {
+    "topfarm_default_decay": {
+      "lr_init": 50.0,
+      "gamma_min": 0.5,
+      "mid": 2.304969037222542e-06,
+      "total_steps": 2000,
+      "threshold": 0.1,
+      "lr_ratio_at_25pct": 0.7484577358760618,
+      "lr_ratio_at_50pct": 0.3150399472412934,
+      "lr_ratio_at_75pct": 0.07462450368916862,
+      "lr_ratio_final": 0.009999999999999998,
+      "iter_first_cross_threshold": 1413,
+      "crosses_threshold": true
+    }
+  },
+  "cells": {
+    "topfarm_default_decay__ES_OFF": {
+      "schedule": "topfarm_default_decay",
+      "early_stopping": false,
+      "es_threshold": 0.1,
+      "cell_elapsed_s": 36.7,
+      "per_restart": [
+        {
+          "restart": 0,
+          "elapsed_s": 6.4,
+          "aep_gwh_det_weibull": 3258.9570791186993,
+          "boundary_violation": 25.431469356499328,
+          "spacing_penalty": 230.3304245977779,
+          "min_pair_dist_m": 395.7491451247654,
+          "feasible": false
+        },
+        {
+          "restart": 1,
+          "elapsed_s": 1.9,
+          "aep_gwh_det_weibull": 3257.157979987766,
+          "boundary_violation": 14.148602094157873,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 396.02056935495904,
+          "feasible": false
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "strict_feasibility": 0,
+        "practical_feasibility": 0,
+        "boundary_penalty_range": [
+          14.148602094157873,
+          25.431469356499328
+        ],
+        "spacing_penalty_range": [
+          0.0,
+          230.3304245977779
+        ],
+        "min_pair_dist_range_m": [
+          395.7491451247654,
+          396.02056935495904
+        ],
+        "aep_mean": 3258.0575295532326,
+        "aep_std": 1.2721551955098511,
+        "aep_best": 3258.9570791186993
+      }
+    },
+    "topfarm_default_decay__ES_ON": {
+      "schedule": "topfarm_default_decay",
+      "early_stopping": true,
+      "es_threshold": 0.1,
+      "cell_elapsed_s": 30.6,
+      "per_restart": [
+        {
+          "restart": 0,
+          "elapsed_s": 1.9,
+          "aep_gwh_det_weibull": 3258.343205317906,
+          "boundary_violation": 0.0,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 396.06034722928143,
+          "feasible": true
+        },
+        {
+          "restart": 1,
+          "elapsed_s": 2.2,
+          "aep_gwh_det_weibull": 3257.8582117454835,
+          "boundary_violation": 0.0,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 396.1005928099778,
+          "feasible": true
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "strict_feasibility": 2,
+        "practical_feasibility": 2,
+        "boundary_penalty_range": [
+          0.0,
+          0.0
+        ],
+        "spacing_penalty_range": [
+          0.0,
+          0.0
+        ],
+        "min_pair_dist_range_m": [
+          396.06034722928143,
+          396.1005928099778
+        ],
+        "aep_mean": 3258.1007085316946,
+        "aep_std": 0.3429422438917356,
+        "aep_best": 3258.343205317906
+      }
+    },
+    "funwake_iter192__ES_OFF": {
+      "schedule": "funwake_iter192",
+      "early_stopping": false,
+      "es_threshold": 0.1,
+      "cell_elapsed_s": 29.6,
+      "per_restart": [
+        {
+          "restart": 0,
+          "elapsed_s": 1.9,
+          "aep_gwh_det_weibull": 3261.8540452884145,
+          "boundary_violation": 0.001137812914242901,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 396.3620837478526,
+          "feasible": false
+        },
+        {
+          "restart": 1,
+          "elapsed_s": 2.0,
+          "aep_gwh_det_weibull": 3265.7458795575985,
+          "boundary_violation": 0.0005047809315740802,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 396.7055203404479,
+          "feasible": false
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "strict_feasibility": 0,
+        "practical_feasibility": 2,
+        "boundary_penalty_range": [
+          0.0005047809315740802,
+          0.001137812914242901
+        ],
+        "spacing_penalty_range": [
+          0.0,
+          0.0
+        ],
+        "min_pair_dist_range_m": [
+          396.3620837478526,
+          396.7055203404479
+        ],
+        "aep_mean": 3263.7999624230065,
+        "aep_std": 2.7519424029942496,
+        "aep_best": 3265.7458795575985
+      }
+    },
+    "funwake_iter192__ES_ON": {
+      "schedule": "funwake_iter192",
+      "early_stopping": true,
+      "es_threshold": 0.1,
+      "cell_elapsed_s": 29.4,
+      "per_restart": [
+        {
+          "restart": 0,
+          "elapsed_s": 2.2,
+          "aep_gwh_det_weibull": 3261.192947441227,
+          "boundary_violation": 0.0,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 401.9293263934853,
+          "feasible": true
+        },
+        {
+          "restart": 1,
+          "elapsed_s": 2.0,
+          "aep_gwh_det_weibull": 3263.591912171688,
+          "boundary_violation": 0.0,
+          "spacing_penalty": 0.0,
+          "min_pair_dist_m": 408.5944843208868,
+          "feasible": true
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "strict_feasibility": 2,
+        "practical_feasibility": 2,
+        "boundary_penalty_range": [
+          0.0,
+          0.0
+        ],
+        "spacing_penalty_range": [
+          0.0,
+          0.0
+        ],
+        "min_pair_dist_range_m": [
+          401.9293263934853,
+          408.5944843208868
+        ],
+        "aep_mean": 3262.3924298064576,
+        "aep_std": 1.6963242287364038,
+        "aep_best": 3263.591912171688
+      }
+    }
+  },
+  "es_trigger_info": {
+    "topfarm_default_decay__ES_ON": {
+      "trigger_fraction": 1.0,
+      "iter_first_cross": 1413,
+      "n_restarts_triggered": 2,
+      "lr_ratio_max": 0.9999976950362757,
+      "lr_ratio_min": 0.009999999999999998
+    },
+    "funwake_iter192__ES_ON": {
+      "trigger_fraction": 1.0,
+      "iter_first_cross": 0,
+      "n_restarts_triggered": 2,
+      "lr_ratio_max": 1.0,
+      "lr_ratio_min": 2.3538218878433487e-35
+    }
+  },
+  "elapsed_total_s": 126.9
+}

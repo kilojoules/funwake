@@ -5245,5 +5245,96 @@
       "lr_gaussian_bumps",
       "warmup"
     ]
+  },
+  {
+    "attempt": 417,
+    "timestamp": 1777186611.351639,
+    "train_aep": 5560.9,
+    "train_feasible": true,
+    "train_time": 34.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 417,
+    "timestamp": 1777186611.488103,
+    "train_aep": 5566.57,
+    "train_feasible": true,
+    "train_time": 33.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 419,
+    "timestamp": 1777196928.432172,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n"
+  },
+  {
+    "attempt": 420,
+    "timestamp": 1777196981.340072,
+    "train_aep": 5561.58,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 421,
+    "timestamp": 1777197035.21163,
+    "train_aep": 5563.94,
+    "train_feasible": true,
+    "train_time": 26.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 421,
+    "timestamp": 1777197035.98684,
+    "train_aep": 5559.56,
+    "train_feasible": true,
+    "train_time": 27.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 423,
+    "timestamp": 1777217477.984753,
+    "train_aep": 5559.56,
+    "train_feasible": true,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
   }
 ]

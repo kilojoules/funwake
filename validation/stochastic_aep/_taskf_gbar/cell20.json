@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n200_roserowp.json",
+  "eta_t_m": 5.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 16180.384608814891,
+      "bp_init": 0.0,
+      "bp_final": 36.389198405814895,
+      "sp_final": 0.0,
+      "elapsed_s": 13.0
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 16176.761108068096,
+      "bp_init": 0.0,
+      "bp_final": 7.609976293030195,
+      "sp_final": 2663.531368838274,
+      "elapsed_s": 7.5
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 16176.94477554976,
+      "bp_init": 0.0,
+      "bp_final": 47.30511819672582,
+      "sp_final": 37932.76252858888,
+      "elapsed_s": 7.5
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 16170.156034483904,
+      "bp_init": 0.0,
+      "bp_final": 9.408355622028292,
+      "sp_final": 1244.5840531104477,
+      "elapsed_s": 7.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 16151.586430803229,
+      "bp_init": 0.0,
+      "bp_final": 172.77502582559387,
+      "sp_final": 3234.8675418234197,
+      "elapsed_s": 7.4
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 16144.650603967748,
+      "bp_init": 0.0,
+      "bp_final": 46.52175400144954,
+      "sp_final": 0.0,
+      "elapsed_s": 7.2
+    }
+  ]
+}

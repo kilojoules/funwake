@@ -1,0 +1,64 @@
+=== rowp_n80_roserowp off ===
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192 es=off ss=100000 ===
+  final AEP=4600.56 bp_final=1.6e-04 es_first_cross=0 elapsed=105.0s
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192 es=off ss=200000 ===
+  final AEP=4602.47 bp_final=4.9e-05 es_first_cross=0 elapsed=104.4s
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192 es=off ss=300000 ===
+  final AEP=4604.62 bp_final=1.4e-04 es_first_cross=0 elapsed=104.6s
+
+Wrote validation/stochastic_aep/per_iter_rowp_n80_roserowp_off.json
+=== rowp_n80_roserowp on_runmax ===
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192 es=on_runmax ss=100000 ===
+  final AEP=4593.99 bp_final=0.0e+00 es_first_cross=0 elapsed=104.7s
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192 es=on_runmax ss=200000 ===
+  final AEP=4594.37 bp_final=0.0e+00 es_first_cross=0 elapsed=103.8s
+=== results/matrix/problem_rowp_n80_roserowp.json claude_iter192 es=on_runmax ss=300000 ===
+  final AEP=4589.02 bp_final=0.0e+00 es_first_cross=0 elapsed=106.0s
+
+Wrote validation/stochastic_aep/per_iter_rowp_n80_roserowp_on_runmax.json
+=== rowp_n80_roseomnidir off ===
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192 es=off ss=100000 ===
+  final AEP=6051.26 bp_final=1.4e-05 es_first_cross=0 elapsed=138.5s
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192 es=off ss=200000 ===
+  final AEP=6048.77 bp_final=1.0e-04 es_first_cross=0 elapsed=138.3s
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192 es=off ss=300000 ===
+  final AEP=6054.13 bp_final=6.2e-05 es_first_cross=0 elapsed=136.1s
+
+Wrote validation/stochastic_aep/per_iter_rowp_n80_roseomnidir_off.json
+=== rowp_n80_roseomnidir on_runmax ===
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192 es=on_runmax ss=100000 ===
+  final AEP=6037.87 bp_final=0.0e+00 es_first_cross=0 elapsed=140.8s
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192 es=on_runmax ss=200000 ===
+  final AEP=6044.90 bp_final=0.0e+00 es_first_cross=0 elapsed=138.6s
+=== results/matrix/problem_rowp_n80_roseomnidir.json claude_iter192 es=on_runmax ss=300000 ===
+  final AEP=6034.38 bp_final=0.0e+00 es_first_cross=0 elapsed=132.8s
+
+Wrote validation/stochastic_aep/per_iter_rowp_n80_roseomnidir_on_runmax.json
+=== rowp_n70_roserowp off ===
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192 es=off ss=100000 ===
+  final AEP=4038.95 bp_final=8.8e-07 es_first_cross=0 elapsed=79.4s
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192 es=off ss=200000 ===
+  final AEP=4039.30 bp_final=3.1e-05 es_first_cross=0 elapsed=78.9s
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192 es=off ss=300000 ===
+  final AEP=4038.79 bp_final=0.0e+00 es_first_cross=0 elapsed=79.5s
+
+Wrote validation/stochastic_aep/per_iter_rowp_n70_roserowp_off.json
+=== rowp_n70_roserowp on_runmax ===
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192 es=on_runmax ss=100000 ===
+  final AEP=4027.55 bp_final=0.0e+00 es_first_cross=0 elapsed=79.0s
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192 es=on_runmax ss=200000 ===
+  final AEP=4033.51 bp_final=0.0e+00 es_first_cross=0 elapsed=78.0s
+=== results/matrix/problem_rowp_n70_roserowp.json claude_iter192 es=on_runmax ss=300000 ===
+  final AEP=4033.04 bp_final=0.0e+00 es_first_cross=0 elapsed=79.0s
+
+Wrote validation/stochastic_aep/per_iter_rowp_n70_roserowp_on_runmax.json
+=== dei_n50_rosedei off (convergence) ===
+=== results/matrix/problem_dei_n50_rosedei.json claude_iter192 es=off ss=100000 ===
+  final AEP=5562.86 bp_final=5.8e-04 es_first_cross=0 elapsed=52.5s
+=== results/matrix/problem_dei_n50_rosedei.json claude_iter192 es=off ss=200000 ===
+  final AEP=5562.01 bp_final=0.0e+00 es_first_cross=0 elapsed=51.7s
+=== results/matrix/problem_dei_n50_rosedei.json claude_iter192 es=off ss=300000 ===
+  final AEP=5560.81 bp_final=0.0e+00 es_first_cross=0 elapsed=52.1s
+
+Wrote validation/stochastic_aep/per_iter_dei_n50_rosedei_off.json
+Done.

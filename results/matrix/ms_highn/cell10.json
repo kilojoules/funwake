@@ -1,0 +1,23 @@
+{
+ "cell": "rowp_n200_roserowp",
+ "K": 50,
+ "tol_m": 0.1,
+ "schedules": {
+  "baseline": {
+   "best": null,
+   "n_feasible": 0,
+   "best_infeas_aep": 10701.531
+  },
+  "claude": {
+   "best": {
+    "seed": 9,
+    "aep_gwh": 10927.804,
+    "feasible": true,
+    "max_out_m": 0.011,
+    "min_dist_m": 803.14
+   },
+   "n_feasible": 50,
+   "best_infeas_aep": null
+  }
+ }
+}

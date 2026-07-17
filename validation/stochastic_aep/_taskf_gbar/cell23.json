@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_rowp_n200_roserowp.json",
+  "eta_t_m": 5.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_rowp_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 10651.84447404841,
+      "bp_init": 0.0,
+      "bp_final": 137.34484261844233,
+      "sp_final": 33789.831193972495,
+      "elapsed_s": 9.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 10646.921327108626,
+      "bp_init": 0.0,
+      "bp_final": 76.30470615665342,
+      "sp_final": 9136.628589428263,
+      "elapsed_s": 5.3
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 10673.288954990761,
+      "bp_init": 0.0,
+      "bp_final": 340.96248471824157,
+      "sp_final": 8767.316972968518,
+      "elapsed_s": 5.8
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 10671.433323975,
+      "bp_init": 0.0,
+      "bp_final": 308.2325428357512,
+      "sp_final": 669.9256197307259,
+      "elapsed_s": 5.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 10644.554709428416,
+      "bp_init": 0.0,
+      "bp_final": 439.46430294234943,
+      "sp_final": 33658.316329201916,
+      "elapsed_s": 5.9
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n200_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 10641.325299608015,
+      "bp_init": 0.0,
+      "bp_final": 381.72118181122784,
+      "sp_final": 20381.41191530996,
+      "elapsed_s": 5.7
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+ "cell": "dei_n300_roserowp",
+ "K": 50,
+ "tol_m": 0.1,
+ "schedules": {
+  "baseline": {
+   "best": null,
+   "n_feasible": 0,
+   "best_infeas_aep": 23228.766
+  },
+  "claude": {
+   "best": {
+    "seed": 46,
+    "aep_gwh": 23687.21,
+    "feasible": true,
+    "max_out_m": 0.081,
+    "min_dist_m": 960.05
+   },
+   "n_feasible": 43,
+   "best_infeas_aep": null
+  },
+  "gemini": {
+   "best": {
+    "seed": 24,
+    "aep_gwh": 23452.966,
+    "feasible": true,
+    "max_out_m": -1.04,
+    "min_dist_m": 961.6
+   },
+   "n_feasible": 45,
+   "best_infeas_aep": null
+  }
+ }
+}

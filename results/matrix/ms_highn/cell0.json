@@ -1,0 +1,23 @@
+{
+ "cell": "dei_n200_rosedei",
+ "K": 50,
+ "tol_m": 0.1,
+ "schedules": {
+  "baseline": {
+   "best": null,
+   "n_feasible": 0,
+   "best_infeas_aep": 20697.367
+  },
+  "claude": {
+   "best": {
+    "seed": 18,
+    "aep_gwh": 20985.583,
+    "feasible": true,
+    "max_out_m": 0.012,
+    "min_dist_m": 1015.42
+   },
+   "n_feasible": 50,
+   "best_infeas_aep": null
+  }
+ }
+}

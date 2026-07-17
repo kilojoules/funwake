@@ -1,0 +1,44 @@
+"""Deterministic Gaussian bump with end-only constraint quench.
+
+HYPOTHESIS: The single-bump random-search schedule has strong train AEP but
+fails strict stressed-boundary repair because the tail step remains too large.
+Preserve its warmup/exponential/bump trajectory, then quench LR and surge
+alpha only in the final repair window.
+AXIS: deterministic gaussian_bump with late LR quench and alpha surge.
+LESSON: pending
+"""
+import jax.numpy as jnp
+
+
+def schedule_fn(step, total_steps, lr0, alpha0):
+    t = step / total_steps
+
+    lr_init = 4.9814 * lr0
+    lr_final_ratio = 0.027468
+    lr_min = lr_init * lr_final_ratio
+
+    warmup_frac = 0.02
+    warmup_lr = lr_init * jnp.minimum(1.0, t / jnp.maximum(warmup_frac, 1e-6))
+
+    post_warmup_t = jnp.maximum(t - warmup_frac, 0.0) / jnp.maximum(
+        1.0 - warmup_frac, 1e-6
+    )
+    lr_decay = lr_init * jnp.exp(-3.03 * post_warmup_t) + lr_min
+    lr_base = jnp.where(t < warmup_frac, warmup_lr, lr_decay)
+
+    bump = 0.182 * jnp.exp(-0.5 * ((t - 0.653) / 0.059) ** 2)
+
+    repair = jnp.minimum(1.0, jnp.maximum(0.0, (t - 0.82) / 0.18))
+    repair = repair * repair * (3.0 - 2.0 * repair)
+
+    lr = lr_base * (1.0 + bump)
+    lr = lr * (1.0 - 0.9975 * repair)
+    lr = jnp.maximum(lr, 0.00030 * lr0)
+
+    alpha = 7.59 * alpha0 * lr0 / jnp.maximum(lr, 1e-10)
+    alpha = alpha * (1.0 + 18.0 * repair + 220.0 * repair * repair)
+
+    beta1 = 0.16
+    beta2 = 0.5427
+
+    return lr, alpha, beta1, beta2

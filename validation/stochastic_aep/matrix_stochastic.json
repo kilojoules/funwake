@@ -1,0 +1,2566 @@
+{
+  "config": {
+    "manifest": "results/matrix/manifest.json",
+    "max_n": 80,
+    "K": 50,
+    "total_steps": 8000,
+    "init_seed": 0,
+    "sample_seeds": [
+      100000
+    ],
+    "out": "validation/stochastic_aep/matrix_stochastic.json",
+    "schedules": [
+      "sgd_baseline",
+      "claude_iter192",
+      "gemini_iter192"
+    ]
+  },
+  "started_utc": null,
+  "cells": {
+    "dei_n30_roseuniform": {
+      "farm": "dei",
+      "n": 30,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n30_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 186319.9324874644
+              },
+              "aep_det_gwh": 3359.9810629031217,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 4.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 186319.9324874644
+              },
+              "aep_det_gwh": 3359.9810629031217,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 186319.9324874644
+              },
+              "aep_det_gwh": 3359.195258237829,
+              "bp_final": 9.803382379747866,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "dei_n30_roseomnidir": {
+      "farm": "dei",
+      "n": 30,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n30_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 48960.25687817403
+              },
+              "aep_det_gwh": 3341.6595520089004,
+              "bp_final": 1211.2569008451696,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 48960.25687817403
+              },
+              "aep_det_gwh": 3351.7207823571152,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.3
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 48960.25687817403
+              },
+              "aep_det_gwh": 3350.0446720697487,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.2
+            }
+          ]
+        }
+      }
+    },
+    "dei_n30_rosedei": {
+      "farm": "dei",
+      "n": 30,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n30_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 39763.862962939194
+              },
+              "aep_det_gwh": 3340.9468124922705,
+              "bp_final": 115.93420918661674,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 39763.862962939194
+              },
+              "aep_det_gwh": 3351.7853921503965,
+              "bp_final": 6.707505269069067e-12,
+              "sp_final": 0.0,
+              "elapsed_s": 2.2
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 39763.862962939194
+              },
+              "aep_det_gwh": 3350.9102187567164,
+              "bp_final": 0.04305938487647894,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        }
+      }
+    },
+    "dei_n30_roserowp": {
+      "farm": "dei",
+      "n": 30,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n30_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 180127.74717758817
+              },
+              "aep_det_gwh": 2598.801246069559,
+              "bp_final": 951.2284138119651,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 180127.74717758817
+              },
+              "aep_det_gwh": 2606.931161593562,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 180127.74717758817
+              },
+              "aep_det_gwh": 2608.40239403318,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "dei_n40_roseuniform": {
+      "farm": "dei",
+      "n": 40,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n40_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 302714.29178901657
+              },
+              "aep_det_gwh": 4479.974750537513,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 4.6
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 302714.29178901657
+              },
+              "aep_det_gwh": 4479.974750537513,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 302714.29178901657
+              },
+              "aep_det_gwh": 4477.192168901114,
+              "bp_final": 5.079084281406944,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "dei_n40_roseomnidir": {
+      "farm": "dei",
+      "n": 40,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n40_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 87725.55547718878
+              },
+              "aep_det_gwh": 4431.733647043802,
+              "bp_final": 3076.739960352327,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 87725.55547718878
+              },
+              "aep_det_gwh": 4458.721322231753,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 87725.55547718878
+              },
+              "aep_det_gwh": 4459.950426461719,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        }
+      }
+    },
+    "dei_n40_rosedei": {
+      "farm": "dei",
+      "n": 40,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n40_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 51436.62349019537
+              },
+              "aep_det_gwh": 4438.730385616709,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 51436.62349019537
+              },
+              "aep_det_gwh": 4461.280155575934,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 51436.62349019537
+              },
+              "aep_det_gwh": 4459.698179543739,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 4.0
+            }
+          ]
+        }
+      }
+    },
+    "dei_n40_roserowp": {
+      "farm": "dei",
+      "n": 40,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n40_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 361502.7102562649
+              },
+              "aep_det_gwh": 3452.101878651355,
+              "bp_final": 2917.44567098421,
+              "sp_final": 0.0,
+              "elapsed_s": 4.0
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 361502.7102562649
+              },
+              "aep_det_gwh": 3472.4683509852166,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 361502.7102562649
+              },
+              "aep_det_gwh": 3471.344114184424,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        }
+      }
+    },
+    "dei_n50_roseuniform": {
+      "farm": "dei",
+      "n": 50,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n50_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 372528.66796869587
+              },
+              "aep_det_gwh": 5591.456465947076,
+              "bp_final": 5223.270131469548,
+              "sp_final": 26844.82600802486,
+              "elapsed_s": 4.3
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 372528.66796869587
+              },
+              "aep_det_gwh": 5596.952794741038,
+              "bp_final": 6.151559064958482e-07,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 372528.66796869587
+              },
+              "aep_det_gwh": 5591.057052847567,
+              "bp_final": 0.00045061791970303796,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "dei_n50_roseomnidir": {
+      "farm": "dei",
+      "n": 50,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n50_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 121393.37493662664
+              },
+              "aep_det_gwh": 5530.479457606176,
+              "bp_final": 261.89709685502174,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 121393.37493662664
+              },
+              "aep_det_gwh": 5561.865533663433,
+              "bp_final": 0.0004349712394273708,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 121393.37493662664
+              },
+              "aep_det_gwh": 5560.367246198176,
+              "bp_final": 6.5913442914572435,
+              "sp_final": 0.0,
+              "elapsed_s": 2.3
+            }
+          ]
+        }
+      }
+    },
+    "dei_n50_rosedei": {
+      "farm": "dei",
+      "n": 50,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n50_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 63109.384017449105
+              },
+              "aep_det_gwh": 5523.3277245748395,
+              "bp_final": 6.497393298943734,
+              "sp_final": 0.0,
+              "elapsed_s": 3.3
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 63109.384017449105
+              },
+              "aep_det_gwh": 5562.85605146231,
+              "bp_final": 0.0005791249026972172,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 63109.384017449105
+              },
+              "aep_det_gwh": 5553.082199423144,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "dei_n50_roserowp": {
+      "farm": "dei",
+      "n": 50,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n50_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 361502.7102562649
+              },
+              "aep_det_gwh": 4304.182841811496,
+              "bp_final": 5744.437929479853,
+              "sp_final": 5736.255415037624,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 361502.7102562649
+              },
+              "aep_det_gwh": 4330.173575260353,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 361502.7102562649
+              },
+              "aep_det_gwh": 4324.853139519683,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        }
+      }
+    },
+    "dei_n60_roseuniform": {
+      "farm": "dei",
+      "n": 60,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n60_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 558515.009437454
+              },
+              "aep_det_gwh": 6665.593126512336,
+              "bp_final": 7719.006806407244,
+              "sp_final": 5695.642919228878,
+              "elapsed_s": 6.0
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 558515.009437454
+              },
+              "aep_det_gwh": 6712.050680891132,
+              "bp_final": 0.0008115858183293606,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 558515.009437454
+              },
+              "aep_det_gwh": 6707.519513594769,
+              "bp_final": 93.47323536573685,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "dei_n60_roseomnidir": {
+      "farm": "dei",
+      "n": 60,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n60_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 126490.85407620459
+              },
+              "aep_det_gwh": 6610.596268927575,
+              "bp_final": 3301.476726880951,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 126490.85407620459
+              },
+              "aep_det_gwh": 6659.428573686599,
+              "bp_final": 0.00018078186222275413,
+              "sp_final": 0.0,
+              "elapsed_s": 3.1
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 126490.85407620459
+              },
+              "aep_det_gwh": 6655.955743875577,
+              "bp_final": 1.2769746952699692,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "dei_n60_rosedei": {
+      "farm": "dei",
+      "n": 60,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n60_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 77154.93523528764
+              },
+              "aep_det_gwh": 6613.37316726129,
+              "bp_final": 141.99849697614127,
+              "sp_final": 0.0,
+              "elapsed_s": 3.3
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 77154.93523528764
+              },
+              "aep_det_gwh": 6656.586121327475,
+              "bp_final": 0.00012198522434410057,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 77154.93523528764
+              },
+              "aep_det_gwh": 6654.2438090619735,
+              "bp_final": 1.0530515503214006,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "dei_n60_roserowp": {
+      "farm": "dei",
+      "n": 60,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n60_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 520673.50891301804
+              },
+              "aep_det_gwh": 5136.669988178499,
+              "bp_final": 0.0,
+              "sp_final": 154024.09307171893,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 520673.50891301804
+              },
+              "aep_det_gwh": 5179.632621281471,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 520673.50891301804
+              },
+              "aep_det_gwh": 5175.01230556432,
+              "bp_final": 1.1067835435905924,
+              "sp_final": 0.0,
+              "elapsed_s": 3.1
+            }
+          ]
+        }
+      }
+    },
+    "dei_n70_roseuniform": {
+      "farm": "dei",
+      "n": 70,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n70_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 814426.9240921263
+              },
+              "aep_det_gwh": 7809.236163259978,
+              "bp_final": 5377.164017436076,
+              "sp_final": 242825.5991568457,
+              "elapsed_s": 5.6
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 814426.9240921263
+              },
+              "aep_det_gwh": 7830.257650863209,
+              "bp_final": 0.0037656675407909176,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 814426.9240921263
+              },
+              "aep_det_gwh": 7808.61989760012,
+              "bp_final": 6.074814252499975,
+              "sp_final": 0.0,
+              "elapsed_s": 3.6
+            }
+          ]
+        }
+      }
+    },
+    "dei_n70_roseomnidir": {
+      "farm": "dei",
+      "n": 70,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 156068.46165487252
+              },
+              "aep_det_gwh": 7680.0701500204905,
+              "bp_final": 8589.692916434204,
+              "sp_final": 0.0,
+              "elapsed_s": 3.2
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 156068.46165487252
+              },
+              "aep_det_gwh": 7743.660119413975,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 156068.46165487252
+              },
+              "aep_det_gwh": 7742.140155838232,
+              "bp_final": 0.5107514209633155,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "dei_n70_rosedei": {
+      "farm": "dei",
+      "n": 70,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n70_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 88827.69576254301
+              },
+              "aep_det_gwh": 7698.624806302227,
+              "bp_final": 1650.8624428343182,
+              "sp_final": 0.0,
+              "elapsed_s": 3.2
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 88827.69576254301
+              },
+              "aep_det_gwh": 7735.764066170797,
+              "bp_final": 0.0001660099624593456,
+              "sp_final": 0.0,
+              "elapsed_s": 3.1
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 88827.69576254301
+              },
+              "aep_det_gwh": 7734.107354807551,
+              "bp_final": 0.7439164395805972,
+              "sp_final": 0.0,
+              "elapsed_s": 3.1
+            }
+          ]
+        }
+      }
+    },
+    "dei_n70_roserowp": {
+      "farm": "dei",
+      "n": 70,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n70_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 610737.3825018125
+              },
+              "aep_det_gwh": 5978.75766791921,
+              "bp_final": 2084.0542289128707,
+              "sp_final": 14730.433019459713,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 610737.3825018125
+              },
+              "aep_det_gwh": 6027.093515942263,
+              "bp_final": 1.215252902873878e-05,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 610737.3825018125
+              },
+              "aep_det_gwh": 6022.735397896286,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 4.8
+            }
+          ]
+        }
+      }
+    },
+    "dei_n80_roseuniform": {
+      "farm": "dei",
+      "n": 80,
+      "rose": "uniform",
+      "path": "results/matrix/problem_dei_n80_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 1000635.6595733579
+              },
+              "aep_det_gwh": 8866.642207864254,
+              "bp_final": 9064.102029716054,
+              "sp_final": 399330.1685359485,
+              "elapsed_s": 4.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 1000635.6595733579
+              },
+              "aep_det_gwh": 8929.626027601273,
+              "bp_final": 0.0064038663413054815,
+              "sp_final": 2.674055208452046,
+              "elapsed_s": 3.1
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 1000635.6595733579
+              },
+              "aep_det_gwh": 8911.722002995006,
+              "bp_final": 41.67694490776284,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "dei_n80_roseomnidir": {
+      "farm": "dei",
+      "n": 80,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_dei_n80_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 199931.23939347372
+              },
+              "aep_det_gwh": 8753.216610394513,
+              "bp_final": 2784.0795791644628,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 199931.23939347372
+              },
+              "aep_det_gwh": 8812.109138700282,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 199931.23939347372
+              },
+              "aep_det_gwh": 8814.078502913448,
+              "bp_final": 14.489617204323675,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "dei_n80_rosedei": {
+      "farm": "dei",
+      "n": 80,
+      "rose": "dei",
+      "path": "results/matrix/problem_dei_n80_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 107618.82836155628
+              },
+              "aep_det_gwh": 8762.212636902539,
+              "bp_final": 411.8358548236064,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 107618.82836155628
+              },
+              "aep_det_gwh": 8812.249368635454,
+              "bp_final": 3.2648212676380735e-05,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 107618.82836155628
+              },
+              "aep_det_gwh": 8808.482846562081,
+              "bp_final": 4.764588799215049,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        }
+      }
+    },
+    "dei_n80_roserowp": {
+      "farm": "dei",
+      "n": 80,
+      "rose": "rowp",
+      "path": "results/matrix/problem_dei_n80_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 745209.5849344527
+              },
+              "aep_det_gwh": 6793.348208819381,
+              "bp_final": 2293.3351860312264,
+              "sp_final": 0.0,
+              "elapsed_s": 3.6
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 745209.5849344527
+              },
+              "aep_det_gwh": 6865.339497690655,
+              "bp_final": 0.0003724042541049983,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 745209.5849344527
+              },
+              "aep_det_gwh": 6856.168313515958,
+              "bp_final": 6.72428181112383,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n30_roseuniform": {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n30_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 185738.26146215724
+              },
+              "aep_det_gwh": 2330.161946731805,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 185738.26146215724
+              },
+              "aep_det_gwh": 2330.161946731805,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 185738.26146215724
+              },
+              "aep_det_gwh": 2330.161946731805,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.3
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n30_roseomnidir": {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n30_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 146054.5669644049
+              },
+              "aep_det_gwh": 2309.2720729688513,
+              "bp_final": 270.93738300383393,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 146054.5669644049
+              },
+              "aep_det_gwh": 2319.7934747501763,
+              "bp_final": 3.703908804903397e-05,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 146054.5669644049
+              },
+              "aep_det_gwh": 2318.422881338928,
+              "bp_final": 5.379080812048127,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n30_rosedei": {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n30_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 253429.5796539056
+              },
+              "aep_det_gwh": 2306.0316166256553,
+              "bp_final": 3145.3197114399372,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 253429.5796539056
+              },
+              "aep_det_gwh": 2319.526466242513,
+              "bp_final": 2.4560851547995854e-06,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 253429.5796539056
+              },
+              "aep_det_gwh": 2321.8139982276557,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n30_roserowp": {
+      "farm": "rowp",
+      "n": 30,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n30_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 404456.8730426626
+              },
+              "aep_det_gwh": 1738.7326637144,
+              "bp_final": 157.820184238568,
+              "sp_final": 35406.916792778065,
+              "elapsed_s": 2.4
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 404456.8730426626
+              },
+              "aep_det_gwh": 1749.18686409304,
+              "bp_final": 0.00033204290782381574,
+              "sp_final": 0.0,
+              "elapsed_s": 3.4
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 404456.8730426626
+              },
+              "aep_det_gwh": 1748.0973795801233,
+              "bp_final": 2.0587567150019535,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n40_roseuniform": {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n40_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 187333.64227047504
+              },
+              "aep_det_gwh": 3106.8825956424052,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 3.0
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 187333.64227047504
+              },
+              "aep_det_gwh": 3106.8825956424052,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 187333.64227047504
+              },
+              "aep_det_gwh": 3106.8825956424052,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.4
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n40_roseomnidir": {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n40_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 146054.5669644049
+              },
+              "aep_det_gwh": 3058.467873186909,
+              "bp_final": 3275.7380656508712,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 146054.5669644049
+              },
+              "aep_det_gwh": 3085.632694525646,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 146054.5669644049
+              },
+              "aep_det_gwh": 3086.0946645925696,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n40_rosedei": {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n40_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 253429.5796539056
+              },
+              "aep_det_gwh": 3061.9552168101973,
+              "bp_final": 3464.0386457187424,
+              "sp_final": 0.0,
+              "elapsed_s": 2.5
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 253429.5796539056
+              },
+              "aep_det_gwh": 3083.3234836151514,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 253429.5796539056
+              },
+              "aep_det_gwh": 3084.688730397009,
+              "bp_final": 1.1195329447804878,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n40_roserowp": {
+      "farm": "rowp",
+      "n": 40,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n40_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 404456.8730426626
+              },
+              "aep_det_gwh": 2308.301567004881,
+              "bp_final": 843.5881554484885,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 404456.8730426626
+              },
+              "aep_det_gwh": 2327.9674162619804,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 404456.8730426626
+              },
+              "aep_det_gwh": 2324.958215174215,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n50_roseuniform": {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n50_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 261948.02301700285
+              },
+              "aep_det_gwh": 3883.6032445529986,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 4.3
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 261948.02301700285
+              },
+              "aep_det_gwh": 3883.6032445529986,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 261948.02301700285
+              },
+              "aep_det_gwh": 3883.6032445529986,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n50_roseomnidir": {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n50_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 194739.42261920753
+              },
+              "aep_det_gwh": 3814.9142710176475,
+              "bp_final": 2118.881867115866,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 194739.42261920753
+              },
+              "aep_det_gwh": 3841.8390019834133,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 194739.42261920753
+              },
+              "aep_det_gwh": 3843.44431287125,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n50_rosedei": {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n50_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 308582.7927682033
+              },
+              "aep_det_gwh": 3794.991824740585,
+              "bp_final": 6048.132853637813,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 308582.7927682033
+              },
+              "aep_det_gwh": 3840.5557187482864,
+              "bp_final": 1.3073149387541233e-06,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 308582.7927682033
+              },
+              "aep_det_gwh": 3835.1466160788978,
+              "bp_final": 0.2854859410900034,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n50_roserowp": {
+      "farm": "rowp",
+      "n": 50,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n50_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 476962.96957240114
+              },
+              "aep_det_gwh": 2873.478847946827,
+              "bp_final": 970.4462213035928,
+              "sp_final": 22431.27139124321,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 476962.96957240114
+              },
+              "aep_det_gwh": 2901.7345110654232,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 476962.96957240114
+              },
+              "aep_det_gwh": 2900.80672333322,
+              "bp_final": 16.106268241545393,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n60_roseuniform": {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n60_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 338157.78457184613
+              },
+              "aep_det_gwh": 4660.32389346361,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 3.2
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 338157.78457184613
+              },
+              "aep_det_gwh": 4657.083245677631,
+              "bp_final": 0.0007389113127148417,
+              "sp_final": 6.540014099213295,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 338157.78457184613
+              },
+              "aep_det_gwh": 4650.326684015422,
+              "bp_final": 32.2650715179215,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n60_roseomnidir": {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n60_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 283196.04628878937
+              },
+              "aep_det_gwh": 4539.782978398203,
+              "bp_final": 257.0557063085926,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 283196.04628878937
+              },
+              "aep_det_gwh": 4584.575051983818,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 283196.04628878937
+              },
+              "aep_det_gwh": 4586.440072716643,
+              "bp_final": 9.420305919361825,
+              "sp_final": 0.0,
+              "elapsed_s": 4.0
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n60_rosedei": {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n60_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 430057.461955586
+              },
+              "aep_det_gwh": 4546.045360294824,
+              "bp_final": 1868.6715000976376,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 430057.461955586
+              },
+              "aep_det_gwh": 4582.196160251719,
+              "bp_final": 0.00014826095509852695,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 430057.461955586
+              },
+              "aep_det_gwh": 4578.455570869743,
+              "bp_final": 19.280265175524057,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n60_roserowp": {
+      "farm": "rowp",
+      "n": 60,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n60_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 652554.8687676425
+              },
+              "aep_det_gwh": 3439.520315627726,
+              "bp_final": 700.5820316054738,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 652554.8687676425
+              },
+              "aep_det_gwh": 3470.267116559424,
+              "bp_final": 8.151649074177688e-05,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 652554.8687676425
+              },
+              "aep_det_gwh": 3472.880087957099,
+              "bp_final": 0.05357567400126553,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n70_roseuniform": {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n70_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 488981.92687321664
+              },
+              "aep_det_gwh": 5409.760171401125,
+              "bp_final": 4949.926392991828,
+              "sp_final": 112856.06077805231,
+              "elapsed_s": 3.5
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 488981.92687321664
+              },
+              "aep_det_gwh": 5425.719279135832,
+              "bp_final": 0.0009420061222586401,
+              "sp_final": 54.71159399894532,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 488981.92687321664
+              },
+              "aep_det_gwh": 5415.436826080223,
+              "bp_final": 328.1349044333803,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n70_roseomnidir": {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n70_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 556804.752206871
+              },
+              "aep_det_gwh": 5264.891301542708,
+              "bp_final": 6913.984332216214,
+              "sp_final": 0.0,
+              "elapsed_s": 3.1
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 556804.752206871
+              },
+              "aep_det_gwh": 5319.341513054518,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 556804.752206871
+              },
+              "aep_det_gwh": 5316.624289220406,
+              "bp_final": 6.532356558077412,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n70_rosedei": {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 683487.041609485
+              },
+              "aep_det_gwh": 5267.587767933574,
+              "bp_final": 8146.959023095394,
+              "sp_final": 3596.4623294584453,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 683487.041609485
+              },
+              "aep_det_gwh": 5323.572050887607,
+              "bp_final": 0.00010652457266933666,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 683487.041609485
+              },
+              "aep_det_gwh": 5312.270197382137,
+              "bp_final": 17.668797114440174,
+              "sp_final": 0.0,
+              "elapsed_s": 2.6
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n70_roserowp": {
+      "farm": "rowp",
+      "n": 70,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 927289.4018187153
+              },
+              "aep_det_gwh": 3984.3391462862783,
+              "bp_final": 1784.1004606861213,
+              "sp_final": 43297.989710908965,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 927289.4018187153
+              },
+              "aep_det_gwh": 4038.945762779331,
+              "bp_final": 8.841313061264006e-07,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 927289.4018187153
+              },
+              "aep_det_gwh": 4034.520823135703,
+              "bp_final": 4.710163629366829,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n80_roseuniform": {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "uniform",
+      "path": "results/matrix/problem_rowp_n80_roseuniform.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 533468.3308839051
+              },
+              "aep_det_gwh": 6182.344573514627,
+              "bp_final": 16927.192754086744,
+              "sp_final": 137760.64714520134,
+              "elapsed_s": 3.5
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 533468.3308839051
+              },
+              "aep_det_gwh": 6187.8113269530895,
+              "bp_final": 0.000320935425807397,
+              "sp_final": 4.628169402596541,
+              "elapsed_s": 4.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 533468.3308839051
+              },
+              "aep_det_gwh": 6176.850959215966,
+              "bp_final": 224.99003648474408,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n80_roseomnidir": {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "omnidir",
+      "path": "results/matrix/problem_rowp_n80_roseomnidir.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 905163.3239691524
+              },
+              "aep_det_gwh": 5971.355037731732,
+              "bp_final": 6375.627550031479,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 905163.3239691524
+              },
+              "aep_det_gwh": 6051.263892709679,
+              "bp_final": 1.3625439200704882e-05,
+              "sp_final": 0.0,
+              "elapsed_s": 3.0
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 905163.3239691524
+              },
+              "aep_det_gwh": 6033.459017907501,
+              "bp_final": 43.33724378040189,
+              "sp_final": 0.0,
+              "elapsed_s": 3.0
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n80_rosedei": {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "dei",
+      "path": "results/matrix/problem_rowp_n80_rosedei.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 816129.9537556515
+              },
+              "aep_det_gwh": 5983.057574461137,
+              "bp_final": 4777.254407195231,
+              "sp_final": 0.0,
+              "elapsed_s": 3.0
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 816129.9537556515
+              },
+              "aep_det_gwh": 6050.507153472645,
+              "bp_final": 0.0,
+              "sp_final": 0.0,
+              "elapsed_s": 3.1
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 816129.9537556515
+              },
+              "aep_det_gwh": 6048.576024788875,
+              "bp_final": 1.2874679258626054,
+              "sp_final": 0.0,
+              "elapsed_s": 2.7
+            }
+          ]
+        }
+      }
+    },
+    "rowp_n80_roserowp": {
+      "farm": "rowp",
+      "n": 80,
+      "rose": "rowp",
+      "path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "schedules": {
+        "sgd_baseline": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 1060954.9106199828
+              },
+              "aep_det_gwh": 4535.866628038686,
+              "bp_final": 4196.20241404642,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "claude_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 1060954.9106199828
+              },
+              "aep_det_gwh": 4600.5604493313585,
+              "bp_final": 0.00015552273798686352,
+              "sp_final": 0.0,
+              "elapsed_s": 2.9
+            }
+          ]
+        },
+        "gemini_iter192": {
+          "runs": [
+            {
+              "sample_seed": 100000,
+              "init_feasibility": {
+                "init_bp": 0.0,
+                "init_sp": 1060954.9106199828
+              },
+              "aep_det_gwh": 4599.398509042798,
+              "bp_final": 1.3812537780870873,
+              "sp_final": 0.0,
+              "elapsed_s": 2.8
+            }
+          ]
+        }
+      }
+    }
+  },
+  "elapsed_total_s": 9714.5
+}

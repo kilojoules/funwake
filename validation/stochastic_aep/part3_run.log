@@ -1,0 +1,72 @@
+
+=== schedule: sgd_baseline ===
+[sgd_baseline r=0] elapsed=8s ✗ AEP=4452.88 min_pair_d=1729m bp=4.51e+03 sp=0.00e+00
+[sgd_baseline r=1] elapsed=3s ✗ AEP=4453.80 min_pair_d=1793m bp=4.89e+03 sp=0.00e+00
+[sgd_baseline r=2] elapsed=3s ✗ AEP=4452.68 min_pair_d=1809m bp=2.03e+03 sp=0.00e+00
+[sgd_baseline r=3] elapsed=4s ✗ AEP=4453.69 min_pair_d=1813m bp=9.88e+03 sp=0.00e+00
+[sgd_baseline r=4] elapsed=4s ✗ AEP=4452.78 min_pair_d=1893m bp=1.21e+04 sp=0.00e+00
+[sgd_baseline r=5] elapsed=4s ✗ AEP=4453.24 min_pair_d=1706m bp=1.86e+04 sp=0.00e+00
+[sgd_baseline r=6] elapsed=4s ✗ AEP=4453.55 min_pair_d=1888m bp=5.71e+03 sp=0.00e+00
+[sgd_baseline r=7] elapsed=4s ✗ AEP=4453.84 min_pair_d=1815m bp=1.59e+04 sp=0.00e+00
+[sgd_baseline r=8] elapsed=4s ✗ AEP=4453.60 min_pair_d=2044m bp=1.03e+04 sp=0.00e+00
+[sgd_baseline r=9] elapsed=4s ✗ AEP=4452.64 min_pair_d=2001m bp=3.46e+03 sp=0.00e+00
+[sgd_baseline r=10] elapsed=3s ✗ AEP=4452.88 min_pair_d=1851m bp=3.61e+03 sp=0.00e+00
+[sgd_baseline r=11] elapsed=3s ✗ AEP=4454.18 min_pair_d=2006m bp=2.41e+04 sp=0.00e+00
+[sgd_baseline r=12] elapsed=3s ✗ AEP=4454.02 min_pair_d=2055m bp=2.06e+04 sp=0.00e+00
+[sgd_baseline r=13] elapsed=3s ✗ AEP=4452.86 min_pair_d=1992m bp=1.28e+04 sp=0.00e+00
+[sgd_baseline r=14] elapsed=4s ✗ AEP=4452.33 min_pair_d=1747m bp=5.30e+03 sp=0.00e+00
+[sgd_baseline r=15] elapsed=3s ✗ AEP=4453.75 min_pair_d=1817m bp=1.51e+04 sp=0.00e+00
+[sgd_baseline r=16] elapsed=3s ✗ AEP=4452.87 min_pair_d=2106m bp=5.47e+03 sp=0.00e+00
+[sgd_baseline r=17] elapsed=3s ✗ AEP=4453.61 min_pair_d=1972m bp=1.48e+03 sp=0.00e+00
+[sgd_baseline r=18] elapsed=3s ✗ AEP=4452.81 min_pair_d=2085m bp=1.12e+04 sp=0.00e+00
+[sgd_baseline r=19] elapsed=3s ✗ AEP=4454.02 min_pair_d=2151m bp=3.04e+03 sp=0.00e+00
+
+=== schedule: funwake_iter192 ===
+[funwake_iter192 r=0] elapsed=2s ✗ AEP=4453.59 min_pair_d=2066m bp=8.76e-06 sp=0.00e+00
+[funwake_iter192 r=1] elapsed=4s ✗ AEP=4453.89 min_pair_d=1916m bp=4.31e-05 sp=0.00e+00
+[funwake_iter192 r=2] elapsed=4s ✗ AEP=4453.87 min_pair_d=2065m bp=3.29e-04 sp=0.00e+00
+[funwake_iter192 r=3] elapsed=4s ✗ AEP=4453.79 min_pair_d=2046m bp=2.60e-04 sp=0.00e+00
+[funwake_iter192 r=4] elapsed=3s ✗ AEP=4454.35 min_pair_d=1933m bp=4.69e-05 sp=0.00e+00
+[funwake_iter192 r=5] elapsed=6s ✗ AEP=4453.08 min_pair_d=2089m bp=6.37e-05 sp=0.00e+00
+[funwake_iter192 r=6] elapsed=4s ✗ AEP=4454.40 min_pair_d=1954m bp=3.10e-05 sp=0.00e+00
+[funwake_iter192 r=7] elapsed=3s ✗ AEP=4454.09 min_pair_d=2201m bp=1.97e-05 sp=0.00e+00
+[funwake_iter192 r=8] elapsed=3s ✗ AEP=4454.12 min_pair_d=2005m bp=2.01e-05 sp=0.00e+00
+[funwake_iter192 r=9] elapsed=4s ✗ AEP=4453.96 min_pair_d=2050m bp=1.87e-04 sp=0.00e+00
+[funwake_iter192 r=10] elapsed=4s ✗ AEP=4455.03 min_pair_d=1897m bp=2.11e-04 sp=0.00e+00
+[funwake_iter192 r=11] elapsed=3s ✗ AEP=4453.55 min_pair_d=2006m bp=6.11e-05 sp=0.00e+00
+[funwake_iter192 r=12] elapsed=4s ✗ AEP=4454.22 min_pair_d=2133m bp=3.77e-04 sp=0.00e+00
+[funwake_iter192 r=13] elapsed=3s ✓ AEP=4453.99 min_pair_d=2080m bp=0.00e+00 sp=0.00e+00
+[funwake_iter192 r=14] elapsed=3s ✗ AEP=4453.04 min_pair_d=2062m bp=8.23e-05 sp=0.00e+00
+[funwake_iter192 r=15] elapsed=3s ✗ AEP=4453.79 min_pair_d=1927m bp=6.16e-04 sp=0.00e+00
+[funwake_iter192 r=16] elapsed=6s ✓ AEP=4454.34 min_pair_d=2043m bp=0.00e+00 sp=0.00e+00
+[funwake_iter192 r=17] elapsed=3s ✗ AEP=4454.10 min_pair_d=2026m bp=3.89e-04 sp=0.00e+00
+[funwake_iter192 r=18] elapsed=3s ✗ AEP=4454.19 min_pair_d=2026m bp=2.76e-06 sp=0.00e+00
+[funwake_iter192 r=19] elapsed=3s ✗ AEP=4454.15 min_pair_d=2161m bp=1.94e-04 sp=0.00e+00
+
+=== SUMMARY ===
+{
+  "sgd_baseline": {
+    "n_restarts": 20,
+    "feasibility_rate": 0.0,
+    "n_feasible": 0,
+    "best_aep_all": 4454.178937178422,
+    "best_aep_feasible": null,
+    "mean_aep_feasible": null,
+    "std_aep_feasible": null,
+    "mean_aep_all": 4453.301743324524,
+    "std_aep_all": 0.5605558698945657
+  },
+  "funwake_iter192": {
+    "n_restarts": 20,
+    "feasibility_rate": 0.1,
+    "n_feasible": 2,
+    "best_aep_all": 4455.03208056037,
+    "best_aep_feasible": 4454.338400203105,
+    "mean_aep_feasible": 4454.1635961289085,
+    "std_aep_feasible": 0.24721029248783014,
+    "mean_aep_all": 4453.976924538135,
+    "std_aep_all": 0.4503498836214506
+  }
+}
+
+Wrote validation/stochastic_aep/part3_result.json

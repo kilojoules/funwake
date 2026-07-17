@@ -1,0 +1,1540 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1777197745.630739,
+    "train_aep": 5526.69,
+    "train_feasible": true,
+    "train_time": 27.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A smooth cosine decay from full-size exploratory steps to a small",
+    "axis": "lr_cosine with TopFarm low-momentum Adam and alpha coupled inversely to lr.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine"
+    ]
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1777197961.468832,
+    "train_aep": 5539.89,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A short LR bump early in the decay phase can cross wake-layout",
+    "axis": "lr_gaussian_bumps plus alpha_anti_phase_dip, zero first momentum, and",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1777198066.209257,
+    "train_aep": 5541.61,
+    "train_feasible": true,
+    "train_time": 26.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The high-scoring seed-style Gaussian bump benefits from minimal",
+    "axis": "lr_gaussian_bumps with alpha_anti_phase_dip and an end-only LR/alpha",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1777198271.374443,
+    "train_aep": 5528.93,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Decreasing warm-restart peaks can revisit layout basins after the",
+    "axis": "lr_sgdr_warm_restarts with alpha_coupled_inverse_lr, alpha_cyclic, and",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_sgdr_warm_restarts"
+    ]
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1777198367.160264,
+    "train_aep": 5529.04,
+    "train_feasible": true,
+    "train_time": 27.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A positive-only sinusoidal shake during the decay phase can provide",
+    "axis": "lr_sinusoidal_shake on the seed inverse decay, with inverse LR-alpha",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_sgdr_warm_restarts",
+      "lr_sinusoidal_shake"
+    ]
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1777198503.7044868,
+    "train_aep": 5529.39,
+    "train_feasible": true,
+    "train_time": 27.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A single early triangular one-cycle pulse can provide the useful",
+    "axis": "lr_one_cycle / lr_cyclical_triangular pulse with inverse alpha coupling",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cyclical_triangular",
+      "lr_one_cycle"
+    ]
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1777198573.9749482,
+    "train_aep": 5542.47,
+    "train_feasible": true,
+    "train_time": 26.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A smooth compact polynomial pulse can approximate one controlled",
+    "axis": "lr_one_cycle with a polynomial_decay-style bell, inverse alpha coupling,",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_one_cycle",
+      "lr_polynomial_decay",
+      "lr_sinusoidal_shake"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 22.3
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1777198667.836551,
+    "train_aep": 5542.3,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The polynomial pulse improves train AEP, but held-out boundary",
+    "axis": "lr_one_cycle with polynomial_decay-style bell, inverse alpha coupling,",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_one_cycle",
+      "lr_polynomial_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.3
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1777198876.017652,
+    "train_aep": 5529.18,
+    "train_feasible": true,
+    "train_time": 26.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A monotone linear learning-rate decay can preserve useful early",
+    "axis": "lr_linear_decay plus alpha_coupled_inverse_lr, TopFarm low-momentum Adam,",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_linear_decay"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 22.2
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1777199020.639634,
+    "train_aep": 5529.13,
+    "train_feasible": true,
+    "train_time": 27.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The seed inverse LR shape is stronger than monotone linear decay,",
+    "axis": "alpha_quadratic_ramp on seed inverse LR decay with TopFarm low-momentum",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_linear_decay"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 21.9
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1777199133.070679,
+    "train_aep": 5529.42,
+    "train_feasible": false,
+    "train_time": 27.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A short warmup can reduce early Adam transients from the grid",
+    "axis": "warmup plus alpha_coupled_inverse_lr on seed-style inverse LR decay,",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "warmup"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 22.9
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1777199236.522593,
+    "train_aep": 5537.28,
+    "train_feasible": true,
+    "train_time": 27.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best prior schedule's LR pulse finds a better wake basin, but",
+    "axis": "adam_topfarm_low-to-moderate momentum change on the prior polynomial",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_one_cycle"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.4
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1777199332.312043,
+    "train_aep": 5541.99,
+    "train_feasible": true,
+    "train_time": 26.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 8 made ROWP feasible but paid a small train-AEP cost versus",
+    "axis": "schedule_two_phase tradeoff on the polynomial LR pulse: same explore",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_one_cycle"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.3
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1777199436.066429,
+    "train_aep": 5536.6,
+    "train_feasible": true,
+    "train_time": 26.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The attempt-8 pulse/repair timing is the best feasible shape so",
+    "axis": "warmup added to the prior polynomial pulse schedule while preserving",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_one_cycle",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.3
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1777199590.971391,
+    "train_aep": 5559.54,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The low-AEP attempts in this run are over-settling into the seed",
+    "axis": "warmup, lr_gaussian_bumps, alpha_anti_phase_dip, alpha_coupled_inverse_lr,",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.8
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1777199709.292471,
+    "train_aep": 5559.84,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Iteration 15 proves the high-LR dual-bump strategy works; a later",
+    "axis": "lr_gaussian_bumps and alpha_anti_phase_dip with a later final LR taper",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.7
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1777199809.748747,
+    "train_aep": 5559.46,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Iteration 16's later settling improved AEP and feasibility; the",
+    "axis": "alpha_linear_ramp/late alpha softening on the iter_016 dual-bump schedule.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.7
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1777200036.702143,
+    "train_aep": 5560.02,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A high-start exp_decay schedule can keep the useful large early",
+    "axis": "lr_exponential_decay with inverse penalty coupling and smooth late alpha",
+    "lesson": "pending",
+    "families": [
+      "alpha_coupled_inverse_lr",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.7
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1777200177.063998,
+    "train_aep": 5560.11,
+    "train_feasible": true,
+    "train_time": 25.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The first exp_decay schedule improved train AEP and generalized;",
+    "axis": "lr_exponential_decay tail-softening with the same inverse penalty",
+    "lesson": "pending",
+    "families": [
+      "alpha_coupled_inverse_lr",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1777200233.082973,
+    "train_aep": 5560.45,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Iteration 19 gained AEP by easing the exp_decay tail; one more",
+    "axis": "lr_exponential_decay tail-softening sweep with inverse penalty coupling.",
+    "lesson": "pending",
+    "families": [
+      "alpha_coupled_inverse_lr",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.7
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1777200406.3173099,
+    "train_aep": 5560.31,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Small multiplicative LR noise on the strong exponential backbone",
+    "axis": "lr_noise_injection on high-start exponential cooling with inverse",
+    "lesson": "pending",
+    "families": [
+      "alpha_coupled_inverse_lr",
+      "lr_exponential_decay",
+      "lr_noise_injection",
+      "lr_sinusoidal_shake"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.3
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1777200509.378855,
+    "train_aep": 5560.74,
+    "train_feasible": false,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Restricting LR noise to the middle of the run can perturb wake",
+    "axis": "lr_noise_injection with smooth penalty coupled to the unperturbed",
+    "lesson": "pending",
+    "families": [
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ]
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1777200572.289357,
+    "train_aep": 5557.98,
+    "train_feasible": false,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 22 reached a better AEP basin but under-repaired",
+    "axis": "lr_noise_injection with feasibility-biased late repair.",
+    "lesson": "pending",
+    "families": [
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ]
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1777200639.9481149,
+    "train_aep": 5553.12,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A long-horizon second moment may smooth coordinate-wise Adam",
+    "axis": "adam_high_beta2 on the best feasible exponential cooling backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_high_beta2",
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1777200849.0853498,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 22 was a boundary-only near miss; keeping its high-AEP",
+    "axis": "alpha_linear_ramp layered onto lr_noise_injection.",
+    "lesson": "pending",
+    "families": [
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1777201032.3142679,
+    "train_aep": 5528.78,
+    "train_feasible": false,
+    "train_time": 27.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A fixed moderate step size can keep the wake layout mobile for the",
+    "axis": "lr_constant with late nonlinear alpha repair and TopFarm low-momentum",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum"
+    ]
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1777201196.7260969,
+    "train_aep": 5544.51,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best previous schedule may be limited by very short Adam",
+    "axis": "adam_standard applied to the best feasible noisy cooling schedule.",
+    "lesson": "pending",
+    "families": [
+      "adam_high_beta2",
+      "adam_standard",
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1777201273.591866,
+    "train_aep": 5556.15,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A quadratic alpha multiplier can stay closer to the high-AEP",
+    "axis": "alpha_quadratic_ramp layered onto the high-scoring noisy cooling",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1777201357.997427,
+    "train_aep": 5562.24,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best feasible noisy schedule may still pay too much penalty",
+    "axis": "alpha_anti_phase_dip paired with mid-course LR perturbation.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1777201441.8194041,
+    "train_aep": 5561.95,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best previous result benefited from a mild linear alpha ramp;",
+    "axis": "alpha_linear_ramp coefficient sweep on the best feasible backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1777201510.971,
+    "train_aep": 5557.77,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Reducing the linear alpha multiplier below the prior best can",
+    "axis": "alpha_linear_ramp coefficient sweep with late repair compensation.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1777201578.7564428,
+    "train_aep": 5561.59,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The prior best's alpha repair can tolerate a little more mid-run",
+    "axis": "lr_noise_injection amplitude sweep with the best linear alpha repair.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1777201657.011541,
+    "train_aep": 5561.68,
+    "train_feasible": true,
+    "train_time": 26.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The prior best may be near the edge of too much stochastic LR",
+    "axis": "lr_noise_injection amplitude sweep with the best linear alpha repair.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1777201735.852223,
+    "train_aep": 5561.02,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best noisy schedule may cool a little too quickly before the",
+    "axis": "lr_exponential_decay curvature sweep on the best feasible backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1777201796.468312,
+    "train_aep": 5557.51,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Faster cooling may reduce late oscillation before the high-penalty",
+    "axis": "lr_exponential_decay curvature sweep on the best feasible backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.7
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1777202013.61473,
+    "train_aep": 5561.12,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.5
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1777202142.9332852,
+    "train_aep": 5562.35,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 22.5
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1777202232.023479,
+    "train_aep": 5555.04,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1777202291.78249,
+    "train_aep": 5562.35,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 22.4
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1777202655.255636,
+    "train_aep": 5528.77,
+    "train_feasible": false,
+    "train_time": 27.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A fixed but smaller Adam step may keep wake-basin movement active",
+    "axis": "lr_constant plus alpha_quadratic_ramp with low Adam smoothing.",
+    "lesson": "pending",
+    "families": [
+      "alpha_quadratic_ramp",
+      "lr_constant"
+    ]
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1777202786.4398,
+    "train_aep": 5561.97,
+    "train_feasible": true,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best feasible noisy schedule may be slightly over-penalized",
+    "axis": "alpha_anti_phase_dip paired with the current best lr_noise_injection",
+    "lesson": "pending",
+    "families": [
+      "alpha_anti_phase_dip",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1777202867.485894,
+    "train_aep": 5562.09,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current best may get most of its benefit from early/mid LR",
+    "axis": "schedule_two_phase on the best noisy exponential backbone.",
+    "lesson": "pending",
+    "families": [
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "schedule_two_phase"
+    ]
+  },
+  {
+    "attempt": 43,
+    "timestamp": 1777202953.844438,
+    "train_aep": 5560.01,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Replacing the best schedule's linear alpha growth with a convex",
+    "axis": "alpha_quadratic_ramp on the current best lr_noise_injection backbone.",
+    "lesson": "pending",
+    "families": [
+      "alpha_quadratic_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 44,
+    "timestamp": 1777203026.158559,
+    "train_aep": 5558.8,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best feasible schedule may have just enough feasibility margin",
+    "axis": "local sweep of alpha_linear_ramp coefficient on lr_noise_injection.",
+    "lesson": "pending",
+    "families": [
+      "alpha_cyclic",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 45,
+    "timestamp": 1777203082.423487,
+    "train_aep": 5555.91,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 46,
+    "timestamp": 1777203148.126785,
+    "train_aep": 5564.28,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best schedule may be sensitive to the deterministic LR-noise",
+    "axis": "lr_noise_injection seed sweep on the best alpha_linear_ramp backbone.",
+    "lesson": "pending",
+    "families": [
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ]
+  },
+  {
+    "attempt": 47,
+    "timestamp": 1777203208.008716,
+    "train_aep": 5560.47,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Nearby deterministic LR-noise seeds can sample slightly different",
+    "axis": "lr_noise_injection seed sweep on the best alpha_linear_ramp backbone.",
+    "lesson": "pending",
+    "families": [
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ]
+  },
+  {
+    "attempt": 48,
+    "timestamp": 1777203354.967815,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n"
+  },
+  {
+    "attempt": 49,
+    "timestamp": 1777203536.1657548,
+    "train_aep": 5555.04,
+    "train_feasible": true,
+    "train_time": 25.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Explicit TopFarm-style low Adam smoothing can keep wake-basin",
+    "axis": "adam_topfarm_low with deterministic exponential LR and staged alpha.",
+    "lesson": "pending",
+    "families": [
+      "adam_topfarm_low",
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 50,
+    "timestamp": 1777203629.642424,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 25.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The deterministic low-momentum branch under-repairs held-out",
+    "axis": "adam_topfarm_low plus lr_noise_injection on the proven alpha repair.",
+    "lesson": "pending",
+    "families": [
+      "adam_topfarm_low",
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.0
+  },
+  {
+    "attempt": 51,
+    "timestamp": 1777203765.219813,
+    "train_aep": 5562.07,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current best may still be under-exploring the mid-run wake",
+    "axis": "adam_topfarm_low with lr_noise_injection amplitude sweep.",
+    "lesson": "pending",
+    "families": [
+      "adam_topfarm_low",
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ]
+  },
+  {
+    "attempt": 52,
+    "timestamp": 1777204116.9206002,
+    "train_aep": 5557.57,
+    "train_feasible": true,
+    "train_time": 27.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The noisy exponential schedules appear capped near 5564 GWh in",
+    "axis": "warmup cosine plus dual Gaussian LR bumps and moderate Adam betas.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.0
+  },
+  {
+    "attempt": 53,
+    "timestamp": 1777204329.885982,
+    "train_aep": 5559.52,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The single-bump random-search schedule has strong train AEP but",
+    "axis": "deterministic gaussian_bump with late LR quench and alpha surge.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 54,
+    "timestamp": 1777204409.704926,
+    "train_aep": 5561.57,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 55,
+    "timestamp": 1777204467.70221,
+    "train_aep": 5561.27,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 56,
+    "timestamp": 1777204537.0000808,
+    "train_aep": 5562.2,
+    "train_feasible": false,
+    "train_time": 26.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 57,
+    "timestamp": 1777204590.202101,
+    "train_aep": 5561.35,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 58,
+    "timestamp": 1777204623.278494,
+    "train_aep": 5561.71,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best noisy exponential schedule in this run may be replaceable",
+    "axis": "deterministic gaussian_bump plus coupled alpha and moderate beta2.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 59,
+    "timestamp": 1777204697.716337,
+    "train_aep": 5561.57,
+    "train_feasible": true,
+    "train_time": 25.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.2
+  },
+  {
+    "attempt": 60,
+    "timestamp": 1777204908.7351859,
+    "train_aep": 5558.62,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best backbone is close to a sign-gradient method; briefly",
+    "axis": "adam_high_beta2 annealed into adam_topfarm_low on a noisy exponential",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 61,
+    "timestamp": 1777205004.917978,
+    "train_aep": 5563.08,
+    "train_feasible": false,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best-known schedule is basin-sensitive; a fresh deterministic",
+    "axis": "lr_noise_injection seed sweep on noisy exponential backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 62,
+    "timestamp": 1777205038.262815,
+    "train_aep": 5563.42,
+    "train_feasible": true,
+    "train_time": 26.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 63,
+    "timestamp": 1777205071.543152,
+    "train_aep": 5563.18,
+    "train_feasible": false,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 64,
+    "timestamp": 1777205104.515699,
+    "train_aep": 5562.13,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 65,
+    "timestamp": 1777205173.441088,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent may be mildly over-polished by the very low final",
+    "axis": "lr_exponential_decay floor sweep on proven noisy repair envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 66,
+    "timestamp": 1777205384.509421,
+    "train_aep": 5562.03,
+    "train_feasible": true,
+    "train_time": 25.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best noisy schedule may be benefiting from a coarse mid-run",
+    "axis": "deterministic lr_gaussian_bumps replacing lr_noise_injection.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 67,
+    "timestamp": 1777205452.3015091,
+    "train_aep": 5556.64,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Instead of moving the layout basin through noisy learning-rate",
+    "axis": "alpha_anti_phase_dip/cyclic alpha on deterministic exponential LR.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps",
+      "lr_sinusoidal_shake"
+    ]
+  },
+  {
+    "attempt": 68,
+    "timestamp": 1777205553.5593338,
+    "train_aep": 5560.19,
+    "train_feasible": false,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The delayed alpha lift in iter_072 gave the optimizer too little",
+    "axis": "delayed alpha ramp plus earlier final repair on noisy LR backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 69,
+    "timestamp": 1777205661.296101,
+    "train_aep": 5563.34,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The high-AEP basin is sensitive to the LR perturbation, so keep",
+    "axis": "small mid-run alpha bump on the proven noisy LR backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.7
+  },
+  {
+    "attempt": 70,
+    "timestamp": 1777205971.990002,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best scored schedule improved when the final floor rose from",
+    "axis": "lr_exponential_decay final floor sweep on proven noisy envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 71,
+    "timestamp": 1777206060.5749419,
+    "train_aep": 5557.74,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous floor sweep was mostly inactive because the",
+    "axis": "lr_exponential_decay exponent sweep on proven noisy envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 72,
+    "timestamp": 1777206093.721983,
+    "train_aep": 5557.51,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current schedule may be carrying too much late movement after",
+    "axis": "lr_exponential_decay exponent sweep on proven noisy envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 73,
+    "timestamp": 1777206172.4526432,
+    "train_aep": 5560.96,
+    "train_feasible": true,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous positive alpha bump reduced train AEP, suggesting",
+    "axis": "small mid-run alpha anti-bump on proven noisy LR backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 74,
+    "timestamp": 1777206264.817457,
+    "train_aep": 5563.25,
+    "train_feasible": true,
+    "train_time": 26.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "adam_topfarm_low",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 75,
+    "timestamp": 1777206338.35885,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 25.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best scored schedule improved when the final floor rose from",
+    "axis": "lr_exponential_decay final floor sweep on proven noisy envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.0
+  },
+  {
+    "attempt": 76,
+    "timestamp": 1777206586.576223,
+    "train_aep": 5559.5,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The noisy exponential winner may be finding its basin because it",
+    "axis": "piecewise rational LR coast plus late quench, no stochastic noise.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum"
+    ]
+  },
+  {
+    "attempt": 77,
+    "timestamp": 1777206716.572005,
+    "train_aep": 5562.73,
+    "train_feasible": true,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best basin comes from the proven noisy LR path, but the",
+    "axis": "incumbent LR-noise backbone plus very small alpha jitter.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ]
+  },
+  {
+    "attempt": 78,
+    "timestamp": 1777206806.372191,
+    "train_aep": 5559.42,
+    "train_feasible": false,
+    "train_time": 25.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Higher Adam memory smoothed away useful displacement in prior",
+    "axis": "low-beta Adam responsiveness on incumbent noisy LR/alpha envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 79,
+    "timestamp": 1777206849.335841,
+    "train_aep": 5562.73,
+    "train_feasible": true,
+    "train_time": 25.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best basin comes from the proven noisy LR path, but the",
+    "axis": "incumbent LR-noise backbone plus very small alpha jitter.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_noise_injection"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.6
+  },
+  {
+    "attempt": 80,
+    "timestamp": 1777207071.681386,
+    "train_aep": 5561.44,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent noisy exponential envelope repeatedly finds the best",
+    "axis": "periodic settle windows layered onto proven noisy exponential envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 81,
+    "timestamp": 1777207162.846197,
+    "train_aep": 5560.88,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent's deterministic noise path is useful for basin",
+    "axis": "annealed lr_noise_injection amplitude on proven exponential envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ]
+  },
+  {
+    "attempt": 82,
+    "timestamp": 1777207243.10257,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 25.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "New settle-window and noise-annealing variants degraded the train",
+    "axis": "control recovery to the best noisy exponential repair backbone.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.0
+  },
+  {
+    "attempt": 83,
+    "timestamp": 1777207470.5921369,
+    "train_aep": 5564.3,
+    "train_feasible": false,
+    "train_time": 26.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent repeatedly reaches the same feasible basin, but its",
+    "axis": "late LR shelf plus brief penalty softening on incumbent noisy envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 84,
+    "timestamp": 1777207534.142741,
+    "train_aep": 5564.48,
+    "train_feasible": false,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The prior late objective-polish shelf retained high AEP but lost",
+    "axis": "late LR shelf with local alpha guard on incumbent noisy envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 85,
+    "timestamp": 1777207679.8115468,
+    "train_aep": 5564.47,
+    "train_feasible": true,
+    "train_time": 26.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Larger late shelves produce attractive but infeasible train",
+    "axis": "tiny late LR shelf without changing penalty envelope.",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_linear_ramp",
+      "lr_exponential_decay",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 22.5
+  },
+  {
+    "attempt": 86,
+    "timestamp": 1777207840.303404,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 19, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\n"
+  },
+  {
+    "attempt": 87,
+    "timestamp": 1777207898.451377,
+    "train_aep": 5558.93,
+    "train_feasible": true,
+    "train_time": 26.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The recent noisy-exponential schedules keep returning the same",
+    "axis": "constant_phase_dual_kick_with_beta2_switch_and_late_repair",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_coupled_inverse_lr",
+      "lr_gaussian_bumps",
+      "warmup"
+    ]
+  },
+  {
+    "attempt": 88,
+    "timestamp": 1777208114.8540218,
+    "train_aep": 5567.85,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A low-alpha0 gate fixed almost all of the stressed-rhombus boundary",
+    "axis": "alpha0_gated_dual_bump_cosine_stronger_low_scale_repair",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "alpha_cyclic",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 23.2
+  },
+  {
+    "attempt": 89,
+    "timestamp": 1777208246.007644,
+    "train_aep": 5562.99,
+    "train_feasible": true,
+    "train_time": 26.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The train farm sits in a middle alpha0 band where the rounded",
+    "axis": "dual_bump_cosine_alpha0_band_gated_repair",
+    "lesson": "pending",
+    "families": [
+      "adam_zero_momentum",
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ]
+  },
+  {
+    "attempt": 90,
+    "timestamp": 1777208372.252222,
+    "train_aep": 5569.59,
+    "train_feasible": false,
+    "train_time": 26.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "lr_cosine",
+      "lr_gaussian_bumps"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.2
+  }
+]

@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_rowp_n80_roserowp.json",
+  "eta_t_m": 5.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 4557.128376948595,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 10.1
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 4559.172946707709,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 4549.261157755463,
+      "bp_init": 0.0,
+      "bp_final": 44.26320713017503,
+      "sp_final": 0.0,
+      "elapsed_s": 5.2
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 4547.956349892304,
+      "bp_init": 0.0,
+      "bp_final": 0.9558906888916164,
+      "sp_final": 0.0,
+      "elapsed_s": 5.0
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 4550.420618523707,
+      "bp_init": 0.0,
+      "bp_final": 11.383698576524989,
+      "sp_final": 1050.724983457476,
+      "elapsed_s": 5.1
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n80_roserowp.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 4545.357516042446,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.0
+    }
+  ]
+}

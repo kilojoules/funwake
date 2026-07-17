@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n300_roseomnidir.json",
+  "eta_t_m": 5.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n300_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 29539.996072881982,
+      "bp_init": 0.0,
+      "bp_final": 1554.2751937549742,
+      "sp_final": 4688.745343136485,
+      "elapsed_s": 10.4
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 29533.095947957452,
+      "bp_init": 0.0,
+      "bp_final": 1088.713538655547,
+      "sp_final": 1490.2054940154776,
+      "elapsed_s": 6.2
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 29508.38088950553,
+      "bp_init": 0.0,
+      "bp_final": 2631.2794656463875,
+      "sp_final": 20346.569882297423,
+      "elapsed_s": 6.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 29503.213376915402,
+      "bp_init": 0.0,
+      "bp_final": 1819.8417024162345,
+      "sp_final": 3236.760492129717,
+      "elapsed_s": 6.2
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 29531.82193584027,
+      "bp_init": 0.0,
+      "bp_final": 1479.788800008236,
+      "sp_final": 0.0,
+      "elapsed_s": 6.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_roseomnidir.json",
+      "eta_t_m": 5.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 29517.829879104993,
+      "bp_init": 0.0,
+      "bp_final": 685.8593524481653,
+      "sp_final": 0.0,
+      "elapsed_s": 6.2
+    }
+  ]
+}

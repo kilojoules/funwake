@@ -1,0 +1,733 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1777251336.23713,
+    "train_aep": 5533.48,
+    "train_feasible": true,
+    "train_time": 27.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "Recreating the benchmark grid from only boundary/min_spacing and running one full TopFarm SGD pass should match the known strong baseline while staying within the runner timeout.",
+    "axis": "topfarm_sgd_solve with conservative single-start settings and deterministic convex-polygon grid initialization.",
+    "lesson": "Scored 5584.45 GWh feasible in 141.3s; weak-wake fan dilation generalized feasibly in 135.5s but did not beat the existing 5584.45 plateau.",
+    "families": [
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 23.8
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1777251518.237858,
+    "error": "Timeout after 60s",
+    "rowp_feasible": true,
+    "rowp_time": 60.4
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1777251679.023154,
+    "train_aep": 5563.45,
+    "train_feasible": true,
+    "train_time": 71.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "A hexagonal lattice start plus stronger TopFarm constraint weights",
+    "axis": "init_hexagonal with topfarm_sgd_solve.",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 61.5
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1777252084.3069692,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 63.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The last run's built-in SGD improved from a hex start but likely",
+    "axis": "custom_adam staged batched NAdam over wind-aligned exact lattice starts.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_wind_aware_grid"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 58.3
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1777252361.649413,
+    "train_aep": 5501.3,
+    "train_feasible": true,
+    "train_time": 9.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The custom Adam run found a good basin but still used soft",
+    "axis": "scipy_slsqp with explicit JAX objective gradients and constraint Jacobians.",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam",
+      "scipy_slsqp"
+    ]
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1777252472.938766,
+    "train_aep": 5568.09,
+    "train_feasible": true,
+    "train_time": 8.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The prior Adam run's strongest component was its parametric",
+    "axis": "scipy_slsqp polishing of BO-selected wind-aligned hex lattice starts.",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam",
+      "init_hexagonal",
+      "scipy_slsqp"
+    ]
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1777252626.32623,
+    "train_aep": 5561.66,
+    "train_feasible": true,
+    "train_time": 33.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "Hex/wind-aware TopFarm SGD reaches better basins than direct",
+    "axis": "scipy_slsqp polish after short TopFarm SGD multistart basin search.",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam",
+      "init_random_restarts",
+      "scipy_slsqp",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1777252662.138022,
+    "train_aep": 5568.09,
+    "train_feasible": true,
+    "train_time": 7.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The prior Adam run's strongest component was its parametric",
+    "axis": "scipy_slsqp polishing of BO-selected wind-aligned hex lattice starts.",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam",
+      "init_hexagonal",
+      "scipy_slsqp"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 9.7
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1777252872.51583,
+    "train_aep": 5572.78,
+    "train_feasible": true,
+    "train_time": 5.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Direct L-BFGS-B with smooth spacing/boundary penalties can move",
+    "axis": "scipy_lbfgs penalty optimization with deterministic wind-oriented lattice starts.",
+    "lesson": "Pending score.",
+    "families": [
+      "scipy_lbfgs"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 5.7
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1777253016.319016,
+    "train_aep": 5575.42,
+    "train_feasible": true,
+    "train_time": 10.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Prior high scores were driven by finding a strong low-dimensional",
+    "axis": "scipy_differential_evolution lattice basin search with brief L-BFGS-B penalty polish.",
+    "lesson": "Pending score.",
+    "families": [
+      "scipy_differential_evolution",
+      "scipy_lbfgs"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 8.3
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1777253165.7816792,
+    "error": "Sandbox blocked: Blocked import: cma"
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1777253237.551301,
+    "train_aep": 5576.15,
+    "train_feasible": true,
+    "train_time": 13.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best known layouts are sensitive to the low-dimensional",
+    "axis": "cmaes lattice-parameter search with brief L-BFGS-B penalty polish.",
+    "lesson": "Pending score.",
+    "families": [
+      "cmaes",
+      "scipy_lbfgs"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 5.3
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1777253475.5707982,
+    "train_aep": 5577.73,
+    "train_feasible": true,
+    "train_time": 8.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Earlier high scores came from strong lattice basins, but penalty",
+    "axis": "scipy_trust_constr with sparse exact constraints and init_latin_hypercube",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam",
+      "init_latin_hypercube",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 13.8
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1777253910.6977332,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 135.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current run's surplus-grid/prune basin is plateauing near",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_wind_aware_grid",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 126.6
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1777254381.98805,
+    "train_aep": 5567.11,
+    "train_feasible": true,
+    "train_time": 40.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous best layout was likely trapped in a polished",
+    "axis": "simulated_annealing using scipy dual_annealing on compact lattice",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "simulated_annealing"
+    ]
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1777254868.1014678,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 146.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current polished BO-grid basin is strong but may still have",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_basin_hopping"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 15.2
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1777255237.803113,
+    "error": "Sandbox blocked: Blocked builtin: getattr()"
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1777255422.569559,
+    "train_aep": 5553.33,
+    "train_feasible": true,
+    "train_time": 157.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The BO lattice search has repeatedly returned the same polished",
+    "axis": "scipy_shgo exact-size lattice parameter search plus staged AL-NAdam",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_basin_hopping",
+      "scipy_shgo"
+    ]
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1777255815.806426,
+    "train_aep": 5549.37,
+    "train_feasible": true,
+    "train_time": 148.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "SHGO's topology sampling was feasible but too weak as a primary",
+    "axis": "BO-tuned exact-size grid plus pso lattice parameter expansion, staged",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "pso",
+      "scipy_shgo"
+    ]
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1777256068.098739,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 160.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "SHGO and PSO both degraded the basin when they displaced BO",
+    "axis": "BO-tuned exact-size grid plus additive init_kmeans centroid layouts,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_kmeans",
+      "nesterov_momentum",
+      "pso",
+      "scipy_basin_hopping",
+      "scipy_shgo"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 141.5
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1777256677.242835,
+    "train_aep": 5553.32,
+    "train_feasible": true,
+    "train_time": 145.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous best basin is robust, but direct centroid and swarm",
+    "axis": "Explicit genetic_algorithm crossover plus mutation population over",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_augmented_lagrangian",
+      "constraint_projection",
+      "custom_adam",
+      "genetic_algorithm",
+      "nesterov_momentum",
+      "scipy_basin_hopping"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 133.4
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1777257022.14527,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 136.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The explicit genetic algorithm was feasible but pulled the",
+    "axis": "BayesianOptimization-style internal GP expected-improvement search over",
+    "lesson": "Pending score.",
+    "families": [
+      "bayesian_optimization",
+      "constraint_projection",
+      "custom_adam",
+      "genetic_algorithm",
+      "init_kmeans",
+      "nesterov_momentum",
+      "scipy_basin_hopping"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 127.8
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1777257868.849568,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 141.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The centroid and basin-hopping variants kept returning the same",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 129.8
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1777259112.606424,
+    "train_aep": 5577.73,
+    "train_feasible": true,
+    "train_time": 12.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The expensive BO/AL-NAdam family has plateaued near 5584 GWh and",
+    "axis": "scipy_trust_constr with sparse exact constraints and init_latin_hypercube",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam",
+      "init_latin_hypercube",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 16.8
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1777259786.164682,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 153.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 138.2
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1777260325.5141098,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 159.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 126.5
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1777260828.063671,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 134.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_lbfgs",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 123.9
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1777261354.882903,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 140.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_wind_aware_grid",
+      "nesterov_momentum",
+      "scipy_lbfgs",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 126.6
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1777261974.4030259,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 144.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_lbfgs",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 125.0
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1777262398.2636101,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 137.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_wind_aware_grid",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 126.7
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1777262882.692831,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 131.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 122.5
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1777263328.813379,
+    "train_aep": 5567.05,
+    "train_feasible": true,
+    "train_time": 143.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "Dual BO-tuned exact-size grids plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 139.4
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1777263821.102149,
+    "error": "Traceback (most recent call last):\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 143, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/julianquick/portfolio_copy/funwake/tools/../playground/harness.py\", line 114, in main\n    opt_x, opt_y = mod.optimize(\n                   ~~~~~~~~~~~~^\n        sim=sim,\n        ^^^^^^^^\n    ...<5 lines>...\n        weights=weights,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/julianquick/portfolio_copy/funwake/resul"
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1777264056.714895,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 146.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 134.1
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1777264601.1413,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 163.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 146.9
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1777265158.695043,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 142.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 123.2
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1777265567.1291342,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1777265716.170086,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 129.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 115.0
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1777266214.073129,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 136.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Scored 5584.45 GWh feasible in 136.3s; lane-phase topology warps generalized feasibly in 139.4s but did not improve beyond the 5584.45 plateau.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 139.4
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1777266895.857672,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 141.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 135.5
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1777267300.8515358,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1777267459.27441,
+    "train_aep": 5584.45,
+    "train_feasible": true,
+    "train_time": 142.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The sparse trust-constr path was fast but gave up too much AEP.",
+    "axis": "BO-tuned exact-size grid plus staged AL-NAdam halving, with a final",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ]
+  }
+]

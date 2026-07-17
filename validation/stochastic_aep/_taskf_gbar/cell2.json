@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n60_roserowp.json",
+  "eta_t_m": 0.5,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 0.5,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5148.142859785676,
+      "bp_init": 0.0,
+      "bp_final": 0.09400264238136016,
+      "sp_final": 0.0,
+      "elapsed_s": 12.4
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 0.5,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5144.6054331214555,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.9
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 0.5,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5151.07372357669,
+      "bp_init": 0.0,
+      "bp_final": 0.11463997512628207,
+      "sp_final": 0.0,
+      "elapsed_s": 7.1
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 0.5,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5149.158030727943,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 7.0
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 0.5,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5149.953169909393,
+      "bp_init": 0.0,
+      "bp_final": 0.3682922160910826,
+      "sp_final": 0.0,
+      "elapsed_s": 7.0
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n60_roserowp.json",
+      "eta_t_m": 0.5,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5148.819314157892,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.9
+    }
+  ]
+}

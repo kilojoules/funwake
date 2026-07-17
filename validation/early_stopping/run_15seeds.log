@@ -1,0 +1,136 @@
+
+=== ES = True (both impls) ===
+seed=0 max_pos_Δ=402.696 m  AEP_Δ=-8.7977%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=1 max_pos_Δ=521.328 m  AEP_Δ=-4.5645%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=2 max_pos_Δ=539.254 m  AEP_Δ=+0.0991%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=3 max_pos_Δ=566.120 m  AEP_Δ=-8.8022%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=4 max_pos_Δ=348.155 m  AEP_Δ=-8.7910%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=5 max_pos_Δ=365.275 m  AEP_Δ=-18.7411%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=6 max_pos_Δ=466.482 m  AEP_Δ=-19.2084%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=7 max_pos_Δ=442.081 m  AEP_Δ=-17.4148%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=8 max_pos_Δ=365.622 m  AEP_Δ=-12.4649%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=9 max_pos_Δ=474.905 m  AEP_Δ=+0.0991%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=10 max_pos_Δ=570.355 m  AEP_Δ=-15.0509%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=11 max_pos_Δ=497.301 m  AEP_Δ=-14.1922%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=12 max_pos_Δ=309.822 m  AEP_Δ=-8.7860%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=13 max_pos_Δ=504.245 m  AEP_Δ=-11.6710%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+seed=14 max_pos_Δ=364.335 m  AEP_Δ=-13.5512%  feas_agree=True  both_feas=True  TF[bp=0.00e+00, sp=0.00e+00]  PX[bp=0.00e+00, sp=0.00e+00]
+
+=== ES = False (positive control prep) ===
+seed=0 max_pos_Δ=404.125 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=1 max_pos_Δ=522.987 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=2 max_pos_Δ=539.254 m  feas_agree=True  TF_feas=True  PX_feas=True
+seed=3 max_pos_Δ=566.120 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=4 max_pos_Δ=348.680 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=5 max_pos_Δ=365.553 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=6 max_pos_Δ=467.374 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=7 max_pos_Δ=443.831 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=8 max_pos_Δ=378.853 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=9 max_pos_Δ=474.905 m  feas_agree=True  TF_feas=True  PX_feas=True
+seed=10 max_pos_Δ=572.036 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=11 max_pos_Δ=499.048 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=12 max_pos_Δ=309.529 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=13 max_pos_Δ=505.442 m  feas_agree=False  TF_feas=True  PX_feas=False
+seed=14 max_pos_Δ=364.335 m  feas_agree=False  TF_feas=True  PX_feas=False
+
+=== SUMMARY ===
+{
+  "es_on": {
+    "n_seeds": 15,
+    "max_position_diff_p50_m": 466.4822303413355,
+    "max_position_diff_p95_m": 567.3905998599794,
+    "max_position_diff_max_m": 570.3550291776899,
+    "aep_delta_pct_p50": -11.671007999944678,
+    "aep_delta_pct_max_abs": 19.208417049434896,
+    "topfarm_feasibility_rate": 1.0,
+    "pixwake_feasibility_rate": 1.0,
+    "feasibility_agreement_rate": 1.0
+  },
+  "es_off": {
+    "n_seeds": 15,
+    "topfarm_feasibility_rate": 1.0,
+    "pixwake_feasibility_rate": 0.13333333333333333
+  },
+  "positive_control_seeds_off_infeasible_on_feasible": [
+    {
+      "seed": 0,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 1,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 3,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 4,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 5,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 6,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 7,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 8,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 10,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 11,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 12,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 13,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    },
+    {
+      "seed": 14,
+      "off_tf_feas": true,
+      "off_px_feas": false,
+      "on_both_feas": true
+    }
+  ]
+}
+
+Wrote validation/early_stopping/topfarm_vs_pixwake_es.json  (207.5s)

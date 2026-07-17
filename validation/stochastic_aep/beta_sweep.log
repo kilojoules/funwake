@@ -1,0 +1,21 @@
+Tasks to run: 18
+[1/18] problem_rowp_n70_roseomnidir.j ηT=5.00m β=(0.1,0.2) ss=100000  AEP=5285.78 bp_final=1.2e+00 elapsed=4.8s
+[2/18] problem_rowp_n70_roseomnidir.j ηT=5.00m β=(0.1,0.2) ss=200000  AEP=5288.19 bp_final=0.0e+00 elapsed=2.3s
+[3/18] problem_rowp_n70_roseomnidir.j ηT=5.00m β=(0.1,0.2) ss=300000  AEP=5291.93 bp_final=1.1e+00 elapsed=2.5s
+[4/18] problem_rowp_n70_roseomnidir.j ηT=5.00m β=(0.3,0.5) ss=100000  AEP=5279.74 bp_final=1.8e+01 elapsed=2.2s
+[5/18] problem_rowp_n70_roseomnidir.j ηT=5.00m β=(0.3,0.5) ss=200000  AEP=5276.86 bp_final=4.2e-01 elapsed=2.4s
+[6/18] problem_rowp_n70_roseomnidir.j ηT=5.00m β=(0.3,0.5) ss=300000  AEP=5276.94 bp_final=2.5e-01 elapsed=2.3s
+[7/18] problem_dei_n60_roserowp.json  ηT=15.00m β=(0.1,0.2) ss=100000  AEP=5149.11 bp_final=3.7e+00 elapsed=3.9s
+[8/18] problem_dei_n60_roserowp.json  ηT=15.00m β=(0.1,0.2) ss=200000  AEP=5150.12 bp_final=5.9e+01 elapsed=2.3s
+[9/18] problem_dei_n60_roserowp.json  ηT=15.00m β=(0.1,0.2) ss=300000  AEP=5146.12 bp_final=2.5e+02 elapsed=2.4s
+[10/18] problem_dei_n60_roserowp.json  ηT=15.00m β=(0.3,0.5) ss=100000  AEP=5150.65 bp_final=1.9e+02 elapsed=2.2s
+[11/18] problem_dei_n60_roserowp.json  ηT=15.00m β=(0.3,0.5) ss=200000  AEP=5154.10 bp_final=2.6e+02 elapsed=2.3s
+[12/18] problem_dei_n60_roserowp.json  ηT=15.00m β=(0.3,0.5) ss=300000  AEP=5151.72 bp_final=1.5e+02 elapsed=2.5s
+[13/18] problem_rowp_n60_roserowp.json ηT=3.50m β=(0.1,0.2) ss=100000  AEP=3444.26 bp_final=0.0e+00 elapsed=2.6s
+[14/18] problem_rowp_n60_roserowp.json ηT=3.50m β=(0.1,0.2) ss=200000  AEP=3447.50 bp_final=0.0e+00 elapsed=2.4s
+[15/18] problem_rowp_n60_roserowp.json ηT=3.50m β=(0.1,0.2) ss=300000  AEP=3449.80 bp_final=0.0e+00 elapsed=2.3s
+[16/18] problem_rowp_n60_roserowp.json ηT=3.50m β=(0.3,0.5) ss=100000  AEP=3444.41 bp_final=0.0e+00 elapsed=2.5s
+[17/18] problem_rowp_n60_roserowp.json ηT=3.50m β=(0.3,0.5) ss=200000  AEP=3446.27 bp_final=0.0e+00 elapsed=2.3s
+[18/18] problem_rowp_n60_roserowp.json ηT=3.50m β=(0.3,0.5) ss=300000  AEP=3442.37 bp_final=0.0e+00 elapsed=2.5s
+
+Wall: 23.4 min

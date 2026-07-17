@@ -1,0 +1,23 @@
+{
+  "engine": "pixwake",
+  "config": {
+    "wake_model": "NOJDeficit",
+    "k": 0.05,
+    "superposition": "SquaredSum",
+    "n_wd": 360,
+    "n_ws": 22,
+    "weighting": "joint_probabilities imported from py_wake setup"
+  },
+  "n_turbines": 74,
+  "aep_gwh": 3381.93420787868,
+  "vs_pywake": {
+    "pywake_aep_gwh": 3381.9342110748576,
+    "delta_gwh": -3.1961776585376356e-06,
+    "delta_pct": -9.450738716534098e-08
+  },
+  "vs_published": {
+    "published_aep_gwh": 3429.63,
+    "delta_gwh": -47.69579212132021,
+    "delta_pct": -1.3906978922309463
+  }
+}

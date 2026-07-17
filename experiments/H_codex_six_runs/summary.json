@@ -1,0 +1,114 @@
+{
+  "sched": {
+    "runs": [
+      {
+        "attempt": 99,
+        "train_aep": 5567.85,
+        "rowp_aep": null,
+        "rowp_feasible": false,
+        "script": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_sched_run1/iter_099.py",
+        "structures": [],
+        "run": 1,
+        "run_dir": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_sched_run1",
+        "n_attempts": 115
+      },
+      {
+        "attempt": 88,
+        "train_aep": 5567.85,
+        "rowp_aep": null,
+        "rowp_feasible": false,
+        "script": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_sched_run2/iter_088.py",
+        "structures": [],
+        "run": 2,
+        "run_dir": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_sched_run2",
+        "n_attempts": 90
+      },
+      {
+        "attempt": 25,
+        "train_aep": 5567.85,
+        "rowp_aep": null,
+        "rowp_feasible": false,
+        "script": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_sched_run3/iter_025.py",
+        "structures": [
+          "dual_gaussian_bumps",
+          "warmup"
+        ],
+        "run": 3,
+        "run_dir": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_sched_run3",
+        "n_attempts": 72
+      }
+    ],
+    "summary": {
+      "n_runs": 3,
+      "n_with_rowp": 0,
+      "train_mean": 5567.85,
+      "train_std": 0.0,
+      "train_max": 5567.85,
+      "rowp_mean": null,
+      "rowp_std": null,
+      "rowp_max": null,
+      "rowp_min": null
+    }
+  },
+  "fullopt": {
+    "runs": [
+      {
+        "attempt": 49,
+        "train_aep": 5583.32,
+        "rowp_aep": null,
+        "rowp_feasible": true,
+        "script": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_fullopt_run1/iter_049.py",
+        "structures": [
+          "wraps_topfarm_sgd"
+        ],
+        "run": 1,
+        "run_dir": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_fullopt_run1",
+        "n_attempts": 63
+      },
+      {
+        "attempt": 56,
+        "train_aep": 5584.25,
+        "rowp_aep": null,
+        "rowp_feasible": true,
+        "script": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_fullopt_run2/iter_056.py",
+        "structures": [
+          "custom_adam"
+        ],
+        "run": 2,
+        "run_dir": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_fullopt_run2",
+        "n_attempts": 61
+      },
+      {
+        "attempt": 14,
+        "train_aep": 5584.45,
+        "rowp_aep": null,
+        "rowp_feasible": true,
+        "script": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_fullopt_run3/iter_014.py",
+        "structures": [
+          "custom_adam"
+        ],
+        "run": 3,
+        "run_dir": "/Users/julianquick/portfolio_copy/funwake/results_agent_codex_fullopt_run3",
+        "n_attempts": 42
+      }
+    ],
+    "summary": {
+      "n_runs": 3,
+      "n_with_rowp": 0,
+      "train_mean": 5584.007,
+      "train_std": 0.492,
+      "train_max": 5584.45,
+      "rowp_mean": null,
+      "rowp_std": null,
+      "rowp_max": null,
+      "rowp_min": null
+    }
+  },
+  "comparators": {
+    "claude_sched_iter192_rowp_5seed_mean": 4266.3,
+    "gemini_sched_iter118_rowp_5seed_mean": 4262.2,
+    "gemini_fullopt_slsqp_5seed_best": 4272.7,
+    "claude_fullopt_run1_rowp": 4264.9,
+    "baseline_500_start_rowp": 4246.7
+  }
+}

@@ -10,6 +10,9 @@ scipy = "*"
 matplotlib = "*"
 pandas = "*"
 git = "*"
+hdf5 = ">=2.1.0,<3"
+netcdf4 = ">=1.7.4,<2"
+pytest = ">=9.0.3,<10"
 
 [pypi-dependencies]
 together = ">=1.0"
@@ -17,6 +20,9 @@ google-genai = ">=1.0"
 huggingface-hub = ">=0.20"
 cma = ">=4.4.4, <5"
 mcp = ">=1.2"
+py-wake = ">=2.6.20, <3"
+windio = ">=2.1.1, <3"
+topfarm = ">=2.6.2, <3"
 # pixwake: installed from playground clone (see setup.sh)
 # The benchmark uses the playground pixwake via PYTHONPATH.
 # The LLM's scripts also use it via PYTHONPATH.

@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n300_rosedei.json",
+  "eta_t_m": 1.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n300_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 29557.3858370285,
+      "bp_init": 0.0,
+      "bp_final": 105.49822418313586,
+      "sp_final": 490.4581291016657,
+      "elapsed_s": 11.1
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 29539.412429803284,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 29497.70697145238,
+      "bp_init": 0.0,
+      "bp_final": 65.16472146371349,
+      "sp_final": 2857.636333836941,
+      "elapsed_s": 6.4
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 29482.58837872057,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 29492.05153614116,
+      "bp_init": 0.0,
+      "bp_final": 207.3321732536153,
+      "sp_final": 2466.418735212297,
+      "elapsed_s": 6.4
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n300_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 29472.52686419819,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.3
+    }
+  ]
+}

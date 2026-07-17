@@ -1,0 +1,12 @@
+{
+ "cell": "dei_n300_roseomnidir",
+ "K": 50,
+ "tol_m": 0.1,
+ "schedules": {
+  "baseline": {
+   "best": null,
+   "n_feasible": 0,
+   "best_infeas_aep": 29468.491
+  }
+ }
+}

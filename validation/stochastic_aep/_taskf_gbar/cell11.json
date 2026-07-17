@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_rowp_n70_roserowp.json",
+  "eta_t_m": 1.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 4001.305522316471,
+      "bp_init": 0.0,
+      "bp_final": 0.326152324320067,
+      "sp_final": 0.0,
+      "elapsed_s": 12.4
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 4000.8729767267323,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.8
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 4002.292132558889,
+      "bp_init": 0.0,
+      "bp_final": 0.17222894266148764,
+      "sp_final": 0.0,
+      "elapsed_s": 6.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 3998.846439739261,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.7
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 4012.4197664796948,
+      "bp_init": 0.0,
+      "bp_final": 2.695312138679487,
+      "sp_final": 0.0,
+      "elapsed_s": 6.8
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_roserowp.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 4010.7017606727195,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.9
+    }
+  ]
+}

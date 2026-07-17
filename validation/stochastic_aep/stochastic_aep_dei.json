@@ -1,0 +1,30 @@
+{
+  "config": {
+    "problem": "playground/problem.json",
+    "resource": "validation/stochastic_aep/dei_weibull_12.json",
+    "K": 50,
+    "repeats": 200,
+    "n_target": 50,
+    "min_spacing_m": 960.0,
+    "wake_model": "BastankhahGaussianDeficit(k=0.04)"
+  },
+  "deterministic_fine_grid_aep_gwh": 4407.374242498361,
+  "deterministic_eval_time_s": 2.1492769718170166,
+  "stochastic_K_sample_estimator": {
+    "K": 50,
+    "repeats": 200,
+    "mc_mean_aep_gwh": 4429.614285806562,
+    "mc_std_aep_gwh": 307.21544806512736,
+    "mc_se_aep_gwh": 21.723412661211515,
+    "delta_vs_deterministic_gwh": 22.240043308201166,
+    "delta_vs_deterministic_pct": 0.5046098217335452,
+    "z_score": 1.0237822047137246
+  },
+  "per_iter_cost": {
+    "forward_only_s": 0.0042573904991149904,
+    "forward_plus_grad_s": 0.006920881271362304,
+    "iters_per_candidate_assumed": 8000,
+    "sec_per_candidate": 55.36705017089844,
+    "candidates_per_hour": 65.02062127001669
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_rowp_n70_rosedei.json",
+  "eta_t_m": 1.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5281.1972689356335,
+      "bp_init": 0.0,
+      "bp_final": 5.408713340184335,
+      "sp_final": 0.0,
+      "elapsed_s": 11.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 5279.557181946171,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.5
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5278.958430240899,
+      "bp_init": 0.0,
+      "bp_final": 0.21491920576179002,
+      "sp_final": 0.0,
+      "elapsed_s": 6.4
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 5277.995883379058,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.3
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5277.657763438466,
+      "bp_init": 0.0,
+      "bp_final": 2.959113405936976,
+      "sp_final": 0.0,
+      "elapsed_s": 6.6
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n70_rosedei.json",
+      "eta_t_m": 1.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 5279.063277021218,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 6.2
+    }
+  ]
+}

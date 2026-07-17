@@ -1,0 +1,1079 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1777218904.987361,
+    "train_aep": 5553.34,
+    "train_feasible": true,
+    "train_time": 36.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "A wind-perpendicular grid plus one perturbed restart gives the",
+    "axis": "topfarm_sgd_solve with wind-aware initialization and one local restart.",
+    "lesson": "Pending score.",
+    "families": [
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 29.8
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1777219165.446095,
+    "train_aep": 5536.54,
+    "train_feasible": true,
+    "train_time": 11.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "A hand-rolled Adam loop with a rising constraint penalty can make",
+    "axis": "custom_adam plus deterministic rotated hex initializations and projection",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 10.1
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1777219285.8901079,
+    "train_aep": 5477.87,
+    "train_feasible": true,
+    "train_time": 5.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Direct constrained SQP can improve AEP without the penalty-weight",
+    "axis": "scipy_slsqp with explicit polygon and spacing inequalities.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "scipy_slsqp"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 5.8
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1777219443.4234922,
+    "train_aep": 5553.46,
+    "train_feasible": true,
+    "train_time": 37.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The original TopFarm SGD produced the strongest basin so far; a",
+    "axis": "scipy_slsqp polish after the best known wind-aware SGD basin.",
+    "lesson": "Pending score.",
+    "families": [
+      "scipy_slsqp",
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 31.0
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1777219838.84335,
+    "train_aep": 5553.54,
+    "train_feasible": true,
+    "train_time": 40.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A custom Adam loop that keeps TopFarm's useful inverse-LR",
+    "axis": "custom_adam with wind-aware initialization, one perturbation restart,",
+    "lesson": "Pending score.",
+    "families": [
+      "custom_adam"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 34.0
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1777220122.091142,
+    "train_aep": 5506.47,
+    "train_feasible": true,
+    "train_time": 8.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "L-BFGS-B on normalized turbine coordinates can use JAX",
+    "axis": "scipy_lbfgs with wind-aware staggered-grid initialization and pure penalty",
+    "lesson": "Pending score.",
+    "families": [
+      "scipy_lbfgs"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 8.7
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1777220294.494464,
+    "train_aep": 5550.43,
+    "train_feasible": true,
+    "train_time": 35.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A Nesterov momentum loop can keep the long exploratory moves that",
+    "axis": "nesterov_momentum with wind-aware staggered initialization and a rising",
+    "lesson": "Pending score.",
+    "families": [
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 30.2
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1777220510.788144,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 39.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous Nesterov run was feasible and above baseline but",
+    "axis": "nesterov_momentum plus init_hexagonal wind-aware starts; pure penalty",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 34.5
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1777220820.798315,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 51.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The strongest Nesterov/hexagonal layout is close to a spacing-",
+    "axis": "scipy_trust_constr interior-point polish after nesterov_momentum and",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 72.9
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1777221085.472809,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 42.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best layout appears locally spacing-active; a few feasible",
+    "axis": "simulated_annealing with constraint projection, followed by short",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "init_hexagonal",
+      "init_wind_aware_grid",
+      "nesterov_momentum",
+      "scipy_trust_constr",
+      "simulated_annealing"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 38.0
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1777221256.273291,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 51.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best two hexagonal starts converge to the same score after",
+    "axis": "init_random_restarts plus init_hexagonal wind_aware starts and",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "init_random_restarts",
+      "init_wind_aware_grid",
+      "nesterov_momentum",
+      "scipy_trust_constr",
+      "simulated_annealing"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 45.0
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1777221575.289715,
+    "train_aep": 5557.78,
+    "train_feasible": true,
+    "train_time": 34.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "A low-dimensional scipy_differential_evolution search over",
+    "axis": "scipy_differential_evolution global search for initialization plus",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "nesterov_momentum",
+      "scipy_differential_evolution"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 28.3
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1777221792.4762728,
+    "train_aep": 5558.76,
+    "train_feasible": true,
+    "train_time": 52.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Deterministic init_latin_hypercube sampling of hex-lattice",
+    "axis": "init_latin_hypercube over wind-aware hexagonal lattice parameters plus",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "init_latin_hypercube",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 45.7
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1777222014.234962,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 39.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best layout is spacing-active, so preserving the strongest",
+    "axis": "constraint_augmented_lagrangian polish after wind-aware hexagonal",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_augmented_lagrangian",
+      "init_hexagonal",
+      "nesterov_momentum",
+      "scipy_trust_constr"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 34.5
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1777222336.169274,
+    "train_aep": 5554.99,
+    "train_feasible": true,
+    "train_time": 45.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "scipy_basin_hopping can escape the repeated 5560.8 GWh hex basin by",
+    "axis": "scipy_basin_hopping on hex-lattice angle/phase/shear/ranking parameters,",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "nesterov_momentum",
+      "scipy_basin_hopping"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 38.7
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1777222568.828707,
+    "train_aep": 5558.76,
+    "train_feasible": true,
+    "train_time": 51.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "scipy_shgo can systematically sample the bounded hex-lattice",
+    "axis": "scipy_shgo over hex-lattice angle/spacing/phase/shear parameters plus",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "nesterov_momentum",
+      "scipy_shgo"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 40.1
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1777222782.174685,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 52.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "pso can cheaply explore coupled orientation/phase/shear changes in",
+    "axis": "particle_swarm search for one extra hex-lattice seed plus the two",
+    "lesson": "Pending score.",
+    "families": [
+      "init_hexagonal",
+      "nesterov_momentum",
+      "pso"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 44.2
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1777223071.971551,
+    "train_aep": 5558.44,
+    "train_feasible": true,
+    "train_time": 44.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "cmaes can learn coupled angle/phase/shear/ranking moves in the",
+    "axis": "full-covariance cmaes over six hex-lattice seed parameters, followed by",
+    "lesson": "Pending score.",
+    "families": [
+      "cmaes",
+      "init_hexagonal",
+      "nesterov_momentum",
+      "pso"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 34.5
+  },
+  {
+    "attempt": 19,
+    "timestamp": 1777223270.173866,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 53.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "a small genetic_algorithm can combine useful orientation, phase,",
+    "axis": "deterministic crossover and mutation search for one extra hex-lattice",
+    "lesson": "Pending score.",
+    "families": [
+      "genetic_algorithm",
+      "init_hexagonal",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 43.4
+  },
+  {
+    "attempt": 20,
+    "timestamp": 1777223597.709515,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 46.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "kmeans clustering of weighted wind sectors can create a seed that",
+    "axis": "init_kmeans over circular wind directions to build a mixed-orientation",
+    "lesson": "Pending score.",
+    "families": [
+      "init_kmeans"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 40.1
+  },
+  {
+    "attempt": 21,
+    "timestamp": 1777223937.266431,
+    "train_aep": 5559.11,
+    "train_feasible": true,
+    "train_time": 41.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Bayesian optimization can spend a small number of expensive seed",
+    "axis": "bayesian_optimization with a hand-built GP/LCB acquisition over",
+    "lesson": "Pending score.",
+    "families": [
+      "bayesian_optimization",
+      "init_hexagonal",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 34.9
+  },
+  {
+    "attempt": 22,
+    "timestamp": 1777224107.090079,
+    "train_aep": 5559.32,
+    "train_feasible": true,
+    "train_time": 39.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 21 lost score by drifting the incumbent lattice geometry;",
+    "axis": "bayesian_optimization with a hand-built GP/LCB acquisition over",
+    "lesson": "Pending score.",
+    "families": [
+      "bayesian_optimization",
+      "init_hexagonal",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 35.2
+  },
+  {
+    "attempt": 23,
+    "timestamp": 1777224334.849778,
+    "train_aep": 5560.79,
+    "train_feasible": true,
+    "train_time": 53.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The 5560.8 GWh recovery path comes from the two staggered",
+    "axis": "BayesianOptimization-style GP/LCB search over staggered lattice",
+    "lesson": "Pending score.",
+    "families": [
+      "bayesian_optimization",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 43.4
+  },
+  {
+    "attempt": 24,
+    "timestamp": 1777224690.600461,
+    "train_aep": 5561.69,
+    "train_feasible": true,
+    "train_time": 38.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The repeated 5560.8 GWh basin is close to a constrained local",
+    "axis": "greedy coordinate_search over selected low-power turbines and weighted",
+    "lesson": "Pending score.",
+    "families": [
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 36.6
+  },
+  {
+    "attempt": 25,
+    "timestamp": 1777224988.997319,
+    "train_aep": 5561.88,
+    "train_feasible": true,
+    "train_time": 66.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The repeated 5560.8 GWh basin is close to a constrained local",
+    "axis": "deterministic paired displacement search over low-output turbines and",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 61.1
+  },
+  {
+    "attempt": 26,
+    "timestamp": 1777225402.2784991,
+    "train_aep": 5562.49,
+    "train_feasible": true,
+    "train_time": 54.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent basin may still have small coherent row-scale",
+    "axis": "low-dimensional affine layout perturbations plus short penalty polish and",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 51.1
+  },
+  {
+    "attempt": 27,
+    "timestamp": 1777225730.398319,
+    "train_aep": 5562.15,
+    "train_feasible": true,
+    "train_time": 47.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current best basin is spacing/boundary active. Instead of",
+    "axis": "incumbent Nesterov penalty recovery plus deterministic contact-tangent",
+    "lesson": "Pending score.",
+    "families": [
+      "nesterov_momentum"
+    ]
+  },
+  {
+    "attempt": 28,
+    "timestamp": 1777225871.5104241,
+    "train_aep": 5562.49,
+    "train_feasible": true,
+    "train_time": 57.0,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 26's affine perturbation reaches a strong basin, but",
+    "axis": "incumbent affine recovery followed by local tangent moves on nearest",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ]
+  },
+  {
+    "attempt": 29,
+    "timestamp": 1777226019.444554,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 30,
+    "timestamp": 1777226128.463883,
+    "train_aep": 5562.85,
+    "train_feasible": true,
+    "train_time": 97.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 26 found a strong affine-polished basin, but active spacing",
+    "axis": "incumbent affine recovery followed by deterministic nearest-pair normal",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 76.9
+  },
+  {
+    "attempt": 31,
+    "timestamp": 1777226516.700465,
+    "train_aep": 5562.53,
+    "train_feasible": true,
+    "train_time": 69.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The current basin may be limited by small wake-aligned clusters,",
+    "axis": "incumbent affine recovery followed by deterministic wind-sector block",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 62.0
+  },
+  {
+    "attempt": 32,
+    "timestamp": 1777226807.737797,
+    "train_aep": 5562.91,
+    "train_feasible": true,
+    "train_time": 105.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The active-pair release can open a slightly different feasible",
+    "axis": "incumbent affine recovery and active-pair release followed by tiny",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 86.5
+  },
+  {
+    "attempt": 33,
+    "timestamp": 1777227228.250277,
+    "train_aep": 5563.84,
+    "train_feasible": true,
+    "train_time": 126.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The last individual-turbine polish is likely blocked by active",
+    "axis": "incumbent affine recovery and active-pair release followed by deterministic",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 116.1
+  },
+  {
+    "attempt": 34,
+    "timestamp": 1777227718.536758,
+    "train_aep": 5563.7,
+    "train_feasible": true,
+    "train_time": 125.2,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The strongest basin is constrained by a contact graph of active",
+    "axis": "incumbent affine recovery and active-pair release followed by deterministic",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 114.2
+  },
+  {
+    "attempt": 35,
+    "timestamp": 1777228062.057343,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 137.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The wake-column polish is still the strongest basin opener, but",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 120
+  },
+  {
+    "attempt": 36,
+    "timestamp": 1777228401.796614,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 141.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The wake-column polish is still the strongest basin opener on the",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 116.3
+  },
+  {
+    "attempt": 37,
+    "timestamp": 1777228754.827216,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 38,
+    "timestamp": 1777228924.9000692,
+    "train_aep": 5564.05,
+    "train_feasible": true,
+    "train_time": 155.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The last layout is locally spacing-active, but columns aligned to",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "init_wind_aware_grid"
+    ]
+  },
+  {
+    "attempt": 39,
+    "timestamp": 1777229134.092997,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 145.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Attempt 36 showed pressure-balanced column shears are not a good",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "uncategorized"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 109.8
+  },
+  {
+    "attempt": 40,
+    "timestamp": 1777229528.085349,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 133.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Hand-coded column shears only tied the incumbent. A final move that",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 112.8
+  },
+  {
+    "attempt": 41,
+    "timestamp": 1777230042.7332811,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 144.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent polish is conservative because most hand-coded moves",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection"
+    ],
+    "rowp_feasible": false,
+    "rowp_time": 120
+  },
+  {
+    "attempt": 42,
+    "timestamp": 1777230389.087161,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 140.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent polish is conservative because most hand-coded moves",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 18.8
+  },
+  {
+    "attempt": 43,
+    "timestamp": 1777230648.3945029,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 138.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent polish is conservative because most hand-coded moves",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "scipy_slsqp"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 18.8
+  },
+  {
+    "attempt": 44,
+    "timestamp": 1777231035.705941,
+    "train_aep": 5564.11,
+    "train_feasible": true,
+    "train_time": 146.7,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The incumbent polish is conservative because most hand-coded moves",
+    "axis": "incumbent affine recovery, active-pair release, wake-column group polish,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "scipy_slsqp"
+    ]
+  },
+  {
+    "attempt": 45,
+    "timestamp": 1777231174.946718,
+    "train_aep": 5520.51,
+    "train_feasible": true,
+    "train_time": 32.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The incumbent affine basin has plateaued around 5564 GWh. A small",
+    "axis": "three random bounding-box initial layouts, topfarm_sgd_solve projection,",
+    "lesson": "Pending score.",
+    "families": [
+      "init_random_restarts",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 46,
+    "timestamp": 1777231248.216097,
+    "train_aep": 5526.04,
+    "train_feasible": true,
+    "train_time": 31.5,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The high-scoring random-start basin depends on the exact sequential",
+    "axis": "three sequential-key random bounding-box starts with topfarm_sgd_solve,",
+    "lesson": "Pending score.",
+    "families": [
+      "init_random_restarts",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 47,
+    "timestamp": 1777231365.5446131,
+    "train_aep": 5575.53,
+    "train_feasible": true,
+    "train_time": 46.4,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "Optimizing a surplus of turbines (n_target + 8) and then pruning",
+    "axis": "Initialization (Surplus BO Grid) + Search (AL-NAdam + Pruning)",
+    "families": [
+      "bayesian_optimization",
+      "constraint_augmented_lagrangian",
+      "constraint_projection",
+      "custom_adam",
+      "nesterov_momentum"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 37.4
+  },
+  {
+    "attempt": 48,
+    "timestamp": 1777231714.830889,
+    "train_aep": 5556.96,
+    "train_feasible": true,
+    "train_time": 50.1,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The previous surplus optimizer found a stronger basin, but pruning",
+    "axis": "optimize a modest surplus grid, prune by several wind-weighted wake-harm",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 39.5
+  },
+  {
+    "attempt": 49,
+    "timestamp": 1777231993.222314,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 55.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The surplus basin is good but pruning is fragile; optimizing an",
+    "axis": "BO-tuned multi-parameter exact grid plus staged AL-NAdam halving.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 48.4
+  },
+  {
+    "attempt": 50,
+    "timestamp": 1777232434.806592,
+    "error": "Timeout after 60s"
+  },
+  {
+    "attempt": 51,
+    "timestamp": 1777232539.5130649,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 90.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The surplus basin is good but pruning is fragile; optimizing an",
+    "axis": "BO-tuned exact grid, staged AL-NAdam halving, then projected",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 83.3
+  },
+  {
+    "attempt": 52,
+    "timestamp": 1777232748.214721,
+    "train_aep": 5526.04,
+    "train_feasible": true,
+    "train_time": 31.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The custom exact-grid basin is strong but may miss a random-start",
+    "axis": "three random starts with high learning-rate topfarm_sgd_solve.",
+    "lesson": "Pending score.",
+    "families": [
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 26.4
+  },
+  {
+    "attempt": 53,
+    "timestamp": 1777232903.836131,
+    "train_aep": 5556.54,
+    "train_feasible": true,
+    "train_time": 40.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best exact-grid basin may be slightly mis-oriented because the",
+    "axis": "energy-weighted BO exact grid plus staged AL-NAdam halving.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_wind_aware_grid"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 34.0
+  },
+  {
+    "attempt": 54,
+    "timestamp": 1777233138.932105,
+    "train_aep": 5583.0,
+    "train_feasible": true,
+    "train_time": 46.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The exact-grid AL-NAdam basin is strong, but its final projected",
+    "axis": "BO-tuned exact grid, staged AL-NAdam, then one warm-start topfarm polish.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_random_restarts",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 55,
+    "timestamp": 1777233255.810352,
+    "train_aep": 5551.51,
+    "train_feasible": true,
+    "train_time": 41.9,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best exact-grid basin is sensitive to the seven lattice",
+    "axis": "BO exact grid plus local normalized-parameter exploit before AL-NAdam.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam"
+    ]
+  },
+  {
+    "attempt": 56,
+    "timestamp": 1777233414.033089,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 44.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "TopFarm warm-start polish can slightly improve the strong exact-grid",
+    "axis": "incumbent exact-grid AL-NAdam plus guarded topfarm acceptance.",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "topfarm_sgd_solve"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 39.2
+  },
+  {
+    "attempt": 57,
+    "timestamp": 1777233750.370688,
+    "train_aep": 5525.72,
+    "train_feasible": true,
+    "train_time": 32.6,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The 5583 GWh random-start basin may still contain small feasible",
+    "axis": "three sequential random topfarm starts, then feasible weak-turbine and",
+    "lesson": "Pending score.",
+    "families": [
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 58,
+    "timestamp": 1777233827.682334,
+    "train_aep": 5525.72,
+    "train_feasible": true,
+    "train_time": 30.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The 5583 GWh random-start basin may still contain small feasible",
+    "axis": "three sequential random topfarm starts, then feasible weak-turbine and",
+    "lesson": "Pending score.",
+    "families": [
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 59,
+    "timestamp": 1777233872.6325,
+    "train_aep": 5526.04,
+    "train_feasible": true,
+    "train_time": 31.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "hypothesis": "The high-scoring random-start basin depends on the exact sequential",
+    "axis": "three sequential-key random bounding-box starts with topfarm_sgd_solve,",
+    "lesson": "Pending score.",
+    "families": [
+      "init_random_restarts",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 60,
+    "timestamp": 1777234009.1833,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 39.3,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The last guarded TopFarm polish did not beat the underlying",
+    "axis": "BO-tuned multi-parameter exact grid plus staged AL-NAdam halving, with",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_random_restarts"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 38.9
+  },
+  {
+    "attempt": 61,
+    "timestamp": 1777234361.537598,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 46.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The best exact-grid basin is strong, but the single dominant-wind",
+    "axis": "incumbent BO exact grid plus absolute-orientation BO starts, followed by",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam",
+      "init_wind_aware_grid"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 42.7
+  },
+  {
+    "attempt": 62,
+    "timestamp": 1777234638.087921,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 41.8,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The 5583 GWh exact-grid basin is reliable, but it may be missing",
+    "axis": "incumbent BO exact grid plus deterministic boundary-farthest starts,",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 36.5
+  },
+  {
+    "attempt": 63,
+    "timestamp": 1777234888.334492,
+    "train_aep": 5583.32,
+    "train_feasible": true,
+    "train_time": 49.5,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "hypothesis": "The BO exact-grid AL-NAdam path repeatedly reaches the same strong",
+    "axis": "incumbent BO exact grid plus staged AL-NAdam halving, followed by a",
+    "lesson": "Pending score.",
+    "families": [
+      "constraint_projection",
+      "custom_adam"
+    ],
+    "rowp_feasible": true,
+    "rowp_time": 44.7
+  }
+]

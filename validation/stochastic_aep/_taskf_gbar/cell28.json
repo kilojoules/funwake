@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_rowp_n300_rosedei.json",
+  "eta_t_m": 25.0,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_rowp_n300_rosedei.json",
+      "eta_t_m": 25.0,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 18939.015322649844,
+      "bp_init": 0.0,
+      "bp_final": 90885.37574259866,
+      "sp_final": 144437.9266426725,
+      "elapsed_s": 12.2
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n300_rosedei.json",
+      "eta_t_m": 25.0,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 18939.015322649844,
+      "bp_init": 0.0,
+      "bp_final": 90885.37574259866,
+      "sp_final": 144437.9266426725,
+      "elapsed_s": 7.2
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n300_rosedei.json",
+      "eta_t_m": 25.0,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 18873.124912122246,
+      "bp_init": 0.0,
+      "bp_final": 109762.68516320511,
+      "sp_final": 262784.09772385587,
+      "elapsed_s": 7.1
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n300_rosedei.json",
+      "eta_t_m": 25.0,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 18873.124912122246,
+      "bp_init": 0.0,
+      "bp_final": 109762.68516320511,
+      "sp_final": 262784.09772385587,
+      "elapsed_s": 7.1
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n300_rosedei.json",
+      "eta_t_m": 25.0,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 18890.989118464116,
+      "bp_init": 0.0,
+      "bp_final": 126876.42965747118,
+      "sp_final": 95174.95343404857,
+      "elapsed_s": 7.3
+    },
+    {
+      "cell_path": "results/matrix/problem_rowp_n300_rosedei.json",
+      "eta_t_m": 25.0,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 18890.989118464116,
+      "bp_init": 0.0,
+      "bp_final": 126876.42965747118,
+      "sp_final": 95174.95343404857,
+      "elapsed_s": 7.1
+    }
+  ]
+}

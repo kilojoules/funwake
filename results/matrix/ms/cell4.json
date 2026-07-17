@@ -1,0 +1,40 @@
+{
+ "cell": "dei_n70_rosedei",
+ "K": 50,
+ "tol_m": 0.1,
+ "schedules": {
+  "baseline": {
+   "best": {
+    "seed": 5,
+    "aep_gwh": 7682.33,
+    "feasible": true,
+    "max_out_m": 0.006,
+    "min_dist_m": 1126.48
+   },
+   "n_feasible": 1,
+   "best_infeas_aep": null
+  },
+  "claude": {
+   "best": {
+    "seed": 25,
+    "aep_gwh": 7747.337,
+    "feasible": true,
+    "max_out_m": 0.01,
+    "min_dist_m": 1656.4
+   },
+   "n_feasible": 50,
+   "best_infeas_aep": null
+  },
+  "gemini": {
+   "best": {
+    "seed": 41,
+    "aep_gwh": 7734.752,
+    "feasible": true,
+    "max_out_m": -1.297,
+    "min_dist_m": 1120.83
+   },
+   "n_feasible": 50,
+   "best_infeas_aep": null
+  }
+ }
+}

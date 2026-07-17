@@ -1,1 +1,22 @@
 [ds-wait] 2026-04-29T06:02:27Z Waiting for gemini chain PID 58892...
+[ds-wait] 2026-04-29T12:00:33Z Gemini chain exited. Launching deepseek chain.
+[I]   hid 82 sibling dirs
+[I] 2026-04-29T12:00:33Z Launching sched seed 1 -> results_agent_deepseek_sched_run1 (model=deepseek-v4-flash)
+[I] 2026-04-29T15:00:44Z Finished sched seed 1.
+[I]   hid 83 sibling dirs
+[I] 2026-04-29T15:00:44Z Launching sched seed 2 -> results_agent_deepseek_sched_run2 (model=deepseek-v4-flash)
+[I] 2026-04-29T18:00:18Z Finished sched seed 2.
+[I]   hid 84 sibling dirs
+[I] 2026-04-29T18:00:18Z Launching sched seed 3 -> results_agent_deepseek_sched_run3 (model=deepseek-v4-flash)
+[I] 2026-04-29T21:00:05Z Finished sched seed 3.
+[I]   hid 85 sibling dirs
+[I] 2026-04-29T21:00:05Z Launching full seed 1 -> results_agent_deepseek_fullopt_run1 (model=deepseek-v4-flash)
+[I] 2026-04-30T01:31:31Z Finished full seed 1.
+[I]   hid 86 sibling dirs
+[I] 2026-04-30T01:31:31Z Launching full seed 2 -> results_agent_deepseek_fullopt_run2 (model=deepseek-v4-flash)
+[I] 2026-04-30T06:01:41Z Finished full seed 2.
+[I]   hid 87 sibling dirs
+[I] 2026-04-30T06:01:41Z Launching full seed 3 -> results_agent_deepseek_fullopt_run3 (model=deepseek-v4-flash)
+[I] 2026-04-30T10:33:17Z Finished full seed 3.
+[I] 2026-04-30T10:33:17Z All requested runs complete.
+[ds-wait] 2026-04-30T10:33:17Z Deepseek chain done.

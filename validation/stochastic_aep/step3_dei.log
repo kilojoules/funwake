@@ -1,0 +1,100 @@
+
+=== cell: sgd_baseline__ES_OFF  early_stopping=False threshold=0.1 ===
+  r= 0 6s ✗ AEP=4459.11  bp=4.51e+03 sp=0.00e+00 min_d=1729m
+  r= 1 2s ✗ AEP=4460.06  bp=4.89e+03 sp=0.00e+00 min_d=1793m
+  r= 2 2s ✗ AEP=4458.90  bp=2.03e+03 sp=0.00e+00 min_d=1809m
+  r= 3 2s ✗ AEP=4459.94  bp=9.88e+03 sp=0.00e+00 min_d=1813m
+  r= 4 2s ✗ AEP=4459.03  bp=1.21e+04 sp=0.00e+00 min_d=1893m
+  r= 5 2s ✗ AEP=4459.46  bp=1.86e+04 sp=0.00e+00 min_d=1706m
+  r= 6 2s ✗ AEP=4459.82  bp=5.71e+03 sp=0.00e+00 min_d=1888m
+  r= 7 2s ✗ AEP=4460.10  bp=1.59e+04 sp=0.00e+00 min_d=1815m
+  r= 8 2s ✗ AEP=4459.86  bp=1.03e+04 sp=0.00e+00 min_d=2044m
+  r= 9 2s ✗ AEP=4458.88  bp=3.46e+03 sp=0.00e+00 min_d=2001m
+  r=10 2s ✗ AEP=4459.12  bp=3.61e+03 sp=0.00e+00 min_d=1851m
+  r=11 2s ✗ AEP=4460.47  bp=2.41e+04 sp=0.00e+00 min_d=2006m
+  r=12 2s ✗ AEP=4460.27  bp=2.06e+04 sp=0.00e+00 min_d=2055m
+  r=13 2s ✗ AEP=4459.07  bp=1.28e+04 sp=0.00e+00 min_d=1992m
+  r=14 2s ✗ AEP=4458.56  bp=5.30e+03 sp=0.00e+00 min_d=1747m
+  r=15 2s ✗ AEP=4460.02  bp=1.51e+04 sp=0.00e+00 min_d=1817m
+  r=16 2s ✗ AEP=4459.10  bp=5.47e+03 sp=0.00e+00 min_d=2106m
+  r=17 2s ✗ AEP=4459.85  bp=1.48e+03 sp=0.00e+00 min_d=1972m
+  r=18 2s ✗ AEP=4459.03  bp=1.12e+04 sp=0.00e+00 min_d=2085m
+  r=19 2s ✗ AEP=4460.29  bp=3.04e+03 sp=0.00e+00 min_d=2151m
+   ↳ summary: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 0, 'boundary_penalty_range': [1475.711129238514, 24103.76556977153], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1706.0954100242016, 2151.135720415237], 'aep_mean': 4459.546948378311, 'aep_std': 0.5758346587863609, 'aep_best': 4460.465264792806}
+
+=== cell: sgd_baseline__ES_ON  early_stopping=True threshold=0.1 ===
+  r= 0 3s ✗ AEP=4459.11  bp=4.51e+03 sp=0.00e+00 min_d=1729m
+  r= 1 3s ✗ AEP=4460.06  bp=4.89e+03 sp=0.00e+00 min_d=1793m
+  r= 2 3s ✗ AEP=4458.90  bp=2.03e+03 sp=0.00e+00 min_d=1809m
+  r= 3 3s ✗ AEP=4459.94  bp=9.88e+03 sp=0.00e+00 min_d=1813m
+  r= 4 2s ✗ AEP=4459.03  bp=1.21e+04 sp=0.00e+00 min_d=1893m
+  r= 5 3s ✗ AEP=4459.46  bp=1.86e+04 sp=0.00e+00 min_d=1706m
+  r= 6 3s ✗ AEP=4459.82  bp=5.71e+03 sp=0.00e+00 min_d=1888m
+  r= 7 3s ✗ AEP=4460.10  bp=1.59e+04 sp=0.00e+00 min_d=1815m
+  r= 8 2s ✗ AEP=4459.86  bp=1.03e+04 sp=0.00e+00 min_d=2044m
+  r= 9 3s ✗ AEP=4458.88  bp=3.46e+03 sp=0.00e+00 min_d=2001m
+  r=10 2s ✗ AEP=4459.12  bp=3.61e+03 sp=0.00e+00 min_d=1851m
+  r=11 3s ✗ AEP=4460.47  bp=2.41e+04 sp=0.00e+00 min_d=2006m
+  r=12 3s ✗ AEP=4460.27  bp=2.06e+04 sp=0.00e+00 min_d=2055m
+  r=13 2s ✗ AEP=4459.07  bp=1.28e+04 sp=0.00e+00 min_d=1992m
+  r=14 2s ✗ AEP=4458.56  bp=5.30e+03 sp=0.00e+00 min_d=1747m
+  r=15 3s ✗ AEP=4460.02  bp=1.51e+04 sp=0.00e+00 min_d=1817m
+  r=16 3s ✗ AEP=4459.10  bp=5.47e+03 sp=0.00e+00 min_d=2106m
+  r=17 3s ✗ AEP=4459.85  bp=1.48e+03 sp=0.00e+00 min_d=1972m
+  r=18 2s ✗ AEP=4459.03  bp=1.12e+04 sp=0.00e+00 min_d=2085m
+  r=19 3s ✗ AEP=4460.29  bp=3.04e+03 sp=0.00e+00 min_d=2151m
+   ↳ summary: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 0, 'boundary_penalty_range': [1475.711129238514, 24103.76556977153], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1706.0954100242016, 2151.135720415237], 'aep_mean': 4459.546948378311, 'aep_std': 0.5758346587863609, 'aep_best': 4460.465264792806}
+
+=== cell: funwake_iter192__ES_OFF  early_stopping=False threshold=0.1 ===
+  r= 0 2s ✗ AEP=4459.85  bp=8.76e-06 sp=0.00e+00 min_d=2066m
+  r= 1 2s ✗ AEP=4460.16  bp=4.31e-05 sp=0.00e+00 min_d=1916m
+  r= 2 2s ✗ AEP=4460.15  bp=3.29e-04 sp=0.00e+00 min_d=2065m
+  r= 3 2s ✗ AEP=4460.05  bp=2.60e-04 sp=0.00e+00 min_d=2046m
+  r= 4 2s ✗ AEP=4460.62  bp=4.69e-05 sp=0.00e+00 min_d=1933m
+  r= 5 2s ✗ AEP=4459.32  bp=6.37e-05 sp=0.00e+00 min_d=2089m
+  r= 6 2s ✗ AEP=4460.68  bp=3.10e-05 sp=0.00e+00 min_d=1954m
+  r= 7 2s ✗ AEP=4460.40  bp=1.97e-05 sp=0.00e+00 min_d=2201m
+  r= 8 2s ✗ AEP=4460.41  bp=2.01e-05 sp=0.00e+00 min_d=2005m
+  r= 9 2s ✗ AEP=4460.24  bp=1.87e-04 sp=0.00e+00 min_d=2050m
+  r=10 2s ✗ AEP=4461.34  bp=2.11e-04 sp=0.00e+00 min_d=1897m
+  r=11 3s ✗ AEP=4459.81  bp=6.11e-05 sp=0.00e+00 min_d=2006m
+  r=12 2s ✗ AEP=4460.49  bp=3.77e-04 sp=0.00e+00 min_d=2133m
+  r=13 2s ✓ AEP=4460.28  bp=0.00e+00 sp=0.00e+00 min_d=2080m
+  r=14 2s ✗ AEP=4459.30  bp=8.23e-05 sp=0.00e+00 min_d=2062m
+  r=15 2s ✗ AEP=4460.05  bp=6.16e-04 sp=0.00e+00 min_d=1927m
+  r=16 2s ✓ AEP=4460.62  bp=0.00e+00 sp=0.00e+00 min_d=2043m
+  r=17 2s ✗ AEP=4460.38  bp=3.89e-04 sp=0.00e+00 min_d=2026m
+  r=18 2s ✗ AEP=4460.47  bp=2.76e-06 sp=0.00e+00 min_d=2026m
+  r=19 3s ✗ AEP=4460.42  bp=1.94e-04 sp=0.00e+00 min_d=2161m
+   ↳ summary: {'n': 20, 'strict_feasibility': 2, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0006161515011631399], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1896.8539362003012, 2201.0153675704664], 'aep_mean': 4460.252385189317, 'aep_std': 0.46215921171624585, 'aep_best': 4461.335107282358}
+
+=== cell: funwake_iter192__ES_ON  early_stopping=True threshold=0.1 ===
+  r= 0 3s ✓ AEP=4460.04  bp=0.00e+00 sp=0.00e+00 min_d=2068m
+  r= 1 3s ✓ AEP=4460.35  bp=0.00e+00 sp=0.00e+00 min_d=1842m
+  r= 2 3s ✓ AEP=4460.06  bp=0.00e+00 sp=0.00e+00 min_d=1923m
+  r= 3 3s ✓ AEP=4460.44  bp=0.00e+00 sp=0.00e+00 min_d=2113m
+  r= 4 3s ✓ AEP=4460.15  bp=0.00e+00 sp=0.00e+00 min_d=2006m
+  r= 5 3s ✓ AEP=4460.50  bp=0.00e+00 sp=0.00e+00 min_d=1885m
+  r= 6 3s ✓ AEP=4459.97  bp=0.00e+00 sp=0.00e+00 min_d=2062m
+  r= 7 3s ✓ AEP=4460.55  bp=0.00e+00 sp=0.00e+00 min_d=1878m
+  r= 8 3s ✓ AEP=4458.96  bp=0.00e+00 sp=0.00e+00 min_d=1998m
+  r= 9 3s ✓ AEP=4460.34  bp=0.00e+00 sp=0.00e+00 min_d=2192m
+  r=10 3s ✓ AEP=4460.07  bp=0.00e+00 sp=0.00e+00 min_d=1862m
+  r=11 3s ✓ AEP=4459.20  bp=0.00e+00 sp=0.00e+00 min_d=2138m
+  r=12 3s ✓ AEP=4459.65  bp=0.00e+00 sp=0.00e+00 min_d=1998m
+  r=13 3s ✓ AEP=4459.64  bp=0.00e+00 sp=0.00e+00 min_d=1981m
+  r=14 3s ✓ AEP=4459.78  bp=0.00e+00 sp=0.00e+00 min_d=1950m
+  r=15 3s ✓ AEP=4459.60  bp=0.00e+00 sp=0.00e+00 min_d=1916m
+  r=16 3s ✓ AEP=4460.95  bp=0.00e+00 sp=0.00e+00 min_d=1938m
+  r=17 3s ✓ AEP=4460.43  bp=0.00e+00 sp=0.00e+00 min_d=1821m
+  r=18 3s ✓ AEP=4459.36  bp=0.00e+00 sp=0.00e+00 min_d=1959m
+  r=19 3s ✓ AEP=4460.20  bp=0.00e+00 sp=0.00e+00 min_d=2116m
+   ↳ summary: {'n': 20, 'strict_feasibility': 20, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1821.0030677940676, 2192.4310148051804], 'aep_mean': 4460.013053661441, 'aep_std': 0.5002373555495172, 'aep_best': 4460.951030217909}
+
+=== STEP 3 SUMMARIES ===
+sgd_baseline__ES_OFF: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 0, 'boundary_penalty_range': [1475.711129238514, 24103.76556977153], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1706.0954100242016, 2151.135720415237], 'aep_mean': 4459.546948378311, 'aep_std': 0.5758346587863609, 'aep_best': 4460.465264792806}
+sgd_baseline__ES_ON: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 0, 'boundary_penalty_range': [1475.711129238514, 24103.76556977153], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1706.0954100242016, 2151.135720415237], 'aep_mean': 4459.546948378311, 'aep_std': 0.5758346587863609, 'aep_best': 4460.465264792806}
+funwake_iter192__ES_OFF: {'n': 20, 'strict_feasibility': 2, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0006161515011631399], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1896.8539362003012, 2201.0153675704664], 'aep_mean': 4460.252385189317, 'aep_std': 0.46215921171624585, 'aep_best': 4461.335107282358}
+funwake_iter192__ES_ON: {'n': 20, 'strict_feasibility': 20, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [1821.0030677940676, 2192.4310148051804], 'aep_mean': 4460.013053661441, 'aep_std': 0.5002373555495172, 'aep_best': 4460.951030217909}
+
+Wrote validation/stochastic_aep/step3_dei.json

@@ -1,0 +1,80 @@
+{
+  "config": {
+    "problem": "playground/problem.json",
+    "resource": "validation/stochastic_aep/dei_weibull_12.json",
+    "K": 50,
+    "total_steps": 2000,
+    "restarts": 2,
+    "wake_model": "bastankhah_0.04",
+    "n_target": 50,
+    "min_spacing_m": 960.0
+  },
+  "elapsed_s_total": 137.0,
+  "per_restart": {
+    "sgd_baseline": [
+      {
+        "restart": 0,
+        "elapsed_s": 7.9,
+        "aep_gwh_det_weibull": 4452.299113187176,
+        "boundary_violation": 6252.764300692747,
+        "spacing_penalty": 0.0,
+        "min_pair_dist_m": 2029.7677913177492,
+        "feasible": false
+      },
+      {
+        "restart": 1,
+        "elapsed_s": 2.6,
+        "aep_gwh_det_weibull": 4452.584148424083,
+        "boundary_violation": 3602.867120549434,
+        "spacing_penalty": 0.0,
+        "min_pair_dist_m": 1995.1489483442128,
+        "feasible": false
+      }
+    ],
+    "funwake_iter192": [
+      {
+        "restart": 0,
+        "elapsed_s": 2.9,
+        "aep_gwh_det_weibull": 4452.971898818241,
+        "boundary_violation": 0.00021242775502276545,
+        "spacing_penalty": 0.0,
+        "min_pair_dist_m": 2069.41418648488,
+        "feasible": false
+      },
+      {
+        "restart": 1,
+        "elapsed_s": 3.2,
+        "aep_gwh_det_weibull": 4453.180206983065,
+        "boundary_violation": 0.0,
+        "spacing_penalty": 0.0,
+        "min_pair_dist_m": 1951.032351731715,
+        "feasible": true
+      }
+    ]
+  },
+  "summary_per_schedule": {
+    "sgd_baseline": {
+      "n_restarts": 2,
+      "feasibility_rate": 0.0,
+      "n_feasible": 0,
+      "best_aep_all": 4452.584148424083,
+      "best_aep_feasible": null,
+      "mean_aep_feasible": null,
+      "std_aep_feasible": null,
+      "mean_aep_all": 4452.44163080563,
+      "std_aep_all": 0.20155034889396803
+    },
+    "funwake_iter192": {
+      "n_restarts": 2,
+      "feasibility_rate": 0.5,
+      "n_feasible": 1,
+      "best_aep_all": 4453.180206983065,
+      "best_aep_feasible": 4453.180206983065,
+      "mean_aep_feasible": 4453.180206983065,
+      "std_aep_feasible": null,
+      "mean_aep_all": 4453.076052900653,
+      "std_aep_all": 0.14729611592314615
+    }
+  },
+  "paired_diff": null
+}

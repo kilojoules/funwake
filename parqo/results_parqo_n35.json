@@ -1,0 +1,14 @@
+{
+  "seed": 9,
+  "n_target": 35,
+  "init": "zones",
+  "optimized": {
+    "aep_gwh": 58.68042952129348,
+    "max_zone_sdf_m": 0.010981498817017432,
+    "zone_penalty": 0.00021286023952208464,
+    "min_spacing_m": 160.12553282822086,
+    "n_inside_zones": 35,
+    "n_spacing_violating_pairs": 0,
+    "feasible": true
+  }
+}

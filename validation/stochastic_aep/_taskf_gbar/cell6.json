@@ -1,0 +1,78 @@
+{
+  "cell": "results/matrix/problem_dei_n70_roseomnidir.json",
+  "eta_t_m": 2.5,
+  "runs": [
+    {
+      "cell_path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "eta_t_m": 2.5,
+      "es_on": false,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 7697.733913069738,
+      "bp_init": 0.0,
+      "bp_final": 4.279533625190729,
+      "sp_final": 0.0,
+      "elapsed_s": 9.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "eta_t_m": 2.5,
+      "es_on": true,
+      "sample_seed": 100000,
+      "init_seed": 0,
+      "aep_det_gwh": 7697.992281301507,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.2
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "eta_t_m": 2.5,
+      "es_on": false,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 7693.154244664629,
+      "bp_init": 0.0,
+      "bp_final": 2.1644857085985136,
+      "sp_final": 0.0,
+      "elapsed_s": 5.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "eta_t_m": 2.5,
+      "es_on": true,
+      "sample_seed": 200000,
+      "init_seed": 0,
+      "aep_det_gwh": 7693.807353582926,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.2
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "eta_t_m": 2.5,
+      "es_on": false,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 7691.819827273665,
+      "bp_init": 0.0,
+      "bp_final": 14.818509976372058,
+      "sp_final": 0.0,
+      "elapsed_s": 5.3
+    },
+    {
+      "cell_path": "results/matrix/problem_dei_n70_roseomnidir.json",
+      "eta_t_m": 2.5,
+      "es_on": true,
+      "sample_seed": 300000,
+      "init_seed": 0,
+      "aep_det_gwh": 7691.672492056261,
+      "bp_init": 0.0,
+      "bp_final": 0.0,
+      "sp_final": 0.0,
+      "elapsed_s": 5.2
+    }
+  ]
+}

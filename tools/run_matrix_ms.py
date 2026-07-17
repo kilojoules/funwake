@@ -49,7 +49,11 @@ def main():
     ap.add_argument("--K", type=int, default=50)
     ap.add_argument("--out", required=True)
     ap.add_argument("--redo", default="", help="comma-sep schedules to recompute")
+    ap.add_argument("--only", default="", help="run ONLY this schedule")
     args = ap.parse_args()
+    global SCHEDULES
+    if args.only:
+        SCHEDULES = {args.only: SCHEDULES[args.only]}
 
     import jax
     jax.config.update("jax_enable_x64", True)

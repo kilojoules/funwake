@@ -1,0 +1,29 @@
+{
+  "engine": "py_wake",
+  "py_wake_version": "2.6.20",
+  "config": {
+    "wake_model": "NOJ",
+    "k": 0.05,
+    "rotor_avg_model": "RotorCenter",
+    "turbulence_model": null,
+    "superposition": "SquaredSum (NOJ default)",
+    "ws_step_m_s": 1.0,
+    "wd_step_deg": 1.0,
+    "ws_grid": [
+      4.0,
+      25.0
+    ],
+    "wd_grid": [
+      0.0,
+      359.0
+    ]
+  },
+  "system_file": "/Users/julianquick/portfolio_copy/IEA-Wind-740-10-ROWP/ROWP_Regular_System.yaml",
+  "n_turbines": 74,
+  "aep_gwh": 3381.9342110748576,
+  "capacity_factor": 0.5217080281987581,
+  "published_aep_gwh": 3429.63,
+  "delta_vs_published_gwh": -47.69578892514255,
+  "delta_vs_published_pct": -1.3906977990378715,
+  "setup_dump_path": "validation/pixwake_pywake/pywake_regular_setup.json"
+}

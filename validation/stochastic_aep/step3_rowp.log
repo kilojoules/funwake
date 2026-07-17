@@ -1,0 +1,133 @@
+
+=== PRE-FLIGHT: topfarm_default_decay schedule ===
+{
+  "lr_init": 50.0,
+  "gamma_min": 0.5,
+  "mid": 1.4394880996246134e-07,
+  "total_steps": 8000,
+  "threshold": 0.1,
+  "lr_ratio_at_25pct": 0.7495352555873727,
+  "lr_ratio_at_50pct": 0.3159304752297678,
+  "lr_ratio_at_75pct": 0.07489800233602713,
+  "lr_ratio_final": 0.010000000000000004,
+  "iter_first_cross_threshold": 5656,
+  "crosses_threshold": true
+}
+
+=== cell: topfarm_default_decay__ES_OFF  ES=False threshold=0.1 ===
+  r= 0 6s ✗ AEP=3258.55  bp=3.33e+01 sp=7.76e+01 min_d=396m
+  r= 1 2s ✗ AEP=3260.72  bp=5.42e+01 sp=1.78e+02 min_d=396m
+  r= 2 2s ✗ AEP=3257.82  bp=4.29e+01 sp=1.44e+02 min_d=396m
+  r= 3 2s ✗ AEP=3259.10  bp=6.30e+01 sp=3.46e+02 min_d=396m
+  r= 4 2s ✗ AEP=3258.69  bp=1.07e+02 sp=1.19e+02 min_d=396m
+  r= 5 2s ✗ AEP=3259.33  bp=7.91e+01 sp=6.54e+02 min_d=396m
+  r= 6 2s ✗ AEP=3258.73  bp=5.87e+01 sp=1.10e+02 min_d=396m
+  r= 7 2s ✗ AEP=3258.01  bp=1.07e+01 sp=3.18e+02 min_d=396m
+  r= 8 2s ✗ AEP=3259.75  bp=1.25e+02 sp=6.97e+02 min_d=396m
+  r= 9 2s ✗ AEP=3259.19  bp=5.04e+01 sp=3.84e+02 min_d=396m
+  r=10 2s ✗ AEP=3258.79  bp=7.63e+01 sp=1.13e+03 min_d=395m
+  r=11 2s ✗ AEP=3259.04  bp=9.21e+01 sp=3.90e+02 min_d=396m
+  r=12 2s ✗ AEP=3259.09  bp=8.03e+01 sp=1.12e+02 min_d=396m
+  r=13 2s ✗ AEP=3260.01  bp=3.30e+01 sp=6.44e+02 min_d=395m
+  r=14 2s ✗ AEP=3259.36  bp=1.34e+02 sp=2.09e+02 min_d=396m
+  r=15 2s ✗ AEP=3258.03  bp=9.69e+00 sp=3.04e+02 min_d=396m
+  r=16 2s ✗ AEP=3258.45  bp=1.72e+02 sp=3.33e+02 min_d=396m
+  r=17 2s ✗ AEP=3258.71  bp=1.22e+02 sp=6.59e+02 min_d=395m
+  r=18 2s ✗ AEP=3260.45  bp=1.60e+01 sp=1.89e+01 min_d=396m
+  r=19 2s ✗ AEP=3258.62  bp=5.68e+01 sp=5.82e+02 min_d=395m
+   ↳ summary: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 0, 'boundary_penalty_range': [9.687374010044833, 172.36138913087348], 'spacing_penalty_range': [18.878843051876174, 1133.940999118815], 'min_pair_dist_range_m': [395.20088280968673, 395.9761623594887], 'aep_mean': 3259.022141800391, 'aep_std': 0.7670702973643142, 'aep_best': 3260.721292689258}
+
+=== cell: topfarm_default_decay__ES_ON  ES=True threshold=0.1 ===
+  r= 0 2s ✓ AEP=3258.54  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r= 1 2s ✓ AEP=3260.13  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r= 2 2s ✓ AEP=3257.66  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r= 3 2s ✓ AEP=3259.89  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r= 4 2s ✓ AEP=3258.60  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r= 5 2s ✓ AEP=3259.49  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r= 6 2s ✓ AEP=3258.86  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r= 7 2s ✓ AEP=3259.29  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r= 8 2s ✓ AEP=3259.56  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r= 9 2s ✓ AEP=3258.62  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r=10 2s ✓ AEP=3259.13  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r=11 2s ✓ AEP=3258.80  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r=12 2s ✓ AEP=3258.47  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r=13 2s ✓ AEP=3258.73  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r=14 2s ✓ AEP=3259.90  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r=15 2s ✓ AEP=3260.06  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r=16 2s ✓ AEP=3256.86  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r=17 2s ✓ AEP=3258.10  bp=0.00e+00 sp=0.00e+00 min_d=396m
+  r=18 2s ✓ AEP=3261.14  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r=19 2s ✓ AEP=3258.80  bp=0.00e+00 sp=0.00e+00 min_d=396m
+   ↳ summary: {'n': 20, 'strict_feasibility': 20, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [396.0198823781373, 396.9806839259157], 'aep_mean': 3259.0318588252862, 'aep_std': 0.9556282127242695, 'aep_best': 3261.136877721867}
+
+=== cell: funwake_iter192__ES_OFF  ES=False threshold=0.1 ===
+  r= 0 2s ✗ AEP=3261.87  bp=1.89e-03 sp=0.00e+00 min_d=396m
+  r= 1 2s ✗ AEP=3261.17  bp=2.39e-03 sp=0.00e+00 min_d=396m
+  r= 2 2s ✗ AEP=3260.84  bp=1.86e-03 sp=0.00e+00 min_d=396m
+  r= 3 2s ✗ AEP=3260.29  bp=3.92e-04 sp=0.00e+00 min_d=396m
+  r= 4 2s ✗ AEP=3260.24  bp=1.88e-03 sp=0.00e+00 min_d=396m
+  r= 5 2s ✗ AEP=3263.05  bp=4.05e-04 sp=0.00e+00 min_d=396m
+  r= 6 2s ✗ AEP=3260.88  bp=2.27e-03 sp=0.00e+00 min_d=396m
+  r= 7 2s ✗ AEP=3262.45  bp=1.55e-03 sp=0.00e+00 min_d=396m
+  r= 8 2s ✗ AEP=3261.23  bp=7.65e-04 sp=0.00e+00 min_d=396m
+  r= 9 2s ✗ AEP=3260.82  bp=1.34e-03 sp=0.00e+00 min_d=396m
+  r=10 2s ✗ AEP=3261.67  bp=1.89e-03 sp=0.00e+00 min_d=396m
+  r=11 2s ✗ AEP=3258.91  bp=1.43e-03 sp=2.43e+00 min_d=396m
+  r=12 2s ✗ AEP=3261.67  bp=2.06e-03 sp=0.00e+00 min_d=396m
+  r=13 2s ✗ AEP=3262.82  bp=1.86e-03 sp=0.00e+00 min_d=396m
+  r=14 2s ✗ AEP=3261.35  bp=2.14e-03 sp=0.00e+00 min_d=396m
+  r=15 2s ✗ AEP=3260.75  bp=1.62e-03 sp=0.00e+00 min_d=396m
+  r=16 2s ✗ AEP=3261.10  bp=2.14e-04 sp=0.00e+00 min_d=396m
+  r=17 2s ✗ AEP=3261.14  bp=2.25e-03 sp=0.00e+00 min_d=396m
+  r=18 2s ✗ AEP=3263.07  bp=3.51e-04 sp=0.00e+00 min_d=396m
+  r=19 2s ✗ AEP=3262.67  bp=1.76e-03 sp=0.00e+00 min_d=396m
+   ↳ summary: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 19, 'boundary_penalty_range': [0.00021356042215272896, 0.0023883768790590614], 'spacing_penalty_range': [0.0, 2.4315460305078886], 'min_pair_dist_range_m': [395.99692985422183, 396.0929775220646], 'aep_mean': 3261.3997937261615, 'aep_std': 1.0515772245871675, 'aep_best': 3263.0743111763018}
+
+=== cell: funwake_iter192__ES_ON  ES=True threshold=0.1 ===
+  r= 0 2s ✓ AEP=3259.52  bp=0.00e+00 sp=0.00e+00 min_d=402m
+  r= 1 2s ✓ AEP=3260.72  bp=0.00e+00 sp=0.00e+00 min_d=398m
+  r= 2 2s ✓ AEP=3260.84  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r= 3 2s ✓ AEP=3262.75  bp=0.00e+00 sp=0.00e+00 min_d=400m
+  r= 4 2s ✓ AEP=3260.21  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r= 5 2s ✓ AEP=3260.78  bp=0.00e+00 sp=0.00e+00 min_d=403m
+  r= 6 2s ✓ AEP=3259.49  bp=0.00e+00 sp=0.00e+00 min_d=398m
+  r= 7 2s ✓ AEP=3262.81  bp=0.00e+00 sp=0.00e+00 min_d=400m
+  r= 8 2s ✓ AEP=3264.24  bp=0.00e+00 sp=0.00e+00 min_d=398m
+  r= 9 2s ✓ AEP=3261.37  bp=0.00e+00 sp=0.00e+00 min_d=399m
+  r=10 2s ✓ AEP=3259.01  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r=11 2s ✓ AEP=3260.12  bp=0.00e+00 sp=0.00e+00 min_d=403m
+  r=12 2s ✓ AEP=3261.60  bp=0.00e+00 sp=0.00e+00 min_d=399m
+  r=13 2s ✓ AEP=3260.80  bp=0.00e+00 sp=0.00e+00 min_d=400m
+  r=14 2s ✓ AEP=3263.54  bp=0.00e+00 sp=0.00e+00 min_d=397m
+  r=15 2s ✓ AEP=3262.54  bp=0.00e+00 sp=0.00e+00 min_d=399m
+  r=16 2s ✓ AEP=3260.38  bp=0.00e+00 sp=0.00e+00 min_d=399m
+  r=17 2s ✓ AEP=3260.80  bp=0.00e+00 sp=0.00e+00 min_d=402m
+  r=18 2s ✓ AEP=3260.47  bp=0.00e+00 sp=0.00e+00 min_d=402m
+  r=19 2s ✓ AEP=3261.62  bp=0.00e+00 sp=0.00e+00 min_d=400m
+   ↳ summary: {'n': 20, 'strict_feasibility': 20, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [396.9611962246713, 402.8378899629399], 'aep_mean': 3261.1822496850136, 'aep_std': 1.3878125367686043, 'aep_best': 3264.2404021283046}
+
+=== SUMMARIES (740-10 ROWP) ===
+topfarm_default_decay__ES_OFF: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 0, 'boundary_penalty_range': [9.687374010044833, 172.36138913087348], 'spacing_penalty_range': [18.878843051876174, 1133.940999118815], 'min_pair_dist_range_m': [395.20088280968673, 395.9761623594887], 'aep_mean': 3259.022141800391, 'aep_std': 0.7670702973643142, 'aep_best': 3260.721292689258}
+topfarm_default_decay__ES_ON: {'n': 20, 'strict_feasibility': 20, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [396.0198823781373, 396.9806839259157], 'aep_mean': 3259.0318588252862, 'aep_std': 0.9556282127242695, 'aep_best': 3261.136877721867}
+funwake_iter192__ES_OFF: {'n': 20, 'strict_feasibility': 0, 'practical_feasibility': 19, 'boundary_penalty_range': [0.00021356042215272896, 0.0023883768790590614], 'spacing_penalty_range': [0.0, 2.4315460305078886], 'min_pair_dist_range_m': [395.99692985422183, 396.0929775220646], 'aep_mean': 3261.3997937261615, 'aep_std': 1.0515772245871675, 'aep_best': 3263.0743111763018}
+funwake_iter192__ES_ON: {'n': 20, 'strict_feasibility': 20, 'practical_feasibility': 20, 'boundary_penalty_range': [0.0, 0.0], 'spacing_penalty_range': [0.0, 0.0], 'min_pair_dist_range_m': [396.9611962246713, 402.8378899629399], 'aep_mean': 3261.1822496850136, 'aep_std': 1.3878125367686043, 'aep_best': 3264.2404021283046}
+
+=== ES trigger info ===
+{
+  "topfarm_default_decay__ES_ON": {
+    "trigger_fraction": 1.0,
+    "iter_first_cross": 5656,
+    "n_restarts_triggered": 20,
+    "lr_ratio_max": 0.9999998560512108,
+    "lr_ratio_min": 0.010000000000000004
+  },
+  "funwake_iter192__ES_ON": {
+    "trigger_fraction": 1.0,
+    "iter_first_cross": 0,
+    "n_restarts_triggered": 20,
+    "lr_ratio_max": 1.0,
+    "lr_ratio_min": 2.3538218878433487e-35
+  }
+}
+
+Wrote validation/stochastic_aep/step3_rowp.json  (3869.1s)
