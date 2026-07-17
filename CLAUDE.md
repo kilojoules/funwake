@@ -58,4 +58,4 @@ results/           — baselines, problem definitions
 - `playground/problem.json` — training farm definition
 - `results/seed_optimizer.py` — generic baseline template
 - `results/best_optimizer.py` — best LLM-generated optimizer
-- `plot_progress.py` — progress visualization
+- `scripts/plot_progress.py` — progress visualization

@@ -9,7 +9,7 @@
 #   - pixi install done
 
 set -e
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 OUTDIR="results_agent_gemini_top3_seed"
 mkdir -p "$OUTDIR"

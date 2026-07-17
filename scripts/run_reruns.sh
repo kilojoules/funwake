@@ -11,7 +11,7 @@
 # Usage:  bash run_reruns.sh            # all 6 sequentially (~30h)
 #         SEEDS="1" bash run_reruns.sh  # one seed each (quick smoke: still 5h each)
 set -uo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 # ---- pinned models (edit if you want a different tier; identity gets logged) ----
 CLAUDE_MODEL="${CLAUDE_MODEL:-claude-opus-4-5-20251101}"

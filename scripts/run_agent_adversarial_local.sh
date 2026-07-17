@@ -15,7 +15,7 @@
 #   - pixi env set up (pixi install)
 
 set -e
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 TIME_BUDGET=${1:-18000}  # default 5 hours
 
