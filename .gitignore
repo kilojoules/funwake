@@ -162,3 +162,7 @@ _lumi_pull/
 /validation/*.log
 /harness_v1_1_backup/
 /results_rerun_smoke_claude/
+
+# Internal working docs (kept local, not part of the public product)
+/paper/CLAIM_AUDIT.md
+/paper/REVIEWER_RESPONSE.md
