@@ -157,7 +157,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("script", help="Path to optimizer module")
     p.add_argument("--problem", default="results/problem_farm1.json")
-    p.add_argument("--timeout", type=int, default=60)
+    p.add_argument("--timeout", type=int, default=180)
     p.add_argument("--baselines", default="results/baselines.json")
     p.add_argument("--train-farm", default="1")
     p.add_argument("--log", default=None,
