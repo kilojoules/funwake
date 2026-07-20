@@ -1,0 +1,54 @@
+name: smoke
+
+# Runs the README's advertised quickstart commands end-to-end. No API keys,
+# no LLM calls — pure scoring of the committed seed and deployed schedules.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"   # weekly (Mon 06:00 UTC) — catches silent rot
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: prefix-dev/setup-pixi@v0.8.1
+        with:
+          cache: true
+
+      # pixwake is vendored and baselines are committed, so this is a fast
+      # no-op (skips the clone and the baseline recompute) — it also verifies
+      # setup.sh's skip-if-present paths.
+      - name: setup (vendored pixwake + committed baselines)
+        run: bash setup.sh
+
+      - name: seed schedule (infeasible by design; AEP 5529.2, baseline 5540.72)
+        run: |
+          pixi run python tools/run_optimizer.py results/seed_schedule.py --schedule-only \
+            | pixi run python tests/ci_smoke_assert.py --check seed
+
+      - name: deployed iter_192 (feasible, beats baseline)
+        run: |
+          pixi run python tools/run_optimizer.py runs/schedule_only_5hr/iter_192.py --schedule-only \
+            | pixi run python tests/ci_smoke_assert.py --check iter192
+
+      - name: unit tests on seed (feasibility expected-fail kept green)
+        run: |
+          pixi run python tools/run_tests.py results/seed_schedule.py --quick \
+            | pixi run python tests/ci_smoke_assert.py --check tests
+
+      - name: held-out generalization of iter_192 (feasible on ROWP)
+        run: |
+          pixi run python tools/test_generalization.py runs/schedule_only_5hr/iter_192.py --schedule-only \
+            | pixi run python tests/ci_smoke_assert.py --check generalization
+
+      - name: determinism (score the seed twice, assert within tolerance)
+        run: |
+          pixi run python tools/run_optimizer.py results/seed_schedule.py --schedule-only > s1.json
+          pixi run python tools/run_optimizer.py results/seed_schedule.py --schedule-only > s2.json
+          pixi run python tests/ci_smoke_assert.py --check determinism --files s1.json s2.json

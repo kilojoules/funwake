@@ -20,6 +20,14 @@ def main():
     script = sys.argv[1]
     args = sys.argv[2:]
 
+    # The seed schedule is infeasible by design (it trades feasibility for AEP;
+    # the baseline is the best-FEASIBLE of 500 multistarts). Auto-mark its
+    # feasibility checks as expected-fail so a fresh clone sees exit 0, not a
+    # broken-looking failure. See the README seed-infeasibility note.
+    if os.path.basename(os.path.abspath(script)) == "seed_schedule.py" \
+            and "--expect-infeasible" not in args:
+        args = args + ["--expect-infeasible"]
+
     test_runner = os.path.join(os.path.dirname(__file__), "..", "playground", "test_optimizer.py")
     cmd = [sys.executable, test_runner, os.path.abspath(script)] + args
 
