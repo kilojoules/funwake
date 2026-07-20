@@ -37,7 +37,7 @@ echo "=== unisweep task $LSB_JOBINDEX / 12, cell_idx=$CELL_IDX ==="
 echo "host: $(hostname)"
 date
 
-PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \
+PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \
     validation/stochastic_aep/run_uniform_per_cell.py \
     --cell-idx "$CELL_IDX" --out "$OUT"
 

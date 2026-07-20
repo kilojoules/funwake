@@ -104,7 +104,7 @@ def render_schedule(params):
 def score_on_farm(script_path, problem_path, timeout=120):
     project_root = os.path.join(os.path.dirname(__file__), "..")
     tools_dir = os.path.dirname(__file__)
-    pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(project_root, "dependencies", "pixwake", "src")
     env = {
         "PATH": os.environ.get("PATH", ""),
         "PYTHONPATH": f"{pixwake_src}:{os.environ.get('PYTHONPATH', '')}",

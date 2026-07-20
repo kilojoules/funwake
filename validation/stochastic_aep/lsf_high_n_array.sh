@@ -26,7 +26,7 @@ OUT="$OUT_DIR/cell${CELL_IDX}.json"
 echo "=== highn task $LSB_JOBINDEX / 16, cell_idx=$CELL_IDX ==="
 hostname; date
 
-PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \
+PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \
     validation/stochastic_aep/run_high_n_per_cell.py \
     --cell-idx "$CELL_IDX" --out "$OUT"
 

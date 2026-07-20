@@ -6,7 +6,7 @@ Per cell: 3 sample seeds × 2 ES modes = 6 SGD runs.
 Resume-safe: writes one JSON per cell.
 
 Usage (local or on gbar):
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_f_es_cost_per_cell.py \\
         --cell-idx <0..29> --out <out.json>
 """
@@ -63,7 +63,7 @@ CELLS_AND_BEST_ETA_T = [
 
 
 def one_run(cell_path, eta_t_m, sample_seed, es_on, init_seed=0, K=50, total_steps=8000):
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

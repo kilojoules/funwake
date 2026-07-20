@@ -5,7 +5,7 @@ import os
 
 # Setup environment
 os.environ['JAX_ENABLE_X64'] = 'True'
-sys.path.insert(0, 'playground/pixwake/src')
+sys.path.insert(0, 'dependencies/pixwake/src')
 
 import json
 import time

@@ -132,7 +132,7 @@ CLI_ARGS=(
     --provider "$PROVIDER"
     --model "$MODEL"
     --base-url http://localhost:8000
-    --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv
+    --wind-csv dependencies/pixwake/energy_island_10y_daily_av_wind.csv
     --time-budget "$TIME_BUDGET"
     --hot-start "$HOT_START"
     --output-dir "$OUTPUT_DIR"

@@ -27,7 +27,7 @@ PROB="results/matrix/problem_${KEY}.json"
 OUT=$HOME/clusters_results/funwake_baseline_highn
 
 echo "=== high-N baseline cell $CELL -> $KEY ==="; hostname; date
-PYTHONPATH=playground/pixwake/src pixi run python \
+PYTHONPATH=dependencies/pixwake/src pixi run python \
     tools/run_baseline_batch.py \
     --problem "$PROB" --seeds 0-499 --out-dir "$OUT" --out-key "$KEY"
 echo done; date

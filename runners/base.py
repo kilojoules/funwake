@@ -23,7 +23,7 @@ class RunConfig:
     train_farm: str = "1"
     hot_start: Optional[str] = None  # seed optimizer path
     timeout_per_run: int = 60        # per-optimizer timeout
-    pixwake_src: str = "playground/pixwake/src"
+    pixwake_src: str = "dependencies/pixwake/src"
     schedule_only: bool = False      # schedule_fn interface (vs full optimize())
     max_attempts: int = 0            # 0 = unlimited (use time_budget only)
     model: Optional[str] = None      # explicit model pin for CLI backends
@@ -292,7 +292,7 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 - The function arguments give you everything: `sim` (wake model),
   `n_target` (turbine count), `boundary` (polygon vertices),
   `min_spacing`, `wd`/`ws`/`weights` (wind rose)
-- Read `playground/pixwake/src/pixwake/optim/sgd.py` to understand the
+- Read `dependencies/pixwake/src/pixwake/optim/sgd.py` to understand the
   baseline solver API
 - The `topfarm_sgd_solve` function handles boundary/spacing constraints
 - Multi-start with diverse initializations helps find better optima

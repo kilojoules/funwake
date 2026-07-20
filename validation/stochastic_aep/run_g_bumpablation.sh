@@ -2,7 +2,7 @@
 # Task G — iter_192-no-bumps on 3 mechanism cells, ES-off, per-iter AEP + grad norms
 set -e
 cd /Users/julianquick/portfolio_copy/funwake
-export PYTHONPATH=playground/pixwake/src:validation/stochastic_aep
+export PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep
 
 for cell_name in rowp_n80_roserowp rowp_n80_roseomnidir rowp_n70_roserowp; do
     out="validation/stochastic_aep/gb_${cell_name}_iter192_nobumps_off.json"

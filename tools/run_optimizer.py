@@ -189,7 +189,7 @@ def main():
 
     project_root = os.path.join(os.path.dirname(__file__), "..")
     harness = os.path.join(project_root, "playground", "harness.py")
-    pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(project_root, "dependencies", "pixwake", "src")
 
     # Safety check before execution
     try:

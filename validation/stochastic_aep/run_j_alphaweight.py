@@ -13,7 +13,7 @@ Total runs: 9 × 2 × 3 = 54. Wall ≈ 2.5–3 hr.
 Resume-safe: writes incrementally to --out JSON.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_j_alphaweight.py \\
         --out validation/stochastic_aep/task_j_alpha_k50.json
 """
@@ -41,7 +41,7 @@ SEEDS = (100000, 200000, 300000)
 
 def one_run(problem_path, wake_model, factor, sample_seed, K, total_steps,
             translate_rowp):
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

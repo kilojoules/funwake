@@ -29,7 +29,7 @@ OUT=$HOME/clusters_results/funwake_baseline_redo
 echo "=== baseline redo task $LSB_JOBINDEX seeds $LO-$HI ==="
 hostname; date
 
-PYTHONPATH=playground/pixwake/src pixi run python \
+PYTHONPATH=dependencies/pixwake/src pixi run python \
     tools/run_baseline_batch.py \
     --problem playground/problem_train.json \
     --seeds ${LO}-${HI} \

@@ -27,7 +27,7 @@ jax.config.update("jax_enable_x64", True)
 import jax.numpy as jnp
 import numpy as np
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "playground", "pixwake", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "pixwake", "src"))
 from pixwake import Curve, Turbine, WakeSimulation
 from pixwake.deficit import BastankhahGaussianDeficit
 from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve, boundary_penalty

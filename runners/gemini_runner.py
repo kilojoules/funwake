@@ -28,7 +28,7 @@ TOOL_DECLARATIONS = [
         "parameters": {
             "type": "object",
             "properties": {
-                "path": {"type": "string", "description": "Relative path to read (e.g. playground/pixwake/src/pixwake/optim/sgd.py)"}
+                "path": {"type": "string", "description": "Relative path to read (e.g. dependencies/pixwake/src/pixwake/optim/sgd.py)"}
             },
             "required": ["path"]
         }

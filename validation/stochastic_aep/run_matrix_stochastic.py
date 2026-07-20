@@ -22,7 +22,7 @@ Plumbing fixes from the ROWP run are applied to every cell:
     whose init still violates the boundary.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_matrix_stochastic.py \\
         --sample-seeds 1 --out validation/stochastic_aep/matrix_stochastic.json
 """

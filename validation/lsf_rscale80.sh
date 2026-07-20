@@ -16,5 +16,5 @@ case $LSB_JOBINDEX in
   2) C=35; TAG=rowp_n80_roserowp ;;
   3) C=41; TAG=rowp_n80_roseomnidir ;;
 esac
-PYTHONPATH=playground/pixwake/src:playground pixi run python tools/run_matrix_ms.py \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python tools/run_matrix_ms.py \
     --cell-idx $C --K 50 --only random --out $HOME/clusters_results/funwake_random_scale/${TAG}.random.json

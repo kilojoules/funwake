@@ -18,7 +18,7 @@ Per-cell outputs:
 Optional 740-10 follow-up cells if --include-rowp.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
       validation/stochastic_aep/run_step3.py \\
       --restarts 20 --total-steps 8000 --K 50 \\
       --out validation/stochastic_aep/step3_result.json

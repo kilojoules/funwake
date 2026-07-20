@@ -35,7 +35,7 @@ Add to claude_desktop_config.json:
                  "--schedule-only"],
         "env": {
           "JAX_ENABLE_X64": "True",
-          "PYTHONPATH": "playground/pixwake/src"
+          "PYTHONPATH": "dependencies/pixwake/src"
         }
       }
     }
@@ -426,7 +426,7 @@ def read_file(path: str) -> str:
 
     Args:
         path: Relative path from the project root
-              (e.g. "playground/pixwake/src/pixwake/optim/sgd.py").
+              (e.g. "dependencies/pixwake/src/pixwake/optim/sgd.py").
     """
     # Normalise and guard against traversal
     norm = Path(path).as_posix().lstrip("/")

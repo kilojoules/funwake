@@ -11,7 +11,7 @@ Tests:
    ES=False run.
 
 Run:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
       validation/early_stopping/test_es_implementation.py
 """
 import json

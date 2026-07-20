@@ -13,7 +13,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                "playground/pixwake/src"))
+                                "dependencies/pixwake/src"))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                                 "playground"))
 import jax  # noqa: E402

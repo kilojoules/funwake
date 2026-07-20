@@ -28,7 +28,7 @@ def run_batch(args_tuple):
     problem_path, start_offset, batch_size, timeout_per_start = args_tuple
 
     project_root = os.path.join(os.path.dirname(__file__), "..")
-    pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(project_root, "dependencies", "pixwake", "src")
 
     env = {
         "PATH": os.environ.get("PATH", ""),

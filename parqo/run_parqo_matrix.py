@@ -16,7 +16,7 @@ Scoring: deterministic full-rose AEP (GWh) + multi-zone feasibility
 Resume-safe: writes parqo/parqo_matrix.json incrementally.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src pixi run python parqo/run_parqo_matrix.py
+    PYTHONPATH=dependencies/pixwake/src pixi run python parqo/run_parqo_matrix.py
 """
 import importlib.util
 import json
@@ -27,7 +27,7 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(ROOT, "playground/pixwake/src"))
+sys.path.insert(0, os.path.join(ROOT, "dependencies/pixwake/src"))
 sys.path.insert(0, os.path.join(ROOT, "playground"))
 
 import jax

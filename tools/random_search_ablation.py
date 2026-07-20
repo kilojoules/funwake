@@ -155,7 +155,7 @@ def score_on_farm(script_path, problem_path, timeout=120, schedule_only=True):
     """Score a schedule script on a farm, return (aep, feasible, time) or error."""
     project_root = os.path.join(os.path.dirname(__file__), "..")
     tools_dir = os.path.dirname(__file__)
-    pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(project_root, "dependencies", "pixwake", "src")
 
     env = {
         "PATH": os.environ.get("PATH", ""),

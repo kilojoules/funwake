@@ -1,0 +1,62 @@
+from typing import Any, Callable
+
+import jax
+import jax.numpy as jnp
+
+from ..core import SimulationContext
+from ..jax_utils import get_float_eps
+from ..utils import ct2a_madsen
+from .base import WakeDeficit
+
+
+class NOJDeficit(WakeDeficit):
+    """Implements the N.O. Jensen (NOJ) wake deficit model.
+
+    This is a classic and simple analytical model that assumes a linearly
+    expanding wake with a top-hat profile for the velocity deficit.
+    """
+
+    def __init__(
+        self,
+        k: float = 0.1,
+        ct2a: Callable = ct2a_madsen,
+        **kwargs: Any,
+    ) -> None:
+        """Initializes the `NOJDeficit` model.
+
+        Args:
+            k: The wake expansion coefficient.
+            ct2a: A callable to convert `Ct` to the induction factor.
+            **kwargs: Additional arguments passed to the parent class.
+        """
+        kwargs["use_radius_mask"] = True  # enforce radius mask for NOJ model
+        super().__init__(**kwargs)
+        self.k = k
+        self.ct2a = ct2a
+
+    def _deficit(
+        self,
+        ws_eff: jnp.ndarray,
+        ti_eff: jnp.ndarray | None,
+        ctx: SimulationContext,
+    ) -> jax.Array:
+        _ = ti_eff  # unused
+        assert ctx.wake_radius is not None
+
+        wt = ctx.turbine
+        rr = wt.rotor_diameter / 2
+        all2all_deficit_matrix = (
+            2 * self.ct2a(wt.ct(ws_eff))
+            * (rr / jnp.maximum(ctx.wake_radius, get_float_eps())) ** 2
+        )  # fmt:skip
+        return ctx.ws * all2all_deficit_matrix
+
+    def _wake_radius(
+        self,
+        ws_eff: jnp.ndarray,
+        ti_eff: jnp.ndarray | None,
+        ctx: SimulationContext,
+    ) -> jnp.ndarray:
+        _ = (ws_eff, ti_eff)  # unused
+        rr = ctx.turbine.rotor_diameter / 2
+        return rr + self.k * ctx.dw

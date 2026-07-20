@@ -40,7 +40,7 @@ def score_one(script_rel, problem_rel, seed, timeout, schedule_only):
         **os.environ,
         "JAX_ENABLE_X64": "True",
         "PYTHONPATH": (
-            os.path.join(PROJECT_ROOT, "playground", "pixwake", "src")
+            os.path.join(PROJECT_ROOT, "dependencies", "pixwake", "src")
             + ":" + os.environ.get("PYTHONPATH", "")
         ),
     }

@@ -19,7 +19,7 @@ H4 — TopFarm smart-start init as a SECONDARY fair baseline. Replaces the
 Total: 84 (H1) + 54 (H2) + 24 (H3) + 162 (H4) = 324 runs.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_hardening.py \\
         --workers 1 --out validation/stochastic_aep/hardening.json
 """
@@ -266,7 +266,7 @@ def run_task(task):
        smart_init      : (h4) bool — replace wind-aware init with smart-start
     """
     import sys
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

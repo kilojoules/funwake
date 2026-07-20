@@ -23,7 +23,7 @@ ROWP_PROBLEM = os.path.join(PROJECT_ROOT, "results", "problem_rowp.json")
 def score_on_rowp(script_path, timeout=180):
     """Score a schedule script on the ROWP held-out farm."""
     tools_dir = os.path.join(PROJECT_ROOT, "tools")
-    pixwake_src = os.path.join(PROJECT_ROOT, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(PROJECT_ROOT, "dependencies", "pixwake", "src")
     env = {
         "PATH": os.environ.get("PATH", ""),
         "PYTHONPATH": f"{pixwake_src}:{os.environ.get('PYTHONPATH', '')}",

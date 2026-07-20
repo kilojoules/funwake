@@ -51,7 +51,7 @@ def classify(script_path, rules):
 
 
 def score_rowp(script_path, schedule_only, timeout=180):
-    pixwake_src = os.path.join(PROJECT_ROOT, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(PROJECT_ROOT, "dependencies", "pixwake", "src")
     env = {
         "PATH": os.environ.get("PATH", ""),
         "PYTHONPATH": f"{pixwake_src}:{os.environ.get('PYTHONPATH','')}",

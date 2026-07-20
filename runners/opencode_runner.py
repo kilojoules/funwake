@@ -73,7 +73,7 @@ maximize AEP (Annual Energy Production).
 - Run tests first: `python tools/run_tests.py <script> --quick`
 - Test generalization: `python tools/test_generalization.py <script>`
 - Check status: `python tools/get_status.py --log {self.log_path}`
-- Do NOT modify files in `playground/pixwake/`, `benchmarks/`, or `tools/`
+- Do NOT modify files in `dependencies/pixwake/`, `benchmarks/`, or `tools/`
 - Baseline to beat: {self._get_baseline_aep():.1f} GWh
 - Each optimizer times out at {self.config.timeout_per_run}s
 
@@ -85,7 +85,7 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 
 ## Workflow
 1. Read `{self.config.output_dir}/agent_memory.md` for status
-2. Read pixwake source if needed (`playground/pixwake/src/pixwake/`)
+2. Read pixwake source if needed (`dependencies/pixwake/src/pixwake/`)
 3. Write an optimizer, test it, score it, check generalization
 4. Iterate with different strategies
 """
@@ -232,7 +232,7 @@ that returns (lr, alpha, beta1, beta2).
             if i == 0:
                 prompt = (
                     f"Read {self.memory_path} for context. Explore the pixwake codebase "
-                    f"in playground/pixwake/src/, understand the API, then write and "
+                    f"in dependencies/pixwake/src/, understand the API, then write and "
                     f"test an optimizer. Score it and test generalization.{seed_context}"
                 )
             else:

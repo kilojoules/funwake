@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 cd /Users/julianquick/portfolio_copy/funwake
-export PYTHONPATH=playground/pixwake/src:validation/stochastic_aep
+export PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep
 
 run_pair() {
     local cell_name="$1"

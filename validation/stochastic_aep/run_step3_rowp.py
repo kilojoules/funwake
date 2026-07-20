@@ -23,7 +23,7 @@ For ES-ON cells: ES-trigger statistics (iter at which lr_ratio first crosses,
 fraction of restarts that triggered).
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_step3_rowp.py \\
         --restarts 20 --total-steps 8000 --K 50 \\
         --out validation/stochastic_aep/step3_rowp.json

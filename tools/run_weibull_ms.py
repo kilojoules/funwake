@@ -8,7 +8,7 @@ schedules (baseline seed / claude / gemini) × K starts, keeps best feasible.
 Deterministic full-rose AEP + boundary/spacing feasibility (practical tol).
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:playground pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:playground pixi run python \\
         tools/run_matrix_ms.py --cell-idx <0..47> --K 50 \\
         --out results/matrix/ms/<key>.json
 """
@@ -20,7 +20,7 @@ import sys
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(ROOT, "playground/pixwake/src"))
+sys.path.insert(0, os.path.join(ROOT, "dependencies/pixwake/src"))
 sys.path.insert(0, os.path.join(ROOT, "playground"))
 
 CELLS = [("rowp", n, r) for r in ["uniform", "dei"] for n in [30,40,50,60,70,80]]  # 12 Weibull pilot

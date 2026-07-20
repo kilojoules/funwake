@@ -68,7 +68,7 @@ def main():
 
     project_root = os.path.join(os.path.dirname(__file__), "..")
     tools_dir = os.path.dirname(__file__)
-    pixwake_src = os.path.join(project_root, "playground", "pixwake", "src")
+    pixwake_src = os.path.join(project_root, "dependencies", "pixwake", "src")
 
     results = []
 

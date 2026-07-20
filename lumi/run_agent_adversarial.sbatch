@@ -30,10 +30,10 @@ cd /scratch/project_465002609/julian/funwake
 mkdir -p lumi/logs
 
 # Ensure pixwake is cloned (idempotent)
-if [ ! -d "playground/pixwake" ]; then
+if [ ! -d "dependencies/pixwake" ]; then
     mkdir -p playground
-    git clone https://github.com/kilojoules/cluster-tradeoffs.git playground/pixwake
-    cd playground/pixwake && git checkout b8e905a && cd ../..
+    git clone https://github.com/kilojoules/cluster-tradeoffs.git dependencies/pixwake
+    cd dependencies/pixwake && git checkout b8e905a && cd ../..
 fi
 
 # Stress cell: same N=50 DEI polygon, uniform wind rose.
@@ -51,7 +51,7 @@ pixi run python agent_cli.py \
     --provider codex \
     --model "${MODEL:-gpt-5.5}" \
     --schedule-only \
-    --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv \
+    --wind-csv dependencies/pixwake/energy_island_10y_daily_av_wind.csv \
     --hot-start results/seed_schedule.py \
     --output-dir "$OUTDIR" \
     --time-budget 18000 \

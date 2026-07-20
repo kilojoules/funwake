@@ -23,7 +23,7 @@ from matplotlib import animation
 from matplotlib.patches import Polygon as MplPoly
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground", "pixwake", "src"))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies", "pixwake", "src"))
 
 from pixwake.optim.sgd import boundary_penalty, spacing_penalty
 from pixwake import Curve, Turbine, WakeSimulation

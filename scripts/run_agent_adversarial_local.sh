@@ -11,7 +11,7 @@
 #
 # Requires:
 #   - codex CLI on PATH (verified: codex-cli 0.125.0)
-#   - playground/pixwake cloned (this script will clone if missing)
+#   - dependencies/pixwake cloned (this script will clone if missing)
 #   - pixi env set up (pixi install)
 
 set -e
@@ -20,11 +20,11 @@ cd "$(dirname "$0")/.."
 TIME_BUDGET=${1:-18000}  # default 5 hours
 
 # Ensure pixwake is cloned
-if [ ! -d "playground/pixwake" ]; then
+if [ ! -d "dependencies/pixwake" ]; then
     echo "Cloning pixwake..."
     mkdir -p playground
-    git clone https://github.com/kilojoules/cluster-tradeoffs.git playground/pixwake
-    cd playground/pixwake && git checkout b8e905a && cd ../..
+    git clone https://github.com/kilojoules/cluster-tradeoffs.git dependencies/pixwake
+    cd dependencies/pixwake && git checkout b8e905a && cd ../..
 fi
 
 # Memory hygiene: don't preallocate JAX, force CPU.

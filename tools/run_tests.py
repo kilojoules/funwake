@@ -24,7 +24,7 @@ def main():
     cmd = [sys.executable, test_runner, os.path.abspath(script)] + args
 
     env = {**os.environ, "JAX_ENABLE_X64": "True"}
-    pixwake = os.path.join(os.path.dirname(__file__), "..", "playground", "pixwake", "src")
+    pixwake = os.path.join(os.path.dirname(__file__), "..", "dependencies", "pixwake", "src")
     env["PYTHONPATH"] = f"{pixwake}:{env.get('PYTHONPATH', '')}"
 
     try:
