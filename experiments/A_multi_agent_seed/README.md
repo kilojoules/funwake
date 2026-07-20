@@ -40,8 +40,8 @@ session at a time.
 ## Outputs
 - `results_agent_claude_sched_run{1..5}/` — 5 Claude replicates
 - `results_agent_gemini_sched_run{1..5}/` — 5 Gemini replicates
-  (run 1 is the existing `results_agent_schedule_only_5hr` /
-  `results_agent_gemini_cli_5hr`; symlink them in.)
+  (run 1 is the existing `runs/schedule_only_5hr` /
+  `runs/gemini_cli_5hr`; symlink them in.)
 - `attempt_log.json` per run with per-attempt train_aep + ROWP.
 
 ## Success criteria

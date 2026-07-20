@@ -25,8 +25,8 @@ mkdir -p lumi/logs
 export JAX_ENABLE_X64=True
 
 # ── Schedules to evaluate ──
-CLAUDE_SCHED="results_agent_schedule_only_5hr/iter_192.py"
-GEMINI_SCHED="results_agent_gemini_cli_5hr/iter_118.py"
+CLAUDE_SCHED="runs/schedule_only_5hr/iter_192.py"
+GEMINI_SCHED="runs/gemini_cli_5hr/iter_118.py"
 
 # ── Parameters ──
 FARMS="dei rowp"

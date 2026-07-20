@@ -40,8 +40,8 @@ import sys as _sys
 SCHED_NAME = _sys.argv[1] if len(_sys.argv) > 1 else "baseline"
 SCHED_PATH = {
     "baseline": os.path.join(ROOT, "results/seed_schedule.py"),
-    "claude":   os.path.join(ROOT, "results_agent_schedule_only_5hr/iter_192.py"),
-    "gemini":   os.path.join(ROOT, "results_agent_gemini_cli_5hr/iter_118.py"),
+    "claude":   os.path.join(ROOT, "runs/schedule_only_5hr/iter_192.py"),
+    "gemini":   os.path.join(ROOT, "runs/gemini_cli_5hr/iter_118.py"),
 }[SCHED_NAME]
 OUT = os.path.join(HERE, f"parqo_ms_{SCHED_NAME}.json")
 

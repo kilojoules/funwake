@@ -36,7 +36,7 @@ PROBE = 200
 OUT = os.path.join(HERE, "per_iter_parqo.json")
 
 spec = importlib.util.spec_from_file_location(
-    "claude", os.path.join(ROOT, "results_agent_schedule_only_5hr/iter_192.py"))
+    "claude", os.path.join(ROOT, "runs/schedule_only_5hr/iter_192.py"))
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 schedule_fn = mod.schedule_fn

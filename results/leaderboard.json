@@ -9,7 +9,7 @@
     "best_rowp_iter": 27
   },
   {
-    "dir": "results_agent_schedule_only_5hr",
+    "dir": "runs/schedule_only_5hr",
     "model": "claude",
     "n_att": 320,
     "n_feas": 241,
@@ -36,7 +36,7 @@
     "best_rowp_iter": 49
   },
   {
-    "dir": "results_agent_schedule_5hr",
+    "dir": "runs/archive/schedule_5hr",
     "model": "?",
     "n_att": 99,
     "n_feas": 78,

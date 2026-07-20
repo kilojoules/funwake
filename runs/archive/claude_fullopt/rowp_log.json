@@ -1,0 +1,243 @@
+[
+  {
+    "attempt": 1,
+    "timestamp": 1776558248.0348768,
+    "train_aep": 4260.35,
+    "train_feasible": true,
+    "train_time": 21.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_hexagonal",
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 2,
+    "timestamp": 1776558284.903946,
+    "train_aep": 4260.32,
+    "train_feasible": true,
+    "train_time": 33.1,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 3,
+    "timestamp": 1776558329.614818,
+    "train_aep": 4263.69,
+    "train_feasible": true,
+    "train_time": 41.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 4,
+    "timestamp": 1776558366.1873071,
+    "train_aep": 4168.29,
+    "train_feasible": true,
+    "train_time": 33.6,
+    "train_baseline": 5540.72,
+    "strategy": "custom",
+    "families": [
+      "custom_adam",
+      "init_hexagonal",
+      "init_wind_aware_grid",
+      "scipy_slsqp"
+    ]
+  },
+  {
+    "attempt": 5,
+    "timestamp": 1776558402.7558131,
+    "train_aep": 4241.95,
+    "train_feasible": true,
+    "train_time": 33.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_hexagonal",
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 6,
+    "timestamp": 1776558418.607905,
+    "train_aep": 4242.68,
+    "train_feasible": true,
+    "train_time": 12.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "custom_adam",
+      "init_hexagonal",
+      "scipy_slsqp",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 7,
+    "timestamp": 1776558459.6297421,
+    "train_aep": 4254.25,
+    "train_feasible": true,
+    "train_time": 38.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_hexagonal",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 8,
+    "timestamp": 1776558502.826473,
+    "train_aep": 4246.63,
+    "train_feasible": true,
+    "train_time": 40.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_hexagonal",
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 9,
+    "timestamp": 1776558546.170943,
+    "train_aep": 4264.27,
+    "train_feasible": true,
+    "train_time": 40.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 10,
+    "timestamp": 1776558580.5731359,
+    "train_aep": 4264.91,
+    "train_feasible": true,
+    "train_time": 31.2,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 11,
+    "timestamp": 1776558607.624964,
+    "train_aep": 4253.96,
+    "train_feasible": true,
+    "train_time": 23.7,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 12,
+    "timestamp": 1776558646.775434,
+    "train_aep": 4258.92,
+    "train_feasible": true,
+    "train_time": 36.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 13,
+    "timestamp": 1776558680.4327219,
+    "train_aep": 4263.37,
+    "train_feasible": true,
+    "train_time": 30.8,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 14,
+    "timestamp": 1776558724.166168,
+    "train_aep": 4262.3,
+    "train_feasible": true,
+    "train_time": 40.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 15,
+    "timestamp": 1776558757.8553941,
+    "train_aep": 4262.4,
+    "train_feasible": true,
+    "train_time": 31.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 16,
+    "timestamp": 1776558791.624935,
+    "train_aep": 4262.54,
+    "train_feasible": true,
+    "train_time": 30.9,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 17,
+    "timestamp": 1776558836.1649358,
+    "train_aep": 4264.1,
+    "train_feasible": true,
+    "train_time": 41.4,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  },
+  {
+    "attempt": 18,
+    "timestamp": 1776558868.910097,
+    "train_aep": 4262.4,
+    "train_feasible": true,
+    "train_time": 30.0,
+    "train_baseline": 5540.72,
+    "strategy": "sgd_solve",
+    "families": [
+      "init_wind_aware_grid",
+      "topfarm_sgd_solve"
+    ]
+  }
+]

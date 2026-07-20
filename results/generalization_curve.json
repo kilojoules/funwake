@@ -259,7 +259,7 @@
     "time_s": 49.7
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n100",
     "n_target": 100,
     "aep_gwh": 10908.45,
@@ -267,7 +267,7 @@
     "time_s": 126.4
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n30",
     "n_target": 30,
     "aep_gwh": 3350.21,
@@ -275,7 +275,7 @@
     "time_s": 26.7
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n40",
     "n_target": 40,
     "aep_gwh": 4454.78,
@@ -283,7 +283,7 @@
     "time_s": 31.3
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n50",
     "n_target": 50,
     "aep_gwh": 5556.6,
@@ -291,7 +291,7 @@
     "time_s": 42.2
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n60",
     "n_target": 60,
     "aep_gwh": 6641.24,
@@ -299,7 +299,7 @@
     "time_s": 51.5
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n70",
     "n_target": 70,
     "aep_gwh": 7727.82,
@@ -307,7 +307,7 @@
     "time_s": 67.2
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_dei_n80",
     "n_target": 80,
     "aep_gwh": 8798.63,
@@ -315,7 +315,7 @@
     "time_s": 86.2
   },
   {
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "problem": "problem_rowp",
     "n_target": 74,
     "aep_gwh": 4259.66,

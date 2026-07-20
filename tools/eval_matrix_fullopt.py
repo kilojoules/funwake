@@ -28,9 +28,9 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # (label, script_path) — the three codex full-optimizer champions.
 CHAMPIONS = [
-    ("codex_fullopt_run1 (iter_049)", "results_agent_codex_fullopt_run1/iter_049.py"),
-    ("codex_fullopt_run2 (iter_056)", "results_agent_codex_fullopt_run2/iter_056.py"),
-    ("codex_fullopt_run3 (iter_014)", "results_agent_codex_fullopt_run3/iter_014.py"),
+    ("codex_fullopt_run1 (iter_049)", "runs/codex_fullopt_run1/iter_049.py"),
+    ("codex_fullopt_run2 (iter_056)", "runs/codex_fullopt_run2/iter_056.py"),
+    ("codex_fullopt_run3 (iter_014)", "runs/codex_fullopt_run3/iter_014.py"),
 ]
 
 

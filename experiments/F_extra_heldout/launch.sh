@@ -29,8 +29,8 @@ fi
 
 # Step 3: score top schedules
 SCHEDULES=(
-    "results_agent_schedule_only_5hr/iter_192.py"
-    "results_agent_gemini_cli_5hr/iter_118.py"
+    "runs/schedule_only_5hr/iter_192.py"
+    "runs/gemini_cli_5hr/iter_118.py"
     "results_bump_opt/best_bump.py"          # if exists
 )
 

@@ -83,9 +83,9 @@ def main():
     summary = {"by_agent": {}}
 
     run1_dirs = {
-        "claude": "results_agent_schedule_only_5hr",
-        "gemini": "results_agent_gemini_cli_5hr",
-        "codex":  "results_agent_codex_sched_run1",
+        "claude": "runs/schedule_only_5hr",
+        "gemini": "runs/gemini_cli_5hr",
+        "codex":  "runs/codex_sched_run1",
     }
 
     for agent in ("claude", "gemini", "codex"):

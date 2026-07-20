@@ -25,8 +25,8 @@ this week; defer the other if budget tight.
 - Hot-start: `results/seed_optimizer.py`
 
 ## Outputs
-- `results_agent_claude_fullopt_run{2..5}/` (or `_codex_fullopt_run{2..5}/`)
-- Run 1 for claude = existing `results_agent_claude_fullopt`.
+- `runs/archive/claude_fullopt_run{2..5}/` (or `_codex_fullopt_run{2..5}/`)
+- Run 1 for claude = existing `runs/archive/claude_fullopt`.
 
 ## Success criteria
 - Across 5 runs, no run rediscovers SLSQP from scratch (i.e., Claude's

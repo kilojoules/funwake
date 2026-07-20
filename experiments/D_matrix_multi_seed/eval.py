@@ -21,8 +21,8 @@ EXP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 SCHEDULES = [
-    ("Claude (iter_192)", "results_agent_schedule_only_5hr/iter_192.py"),
-    ("Gemini (iter_118)", "results_agent_gemini_cli_5hr/iter_118.py"),
+    ("Claude (iter_192)", "runs/schedule_only_5hr/iter_192.py"),
+    ("Gemini (iter_118)", "runs/gemini_cli_5hr/iter_118.py"),
 ]
 
 

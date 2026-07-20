@@ -40,7 +40,7 @@ COLORS = {
 
 
 MODEL_DIRS = {
-    "Claude schedule (320att)": ("results_agent_schedule_only_5hr", "Claude Code"),
+    "Claude schedule (320att)": ("runs/schedule_only_5hr", "Claude Code"),
     "Claude 6hr":                ("results_agent_claude_6hr",       "Claude Code"),
     "Claude 7hr":                ("results_agent_claude_7hr",       "Claude Code"),
     "Gemini 5hr v2 (full-opt)":  ("results_agent_5hr_v2",           "Gemini CLI"),
@@ -81,7 +81,7 @@ def load_feasible_leaderboard():
                 model = "Qwen 32B"
             elif "llama" in base.lower():
                 model = "Llama 70B"
-            elif "5hr_v" in base or "5hr_noinit" in base or "5hr" == base[-3:] or "30min_v" in base or "1hr_v" in base or base == "results_agent_schedule_5hr":
+            elif "5hr_v" in base or "5hr_noinit" in base or "5hr" == base[-3:] or "30min_v" in base or "1hr_v" in base or base == "runs/archive/schedule_5hr":
                 model = "Gemini CLI"
 
         feas = [a for a in attempts if a.get("rowp_feasible") and "rowp_aep" in a]
@@ -192,9 +192,9 @@ def fig2_generalization_curve(data):
 
     # Only frontier LLMs (open-source models were dropped from the paper)
     plot_scripts = [
-        ("results_agent_schedule_only_5hr/iter_192.py",
+        ("runs/schedule_only_5hr/iter_192.py",
          "Claude schedule (iter 192)", COLORS["Claude Code"], "s"),
-        ("results_agent_gemini_cli_5hr/iter_118.py",
+        ("runs/gemini_cli_5hr/iter_118.py",
          "Gemini schedule", COLORS["Gemini CLI"], "o"),
         ("results/seed_optimizer.py",
          "Seed (single-start)", COLORS.get("Seed", "#888888"), "x"),
@@ -422,7 +422,7 @@ def fig5_convergence(data):
     baseline = data["baselines"]["problem_rowp"]["best_aep"]
 
     sources = [
-        ("Claude Code", "results_agent_schedule_only_5hr/attempt_log.json", COLORS["Claude Code"]),
+        ("Claude Code", "runs/schedule_only_5hr/attempt_log.json", COLORS["Claude Code"]),
         ("Gemini CLI", "results_agent_5hr_v2/attempt_log.json", COLORS["Gemini CLI"]),
         ("Random search", "results_random_search_320/attempt_log.json", COLORS["Random"]),
         ("Bump DE", "results_bump_opt/bump_opt_log.json", COLORS["Bump DE"]),
@@ -486,7 +486,7 @@ def fig6_alpha_mechanism(data):
 
     # Sources: any dir with schedule_fn scripts + attempt logs with rowp
     source_dirs = [
-        ("Claude Code", "results_agent_schedule_only_5hr", COLORS["Claude Code"], "o"),
+        ("Claude Code", "runs/schedule_only_5hr", COLORS["Claude Code"], "o"),
     ]
     for s in [1, 2, 3, 4]:
         source_dirs.append((f"Claude seed {s}", f"results_agent_claude_sched_s{s}", COLORS["Claude Code"], "o"))
@@ -582,7 +582,7 @@ def fig7_deployment_gap(data):
     baseline = data["baselines"]["problem_rowp"]["best_aep"]
 
     runs = [
-        ("Claude sched (320)", "results_agent_schedule_only_5hr"),
+        ("Claude sched (320)", "runs/schedule_only_5hr"),
         ("Claude 6hr", "results_agent_claude_6hr"),
         ("Claude 7hr", "results_agent_claude_7hr"),
         ("Gemini v2", "results_agent_5hr_v2"),

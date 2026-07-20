@@ -14,7 +14,7 @@ import tempfile
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRIPT = os.path.join(ROOT, "results_agent_schedule_only_5hr/iter_192.py")
+SCRIPT = os.path.join(ROOT, "runs/schedule_only_5hr/iter_192.py")
 HARNESS = os.path.join(ROOT, "playground/harness.py")
 
 JOBS = {

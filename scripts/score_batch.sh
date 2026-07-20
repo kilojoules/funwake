@@ -4,9 +4,9 @@
 export JAX_ENABLE_X64=True
 export PYTHONPATH=playground/pixwake/src:$PYTHONPATH
 
-LOG=results_agent_claude_fullopt/attempt_log.json
+LOG=runs/archive/claude_fullopt/attempt_log.json
 
-for script in results_agent_claude_fullopt/iter_*.py; do
+for script in runs/archive/claude_fullopt/iter_*.py; do
     echo "Scoring $script..."
     timeout 90 python tools/run_optimizer.py "$script" --timeout 60 --log "$LOG" 2>&1 | tail -20
     echo "---"

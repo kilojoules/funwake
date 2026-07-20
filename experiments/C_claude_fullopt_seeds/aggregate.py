@@ -1,7 +1,7 @@
 """Aggregate Experiment C: best ROWP per Claude full-opt agent run.
 
 Reuses the same per-run analysis logic as Experiment A but for
-results_agent_claude_fullopt_run{1..5}/ and adds a "wraps_slsqp" flag.
+runs/archive/claude_fullopt_run{1..5}/ and adds a "wraps_slsqp" flag.
 
 Usage:
     pixi run python experiments/C_claude_fullopt_seeds/aggregate.py
@@ -47,8 +47,8 @@ def main():
     p.add_argument("--agent", choices=("claude", "codex"), default="claude")
     args = p.parse_args()
 
-    run1 = ("results_agent_claude_fullopt" if args.agent == "claude"
-            else "results_agent_codex_fullopt_run1")
+    run1 = ("runs/archive/claude_fullopt" if args.agent == "claude"
+            else "runs/codex_fullopt_run1")
 
     runs = []
     for n in range(1, 6):

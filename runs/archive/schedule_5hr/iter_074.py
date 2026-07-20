@@ -1,0 +1,191 @@
+"""Gradient noise injection (simulated annealing) on iter_058's schedule.
+
+Genuinely different strategy: add decaying Gaussian noise to gradients
+during the exploration phase. This creates stochastic exploration that
+can escape local minima that pure gradient descent cannot.
+
+Uses iter_058's proven penalty schedule exactly, but adds noise:
+- Phase 1 (0-2000): Feasibility, alpha=200, no noise
+- Phase 2 (2000-8000): Exploration, alpha=2, noise_scale decays 50->1
+- Phase 3 (8000-13000): Enforcement, alpha cosine 5->600, no noise
+
+The noise is generated per-iteration using JAX PRNGKey splitting.
+Noise magnitude is proportional to gradient magnitude (SNR control).
+"""
+import jax
+import jax.numpy as jnp
+from pixwake.optim.sgd import SGDSettings, topfarm_sgd_solve
+from pixwake.optim.sgd import boundary_penalty, spacing_penalty
+
+
+def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
+
+    def objective(x, y):
+        r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
+        p = r.power()[:, :len(x)]
+        return -jnp.sum(p * weights[:, None]) * 8760 / 1e6
+
+    # --- Wind-aware grid initialization ---
+    x_min, y_min = jnp.min(boundary, axis=0)
+    x_max, y_max = jnp.max(boundary, axis=0)
+
+    wd_rad = jnp.deg2rad(wd)
+    dominant = jnp.arctan2(
+        jnp.sum(weights * jnp.sin(wd_rad)),
+        jnp.sum(weights * jnp.cos(wd_rad)))
+    angle = dominant + jnp.pi / 2
+
+    cos_a, sin_a = jnp.cos(angle), jnp.sin(angle)
+    cx, cy = jnp.mean(boundary[:, 0]), jnp.mean(boundary[:, 1])
+    translated = boundary - jnp.array([cx, cy])
+    rot = jnp.array([[cos_a, -sin_a], [sin_a, cos_a]])
+    rot_bnd = (rot @ translated.T).T
+
+    rx_min, ry_min = jnp.min(rot_bnd, axis=0)
+    rx_max, ry_max = jnp.max(rot_bnd, axis=0)
+    nx = int(jnp.ceil((rx_max - rx_min) / min_spacing))
+    ny = int(jnp.ceil((ry_max - ry_min) / min_spacing))
+    gx, gy = jnp.meshgrid(
+        jnp.linspace(rx_min + min_spacing / 2, rx_max - min_spacing / 2, nx),
+        jnp.linspace(ry_min + min_spacing / 2, ry_max - min_spacing / 2, ny))
+    rot_pts = jnp.stack([gx.flatten(), gy.flatten()], axis=-1)
+    inv_rot = jnp.array([[cos_a, sin_a], [-sin_a, cos_a]])
+    orig_pts = (inv_rot @ rot_pts.T).T + jnp.array([cx, cy])
+    cand_x, cand_y = orig_pts[:, 0], orig_pts[:, 1]
+
+    n_verts = boundary.shape[0]
+    def edge_dist(i):
+        x1, y1 = boundary[i]
+        x2, y2 = boundary[(i + 1) % n_verts]
+        ex, ey = x2 - x1, y2 - y1
+        el = jnp.sqrt(ex**2 + ey**2) + 1e-10
+        return (cand_x - x1) * (-ey / el) + (cand_y - y1) * (ex / el)
+    inside = jnp.min(jax.vmap(edge_dist)(jnp.arange(n_verts)), axis=0) > 0
+    ix, iy = cand_x[inside], cand_y[inside]
+
+    if len(ix) >= n_target:
+        idx = jnp.round(jnp.linspace(0, len(ix) - 1, n_target)).astype(int)
+        init_x, init_y = ix[idx], iy[idx]
+    else:
+        key = jax.random.PRNGKey(0)
+        init_x = jax.random.uniform(key, (n_target,), minval=float(x_min), maxval=float(x_max))
+        key, _ = jax.random.split(key)
+        init_y = jax.random.uniform(key, (n_target,), minval=float(y_min), maxval=float(y_max))
+
+    # === CUSTOM ADAM with gradient noise injection ===
+    def penalized_objective(x, y, alpha_sp, alpha_bp):
+        r = sim(x, y, ws_amb=ws, wd_amb=wd, ti_amb=None)
+        p = r.power()[:, :len(x)]
+        aep = -jnp.sum(p * weights[:, None]) * 8760 / 1e6
+        sp = spacing_penalty(x, y, min_spacing)
+        bp = boundary_penalty(x, y, boundary)
+        return aep + alpha_sp * sp + alpha_bp * bp
+
+    grad_fn = jax.grad(penalized_objective, argnums=(0, 1))
+
+    total_iters = 13000
+    beta1 = 0.9
+    beta2 = 0.999
+    eps = 1e-8
+    max_step = min_spacing
+
+    # Phase boundaries (matching iter_058)
+    p1_end = 2000
+    p2_end = 8000
+
+    def adam_step(i, state):
+        x, y, m_x, m_y, v_x, v_y, rng_key = state
+
+        # === Momentum warm restarts at phase boundaries ===
+        at_restart = (i == p1_end) | (i == p2_end)
+        m_x = jnp.where(at_restart, 0.0, m_x)
+        m_y = jnp.where(at_restart, 0.0, m_y)
+        v_x = jnp.where(at_restart, 1e-8, v_x)
+        v_y = jnp.where(at_restart, 1e-8, v_y)
+
+        in_p1 = i < p1_end
+        in_p2 = (i >= p1_end) & (i < p2_end)
+
+        # === Per-phase learning rate (matching iter_058) ===
+        p1_lr = 200.0 * (0.9993 ** i)
+        p2_lr = 150.0 * (0.99973 ** (i - p1_end))
+        p3_lr = 80.0 * (0.99944 ** (i - p2_end))
+
+        lr = jnp.where(in_p1, p1_lr, jnp.where(in_p2, p2_lr, p3_lr))
+
+        # === Penalty schedule (matching iter_058) ===
+        alpha = jnp.where(in_p1, 200.0,
+                jnp.where(in_p2, 2.0,
+                5.0 + 595.0 * 0.5 * (1.0 - jnp.cos(
+                    jnp.pi * (i - p2_end) / (total_iters - p2_end)))))
+
+        gx, gy = grad_fn(x, y, alpha, alpha)
+
+        # === Gradient noise injection during exploration ===
+        # Noise decays from noise_scale to near zero during phase 2
+        noise_scale = jnp.where(in_p2,
+            50.0 * (0.99935 ** (i - p1_end)),  # 50 -> ~1 over 6000 iters
+            0.0)
+
+        k1, k2, rng_key = jax.random.split(rng_key, 3)
+        noise_x = jax.random.normal(k1, shape=x.shape) * noise_scale
+        noise_y = jax.random.normal(k2, shape=x.shape) * noise_scale
+
+        gx = gx + noise_x
+        gy = gy + noise_y
+
+        m_x = beta1 * m_x + (1.0 - beta1) * gx
+        m_y = beta1 * m_y + (1.0 - beta1) * gy
+        v_x = beta2 * v_x + (1.0 - beta2) * gx ** 2
+        v_y = beta2 * v_y + (1.0 - beta2) * gy ** 2
+
+        # Phase-relative step count for bias correction
+        step_in_phase = jnp.where(
+            in_p1, i + 1,
+            jnp.where(in_p2, i - p1_end + 1,
+                       i - p2_end + 1)).astype(jnp.float64)
+
+        bc1 = 1.0 / (1.0 - beta1 ** step_in_phase)
+        bc2 = 1.0 / (1.0 - beta2 ** step_in_phase)
+
+        step_x = lr * (m_x * bc1) / (jnp.sqrt(v_x * bc2) + eps)
+        step_y = lr * (m_y * bc1) / (jnp.sqrt(v_y * bc2) + eps)
+
+        # Per-turbine step clipping
+        per_d = jnp.sqrt(step_x ** 2 + step_y ** 2 + 1e-12)
+        scale = jnp.minimum(1.0, max_step / per_d)
+        step_x = step_x * scale
+        step_y = step_y * scale
+
+        x = x - step_x
+        y = y - step_y
+
+        return (x, y, m_x, m_y, v_x, v_y, rng_key)
+
+    rng_key = jax.random.PRNGKey(42)
+    init_state = (init_x, init_y,
+                  jnp.zeros_like(init_x), jnp.zeros_like(init_y),
+                  jnp.zeros_like(init_x), jnp.zeros_like(init_y),
+                  rng_key)
+
+    explored_x, explored_y, _, _, _, _, _ = jax.lax.fori_loop(
+        0, total_iters, adam_step, init_state)
+
+    # === Topfarm polish for robust feasibility ===
+    polish_settings = SGDSettings(
+        learning_rate=25.0,
+        max_iter=1200,
+        additional_constant_lr_iterations=600,
+        tol=1e-6,
+        beta1=0.1,
+        beta2=0.2,
+        spacing_weight=300.0,
+        boundary_weight=300.0,
+        ks_rho=150.0,
+        gamma_min_factor=0.01,
+    )
+
+    opt_x, opt_y = topfarm_sgd_solve(objective, explored_x, explored_y,
+                                      boundary, min_spacing, polish_settings)
+
+    return opt_x, opt_y

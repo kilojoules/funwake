@@ -4,7 +4,7 @@
 # Pre-launch checklist:
 #   - ANTHROPIC_API_KEY set? Confirm a budget for ~5hr × 4 of Claude usage.
 #   - results/seed_optimizer.py exists.
-#   - Existing results_agent_claude_fullopt/ is preserved as run1.
+#   - Existing runs/archive/claude_fullopt/ is preserved as run1.
 #
 # Usage:
 #   bash experiments/C_claude_fullopt_seeds/launch.sh                 # runs 2..5 serial

@@ -1,7 +1,7 @@
 {
   "Claude schedule (iter 192)|dei_n30_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "uniform",
@@ -13,7 +13,7 @@
   },
   "Claude schedule (iter 192)|dei_n30_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "omnidir",
@@ -25,7 +25,7 @@
   },
   "Claude schedule (iter 192)|dei_n30_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "dei",
@@ -37,7 +37,7 @@
   },
   "Claude schedule (iter 192)|dei_n30_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "rowp",
@@ -49,7 +49,7 @@
   },
   "Claude schedule (iter 192)|dei_n40_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "uniform",
@@ -61,7 +61,7 @@
   },
   "Claude schedule (iter 192)|dei_n40_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "omnidir",
@@ -73,7 +73,7 @@
   },
   "Claude schedule (iter 192)|dei_n40_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "dei",
@@ -85,7 +85,7 @@
   },
   "Claude schedule (iter 192)|dei_n40_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "rowp",
@@ -97,7 +97,7 @@
   },
   "Claude schedule (iter 192)|dei_n50_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "uniform",
@@ -109,7 +109,7 @@
   },
   "Claude schedule (iter 192)|dei_n50_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "omnidir",
@@ -121,7 +121,7 @@
   },
   "Claude schedule (iter 192)|dei_n50_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "dei",
@@ -133,7 +133,7 @@
   },
   "Claude schedule (iter 192)|dei_n50_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "rowp",
@@ -145,7 +145,7 @@
   },
   "Claude schedule (iter 192)|dei_n60_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "uniform",
@@ -157,7 +157,7 @@
   },
   "Claude schedule (iter 192)|dei_n60_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "omnidir",
@@ -169,7 +169,7 @@
   },
   "Claude schedule (iter 192)|dei_n60_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "dei",
@@ -181,7 +181,7 @@
   },
   "Claude schedule (iter 192)|dei_n60_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "rowp",
@@ -193,7 +193,7 @@
   },
   "Claude schedule (iter 192)|dei_n70_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "uniform",
@@ -205,7 +205,7 @@
   },
   "Claude schedule (iter 192)|dei_n70_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "omnidir",
@@ -217,7 +217,7 @@
   },
   "Claude schedule (iter 192)|dei_n70_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "dei",
@@ -229,7 +229,7 @@
   },
   "Claude schedule (iter 192)|dei_n70_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "rowp",
@@ -241,7 +241,7 @@
   },
   "Claude schedule (iter 192)|dei_n80_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "uniform",
@@ -253,7 +253,7 @@
   },
   "Claude schedule (iter 192)|dei_n80_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "omnidir",
@@ -265,7 +265,7 @@
   },
   "Claude schedule (iter 192)|dei_n80_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "dei",
@@ -277,7 +277,7 @@
   },
   "Claude schedule (iter 192)|dei_n80_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "rowp",
@@ -289,7 +289,7 @@
   },
   "Claude schedule (iter 192)|rowp_n30_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "uniform",
@@ -301,7 +301,7 @@
   },
   "Claude schedule (iter 192)|rowp_n30_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "omnidir",
@@ -313,7 +313,7 @@
   },
   "Claude schedule (iter 192)|rowp_n30_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "dei",
@@ -325,7 +325,7 @@
   },
   "Claude schedule (iter 192)|rowp_n30_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "rowp",
@@ -337,7 +337,7 @@
   },
   "Claude schedule (iter 192)|rowp_n40_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "uniform",
@@ -349,7 +349,7 @@
   },
   "Claude schedule (iter 192)|rowp_n40_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "omnidir",
@@ -361,7 +361,7 @@
   },
   "Claude schedule (iter 192)|rowp_n40_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "dei",
@@ -373,7 +373,7 @@
   },
   "Claude schedule (iter 192)|rowp_n40_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "rowp",
@@ -385,7 +385,7 @@
   },
   "Claude schedule (iter 192)|rowp_n50_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "uniform",
@@ -397,7 +397,7 @@
   },
   "Claude schedule (iter 192)|rowp_n50_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "omnidir",
@@ -409,7 +409,7 @@
   },
   "Claude schedule (iter 192)|rowp_n50_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "dei",
@@ -421,7 +421,7 @@
   },
   "Claude schedule (iter 192)|rowp_n50_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "rowp",
@@ -433,7 +433,7 @@
   },
   "Claude schedule (iter 192)|rowp_n60_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "uniform",
@@ -445,7 +445,7 @@
   },
   "Claude schedule (iter 192)|rowp_n60_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "omnidir",
@@ -457,7 +457,7 @@
   },
   "Claude schedule (iter 192)|rowp_n60_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "dei",
@@ -469,7 +469,7 @@
   },
   "Claude schedule (iter 192)|rowp_n60_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "rowp",
@@ -481,7 +481,7 @@
   },
   "Claude schedule (iter 192)|rowp_n70_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "uniform",
@@ -493,7 +493,7 @@
   },
   "Claude schedule (iter 192)|rowp_n70_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "omnidir",
@@ -505,7 +505,7 @@
   },
   "Claude schedule (iter 192)|rowp_n70_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "dei",
@@ -517,7 +517,7 @@
   },
   "Claude schedule (iter 192)|rowp_n70_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "rowp",
@@ -529,7 +529,7 @@
   },
   "Claude schedule (iter 192)|rowp_n80_roseuniform": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "uniform",
@@ -541,7 +541,7 @@
   },
   "Claude schedule (iter 192)|rowp_n80_roseomnidir": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "omnidir",
@@ -553,7 +553,7 @@
   },
   "Claude schedule (iter 192)|rowp_n80_rosedei": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "dei",
@@ -565,7 +565,7 @@
   },
   "Claude schedule (iter 192)|rowp_n80_roserowp": {
     "label": "Claude schedule (iter 192)",
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "rowp",
@@ -577,7 +577,7 @@
   },
   "Gemini schedule|dei_n30_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "uniform",
@@ -589,7 +589,7 @@
   },
   "Gemini schedule|dei_n30_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "omnidir",
@@ -601,7 +601,7 @@
   },
   "Gemini schedule|dei_n30_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "dei",
@@ -613,7 +613,7 @@
   },
   "Gemini schedule|dei_n30_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 30,
     "rose": "rowp",
@@ -625,7 +625,7 @@
   },
   "Gemini schedule|dei_n40_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "uniform",
@@ -637,7 +637,7 @@
   },
   "Gemini schedule|dei_n40_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "omnidir",
@@ -649,7 +649,7 @@
   },
   "Gemini schedule|dei_n40_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "dei",
@@ -661,7 +661,7 @@
   },
   "Gemini schedule|dei_n40_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 40,
     "rose": "rowp",
@@ -673,7 +673,7 @@
   },
   "Gemini schedule|dei_n50_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "uniform",
@@ -685,7 +685,7 @@
   },
   "Gemini schedule|dei_n50_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "omnidir",
@@ -697,7 +697,7 @@
   },
   "Gemini schedule|dei_n50_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "dei",
@@ -709,7 +709,7 @@
   },
   "Gemini schedule|dei_n50_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 50,
     "rose": "rowp",
@@ -721,7 +721,7 @@
   },
   "Gemini schedule|dei_n60_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "uniform",
@@ -733,7 +733,7 @@
   },
   "Gemini schedule|dei_n60_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "omnidir",
@@ -745,7 +745,7 @@
   },
   "Gemini schedule|dei_n60_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "dei",
@@ -757,7 +757,7 @@
   },
   "Gemini schedule|dei_n60_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 60,
     "rose": "rowp",
@@ -769,7 +769,7 @@
   },
   "Gemini schedule|dei_n70_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "uniform",
@@ -781,7 +781,7 @@
   },
   "Gemini schedule|dei_n70_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "omnidir",
@@ -793,7 +793,7 @@
   },
   "Gemini schedule|dei_n70_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "dei",
@@ -805,7 +805,7 @@
   },
   "Gemini schedule|dei_n70_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 70,
     "rose": "rowp",
@@ -817,7 +817,7 @@
   },
   "Gemini schedule|dei_n80_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "uniform",
@@ -829,7 +829,7 @@
   },
   "Gemini schedule|dei_n80_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "omnidir",
@@ -841,7 +841,7 @@
   },
   "Gemini schedule|dei_n80_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "dei",
@@ -853,7 +853,7 @@
   },
   "Gemini schedule|dei_n80_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "dei",
     "n": 80,
     "rose": "rowp",
@@ -865,7 +865,7 @@
   },
   "Gemini schedule|rowp_n30_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "uniform",
@@ -877,7 +877,7 @@
   },
   "Gemini schedule|rowp_n30_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "omnidir",
@@ -889,7 +889,7 @@
   },
   "Gemini schedule|rowp_n30_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "dei",
@@ -901,7 +901,7 @@
   },
   "Gemini schedule|rowp_n30_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 30,
     "rose": "rowp",
@@ -913,7 +913,7 @@
   },
   "Gemini schedule|rowp_n40_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "uniform",
@@ -925,7 +925,7 @@
   },
   "Gemini schedule|rowp_n40_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "omnidir",
@@ -937,7 +937,7 @@
   },
   "Gemini schedule|rowp_n40_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "dei",
@@ -949,7 +949,7 @@
   },
   "Gemini schedule|rowp_n40_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 40,
     "rose": "rowp",
@@ -961,7 +961,7 @@
   },
   "Gemini schedule|rowp_n50_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "uniform",
@@ -973,7 +973,7 @@
   },
   "Gemini schedule|rowp_n50_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "omnidir",
@@ -985,7 +985,7 @@
   },
   "Gemini schedule|rowp_n50_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "dei",
@@ -997,7 +997,7 @@
   },
   "Gemini schedule|rowp_n50_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 50,
     "rose": "rowp",
@@ -1009,7 +1009,7 @@
   },
   "Gemini schedule|rowp_n60_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "uniform",
@@ -1021,7 +1021,7 @@
   },
   "Gemini schedule|rowp_n60_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "omnidir",
@@ -1033,7 +1033,7 @@
   },
   "Gemini schedule|rowp_n60_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "dei",
@@ -1045,7 +1045,7 @@
   },
   "Gemini schedule|rowp_n60_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 60,
     "rose": "rowp",
@@ -1057,7 +1057,7 @@
   },
   "Gemini schedule|rowp_n70_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "uniform",
@@ -1069,7 +1069,7 @@
   },
   "Gemini schedule|rowp_n70_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "omnidir",
@@ -1081,7 +1081,7 @@
   },
   "Gemini schedule|rowp_n70_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "dei",
@@ -1093,7 +1093,7 @@
   },
   "Gemini schedule|rowp_n70_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 70,
     "rose": "rowp",
@@ -1105,7 +1105,7 @@
   },
   "Gemini schedule|rowp_n80_roseuniform": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "uniform",
@@ -1117,7 +1117,7 @@
   },
   "Gemini schedule|rowp_n80_roseomnidir": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "omnidir",
@@ -1129,7 +1129,7 @@
   },
   "Gemini schedule|rowp_n80_rosedei": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "dei",
@@ -1141,7 +1141,7 @@
   },
   "Gemini schedule|rowp_n80_roserowp": {
     "label": "Gemini schedule",
-    "script": "results_agent_gemini_cli_5hr/iter_192.py",
+    "script": "runs/gemini_cli_5hr/iter_192.py",
     "farm": "rowp",
     "n": 80,
     "rose": "rowp",

@@ -23,8 +23,8 @@ EXP_DIR = os.path.dirname(os.path.abspath(__file__))
 
 CELLS = [
     # (label, scaffold, interface, run_dir)
-    ("Claude/CLI/sched",         "cli", "narrow", "results_agent_schedule_only_5hr"),
-    ("Claude/CLI/full",          "cli", "broad",  "results_agent_claude_fullopt"),
+    ("Claude/CLI/sched",         "cli", "narrow", "runs/schedule_only_5hr"),
+    ("Claude/CLI/full",          "cli", "broad",  "runs/archive/claude_fullopt"),
     ("Claude/SO/sched",          "so",  "narrow", "results_agent_claude_anthropic_api_sched"),
     ("Claude/SO/full",           "so",  "broad",  "results_agent_claude_anthropic_api_fullopt"),
 ]

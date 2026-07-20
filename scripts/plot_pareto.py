@@ -30,13 +30,13 @@ RUNS = [
     },
     {
         "name": "Suggested schedule seed",
-        "path": "results_agent_schedule_5hr/attempt_log.json",
+        "path": "runs/archive/schedule_5hr/attempt_log.json",
         "color": "C2",
         "marker": "^",
     },
     {
         "name": "Enforced schedule-only",
-        "path": "results_agent_schedule_only_5hr/attempt_log.json",
+        "path": "runs/schedule_only_5hr/attempt_log.json",
         "color": "C3",
         "marker": "D",
     },

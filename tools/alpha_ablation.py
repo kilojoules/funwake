@@ -7,7 +7,7 @@ Takes Claude iter_192's schedule, multiplies alpha by a constant factor,
 and scores on both DEI (training) and ROWP (held-out).
 
 Usage:
-    python tools/alpha_ablation.py --output-dir results_alpha_ablation
+    python tools/alpha_ablation.py --output-dir runs/archive/alpha_ablation
 """
 import argparse
 import json
@@ -58,7 +58,7 @@ def schedule_fn(step, total_steps, lr0, alpha0):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--output-dir", default="results_alpha_ablation")
+    p.add_argument("--output-dir", default="runs/archive/alpha_ablation")
     p.add_argument("--train-problem", default="playground/problem.json")
     p.add_argument("--rowp-problem", default="results/problem_rowp.json")
     p.add_argument("--timeout", type=int, default=120)

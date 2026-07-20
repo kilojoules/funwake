@@ -32,9 +32,9 @@ steps = np.arange(TOTAL)
 
 SCHEDS = [
     ("iter 118  (best validation, 4269 GWh)", "#2c6fbb",
-     "results_agent_gemini_cli_5hr/iter_118.py"),
+     "runs/gemini_cli_5hr/iter_118.py"),
     ("iter 192  (labelled 'deployed')", "#c0392b",
-     "results_agent_gemini_cli_5hr/iter_192.py"),
+     "runs/gemini_cli_5hr/iter_192.py"),
 ]
 
 data = {}

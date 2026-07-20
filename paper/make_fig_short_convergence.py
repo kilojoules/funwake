@@ -14,8 +14,8 @@ Validation (ROWP) AEP was held out from the agent during search; it is
 backfilled by re-scoring each attempt afterwards, so the bottom row is a
 retrospective evaluation, not a search signal.
 
-Data: results_agent_schedule_only_5hr/attempt_log.json (Claude);
-results_agent_gemini_cli_5hr/attempt_log.json (Gemini).
+Data: runs/schedule_only_5hr/attempt_log.json (Claude);
+runs/gemini_cli_5hr/attempt_log.json (Gemini).
 Baselines: 500-start TopFarm gated at 0.1 m max-outside tolerance
 (results/baselines_01tol.json): DEI 5545.0, ROWP 4243.6. Matches the
 tolerance language of fig_aep_dominance. (At strict-0 the TopFarm baseline is
@@ -50,8 +50,8 @@ def in_budget(path):
     return [x for x in a if x.get("timestamp") and x["timestamp"] - t0 <= 5 * 3600]
 
 
-CLAUDE = in_budget("results_agent_schedule_only_5hr/attempt_log.json")
-GEMINI = in_budget("results_agent_gemini_cli_5hr/attempt_log.json")
+CLAUDE = in_budget("runs/schedule_only_5hr/attempt_log.json")
+GEMINI = in_budget("runs/gemini_cli_5hr/attempt_log.json")
 # 500-start TopFarm baselines gated at a clean 0.1 m max-outside tolerance
 # (same tolerance language as fig_aep_dominance). See results/baselines_01tol.json.
 _B01 = json.load(open(os.path.join(ROOT, "results/baselines_01tol.json")))

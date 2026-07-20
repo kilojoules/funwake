@@ -4,7 +4,7 @@ Mirrors playground/skeleton.py but exposes per-step (x, y) snapshots.
 
 Usage:
     pixi run python tools/animate_schedule.py \\
-        --schedule results_agent_schedule_only_5hr/iter_192.py \\
+        --schedule runs/schedule_only_5hr/iter_192.py \\
         --problem playground/problem.json \\
         --out paper/short_codex_figs/claude_animation.mp4 \\
         --frames 200 --fps 30

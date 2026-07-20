@@ -5,7 +5,7 @@
       "command": "pixi",
       "args": [
         "run", "python", "funwake_mcp.py",
-        "--output-dir", "results_agent_claude_fullopt"
+        "--output-dir", "runs/archive/claude_fullopt"
       ],
       "env": {
         "JAX_ENABLE_X64": "True",

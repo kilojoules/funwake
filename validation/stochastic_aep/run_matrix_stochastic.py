@@ -65,7 +65,7 @@ PROJECT_ROOT = "/Users/julianquick/portfolio_copy/funwake"
 
 def claude_iter192():
     """Claude iter_192 verbatim, sourced from
-    results_agent_schedule_only_5hr/iter_192.py (same definition as
+    runs/schedule_only_5hr/iter_192.py (same definition as
     paper_schedules/scripts/schedules.py:funwake_iter192). Beta1=0.3,
     Beta2=0.5 constants; warmup + cosine + dual bumps + α-dip + α-escalation.
     """
@@ -76,7 +76,7 @@ def gemini_iter192():
     """Gemini iter_192. The deployed script applies a different structural
     schedule: 8-cycle cosine restarts, cyclic betas (β₁: 0.1+0.4·t, β₂:
     0.2+0.7·t), late-stage 'squeeze' (lr→1e-5, α→1e12 at t > 0.985).
-    Sourced from results_agent_gemini_cli_5hr/iter_192.py.
+    Sourced from runs/gemini_cli_5hr/iter_192.py.
     """
     n_cycles = 8
 

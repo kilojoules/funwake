@@ -1,6 +1,6 @@
 [
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n100",
     "n_target": 100,
     "aep_gwh": 10951.19,
@@ -8,7 +8,7 @@
     "time_s": 135.2
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n30",
     "n_target": 30,
     "aep_gwh": 3349.53,
@@ -16,7 +16,7 @@
     "time_s": 29.8
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n40",
     "n_target": 40,
     "aep_gwh": 4456.82,
@@ -24,7 +24,7 @@
     "time_s": 34.6
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n50",
     "n_target": 50,
     "aep_gwh": 5559.91,
@@ -32,7 +32,7 @@
     "time_s": 43.8
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n60",
     "n_target": 60,
     "aep_gwh": 6653.7,
@@ -40,7 +40,7 @@
     "time_s": 53.0
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n70",
     "n_target": 70,
     "aep_gwh": 7746.91,
@@ -48,7 +48,7 @@
     "time_s": 68.2
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_dei_n80",
     "n_target": 80,
     "aep_gwh": 8812.37,
@@ -56,7 +56,7 @@
     "time_s": 87.8
   },
   {
-    "script": "results_agent_schedule_only_5hr/iter_192.py",
+    "script": "runs/schedule_only_5hr/iter_192.py",
     "problem": "problem_rowp",
     "n_target": 74,
     "aep_gwh": 4260.85,

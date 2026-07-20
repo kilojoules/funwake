@@ -23,8 +23,8 @@ done
 echo "[gem-wait] $(date -u +%FT%TZ) Codex chain exited. Launching gemini chain."
 
 # Confirm the gemini run-1 dir exists; aggregate.py needs it.
-if [[ ! -d results_agent_gemini_cli_5hr && ! -d .hidden_results_agent_gemini_cli_5hr ]]; then
-    echo "[gem-wait] WARNING: results_agent_gemini_cli_5hr not found in either visible or .hidden_ form."
+if [[ ! -d runs/gemini_cli_5hr && ! -d .hidden_runs/gemini_cli_5hr ]]; then
+    echo "[gem-wait] WARNING: runs/gemini_cli_5hr not found in either visible or .hidden_ form."
 fi
 
 AGENT=gemini RUNS="$GEMINI_RUNS" bash experiments/A_multi_agent_seed/launch_chain.sh

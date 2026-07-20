@@ -142,7 +142,7 @@ paper/example_paper.tex
 /results_agent_opencode*/
 /results_agent_vllm*/
 /results_agent_mcp_*/
-/results_alpha_ablation/
+/runs/archive/alpha_ablation/
 /results_bump_opt*/
 /results_substrate_tiebreaker*/
 /results_random_search_320/
@@ -166,3 +166,9 @@ _lumi_pull/
 # Internal working docs (kept local, not part of the public product)
 /paper/CLAIM_AUDIT.md
 /paper/REVIEWER_RESPONSE.md
+
+# Relocated local cruft (untracked runs/scratch, not part of the public product)
+/archive/local/
+
+# archived build artifact
+/paper/archive/main.pdf

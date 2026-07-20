@@ -12,7 +12,7 @@
     "best_any_rowp": 4232.357137665714,
     "best_any_rowp_feasible": true
   },
-  "results_agent_schedule_only_5hr": {
+  "runs/schedule_only_5hr": {
     "model": "Claude Code (schedule)",
     "n_attempts": 320,
     "n_scored": 320,
@@ -90,7 +90,7 @@
     "best_any_rowp": 4268.51,
     "best_any_rowp_feasible": true
   },
-  "results_agent_schedule_5hr": {
+  "runs/archive/schedule_5hr": {
     "model": "Claude schedule 5hr",
     "n_attempts": 99,
     "n_scored": 96,

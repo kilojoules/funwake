@@ -27,8 +27,8 @@ with 20 CPU jobs ≈ 40 min.
 ## Inputs
 - `results/matrix/manifest.json`
 - Top schedules (auto-discovered from
-  `results_agent_schedule_only_5hr/iter_192.py` and
-  `results_agent_gemini_cli_5hr/iter_118.py`)
+  `runs/schedule_only_5hr/iter_192.py` and
+  `runs/gemini_cli_5hr/iter_118.py`)
 
 ## Outputs
 - `experiments/D_matrix_multi_seed/results.json`

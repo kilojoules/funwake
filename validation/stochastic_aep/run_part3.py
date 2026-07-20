@@ -52,7 +52,7 @@ def sgd_baseline(lr_init=50.0):
 
 def funwake_iter192(lr_init=50.0):
     """Claude iter_192 verbatim: warmup + cosine + dual bumps + alpha dip.
-    Source: funwake/results_agent_schedule_only_5hr/iter_192.py
+    Source: funwake/runs/schedule_only_5hr/iter_192.py
     Constants beta1=0.3, beta2=0.5."""
     lr0_setting = float(lr_init)
 

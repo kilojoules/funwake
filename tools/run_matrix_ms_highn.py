@@ -30,8 +30,8 @@ CELLS = [(f, n, r) for f in FARMS for r in ROSES for n in NS]  # 48
 
 SCHEDULES = {
     "baseline": "results/seed_schedule.py",
-    "claude":   "results_agent_schedule_only_5hr/iter_192.py",
-    "gemini":   "results_agent_gemini_cli_5hr/iter_118.py",
+    "claude":   "runs/schedule_only_5hr/iter_192.py",
+    "gemini":   "runs/gemini_cli_5hr/iter_118.py",
     "random":   "results/random_champion.py",
     "ab_nobumps":  "results/ablations/ab_nobumps.py",
     "ab_weakalpha":"results/ablations/ab_weakalpha.py",

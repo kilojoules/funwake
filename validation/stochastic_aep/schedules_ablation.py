@@ -1,7 +1,7 @@
 """Bump-ablation schedule: iter_192 with the two Gaussian LR bumps removed,
 everything else (warmup, cosine, α-escalation, betas) identical.
 
-Sourced from results_agent_schedule_only_5hr/iter_192.py / paper_schedules
+Sourced from runs/schedule_only_5hr/iter_192.py / paper_schedules
 schedules.py:funwake_iter192. The ONLY change is removing the two
 `bump1` and `bump2` terms from `lr_base`.
 """

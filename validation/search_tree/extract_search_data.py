@@ -18,8 +18,8 @@ import re
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 RUNS = [
-    ("Claude", os.path.join(ROOT, "results_agent_schedule_only_5hr")),
-    ("Gemini", os.path.join(ROOT, "results_agent_gemini_cli_5hr")),
+    ("Claude", os.path.join(ROOT, "runs/schedule_only_5hr")),
+    ("Gemini", os.path.join(ROOT, "runs/gemini_cli_5hr")),
 ]
 
 OFF_TIME_GAP_S = 30 * 60  # gaps longer than 30 min = off-time (resume)

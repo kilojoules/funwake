@@ -131,8 +131,8 @@ def main():
     args = p.parse_args()
 
     dirs = [
-        "results_agent_schedule_only_5hr",
-        "results_agent_gemini_cli_5hr",
+        "runs/schedule_only_5hr",
+        "runs/gemini_cli_5hr",
     ]
 
     for d in dirs:

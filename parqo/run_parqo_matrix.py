@@ -2,8 +2,8 @@
 
 Schedules:
   baseline — results/seed_schedule.py (TopFarm-style coupled decay)
-  gemini   — results_agent_gemini_cli_5hr/iter_192.py (deployed)
-  claude   — results_agent_schedule_only_5hr/iter_192.py (deployed dual-bump)
+  gemini   — runs/gemini_cli_5hr/iter_192.py (deployed)
+  claude   — runs/schedule_only_5hr/iter_192.py (deployed dual-bump)
 
 Counts: 10, 15, 20, 25, 30, 35.
 Roses: the paper's four (dei, rowp, omnidir, uniform), taken verbatim from
@@ -42,8 +42,8 @@ from skeleton_multizone import (             # noqa: E402
 
 SCHEDULES = {
     "baseline": os.path.join(ROOT, "results/seed_schedule.py"),
-    "gemini":   os.path.join(ROOT, "results_agent_gemini_cli_5hr/iter_192.py"),
-    "claude":   os.path.join(ROOT, "results_agent_schedule_only_5hr/iter_192.py"),
+    "gemini":   os.path.join(ROOT, "runs/gemini_cli_5hr/iter_192.py"),
+    "claude":   os.path.join(ROOT, "runs/schedule_only_5hr/iter_192.py"),
 }
 COUNTS = [10, 15, 20, 25, 30, 35]
 ROSES = {

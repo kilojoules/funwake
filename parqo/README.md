@@ -5,7 +5,7 @@ al. (2024), *Gradient-based wind farm layout optimization with inclusion
 and exclusion zones*, WES 9, 585-600 (doi:10.5194/wes-9-585-2024):
 **12 x Vestas V80-2.0** (D = 80 m, hub 70 m), **min spacing 2 D = 160 m**,
 **five irregular disconnected inclusion-zone polygons**, optimized with
-the deployed dual-bump schedule (`results_agent_schedule_only_5hr/
+the deployed dual-bump schedule (`runs/schedule_only_5hr/
 iter_192.py`, the schedule used for `paper/gen_deployed_layouts.py`).
 
 ## Inclusion zones

@@ -19,9 +19,9 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCHEDULES = [
     # (label, script_path)
     ("Claude schedule (iter 192)",
-     "results_agent_schedule_only_5hr/iter_192.py"),
+     "runs/schedule_only_5hr/iter_192.py"),
     ("Gemini schedule",
-     "results_agent_gemini_cli_5hr/iter_192.py"),
+     "runs/gemini_cli_5hr/iter_192.py"),
     ("Gemini schedule (fixed beta)",
      "results/ablations/gemini_iter192_fixed_betas.py"),
 ]

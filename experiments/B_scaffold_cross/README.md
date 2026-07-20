@@ -16,9 +16,9 @@ qualitative outcome (discovery vs reimplementation).
 
 |                 | scaffold = CLI (`claude -p`)       | scaffold = structured-output (vLLM JSON) |
 |-----------------|------------------------------------|------------------------------------------|
-| narrow × Claude | `results_agent_schedule_only_5hr`  | **B1 — to run**                          |
-| narrow × Gemini | `results_agent_gemini_cli_5hr`     | (deprioritized — Gemini-flash via vLLM not configured) |
-| broad × Claude  | `results_agent_claude_fullopt`     | **B2 — to run**                          |
+| narrow × Claude | `runs/schedule_only_5hr`  | **B1 — to run**                          |
+| narrow × Gemini | `runs/gemini_cli_5hr`     | (deprioritized — Gemini-flash via vLLM not configured) |
+| broad × Claude  | `runs/archive/claude_fullopt`     | **B2 — to run**                          |
 | broad × Gemini  | `results_agent_gemini_fullopt_2hr` | (already covered by VLLMRunner with open-source Llama 3.3) |
 
 Cells **B1** and **B2** are the diagonal: re-run Claude under

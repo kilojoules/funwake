@@ -27,8 +27,8 @@ CELLS = [("rowp", n, r) for r in ["uniform", "dei"] for n in [30,40,50,60,70,80]
 
 SCHEDULES = {
     "baseline": "results/seed_schedule.py",
-    "claude":   "results_agent_schedule_only_5hr/iter_192.py",
-    "gemini":   "results_agent_gemini_cli_5hr/iter_118.py",
+    "claude":   "runs/schedule_only_5hr/iter_192.py",
+    "gemini":   "runs/gemini_cli_5hr/iter_118.py",
 }
 TOL = 0.1  # practical feasibility tolerance (m)
 

@@ -15,9 +15,9 @@ OUTDIR="results_agent_gemini_top3_seed"
 mkdir -p "$OUTDIR"
 
 # Copy seeds into the output dir so the agent can see them
-cp seeds_top3/seed_slsqp.py "$OUTDIR/"
-cp seeds_top3/seed_bo_adam.py "$OUTDIR/"
-cp seeds_top3/seed_dual_bumps_schedule.py "$OUTDIR/"
+cp runs/archive/seeds_top3/seed_slsqp.py "$OUTDIR/"
+cp runs/archive/seeds_top3/seed_bo_adam.py "$OUTDIR/"
+cp runs/archive/seeds_top3/seed_dual_bumps_schedule.py "$OUTDIR/"
 
 PROMPT="You are optimizing wind farm layouts. You have access to 3 proven approaches in $OUTDIR/:
 

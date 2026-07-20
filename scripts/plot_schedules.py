@@ -49,7 +49,7 @@ def main():
 
     # Load schedules
     baseline_fn = load_schedule("results/seed_schedule.py")
-    deployed_fn = load_schedule("results_agent_schedule_only_5hr/iter_192.py")
+    deployed_fn = load_schedule("runs/schedule_only_5hr/iter_192.py")
 
     t_b, lr_b, alpha_b, b1_b, b2_b = evaluate_schedule(baseline_fn)
     t_d, lr_d, alpha_d, b1_d, b2_d = evaluate_schedule(deployed_fn)
