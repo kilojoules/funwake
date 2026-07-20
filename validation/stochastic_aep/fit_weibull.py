@@ -1,6 +1,6 @@
 """Fit per-sector Weibull(A, k) to the DEI 10-year time-series wind resource.
 
-Input: playground/pixwake/energy_island_10y_daily_av_wind.csv (~3653 daily-mean
+Input: dependencies/pixwake/energy_island_10y_daily_av_wind.csv (~3653 daily-mean
 samples of WS_150 and WD_150). Output: a JSON resource file with
   - n_sectors (12 — matches the published DEI convention)
   - sector_centers_deg, sector_width_deg
@@ -10,7 +10,7 @@ samples of WS_150 and WD_150). Output: a JSON resource file with
 
 Usage:
     pixi run python validation/stochastic_aep/fit_weibull.py \\
-        playground/pixwake/energy_island_10y_daily_av_wind.csv \\
+        dependencies/pixwake/energy_island_10y_daily_av_wind.csv \\
         validation/stochastic_aep/dei_weibull_12.json \\
         --n-sectors 12
 """

@@ -33,7 +33,7 @@ if os.path.exists(OUT):
 
 env_base = {
     **os.environ,
-    "PYTHONPATH": os.path.join(ROOT, "playground/pixwake/src")
+    "PYTHONPATH": os.path.join(ROOT, "dependencies/pixwake/src")
                   + ":" + os.path.join(ROOT, "playground"),
     "JAX_ENABLE_X64": "True",
     "JAX_PLATFORMS": "cpu",

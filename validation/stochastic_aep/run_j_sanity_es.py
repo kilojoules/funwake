@@ -2,7 +2,7 @@
 Confirms whether ROWP needs ES-on to hit ~4271 (paper claim)."""
 import os, sys, json, time, traceback
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
 import jax

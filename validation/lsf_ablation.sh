@@ -14,5 +14,5 @@ cd $HOME/projects/funwake_unisweep
 VARIANTS=(ab_nobumps ab_weakalpha ab_stdbetas); CELLS_IDX=(10 11); TAGS=(rowp_n200_roserowp rowp_n300_roserowp)
 IDX=$((LSB_JOBINDEX-1)); VI=$((IDX/2)); CI=$((IDX%2))
 V=${VARIANTS[$VI]}; C=${CELLS_IDX[$CI]}; TAG=${TAGS[$CI]}
-PYTHONPATH=playground/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
     --cell-idx $C --K 50 --only $V --out $HOME/clusters_results/funwake_ablation/${TAG}.${V}.json

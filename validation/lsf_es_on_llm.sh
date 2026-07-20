@@ -14,6 +14,6 @@ cd $HOME/projects/funwake_unisweep
 SCHED=(claude gemini); CIDX=(10 11); TAGS=(rowp_n200_roserowp rowp_n300_roserowp)
 IDX=$((LSB_JOBINDEX-1)); SI=$((IDX/2)); CI=$((IDX%2))
 S=${SCHED[$SI]}; C=${CIDX[$CI]}; TAG=${TAGS[$CI]}
-PYTHONPATH=playground/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
     --cell-idx $C --K 50 --only $S --es \
     --out $HOME/clusters_results/funwake_es_on_llm/${TAG}.${S}_es.json

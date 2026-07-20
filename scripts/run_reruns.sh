@@ -19,7 +19,7 @@ GEMINI_MODEL="${GEMINI_MODEL:-gemini-3-flash-preview}"
 WIND_CSV="${WIND_CSV:-$HOME/clusters/energy_island_10y_daily_av_wind.csv}"
 BUDGET="${BUDGET:-18000}"            # 5 hours
 SEEDS="${SEEDS:-1 2 3}"
-PP=playground/pixwake/src
+PP=dependencies/pixwake/src
 
 run_one () {
   local provider="$1" model="$2" tag="$3" seed="$4"

@@ -74,7 +74,7 @@ maximize AEP (Annual Energy Production).
 - Run tests first: `python tools/run_tests.py <script> --quick`
 - Test generalization: `python tools/test_generalization.py <script>`
 - Check status: `python tools/get_status.py --log {self.log_path}`
-- You CANNOT modify files in `playground/pixwake/`, `benchmarks/`, or `tools/`
+- You CANNOT modify files in `dependencies/pixwake/`, `benchmarks/`, or `tools/`
 - You CANNOT run Python directly — only through the tool scripts above
 - Baseline to beat: {self._get_baseline_aep():.1f} GWh
 
@@ -97,7 +97,7 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 
 ## Workflow
 1. Read `{self.config.output_dir}/agent_memory.md` for current status and history
-2. Read pixwake source if needed (`playground/pixwake/src/pixwake/`)
+2. Read pixwake source if needed (`dependencies/pixwake/src/pixwake/`)
 3. Write an optimizer script
 4. Run tests → fix if failing
 5. Score → compare to baseline and previous best
@@ -105,7 +105,7 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 7. Iterate: try different strategies (initialization, hyperparams, custom optimizers)
 
 ## Environment
-PYTHONPATH includes `playground/pixwake/src`. JAX_ENABLE_X64=True is set.
+PYTHONPATH includes `dependencies/pixwake/src`. JAX_ENABLE_X64=True is set.
 """
 
     def _build_schedule_claude_md(self) -> str:
@@ -325,7 +325,7 @@ This ensures feasibility in late iterations. Can you do better?
             if i == 0:
                 prompt = (
                     f"Read {mem_path} for context. Explore the pixwake codebase "
-                    f"in playground/pixwake/src/, understand the API, then write and "
+                    f"in dependencies/pixwake/src/, understand the API, then write and "
                     f"test an optimizer. Score it and test generalization.{seed_context}"
                 )
             else:

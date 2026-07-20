@@ -72,7 +72,7 @@ maximize AEP (Annual Energy Production).
 - Run tests first: `python tools/run_tests.py <script> --quick`
 - Test generalization: `python tools/test_generalization.py <script>`
 - Check status: `python tools/get_status.py --log {self.log_path}`
-- Do NOT modify files in `playground/pixwake/`, `benchmarks/`, or `tools/`.
+- Do NOT modify files in `dependencies/pixwake/`, `benchmarks/`, or `tools/`.
 - Do NOT run Python directly outside the tool scripts above.
 - Baseline to beat: {self._get_baseline_aep():.1f} GWh.
 
@@ -93,13 +93,13 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 
 ## Workflow
 1. Read `{self.config.output_dir}/agent_memory.md` for status and history.
-2. Read pixwake source if needed (`playground/pixwake/src/pixwake/`).
+2. Read pixwake source if needed (`dependencies/pixwake/src/pixwake/`).
 3. Write an optimizer script.
 4. Run tests, then score, then test generalization.
 5. Iterate: try different strategies (init, hyperparams, custom solvers).
 
 ## Environment
-PYTHONPATH includes `playground/pixwake/src`. JAX_ENABLE_X64=True is set.
+PYTHONPATH includes `dependencies/pixwake/src`. JAX_ENABLE_X64=True is set.
 """
 
     def _build_schedule_agents_md(self) -> str:
@@ -278,7 +278,7 @@ def schedule_fn(step, total_steps, lr0, alpha0):
                 prompt = (
                     f"Read {CODEX_INSTRUCTION_FILE} and "
                     f"{mem_path} for context. Explore the pixwake codebase "
-                    f"in playground/pixwake/src/, understand the API, then write "
+                    f"in dependencies/pixwake/src/, understand the API, then write "
                     f"and test an optimizer. Score it and test generalization."
                     f"{seed_context}"
                 )

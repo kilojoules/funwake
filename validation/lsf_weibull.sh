@@ -13,6 +13,6 @@ export PATH="$HOME/.pixi/bin:$PATH"; export JAX_COMPILATION_CACHE_DIR=/tmp/jax_$
 cd $HOME/projects/funwake_unisweep
 IDX=$((LSB_JOBINDEX-1)); CELL=$((IDX/3)); SI=$((IDX%3))
 SCHED=(baseline claude gemini); S=${SCHED[$SI]}
-PYTHONPATH=playground/pixwake/src:playground pixi run python tools/run_weibull_ms.py \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python tools/run_weibull_ms.py \
     --cell-idx $CELL --K 50 --only $S \
     --out $HOME/clusters_results/funwake_weibull/cell${CELL}.${S}.json

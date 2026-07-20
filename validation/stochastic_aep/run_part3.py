@@ -13,7 +13,7 @@ verbatim + pixwake sgd_baseline) and inlined here so this script is
 self-contained.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src pixi run python \\
         validation/stochastic_aep/run_part3.py \\
         --restarts 20 \\
         --out validation/stochastic_aep/part3_result.json

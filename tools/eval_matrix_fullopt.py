@@ -41,7 +41,7 @@ def score_one(script_rel, problem_rel, timeout):
         "JAX_PLATFORMS": "cpu",
         "XLA_PYTHON_CLIENT_PREALLOCATE": "false",
         "PYTHONPATH": (
-            os.path.join(PROJECT_ROOT, "playground", "pixwake", "src")
+            os.path.join(PROJECT_ROOT, "dependencies", "pixwake", "src")
             + ":" + os.environ.get("PYTHONPATH", "")
         ),
     }

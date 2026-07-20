@@ -2,7 +2,7 @@
 # Score all optimizers in batch
 
 export JAX_ENABLE_X64=True
-export PYTHONPATH=playground/pixwake/src:$PYTHONPATH
+export PYTHONPATH=dependencies/pixwake/src:$PYTHONPATH
 
 LOG=runs/archive/claude_fullopt/attempt_log.json
 

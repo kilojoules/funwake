@@ -14,7 +14,7 @@ cd $HOME/projects/funwake_unisweep
 ROSES=(uniform rowp omnidir); NS=(50 80 200 300)
 IDX=$((LSB_JOBINDEX-1)); RI=$((IDX/4)); NI=$((IDX%4))
 R=${ROSES[$RI]}; N=${NS[$NI]}; KEY=rowp_n${N}_rose${R}
-PYTHONPATH=playground/pixwake/src pixi run python tools/run_baseline_batch.py \
+PYTHONPATH=dependencies/pixwake/src pixi run python tools/run_baseline_batch.py \
     --problem results/matrix/problem_${KEY}.json --seeds 0-49 \
     --early-stopping --es-threshold 0.1 \
     --out-dir $HOME/clusters_results/funwake_es_baseline --out-key ${KEY}_es

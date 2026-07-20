@@ -19,6 +19,6 @@ PROJ=$HOME/projects/funwake_unisweep; cd "$PROJ"
 CELL=$((LSB_JOBINDEX - 1))
 OUT=$HOME/clusters_results/funwake_matrix_ms_highn/cell${CELL}.json
 echo "=== high-N sched MS cell $CELL ==="; hostname; date
-PYTHONPATH=playground/pixwake/src:playground pixi run python \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python \
     tools/run_matrix_ms_highn.py --cell-idx "$CELL" --K 50 --out "$OUT"
 echo done; date

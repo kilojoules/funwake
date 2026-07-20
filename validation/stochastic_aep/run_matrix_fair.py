@@ -19,7 +19,7 @@ Parallel execution via ProcessPoolExecutor (per-worker JAX is independent).
 Resume-safe via incremental JSON writes per result.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_matrix_fair.py \\
         --workers 4 --sample-seeds 100000 200000 300000 \\
         --out validation/stochastic_aep/matrix_fair.json
@@ -48,7 +48,7 @@ def run_task(cell_path, schedule_name, sample_seed, init_seed, K, total_steps,
 
     # Path setup inside subprocess
     import sys
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     from pixwake.optim.sgd import boundary_penalty, spacing_penalty

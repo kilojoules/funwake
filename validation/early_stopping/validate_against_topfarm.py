@@ -15,7 +15,7 @@ Outputs:
 - validation/early_stopping/REPORT_STEP2.md — summary
 
 Usage:
-    PYTHONPATH=playground/pixwake/src pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src pixi run python \\
         validation/early_stopping/validate_against_topfarm.py \\
         --seeds 50 --max-iter 500
 """

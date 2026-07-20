@@ -363,7 +363,7 @@ For each turn, respond with ONE of:
 
 1. Read a file:
    ACTION: read_file
-   ARGS: {"path": "playground/pixwake/src/pixwake/optim/sgd.py"}
+   ARGS: {"path": "dependencies/pixwake/src/pixwake/optim/sgd.py"}
 
 2. Read your memory:
    ACTION: read_file

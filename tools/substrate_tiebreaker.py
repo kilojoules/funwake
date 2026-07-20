@@ -137,7 +137,7 @@ def main():
     import cma
 
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.insert(0, os.path.join(project_root, "playground", "pixwake", "src"))
+    sys.path.insert(0, os.path.join(project_root, "dependencies", "pixwake", "src"))
     sys.path.insert(0, os.path.join(project_root, "benchmarks"))
     from dei_layout import ProblemBenchmark
 
@@ -168,7 +168,7 @@ def main():
             env = {
                 **os.environ,
                 "PYTHONPATH": (
-                    os.path.join(project_root, "playground", "pixwake", "src")
+                    os.path.join(project_root, "dependencies", "pixwake", "src")
                     + ":" + os.environ.get("PYTHONPATH", "")
                 ),
                 "JAX_ENABLE_X64": "True",

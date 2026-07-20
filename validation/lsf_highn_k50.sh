@@ -15,5 +15,5 @@ IDX=$((LSB_JOBINDEX-1)); CELL=$((IDX/3)); SI=$((IDX%3))
 SCHED=(baseline claude gemini); S=${SCHED[$SI]}
 OUT=$HOME/clusters_results/funwake_highn_k50/cell${CELL}.${S}.json
 mkdir -p $HOME/clusters_results/funwake_highn_k50
-PYTHONPATH=playground/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
     --cell-idx $CELL --K 50 --only $S --out $OUT

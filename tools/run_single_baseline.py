@@ -10,7 +10,7 @@ import os
 import sys
 import time
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "playground", "pixwake", "src"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "dependencies", "pixwake", "src"))
 import jax
 jax.config.update("jax_enable_x64", True)
 import jax.numpy as jnp

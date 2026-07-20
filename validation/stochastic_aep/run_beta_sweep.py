@@ -8,7 +8,7 @@ The (0.1, 0.2) runs duplicate hardening data for sanity but at the SAME
 init seed = 0, K, total_steps so they're directly paired.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_beta_sweep.py \\
         --cells <p1> <p2> <p3> --eta-t-vals <e1> <e2> <e3> \\
         --betas 0.1,0.2 0.3,0.5 \\
@@ -29,7 +29,7 @@ def topfarm_decay_with_betas(lr_init, gamma_min_factor, total_steps,
                               beta1, beta2):
     """topfarm_default_decay variant with overridable betas."""
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     from run_step3_rowp import _bisect_mid
     import jax.numpy as jnp
     import numpy as np
@@ -53,7 +53,7 @@ def topfarm_decay_with_betas(lr_init, gamma_min_factor, total_steps,
 
 def run_one(cell_path, eta_t_m, beta1, beta2, sample_seed,
             init_seed=0, K=50, total_steps=8000):
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

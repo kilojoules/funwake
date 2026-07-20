@@ -23,7 +23,7 @@ import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIGS = os.path.join(ROOT, "paper", "figs")
-sys.path.insert(0, os.path.join(ROOT, "playground/pixwake/src"))
+sys.path.insert(0, os.path.join(ROOT, "dependencies/pixwake/src"))
 sys.path.insert(0, os.path.join(ROOT, "validation/stochastic_aep"))
 
 # deployed-schedule (iter_192) optimized layouts, generated once by

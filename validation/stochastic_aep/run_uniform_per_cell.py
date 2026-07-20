@@ -5,7 +5,7 @@ its result JSON. The result JSON is then collected by the array-runner shell
 script.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep \\
         pixi run python validation/stochastic_aep/run_uniform_per_cell.py \\
             --cell-idx <0..11> --out <out.json>
 """
@@ -31,7 +31,7 @@ SAMPLE_SEEDS = [100000, 200000, 300000]
 
 
 def one_run(cell_path, delta, sample_seed, init_seed=0, K=50, total_steps=8000):
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

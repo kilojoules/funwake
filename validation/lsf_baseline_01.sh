@@ -15,5 +15,5 @@ case $LSB_JOBINDEX in
   1) PROB=results/problem_rowp.json; KEY=rowp_n74 ;;
   2) PROB=playground/problem.json;   KEY=dei_n50 ;;
 esac
-PYTHONPATH=playground/pixwake/src pixi run python tools/run_baseline_batch.py \
+PYTHONPATH=dependencies/pixwake/src pixi run python tools/run_baseline_batch.py \
     --problem $PROB --seeds 0-499 --out-dir $HOME/clusters_results/funwake_baseline_01tol --out-key $KEY

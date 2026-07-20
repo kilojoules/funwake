@@ -11,6 +11,6 @@
 set -euo pipefail
 export PATH="$HOME/.pixi/bin:$PATH"; export JAX_COMPILATION_CACHE_DIR=/tmp/jax_c1base_${LSB_JOBID}; export TMPDIR=/tmp
 cd $HOME/projects/funwake_unisweep
-PYTHONPATH=playground/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python tools/run_matrix_ms_highn.py \
     --cell-idx 1 --K 50 --only baseline \
     --out $HOME/clusters_results/funwake_highn_k50/cell1.baseline.json

@@ -15,7 +15,7 @@ Schedules supported:
   - decay_es_eta_<f>  (topfarm decay+ES at given ηT in metres; e.g. decay_es_eta_5.0)
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_gradient_balance.py \\
         --cell <path> --schedule claude_iter192 --es-mode off \\
         --sample-seeds 100000 200000 300000 \\
@@ -34,7 +34,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(_
 
 def run_one(cell_path, schedule_name, es_mode, sample_seed, init_seed,
             K, total_steps, probe_every):
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

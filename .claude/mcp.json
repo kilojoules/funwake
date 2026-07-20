@@ -9,7 +9,7 @@
       ],
       "env": {
         "JAX_ENABLE_X64": "True",
-        "PYTHONPATH": "playground/pixwake/src"
+        "PYTHONPATH": "dependencies/pixwake/src"
       }
     }
   }

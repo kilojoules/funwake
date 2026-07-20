@@ -42,7 +42,7 @@ MODEL=${MODEL:-gemini-2.5-flash}
 CLI_ARGS=(
     --provider gemini
     --model "$MODEL"
-    --wind-csv playground/pixwake/energy_island_10y_daily_av_wind.csv
+    --wind-csv dependencies/pixwake/energy_island_10y_daily_av_wind.csv
     --time-budget 43200
     --max-attempts "$MAX_ATTEMPTS"
     --hot-start "$HOT_START"

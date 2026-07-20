@@ -3,7 +3,7 @@
 # convergence (DEI N=50 training + ROWP N=80 held-out, ES-off only).
 set -e
 cd /Users/julianquick/portfolio_copy/funwake
-export PYTHONPATH=playground/pixwake/src:validation/stochastic_aep
+export PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep
 
 # Mechanism cells: top 3 H2-largest-negative ΔAEP
 MECH_CELLS=(

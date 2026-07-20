@@ -8,12 +8,12 @@ regret quantities our papers depend on.
 
 ## 1a — Existing-suite summary
 
-`playground/pixwake/tests/` contains zero pywake-equivalence tests. Only:
+`dependencies/pixwake/tests/` contains zero pywake-equivalence tests. Only:
 - `test_boundary.py` — polygon SDF/penalty correctness
 - `test_greedy_grid.py` — GreedyGridSearch smoke
 - `test_ift_gradients.py` — implicit-function-theorem gradient checks
 
-One-off script `playground/pixwake/scripts/verify_A0.02_pywake.py` exercises
+One-off script `dependencies/pixwake/scripts/verify_A0.02_pywake.py` exercises
 TurboGaussianDeficit against py_wake but asserts no tolerance and is not
 collected by pytest.
 

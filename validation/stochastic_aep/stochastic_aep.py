@@ -14,7 +14,7 @@ Wake model held identical to iter_192's original discovery: pixwake's
 BastankhahGaussianDeficit(k=0.04). The skeleton signature is unchanged.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src pixi run python \\
       validation/stochastic_aep/stochastic_aep.py \\
       --resource validation/stochastic_aep/dei_weibull_12.json \\
       --problem playground/problem.json \\

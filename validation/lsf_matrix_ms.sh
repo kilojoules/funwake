@@ -23,6 +23,6 @@ CELL=$((LSB_JOBINDEX - 1))
 OUT=$HOME/clusters_results/funwake_matrix_ms/cell${CELL}.json
 
 echo "=== matrix MS cell $CELL ==="; hostname; date
-PYTHONPATH=playground/pixwake/src:playground pixi run python \
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python \
     tools/run_matrix_ms.py --cell-idx "$CELL" --K 50 --out "$OUT"
 echo "done"; date

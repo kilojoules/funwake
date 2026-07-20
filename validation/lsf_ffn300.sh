@@ -11,4 +11,4 @@
 set -euo pipefail
 export PATH="$HOME/.pixi/bin:$PATH"; export JAX_COMPILATION_CACHE_DIR=/tmp/jax_ffn300_${LSB_JOBID}; export TMPDIR=/tmp
 cd $HOME/projects/funwake_unisweep
-PYTHONPATH=playground/pixwake/src:playground pixi run python precompute_ff_n300.py
+PYTHONPATH=dependencies/pixwake/src:playground pixi run python precompute_ff_n300.py

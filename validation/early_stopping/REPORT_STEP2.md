@@ -4,7 +4,7 @@
 
 ## What was added
 
-`playground/pixwake/src/pixwake/optim/sgd.py`:
+`dependencies/pixwake/src/pixwake/optim/sgd.py`:
 - `SGDSettings.early_stopping: bool = False` (off by default, ES=False is
   bit-for-bit identical to the prior implementation).
 - `SGDSettings.early_stop_threshold: float = 0.1` (Quick 2023 Sect. 4.3 uses
@@ -187,7 +187,7 @@ affect the Step 3 question.
 
 ## Artifacts
 
-- `playground/pixwake/src/pixwake/optim/sgd.py` — patched ES.
+- `dependencies/pixwake/src/pixwake/optim/sgd.py` — patched ES.
 - `validation/early_stopping/test_es_implementation.py` — bit-for-bit
   smoke tests.
 - `validation/early_stopping/validate_against_topfarm.py` —

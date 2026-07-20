@@ -17,7 +17,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(ROOT, "playground/pixwake/src"))
+sys.path.insert(0, os.path.join(ROOT, "dependencies/pixwake/src"))
 sys.path.insert(0, os.path.join(ROOT, "playground"))
 
 import jax

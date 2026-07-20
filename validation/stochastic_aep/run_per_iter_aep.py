@@ -29,7 +29,7 @@ The ES trigger info is precomputed from the schedule_fn so we mark on the
 figure when ES "should" fire.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_per_iter_aep.py \\
         --cell <path> --schedule claude_iter192 --es-mode off \\
         --probe-every 200 --sample-seeds 100000 200000 300000 \\
@@ -48,7 +48,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(_
 def run_one(cell_path, schedule_name, es_mode, sample_seed, init_seed,
             K, total_steps, probe_every):
     import sys
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

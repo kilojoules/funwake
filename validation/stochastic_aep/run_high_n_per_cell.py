@@ -31,7 +31,7 @@ SAMPLE_SEEDS = [100000, 200000, 300000]
 
 def one_run(cell_path, schedule_name, delta, sample_seed,
             init_seed=0, K=50, total_steps=8000):
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax

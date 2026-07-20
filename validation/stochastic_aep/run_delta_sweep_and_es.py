@@ -18,7 +18,7 @@ Experiment B — iter_192 + ES with lr_ratio trace:
 Total new compute: 18 × 6 × 3 = 324 (A) + 18 × 1 × 3 = 54 (B) = 378 runs.
 
 Usage:
-    PYTHONPATH=playground/pixwake/src:validation/stochastic_aep pixi run python \\
+    PYTHONPATH=dependencies/pixwake/src:validation/stochastic_aep pixi run python \\
         validation/stochastic_aep/run_delta_sweep_and_es.py \\
         --workers 1 \\
         --out validation/stochastic_aep/delta_sweep_and_es.json
@@ -50,7 +50,7 @@ def run_task(cell_path, task_kind, sample_seed, init_seed, K, total_steps,
 
     Returns dict with aep, feasibility, lr_ratio trajectory (if requested)."""
     import sys
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, "playground/pixwake/src"))
+    sys.path.insert(0, os.path.join(PROJECT_ROOT, "dependencies/pixwake/src"))
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "validation/stochastic_aep"))
 
     import jax
