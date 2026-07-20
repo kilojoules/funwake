@@ -1,0 +1,24 @@
+{
+  "title": "Automated Optimization Discovery for Wind Farm Layout Optimization using Large Language Models",
+  "description": "FunWake: LLM-discovered optimizer schedules for wind farm layout optimization. LLM coding agents iteratively write optimizer schedules (learning-rate and constraint-penalty controls for a fixed JAX skeleton), evaluated on wind farms held out from the search.",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {"name": "Quick, Julian"},
+    {"name": "Réthoré, Pierre"}
+  ],
+  "keywords": [
+    "wind farm layout optimization",
+    "large language models",
+    "FunSearch",
+    "optimizer schedules",
+    "annual energy production"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/kilojoules/funwake",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

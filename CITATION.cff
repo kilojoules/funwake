@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use FunWake, please cite it as below."
+title: "Automated Optimization Discovery for Wind Farm Layout Optimization using Large Language Models"
+abstract: >-
+  FunWake applies the FunSearch paradigm to wind farm layout optimization: LLM
+  coding agents iteratively write optimizer schedules, evaluated on wind farms
+  held out from the search.
+type: software
+authors:
+  - family-names: Quick
+    given-names: Julian
+    # affiliation: TODO(human)
+    # orcid: TODO(human)
+  - family-names: Réthoré
+    given-names: Pierre
+    # affiliation: TODO(human)
+    # orcid: TODO(human)
+repository-code: "https://github.com/kilojoules/funwake"
+license: MIT
+# version: TODO(human) — set at release (e.g. v0.1-icml2026)
+# doi: TODO(human) — Zenodo DOI once the release is minted (see RELEASING.md)
