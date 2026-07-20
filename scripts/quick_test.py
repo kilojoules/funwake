@@ -30,7 +30,7 @@ def load_problem(path):
     with open(path) as f:
         return json.load(f)
 
-def score_optimizer(optimizer_path, problem_path='playground/problem.json', timeout=60):
+def score_optimizer(optimizer_path, problem_path='playground/problem.json', timeout=180):
     """Score an optimizer on a problem."""
     try:
         # Load problem

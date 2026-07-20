@@ -22,7 +22,7 @@ class RunConfig:
     baselines: str = "results/baselines.json"
     train_farm: str = "1"
     hot_start: Optional[str] = None  # seed optimizer path
-    timeout_per_run: int = 60        # per-optimizer timeout
+    timeout_per_run: int = 180       # per-optimizer timeout (fixed skeleton ~30s; 180 absorbs slow machines + cold JIT)
     pixwake_src: str = "dependencies/pixwake/src"
     schedule_only: bool = False      # schedule_fn interface (vs full optimize())
     max_attempts: int = 0            # 0 = unlimited (use time_budget only)
@@ -279,7 +279,7 @@ def optimize(sim, n_target, boundary, min_spacing, wd, ws, weights):
 - Time budget: {time_budget_min} minutes total
 - Each optimizer run times out at {timeout_per_run}s
 - Baseline (500 multi-start SGD): {baseline_aep:.1f} GWh — beat this
-- You can read files in `playground/` (pixwake source)
+- You can read files in `playground/` (workspace) and `dependencies/pixwake/` (pixwake source)
 - Write optimizers to the workspace directory
 - You CANNOT modify the wake model, harness, or scorer
 - Do NOT import `os`, `subprocess`, or read files inside your optimizer.

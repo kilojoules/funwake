@@ -326,14 +326,43 @@ def check_layout(layout, info):
     return results
 
 
+# Feasibility checks (boundary + spacing). With --expect-infeasible these are
+# treated as expected-fail (XFAIL) instead of hard failures, so the suite exits
+# 0 for a script that is infeasible *by design* — notably the seed schedule
+# (results/seed_schedule.py). The baseline is the best-FEASIBLE of 500
+# multistarts; the seed trades feasibility for AEP on purpose. See the README
+# ("Quick start" / seed infeasibility note).
+FEAS_CHECKS = {"stressed_boundary", "stressed_spacing", "boundary", "spacing"}
+
+
+def _report(results, expect_infeasible):
+    """Print a result block; return True unless a hard (non-expected) check failed.
+
+    A failing feasibility check becomes [XFAIL] when expect_infeasible is set,
+    so it does not fail the suite.
+    """
+    ok = True
+    for name, passed, detail in results:
+        if passed:
+            status = "PASS"
+        elif expect_infeasible and name in FEAS_CHECKS:
+            status = "XFAIL"  # expected: infeasible by design (see README)
+        else:
+            status = "FAIL"
+            ok = False
+        print(f"  [{status}] {name}: {detail}")
+    return ok
+
+
 def main():
     if len(sys.argv) < 2:
         print(f"Usage: python {sys.argv[0]} <optimizer.py> [problem.json] [timeout]")
-        print(f"       python {sys.argv[0]} <optimizer.py> --quick")
+        print(f"       python {sys.argv[0]} <optimizer.py> --quick [--expect-infeasible]")
         sys.exit(1)
 
     optimizer_path = sys.argv[1]
     quick_mode = "--quick" in sys.argv
+    expect_infeasible = "--expect-infeasible" in sys.argv
 
     # Always run signature and quick checks
     print(f"Loading {optimizer_path}...")
@@ -357,20 +386,10 @@ def main():
         sys.exit(1)
 
     print("\n=== Quick Run (3 turbines, tiny problem) ===")
-    quick_results = check_quick_run(mod)
-    for name, passed, detail in quick_results:
-        status = "PASS" if passed else "FAIL"
-        if not passed:
-            all_passed = False
-        print(f"  [{status}] {name}: {detail}")
+    all_passed = _report(check_quick_run(mod), expect_infeasible) and all_passed
 
     print("\n=== Stressed Polygon (25 turbines, thin rhombus) ===")
-    stressed_results = check_stressed_polygon(mod)
-    for name, passed, detail in stressed_results:
-        status = "PASS" if passed else "FAIL"
-        if not passed:
-            all_passed = False
-        print(f"  [{status}] {name}: {detail}")
+    all_passed = _report(check_stressed_polygon(mod), expect_infeasible) and all_passed
 
     if quick_mode:
         print()
@@ -404,12 +423,7 @@ def main():
 
     print(f"Completed in {elapsed:.1f}s\n")
 
-    layout_results = check_layout(layout, info)
-    for name, passed, detail in layout_results:
-        status = "PASS" if passed else "FAIL"
-        if not passed:
-            all_passed = False
-        print(f"  [{status}] {name}: {detail}")
+    all_passed = _report(check_layout(layout, info), expect_infeasible) and all_passed
 
     print()
     if all_passed:

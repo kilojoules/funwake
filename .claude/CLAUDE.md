@@ -49,7 +49,7 @@ The baseline solver couples alpha to 1/lr: as lr decays, alpha increases.
 This ensures feasibility in late iterations. Can you do better?
 
 ## Rules
-- Write schedule files to `results_rerun_smoke_claude/iter_NNN.py`
+- Write schedule files to `runs/schedule_designer/iter_NNN.py`
 - NEVER overwrite an existing `iter_NNN.py`. Always increment N.
 - Each file must define ONLY `schedule_fn(step, total_steps, lr0, alpha0)`
 - Do NOT write `optimize()` — it will be rejected
@@ -57,9 +57,9 @@ This ensures feasibility in late iterations. Can you do better?
 - Score: `python tools/run_optimizer.py <script> --schedule-only`
 - Test: `python tools/run_tests.py <script> --quick`
 - Generalize: `python tools/test_generalization.py <script> --schedule-only`
-- Status: `python tools/get_status.py --log results_rerun_smoke_claude/attempt_log.json`
+- Status: `python tools/get_status.py --log runs/schedule_designer/attempt_log.json`
 - Baseline: 5540.7 GWh
-- Timeout: 60s per run
+- Timeout: 180s per run
 
 
 ## Ideas to try
@@ -71,7 +71,7 @@ This ensures feasibility in late iterations. Can you do better?
 - Standard Adam (beta1=0.9, beta2=0.999) vs TopFarm (0.1, 0.2)
 
 ## Workflow
-1. Read `results_rerun_smoke_claude/agent_memory.md` for status
+1. Read `runs/schedule_designer/agent_memory.md` for status
 2. Read `results/seed_schedule.py` to see the starting schedule
 3. Read `playground/skeleton.py` to understand the fixed optimizer
 4. Write a new schedule, score it, iterate

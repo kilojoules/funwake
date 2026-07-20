@@ -51,8 +51,8 @@ def main():
                    help="Path to seed optimizer script")
     p.add_argument("--output-dir", default=None,
                    help="Output directory (default: results_agent_{provider})")
-    p.add_argument("--timeout-per-run", type=int, default=60,
-                   help="Timeout per optimizer evaluation (default: 60s)")
+    p.add_argument("--timeout-per-run", type=int, default=180,
+                   help="Timeout per optimizer evaluation (default: 180s)")
 
     # Gemini/vLLM-specific
     p.add_argument("--model", default="gemini-2.5-flash",
