@@ -85,7 +85,7 @@ _PROJECT_ROOT = Path(
     _ARGS.project_root if _ARGS.project_root else Path(__file__).parent
 ).resolve()
 _TOOLS_DIR   = _PROJECT_ROOT / "tools"
-_PIXWAKE_SRC = _PROJECT_ROOT / "playground" / "pixwake" / "src"
+_PIXWAKE_SRC = _PROJECT_ROOT / "dependencies" / "pixwake" / "src"
 
 _OUTPUT_DIR  = Path(_ARGS.output_dir)
 if not _OUTPUT_DIR.is_absolute():
