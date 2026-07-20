@@ -41,12 +41,14 @@ pixi run python tools/run_optimizer.py \
     runs/schedule_only_5hr/iter_192.py --schedule-only
 ```
 
-The seed reports `"feasible": false` **by design**. The baseline (5540.72)
-is the best *feasible* layout of 500 multistarts; the seed trades strict
-feasibility for AEP, so the game is to gain AEP *while* restoring
-feasibility (the deployed schedule scores 5561.58, feasible). For the same
-reason `tools/run_tests.py` on the seed reports one expected-fail
-(`[XFAIL] stressed_boundary`) and still exits green.
+The seed scores *below* the baseline and sits right at the feasibility
+boundary — it reports `"feasible": false` on the reference platform, though
+the exact flag can flip across CPU architectures via float drift. The
+baseline (5540.72) is the best *feasible* layout of 500 multistarts, so the
+game is to gain AEP *while* holding feasibility (the deployed schedule
+scores 5561.58, comfortably feasible). `tools/run_tests.py` on the seed
+reports one expected-fail (`[XFAIL] stressed_boundary`) and still exits
+green.
 
 That is the whole loop: write a `schedule_fn`, score it, iterate. See
 [Write your own schedule](#write-your-own-schedule) below.
