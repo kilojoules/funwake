@@ -350,6 +350,16 @@ the discovered schedules can underperform the baseline. Reported results
 come from two agent CLIs (Claude Code and Gemini CLI) and are agent-lane
 results (model plus scaffold), not pure model comparisons.
 
+The skeleton passes a fixed reference learning rate lr0 = 50 m to every
+schedule on every farm; it is not scaled by rotor diameter or minimum
+spacing (schedules may reshape it, but receive no geometry information).
+Relative to geometry that makes steps ~0.21 D on DEI, 0.25 D on ROWP, and
+0.63 D on Parque Ficticio, so the Parque transfer test is also a
+step-size out-of-distribution test, which likely contributes to the
+degraded transfer there (the TopFarm convention scales lr with D). The
+convention is frozen: the discovery runs consumed this exact skeleton, so
+it cannot be changed without re-running the search.
+
 ## Process
 
 Coding agents helped build the evaluation infrastructure and ran the

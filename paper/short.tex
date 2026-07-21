@@ -484,6 +484,16 @@ continuation~\cite{rojas2015continuation}) and trajectory optimization
 are immediate candidates for the same benchmark pattern.
 
 \paragraph{Limitations and future work.}
+% NOTE (lr0 convention, add if space allows): the skeleton passes a FIXED
+% reference learning rate lr0 = 50 m to every schedule on every farm — not
+% scaled by rotor diameter or minimum spacing (schedules may reshape it but
+% receive no geometry information). Relative to geometry: ~0.21 D on DEI,
+% 0.25 D on ROWP, 0.63 D on ParqueFicticio — the Parque transfer test is
+% therefore also a step-size out-of-distribution test, likely contributing
+% to the degraded transfer there (TopFarm convention scales lr with D).
+% Frozen: discovery runs consumed this exact skeleton; changing it means
+% re-running the search. Evidence: playground/skeleton.py:102 (lr0=50.0),
+% parqo/skeleton_multizone.py:96 (same), run_with_schedule has no lr0 arg.
 \emph{Agent-run asymmetry.} Of the four (agent $\times$ interface)
 cells in the study, only Gemini $\times$ full-optimizer has
 $n{=}5$ agent-run seeds; Claude $\times$ full-optimizer, Claude

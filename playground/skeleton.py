@@ -7,7 +7,8 @@ penalty weight, and Adam momentum schedules via schedule_fn.
 schedule_fn(step, total_steps, lr0, alpha0) -> (lr, alpha, beta1, beta2)
   - step: current iteration (0 to total_steps-1)
   - total_steps: total number of iterations
-  - lr0: initial learning rate (computed from problem scale)
+  - lr0: initial learning rate (fixed 50.0 m reference on every farm;
+    NOT scaled by rotor diameter or spacing)
   - alpha0: initial penalty weight (computed from gradient magnitude)
   Returns:
   - lr: learning rate for this step
