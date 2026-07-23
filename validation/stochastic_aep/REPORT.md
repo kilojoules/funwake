@@ -96,7 +96,7 @@ factory function returns an `aep_fn` whose signature already takes the
 ## Caveats
 
 1. **Weibull fit for DEI** is derived from the 10-year daily-mean
-   time-series at `dependencies/pixwake/energy_island_10y_daily_av_wind.csv`
+   time-series at `dependencies/energy_island_10y_daily_av_wind.csv`
    via per-sector MLE (`fit_weibull.py`). This is an
    **internal-paper-equivalent** rose — the parent paper Quick 2023
    uses a binned rose; our fit produces 12-sector Weibull(A, k) with

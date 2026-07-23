@@ -32,7 +32,7 @@ python agent_cli.py \
     --provider vllm \
     --model "$MODEL" \
     --base-url http://localhost:8000 \
-    --wind-csv /scratch/project_465002609/julian/funwake/dependencies/pixwake/energy_island_10y_daily_av_wind.csv \
+    --wind-csv /scratch/project_465002609/julian/funwake/dependencies/energy_island_10y_daily_av_wind.csv \
     --time-budget $TIME_BUDGET \
     --hot-start results/seed_optimizer.py \
     --output-dir results_agent_llama405b \

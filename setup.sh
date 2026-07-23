@@ -3,9 +3,9 @@ set -e
 
 cd "$(dirname "$0")"
 
-# Args: an optional wind CSV path (defaults to the vendored one) and an optional
+# Args: an optional wind CSV path (defaults to the tracked one) and an optional
 # --recompute-baselines flag to force the (expensive) baseline recompute.
-WIND_CSV="dependencies/pixwake/energy_island_10y_daily_av_wind.csv"
+WIND_CSV="dependencies/energy_island_10y_daily_av_wind.csv"
 RECOMPUTE_BASELINES=0
 for arg in "$@"; do
     case "$arg" in
@@ -13,14 +13,13 @@ for arg in "$@"; do
         *.csv) WIND_CSV="$arg" ;;
     esac
 done
-# pixwake source repo (only needed for the fallback re-clone below).
+# pixwake source repo (only needed for the clone below).
 PIXWAKE_REPO="https://github.com/kilojoules/cluster-tradeoffs.git"
 PIXWAKE_COMMIT="b8e905a"
 
 # 1. pixwake engine
-# Vendored in-repo at dependencies/pixwake/ (the pixwake package from
-# cluster-tradeoffs @ b8e905a, used on PYTHONPATH — see dependencies/README.md).
-# No clone needed. Fallback re-clone only if the vendored copy is missing.
+# NOT vendored (private — see dependencies/README.md). Used on PYTHONPATH at
+# dependencies/pixwake/src (gitignored). Cloned here when missing.
 if [ ! -d "dependencies/pixwake/src/pixwake" ]; then
     echo "Vendored pixwake missing — re-cloning from source..."
     git clone "$PIXWAKE_REPO" _pixwake_tmp

@@ -172,3 +172,6 @@ _lumi_pull/
 
 # archived build artifact
 /paper/archive/main.pdf
+
+# pixwake is private — never commit it (setup.sh clones it locally)
+dependencies/pixwake/
