@@ -8,6 +8,11 @@ Usage:
 Output JSON:
     {"aep_gwh": 5540.72, "feasible": true, "time_s": 23.4, "baseline": 5540.72}
     or {"error": "..."}
+
+    When scoring the TRAINING problem (and only then), two extra fields are
+    appended if results/equiv_cost_sgd/summary.json is readable:
+    "equiv_cost_sgd" (best budgeted-SGD config's mean AEP at the same
+    8000-eval budget) and "gap_equiv" (= aep_gwh - equiv_cost_sgd).
 """
 import argparse
 import json
@@ -85,6 +90,44 @@ def _append_to_log(log_path, entry):
     os.makedirs(os.path.dirname(log_path) or ".", exist_ok=True)
     with open(log_path, "w") as f:
         json.dump(existing, f, indent=2)
+
+
+def _load_equiv_cost_ref(project_root, problem_path):
+    """Load the equivalent-cost SGD reference: the winning budgeted config's
+    mean AEP on the DEI training farm (dei.winner.aep_mean in
+    results/equiv_cost_sgd/summary.json).
+
+    FIREWALL: summary.json also contains held-out ROWP AEP numbers. This
+    reference must therefore only ever be attached when scoring the TRAINING
+    problem. Detection is a path allowlist: the scored problem must resolve
+    (realpath) to one of the known training-problem files. Anything else —
+    unknown problem, missing/corrupt/mid-rewrite summary.json, unexpected
+    schema — returns None and the caller omits the fields entirely. Only the
+    "dei" subtree is ever read; the "rowp" subtree is never touched.
+
+    Returns a float or None. Never raises.
+    """
+    try:
+        train_problems = {
+            os.path.realpath(os.path.join(
+                project_root, "results", "problem_farm1.json")),
+            os.path.realpath(os.path.join(
+                project_root, "results", "problem_dei_n50.json")),
+        }
+        if os.path.realpath(os.path.abspath(problem_path)) not in train_problems:
+            return None
+        summary_path = os.path.join(
+            project_root, "results", "equiv_cost_sgd", "summary.json")
+        # Another process may rewrite this file mid-experiment; a torn read
+        # yields JSONDecodeError which the blanket except turns into None.
+        with open(summary_path) as f:
+            summary = json.load(f)
+        ref = summary["dei"]["winner"]["aep_mean"]
+        if isinstance(ref, (int, float)) and not isinstance(ref, bool):
+            return float(ref)
+        return None
+    except Exception:
+        return None
 
 
 def _count_attempts(log_path):
@@ -238,6 +281,10 @@ def main():
     except FileNotFoundError:
         pass
 
+    # Equivalent-cost SGD reference (training farm only; None otherwise —
+    # see _load_equiv_cost_ref for the firewall rationale).
+    equiv_ref = _load_equiv_cost_ref(project_root, args.problem)
+
     # Classify strategy + parse agent-authored metadata from the source
     hypothesis = axis = lesson = None
     families = None
@@ -315,6 +362,15 @@ def main():
         entry["lesson"] = lesson
     if families:
         entry["families"] = families
+
+    # Equivalent-cost SGD reference — training problem only (firewall:
+    # never attached when scoring any other problem; see _load_equiv_cost_ref).
+    if equiv_ref is not None:
+        output["equiv_cost_sgd"] = round(equiv_ref, 2)
+        output["gap_equiv"] = round(aep - equiv_ref, 2)
+        entry["equiv_cost_sgd"] = round(equiv_ref, 2)
+        entry["gap_equiv"] = round(aep - equiv_ref, 2)
+
     _append_to_log(log_path, entry)
 
     print(json.dumps(output))

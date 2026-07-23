@@ -1,0 +1,51 @@
+{
+ "problem": "/Users/julianquick/working/funwake/results/problem_dei_n50.json",
+ "line_scans_pm5cm_2mm": [
+  {
+   "turbine": 0,
+   "n_jumps_over_0.01": 1,
+   "max_jump_gwh": 0.0992,
+   "smooth_variation_gwh": 4e-05
+  },
+  {
+   "turbine": 12,
+   "n_jumps_over_0.01": 1,
+   "max_jump_gwh": 0.0153,
+   "smooth_variation_gwh": 0.00012
+  },
+  {
+   "turbine": 25,
+   "n_jumps_over_0.01": 1,
+   "max_jump_gwh": 0.0945,
+   "smooth_variation_gwh": 6e-05
+  },
+  {
+   "turbine": 37,
+   "n_jumps_over_0.01": 3,
+   "max_jump_gwh": 0.1184,
+   "smooth_variation_gwh": 8e-05
+  },
+  {
+   "turbine": 49,
+   "n_jumps_over_0.01": 2,
+   "max_jump_gwh": 0.0293,
+   "smooth_variation_gwh": 2e-05
+  }
+ ],
+ "perturbation_response_gwh": {
+  "0.01": {
+   "std": 0.2151,
+   "max_abs": 0.4647
+  },
+  "0.1": {
+   "std": 0.3382,
+   "max_abs": 0.7575
+  },
+  "1.0": {
+   "std": 0.3221,
+   "max_abs": 0.7023
+  }
+ },
+ "max_tol_sensitivity_gwh": 1.5073965187184513e-08,
+ "jump_source": "pixwake/deficit/base.py: in_wake_mask = (dw > 0) & (|cw| < wake_radius=2*sigma); e^-2 edge deficit switched discontinuously"
+}

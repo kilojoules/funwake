@@ -1,0 +1,33 @@
+{
+  "aep_gwh": 5531.445,
+  "feasible": true,
+  "best_lane": 1,
+  "n_feasible": 2,
+  "n_starts": 2,
+  "iters": 4000,
+  "budget": 8000,
+  "evals_billed": 8000,
+  "C": 1800,
+  "M": 3600,
+  "mid": 1.3160905512740343e-06,
+  "activation_step": 3671,
+  "es_enabled": true,
+  "seed": 3,
+  "time_s": 28.9,
+  "per_lane": [
+    {
+      "aep_gwh": 5520.748,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1239.14
+    },
+    {
+      "aep_gwh": 5531.445,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1251.31
+    }
+  ],
+  "evals_executed": 7348,
+  "batched_iters_executed": 3674
+}

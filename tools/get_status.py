@@ -43,6 +43,16 @@ def main():
         "gap": round(best_aep - baseline, 2),
     }
 
+    # Equivalent-cost SGD reference: run_optimizer.py attaches these fields
+    # only when scoring the training problem, so older logs (or non-training
+    # scorings) simply lack them — tolerate that.
+    equiv_attempts = [a for a in successes
+                      if a.get("equiv_cost_sgd") is not None]
+    if equiv_attempts:
+        equiv_ref = equiv_attempts[-1]["equiv_cost_sgd"]
+        summary["equiv_cost_sgd"] = round(equiv_ref, 2)
+        summary["gap_equiv"] = round(best_aep - equiv_ref, 2)
+
     # If any attempts used --stress-problem, surface adversarial-selection state.
     stress_attempts = [a for a in successes if "stress_aep" in a]
     if stress_attempts:

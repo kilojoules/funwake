@@ -1,0 +1,93 @@
+{
+  "aep_gwh": 5527.854,
+  "feasible": true,
+  "best_lane": 10,
+  "n_feasible": 12,
+  "n_starts": 12,
+  "iters": 666,
+  "budget": 8000,
+  "evals_billed": 7992,
+  "C": 300,
+  "M": 599,
+  "mid": 4.784778420840968e-05,
+  "activation_step": 611,
+  "es_enabled": true,
+  "seed": 5,
+  "time_s": 31.8,
+  "per_lane": [
+    {
+      "aep_gwh": 5522.402,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1041.33
+    },
+    {
+      "aep_gwh": 5522.585,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1294.76
+    },
+    {
+      "aep_gwh": 5512.482,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1071.45
+    },
+    {
+      "aep_gwh": 5521.559,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1116.03
+    },
+    {
+      "aep_gwh": 5519.808,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1155.52
+    },
+    {
+      "aep_gwh": 5524.973,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1346.24
+    },
+    {
+      "aep_gwh": 5515.154,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1106.1
+    },
+    {
+      "aep_gwh": 5521.919,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1356.78
+    },
+    {
+      "aep_gwh": 5521.59,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1190.55
+    },
+    {
+      "aep_gwh": 5517.55,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1144.44
+    },
+    {
+      "aep_gwh": 5527.854,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1140.22
+    },
+    {
+      "aep_gwh": 5505.301,
+      "feasible": true,
+      "boundary_penalty": 0.0,
+      "min_dist_m": 1057.76
+    }
+  ],
+  "evals_executed": 7368,
+  "batched_iters_executed": 614
+}

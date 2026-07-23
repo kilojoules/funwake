@@ -1,0 +1,178 @@
+{
+  "problem": "results/problem_dei_n50.json",
+  "settings": {
+    "learning_rate": 50.0,
+    "max_iter": 4000,
+    "additional_constant_lr_iterations": 2000,
+    "beta1": 0.1,
+    "beta2": 0.2,
+    "early_stop_threshold": 0.1,
+    "gamma_min_factor": 0.01,
+    "total_iterations": 6000
+  },
+  "counter_sanity": {
+    "expected_evals": 51,
+    "observed_evals": 51,
+    "ok": true,
+    "mechanism": "jax.debug.callback"
+  },
+  "activation": {
+    "mid": 1.065894863105779e-06,
+    "t_activation_decay_step": 2079,
+    "predicted_activation_total_step": 4079,
+    "first_es_active_iteration": 4080,
+    "fraction_of_decay_phase": 0.5198
+  },
+  "es_runs": [
+    {
+      "evals": 4082,
+      "aep_gwh": 5524.896,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1283.04,
+      "feasible": true,
+      "wall_time_s": 13.5,
+      "hit_cap": false,
+      "seed": 0,
+      "tail": 2
+    },
+    {
+      "evals": 4082,
+      "aep_gwh": 5519.074,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1275.85,
+      "feasible": true,
+      "wall_time_s": 14.1,
+      "hit_cap": false,
+      "seed": 1,
+      "tail": 2
+    },
+    {
+      "evals": 4082,
+      "aep_gwh": 5522.071,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1311.39,
+      "feasible": true,
+      "wall_time_s": 13.9,
+      "hit_cap": false,
+      "seed": 2,
+      "tail": 2
+    },
+    {
+      "evals": 4082,
+      "aep_gwh": 5521.408,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1100.49,
+      "feasible": true,
+      "wall_time_s": 13.9,
+      "hit_cap": false,
+      "seed": 3,
+      "tail": 2
+    },
+    {
+      "evals": 4083,
+      "aep_gwh": 5519.55,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1478.73,
+      "feasible": true,
+      "wall_time_s": 17.2,
+      "hit_cap": false,
+      "seed": 4,
+      "tail": 3
+    },
+    {
+      "evals": 4083,
+      "aep_gwh": 5526.662,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1162.74,
+      "feasible": true,
+      "wall_time_s": 17.8,
+      "hit_cap": false,
+      "seed": 5,
+      "tail": 3
+    },
+    {
+      "evals": 4082,
+      "aep_gwh": 5528.339,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1238.16,
+      "feasible": true,
+      "wall_time_s": 15.8,
+      "hit_cap": false,
+      "seed": 6,
+      "tail": 2
+    },
+    {
+      "evals": 4084,
+      "aep_gwh": 5525.036,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1264.35,
+      "feasible": true,
+      "wall_time_s": 15.2,
+      "hit_cap": false,
+      "seed": 7,
+      "tail": 4
+    },
+    {
+      "evals": 4082,
+      "aep_gwh": 5534.33,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1219.54,
+      "feasible": true,
+      "wall_time_s": 15.7,
+      "hit_cap": false,
+      "seed": 8,
+      "tail": 2
+    },
+    {
+      "evals": 4083,
+      "aep_gwh": 5521.885,
+      "boundary_penalty": 0.0,
+      "min_spacing_m": 1117.36,
+      "feasible": true,
+      "wall_time_s": 13.8,
+      "hit_cap": false,
+      "seed": 9,
+      "tail": 3
+    }
+  ],
+  "full_runs": [
+    {
+      "evals": 6001,
+      "aep_gwh": 5524.716,
+      "boundary_penalty": 0.00020708863574719634,
+      "min_spacing_m": 1290.55,
+      "feasible": true,
+      "wall_time_s": 18.8,
+      "hit_cap": true,
+      "seed": 0,
+      "aep_delta_es_minus_full": 0.18,
+      "evals_es": 4082
+    },
+    {
+      "evals": 6001,
+      "aep_gwh": 5518.424,
+      "boundary_penalty": 0.00020717090634950942,
+      "min_spacing_m": 1280.09,
+      "feasible": true,
+      "wall_time_s": 19.3,
+      "hit_cap": true,
+      "seed": 1,
+      "aep_delta_es_minus_full": 0.65,
+      "evals_es": 4082
+    }
+  ],
+  "summary": {
+    "n_seeds": 10,
+    "activation_analytic_total_step": 4079,
+    "evals_min": 4082,
+    "evals_median": 4082.0,
+    "evals_max": 4084,
+    "tail_min": 2,
+    "tail_median": 2.0,
+    "tail_max": 4,
+    "feasibility_rate": 1.0,
+    "n_hit_cap": 0,
+    "mean_aep_delta_es_minus_full_gwh": 0.415,
+    "recommended_cleanup_allowance_frac_of_T": 0.0008
+  }
+}
