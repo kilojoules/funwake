@@ -9,6 +9,9 @@ playground/*.py
 !playground/test_optimizer.py
 !playground/harness.py
 !playground/skeleton.py
+!playground/skeleton_pywake.py
+!playground/pywake_adapter.py
+!playground/penalties_np.py
 playground/*.json
 !playground/problem.json
 

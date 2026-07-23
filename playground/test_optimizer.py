@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Unit tests for optimizer modules.
+"""Unit tests for optimizer modules (open-source py_wake backend).
 
 Tests that an optimizer module:
   - Defines optimize() with the correct signature
@@ -9,11 +9,25 @@ Tests that an optimizer module:
   - Produces non-degenerate AEP
   - Works on multiple problem sizes (quick check)
 
+Wake model: py_wake PropagateDownwind + Bastankhah-Gaussian deficit
+(k=0.04, ambient-WS reference, 2-sigma radius mask, SquaredSum
+superposition) via pywake_adapter; constraint penalties are the plain
+numpy TopFarm formulations in penalties_np.  AEP, penalty, and gradient
+values match the reference scoring model to <1e-6 relative.
+
+Step count: schedule-mode runs use TEST_TOTAL_STEPS = 5000 (the scoring
+stack uses 8000).  py_wake gradients cost ~63 ms/step on the 25-turbine
+stressed fixture, so 8000 steps would take ~9 min; 5000 keeps the suite
+near 5 min while preserving the reference behavior of the seed schedule
+(stressed_boundary FAIL with penalty ~0.1; verified against the reference
+model at the same step count — note 4000 anomalously passes and 4500 is
+marginal, so do not lower this further).
+
 Usage:
-    # Full test (runs optimizer, ~20-30s)
+    # Full test (runs optimizer via harness)
     python test_optimizer.py <optimizer_module.py> <problem.json>
 
-    # Quick test (signature + import check only, <1s)
+    # Quick test (signature + fixture runs, ~5 min for schedule modules)
     python test_optimizer.py <optimizer_module.py> --quick
 """
 
@@ -32,9 +46,11 @@ jax.config.update("jax_enable_x64", True)
 import jax.numpy as jnp
 import numpy as np
 
-from pixwake import Curve, Turbine, WakeSimulation
-from pixwake.deficit import BastankhahGaussianDeficit
-from pixwake.optim.sgd import boundary_penalty, spacing_penalty
+from penalties_np import boundary_penalty, spacing_penalty
+from pywake_adapter import Curve, Turbine, WakeSimulation, BastankhahGaussianDeficit
+
+# Step count for schedule_fn-based modules (see header).
+TEST_TOTAL_STEPS = 5000
 
 
 def load_problem(problem_path):
@@ -89,9 +105,10 @@ def _call_optimizer(mod, sim, n_target, boundary, min_spacing, wd, ws, weights):
         return mod.optimize(sim=sim, n_target=n_target, boundary=boundary,
                            min_spacing=min_spacing, wd=wd, ws=ws, weights=weights)
     elif hasattr(mod, "schedule_fn"):
-        from skeleton import run_with_schedule
+        from skeleton_pywake import run_with_schedule
         return run_with_schedule(mod.schedule_fn, sim, n_target, boundary,
-                                min_spacing, wd, ws, weights, total_steps=8000)
+                                min_spacing, wd, ws, weights,
+                                total_steps=TEST_TOTAL_STEPS)
     else:
         raise ValueError("Module must define optimize() or schedule_fn()")
 
@@ -220,10 +237,11 @@ def run_via_harness(optimizer_path, problem_path, timeout=120):
         output_path = f.name
 
     harness_path = os.path.join(os.path.dirname(__file__), "harness.py")
-    pixwake_src = os.path.join(os.path.dirname(__file__), "pixwake", "src")
+    # harness.py runs on the closed-source scoring stack; the caller must
+    # provide a PYTHONPATH where its simulation library is importable.
     env = {
         "PATH": os.environ.get("PATH", ""),
-        "PYTHONPATH": pixwake_src,
+        "PYTHONPATH": os.environ.get("PYTHONPATH", ""),
         "JAX_ENABLE_X64": "True",
         "FUNWAKE_PROBLEM": os.path.abspath(problem_path),
         "FUNWAKE_OUTPUT": output_path,

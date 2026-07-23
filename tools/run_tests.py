@@ -32,11 +32,9 @@ def main():
     cmd = [sys.executable, test_runner, os.path.abspath(script)] + args
 
     env = {**os.environ, "JAX_ENABLE_X64": "True"}
-    pixwake = os.path.join(os.path.dirname(__file__), "..", "dependencies", "pixwake", "src")
-    env["PYTHONPATH"] = f"{pixwake}:{env.get('PYTHONPATH', '')}"
 
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=180,
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600,
                                 cwd=os.path.join(os.path.dirname(__file__), ".."), env=env)
         output = result.stdout.strip()
         passed = result.returncode == 0
@@ -46,7 +44,7 @@ def main():
             "errors": result.stderr[-500:] if result.stderr else None,
         }))
     except subprocess.TimeoutExpired:
-        print(json.dumps({"passed": False, "output": "Tests timed out after 180s"}))
+        print(json.dumps({"passed": False, "output": "Tests timed out after 600s"}))
 
 
 if __name__ == "__main__":
