@@ -1,0 +1,13 @@
+{
+ "file": "iter_222.py",
+ "problem": "problem_rowp.json",
+ "seed": 0,
+ "lr0": 41.25,
+ "aep_gwh": 4263.58,
+ "feasible": true,
+ "boundary_ok": true,
+ "spacing_ok": true,
+ "boundary_penalty": 6.331262894235507e-05,
+ "min_dist": 803.66,
+ "time_s": 43.0
+}

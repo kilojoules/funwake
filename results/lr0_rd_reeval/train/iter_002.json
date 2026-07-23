@@ -1,0 +1,13 @@
+{
+ "file": "iter_002.py",
+ "problem": "problem_dei_n50.json",
+ "seed": 0,
+ "lr0": 240.0,
+ "aep_gwh": 5544.01,
+ "feasible": false,
+ "boundary_ok": false,
+ "spacing_ok": true,
+ "boundary_penalty": 315.0506938999572,
+ "min_dist": 1493.23,
+ "time_s": 36.8
+}

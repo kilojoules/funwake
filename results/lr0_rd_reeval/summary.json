@@ -1,0 +1,195 @@
+{
+ "question": "If lr0 had been scaled to the validation farm's rotor diameter fraction (50 m = 50/240 D_train; ROWP D=198 -> lr0 = 50*198/240 = 41.25 m), would the deployment choice change? Train evaluation (DEI, lr0=50) unchanged by design.",
+ "lr0": {
+  "train_dei": 50.0,
+  "rowp_old": 50.0,
+  "rowp_new": 41.25
+ },
+ "deployment_rule_confirmed": "Log + README confirm the historical rule: max backfilled ROWP AEP among train-feasible AND rowp-feasible. It selects iter_192 (rowp 4271.49) exactly. The best-train-AEP rule would instead have selected iter_179 and does NOT reproduce the deployed choice.",
+ "old_deployment": {
+  "file": "iter_192.py",
+  "rowp_aep_lr50": 4271.49,
+  "train_aep_log": 5555.73,
+  "rowp_aep_lr41p25": 4265.2,
+  "rowp_rank_at_41p25": 91
+ },
+ "new_deployment_rule_B_actual": {
+  "file": "iter_181.py",
+  "rowp_aep_lr41p25": 4272.49,
+  "rowp_aep_lr50": 4263.43,
+  "train_aep_log": 5565.94,
+  "rowp_feasible_both": true,
+  "margin_over_runner_up_gwh": 0.98,
+  "runner_up": "iter_334.py (4271.51)",
+  "margin_over_old_winner_at_41p25_gwh": 7.29,
+  "realized_validation_gain_vs_old_deployment_gwh": 1.0,
+  "noise_floor_gwh": 0.5,
+  "family": "cosine LR (no bumps) + 5x lr-coupled alpha + quadratic late ramp + 70% alpha dip at t=0.7, beta1=0.3 beta2=0.5 \u2014 same alpha-dip explore/enforce lineage as iter_192 but without iter_192's dual Gaussian LR bumps"
+ },
+ "new_deployment_rule_A_stated": {
+  "rule": "best log train AEP among train-feasible AND rowp-feasible@41.25",
+  "file": "iter_179.py",
+  "train_aep_log": 5566.6,
+  "rowp_aep_lr41p25": 4265.7,
+  "unchanged_from_lr50": true,
+  "note": "iter_179 is rowp-feasible at both 50 and 41.25, so under this rule nothing changes; but this rule does not reproduce the historical iter_192 deployment."
+ },
+ "feasibility": {
+  "rowp_lr50_known": {
+   "feasible": 231,
+   "of": 248,
+   "rate": 0.9315
+  },
+  "rowp_lr41p25": {
+   "feasible": 244,
+   "of": 266,
+   "rate": 0.9173
+  },
+  "paired_flips_50_to_41p25": {
+   "stable_feasible": 227,
+   "stable_infeasible": 10,
+   "lost": [
+    "iter_064",
+    "iter_066",
+    "iter_134",
+    "iter_278"
+   ],
+   "gained": [
+    "iter_010",
+    "iter_087",
+    "iter_130",
+    "iter_203",
+    "iter_279",
+    "iter_303",
+    "iter_318"
+   ],
+   "flip_rate": 0.0444
+  },
+  "unknown_at_50": {
+   "count": 18,
+   "feasible_at_41p25": 10
+  }
+ },
+ "rowp_aep_shift_paired": {
+  "n": 248,
+  "mean_lr50": 4259.53,
+  "mean_lr41p25": 4260.63,
+  "mean_shift": 1.103,
+  "median_shift": 1.525,
+  "spearman_rho": 0.5556,
+  "spearman_p": 1.7335492298863177e-21
+ },
+ "rowp_aep_shift_feasible_both": {
+  "n": 227,
+  "mean_shift": 1.065,
+  "std": 5.303,
+  "max_gain": 17.42,
+  "max_loss": -14.19,
+  "gt_half_gwh_up": 131,
+  "gt_half_gwh_down": 82
+ },
+ "old_top5_train_cluster_at_41p25": {
+  "iter_179": {
+   "feasible": true,
+   "rowp41": 4265.7,
+   "rowp50": 4263.34,
+   "rowp41_rankB": 83
+  },
+  "iter_166": {
+   "feasible": true,
+   "rowp41": 4270.12,
+   "rowp50": 4266.43,
+   "rowp41_rankB": 14
+  },
+  "iter_177": {
+   "feasible": true,
+   "rowp41": 4267.39,
+   "rowp50": 4262.73,
+   "rowp41_rankB": 45
+  },
+  "iter_183": {
+   "feasible": true,
+   "rowp41": 4261.38,
+   "rowp50": 4266.69,
+   "rowp41_rankB": 172
+  },
+  "iter_165": {
+   "feasible": true,
+   "rowp41": 4269.57,
+   "rowp50": 4267.9,
+   "rowp41_rankB": 19
+  }
+ },
+ "validation": {
+  "train_lr50_reproduction": {
+   "iter_099": [
+    5557.38,
+    5557.38
+   ],
+   "iter_165": [
+    5566.24,
+    5566.24
+   ],
+   "iter_166": [
+    5566.57,
+    5566.57
+   ],
+   "iter_123": [
+    5565.31,
+    5565.31
+   ],
+   "iter_183": [
+    5566.6,
+    5566.26
+   ],
+   "iter_177": [
+    5562.25,
+    5566.3
+   ],
+   "iter_179": [
+    5560.9,
+    5566.6
+   ],
+   "iter_192": [
+    5561.58,
+    5555.73
+   ],
+   "iter_228": [
+    5562.07,
+    5556.94
+   ],
+   "note": "[reeval, log]. 5/9 exact, 1 within 0.5 noise floor. iter_177/179/192/228 differ 4-6 GWh from ORIGINAL-run values but exactly reproduce the log's own later current-stack re-scores (e.g. iter_179->5560.90 = late attempt 323; iter_192->5561.58 = late attempt 335): historical cross-stack drift (pre-vendored pixwake), not a tool error."
+  },
+  "rowp_lr50_reproduction": {
+   "iter_192": [
+    4271.49,
+    4271.49
+   ],
+   "iter_179": [
+    4263.34,
+    4263.34
+   ],
+   "iter_166": [
+    4266.43,
+    4266.43
+   ],
+   "iter_181": [
+    4263.43,
+    4263.43
+   ],
+   "iter_216_feasibility": [
+    "infeasible",
+    "log rowp_feasible=False"
+   ],
+   "note": "all exact vs backfilled (current-stack) log values"
+  },
+  "iter_181_41p25_repeat": [
+   4272.49,
+   4272.49
+  ]
+ },
+ "mapping": "iter_NNN.py == attempt NNN for NNN<=236 (identity; also the convention the repo's own cleanse_and_backfill.py used). Established by ordering the 316 original-window train entries (timestamp<1775.5e6, train_aep in (5000,5700)) against the 316 iter files sorted by number; file numbering has gaps at 237-255 and 288-290. Verified empirically by exact AEP reproduction (train: iter_099/123/165/166; ROWP: iter_166/179/181/192).",
+ "log_anomaly": "attempt_log.json has 423 attempts vs 316 files. (1) Attempts 321-423 (timestamps 11 days after the run) are post-run generalization/N-sweep matrix evals: train_aep 2318-8830 spans the problem_dei_n30..n100 farms (values >6570 exceed the N=50 farm's capacity); train_baseline stays 5540.72 because run_optimizer always attaches the farm-1 baseline. Marked rowp_backfilled/families. Excluded. (2) Four original-window entries (attempts 307/309/311/313, aep 4240-4600) are ROWP-scored entries interleaved in the train log; excluded. (3) rowp_aep fields were backfilled post-hoc on the current stack; train_aep fields are original-run values, which for a minority of LR-bump-sensitive schedules differ 4-6 GWh from current-stack re-evaluation.",
+ "cancelled_arm": "train/ holds 126 partial lr0=240 DEI evals from the cancelled pre-scope-change arm (incidental data only).",
+ "failed_evals": []
+}
