@@ -166,6 +166,86 @@ def test_feasibility_only_cell_excluded_from_aggregate():
             "hard_gate_still_applies": (not b2.passed)}
 
 
+def test_farm_balanced_aggregate_parity():
+    """Farm-balanced aggregate: fitness = mean over farms of the per-farm mean
+    cell score. A uniform +1% lift across ALL of one farm's scored cells raises
+    fitness by 1%/n_farms, the SAME for either farm, INDEPENDENT of how many cells
+    each farm has (the training set has more DEI cells than Parque cells). This is
+    the parity a flat mean over cells lacks (it would over-weight DEI)."""
+    from funwake2.controller.cascade import _cell_farm
+    cells = ["dei_n50", "dei_n80_omnidir", "parque_n20", "parque_n10_omnidir"]
+    assert [_cell_farm(c) for c in cells] == ["dei", "dei", "parque", "parque"]
+    base = {"cells": {c: {"seeds": {str(s): 1000.0 for s in range(5)}} for c in cells}}
+
+    def make(pcts):  # deterministic eval: score_c == pcts[cell] (AEP vs ref 1000)
+        def ev(cell, fn, seed=0, total_steps=8000, gamma_min=0.01):
+            return {"cell": cell, "seed": seed, "steps": total_steps,
+                    "gamma_min": gamma_min, "feasible": True,
+                    "aep_gwh": 1000.0 * (1.0 + pcts[cell] / 100.0)}
+        return ev
+
+    src = open(os.path.join(_SEED_DIR, "seed_native.py")).read()
+    dei_up = Cascade(_dry_cfg(tempfile.mkdtemp()), baselines=base,
+                     evaluate_fn=make({"dei_n50": 1, "dei_n80_omnidir": 1,
+                                       "parque_n20": 0, "parque_n10_omnidir": 0}))
+    par_up = Cascade(_dry_cfg(tempfile.mkdtemp()), baselines=base,
+                     evaluate_fn=make({"dei_n50": 0, "dei_n80_omnidir": 0,
+                                       "parque_n20": 1, "parque_n10_omnidir": 1}))
+    fa = dei_up.stage_b(src, cells, [0, 1, 2, 3, 4]).fitness
+    fb = par_up.stage_b(src, cells, [0, 1, 2, 3, 4]).fitness
+    assert abs(fa - fb) < 1e-9, (fa, fb)          # equal farm influence
+    assert abs(fa - 0.5) < 1e-9 and abs(fb - 0.5) < 1e-9   # 1% / 2 farms
+    # a single-farm +1% is NOT diluted by the other farm's cell count
+    return {"dei_up_fitness": fa, "parque_up_fitness": fb, "parity": abs(fa - fb) < 1e-9}
+
+
+def test_gbar_only_cell_pending_off_gbar():
+    """A gbar-only capability-frontier cell (parque_n30_uniform) is PENDING off
+    gbar (enable_stage_b_plus=False): deferred to the elite tier, never gating —
+    even if it would be infeasible were it evaluated."""
+    from funwake2.controller.cascade import _is_gbar_only
+    assert _is_gbar_only("parque_n30_uniform")
+    assert not _is_gbar_only("dei_n50")
+    cells = ["dei_n50", "parque_n30_uniform"]
+    base = {"cells": {"dei_n50": {"seeds": {str(s): 5560.0 for s in range(5)}}}}
+    c = Cascade(_dry_cfg(tempfile.mkdtemp()), baselines=base,
+                evaluate_fn=make_fake_eval(infeasible_cells=["parque_n30_uniform"]))
+    src = open(os.path.join(_SEED_DIR, "seed_native.py")).read()
+    b = c.stage_b(src, cells, [0, 1])
+    assert b.per_cell["parque_n30_uniform"]["status"] == "PENDING"
+    assert b.per_cell["parque_n30_uniform"]["gates"] is False
+    assert b.passed, "a PENDING gbar-only cell must not gate off gbar"
+    return {"pending": True, "passed_despite_infeasible_frontier": b.passed}
+
+
+def test_stage_a_gross_filter_and_causes():
+    """Stage A is a GROSS filter, not texture-floor-tight: a candidate 0.5% below
+    the reference PASSES (it is not mass-rejected), one ~2% below is rejected as
+    'below_ref', and an infeasible one is rejected as 'infeasible'. The `causes`
+    tally is the pilot metric (rejection rate by cause)."""
+    cells = ["dei_n50"]
+    base = {"cells": {"dei_n50": {"seeds": {str(s): 1000.0 for s in range(5)}}}}
+    src = open(os.path.join(_SEED_DIR, "seed_native.py")).read()
+
+    def ev(frac_below, feasible=True):
+        def f(cell, fn, seed=0, total_steps=8000, gamma_min=0.01):
+            return {"cell": cell, "seed": seed, "steps": total_steps,
+                    "gamma_min": gamma_min, "feasible": feasible,
+                    "aep_gwh": 1000.0 * (1.0 - frac_below)}
+        return f
+
+    a = Cascade(_dry_cfg(tempfile.mkdtemp()), baselines=base,
+                evaluate_fn=ev(0.005)).stage_a(src, cells, [0, 1])
+    assert a.passed and a.causes["ok"] == 2 and a.causes["below_ref"] == 0, a.causes
+    b = Cascade(_dry_cfg(tempfile.mkdtemp()), baselines=base,
+                evaluate_fn=ev(0.02)).stage_a(src, cells, [0, 1])
+    assert (not b.passed) and b.causes["below_ref"] == 2, b.causes
+    c = Cascade(_dry_cfg(tempfile.mkdtemp()), baselines=base,
+                evaluate_fn=ev(0.0, feasible=False)).stage_a(src, cells, [0, 1])
+    assert (not c.passed) and c.causes["infeasible"] == 2, c.causes
+    return {"ok_case": a.causes, "below_ref_case": b.causes, "infeasible_case": c.causes}
+
+
 def test_fitness_scale_constant_with_infeasible_ref():
     # native reference infeasible on dei_n50; candidate feasible -> still scored.
     cfg = _dry_cfg(tempfile.mkdtemp())

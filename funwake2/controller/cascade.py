@@ -101,6 +101,35 @@ class StageResult:
     worst_cell: float = float("-inf")
     n_evals: int = 0
     notes: str = ""
+    causes: Dict = field(default_factory=dict)     # stage-A rejection tally by cause
+
+
+def _cell_farm(cell: str) -> str:
+    """Farm a cell belongs to (for the farm-balanced aggregate). Prefer an
+    explicit CELLS['farm'] tag; otherwise derive from the cell-name prefix
+    (dei_* / parque_* / rowp_*)."""
+    try:
+        if _FW2 not in sys.path:
+            sys.path.insert(0, _FW2)
+        import evaluator as ev
+        f = ev.CELLS.get(cell, {}).get("farm")
+        if f:
+            return f
+    except Exception:
+        pass
+    return cell.split("_", 1)[0]
+
+
+def _is_gbar_only(cell: str) -> bool:
+    """True if the cell is a gbar-only (capability-frontier / stage-B+) cell.
+    Off gbar it is PENDING (deferred to the elite tier) and NEVER gates."""
+    try:
+        if _FW2 not in sys.path:
+            sys.path.insert(0, _FW2)
+        import evaluator as ev
+        return bool(ev.CELLS.get(cell, {}).get("gbar_only", False))
+    except Exception:
+        return False
 
 
 class Cascade:
@@ -180,54 +209,85 @@ class Cascade:
                 "cand_mean": round(cand_mean, 4), "base_mean": round(base_mean, 4),
                 "n_evals": n}
 
-    # ── STAGE A ───────────────────────────────────────────────────────
+    # ── STAGE A (GROSS fast-reject) ───────────────────────────────────
     def stage_a(self, source: str, cells: List[str], seeds: List[int]) -> StageResult:
+        """Cheap gross filter — reject only clearly-bad candidates so the archive
+        keeps the quality-diversity exploration it exists for. A (cell, seed) is
+        rejected iff the candidate is INFEASIBLE at gamma_min OR its AEP is more
+        than ``stage_a_reject_frac`` (a gross ~1%) BELOW the reference. This is
+        deliberately NOT texture-floor-tight (a floor-tight Stage A would
+        mass-reject exploratory but viable schedules). The texture floors are used
+        for selection margins, not here. ``causes`` tallies the rejection reason."""
         h = schedule_hash(source)
         fn = _load_schedule_fn(source)
         per_cell, n, passed = {}, 0, True
+        causes = {"ok": 0, "infeasible": 0, "below_ref": 0, "error": 0}
         gm, steps = self.cfg.gamma_min, self.cfg.total_steps
+        frac = self.cfg.stage_a_reject_frac
         for cell in cells:
             for s in seeds:
                 rec = self._eval(h, fn, cell, s, gm, steps)
                 n += 1
                 if "error" in rec:
-                    passed = False; per_cell.setdefault(cell, {})[s] = "error"; continue
+                    passed = False; causes["error"] += 1
+                    per_cell.setdefault(cell, {})[s] = {"cause": "error"}; continue
                 base = self._baseline_aep(cell, s, gm, steps)
-                ok = bool(rec.get("feasible")) and \
-                    (rec["aep_gwh"] >= base - self.cfg.noise_floor_gwh)
+                feas = bool(rec.get("feasible"))
+                below = base and (rec["aep_gwh"] < base * (1.0 - frac))
+                cause = "infeasible" if not feas else ("below_ref" if below else "ok")
+                causes[cause] += 1
+                ok = (cause == "ok")
                 per_cell.setdefault(cell, {})[s] = {
-                    "feasible": bool(rec.get("feasible")),
-                    "aep": rec["aep_gwh"], "base": round(base, 3), "ok": ok}
+                    "feasible": feas, "aep": rec["aep_gwh"], "base": round(base, 3),
+                    "ok": ok, "cause": cause}
                 passed = passed and ok
-        return StageResult("A", passed, per_cell, n_evals=n)
+        return StageResult("A", passed, per_cell, n_evals=n, causes=causes)
 
     # ── STAGE B ───────────────────────────────────────────────────────
     def stage_b(self, source: str, cells: List[str], seeds: List[int]) -> StageResult:
         h = schedule_hash(source)
         fn = _load_schedule_fn(source)
         gm, steps = self.cfg.gamma_min, self.cfg.total_steps
-        per_cell, n, scores, feasible_all = {}, 0, [], True
+        per_cell, n, feasible_all = {}, 0, True
+        scored = []          # (farm, score) for the farm-balanced aggregate
+        all_scores = []      # every scored cell's score (worst-cell tiebreak)
         for cell in cells:
-            sc = self._score_cell(h, fn, cell, seeds, gm, steps)
+            # PENDING: gbar-only capability-frontier cells are deferred off gbar
+            # (enable_stage_b_plus=False). They never gate and never score here.
+            if _is_gbar_only(cell) and not self.cfg.enable_stage_b_plus:
+                per_cell[cell] = {"cell": cell, "status": "PENDING",
+                                  "deferred_to": "stage_b_plus", "gates": False,
+                                  "n_evals": 0}
+                continue
             fo = _is_feasibility_only(cell)
+            # feasibility-only cells run at 2 seeds (they gate feasibility only)
+            cell_seeds = list(seeds[:2]) if fo else list(seeds)
+            sc = self._score_cell(h, fn, cell, cell_seeds, gm, steps)
             sc["feasibility_only"] = fo
             per_cell[cell] = sc
             n += sc["n_evals"]
-            # HARD GATE (all cells, incl. feasibility-only): candidate must be
-            # feasible in EVERY stage-B cell.
+            # HARD GATE (all scored + feasibility-only cells): candidate must be
+            # feasible in EVERY such cell.
             feasible_all = feasible_all and sc["feasible"]
-            # SCORE AGGREGATE excludes feasibility-only cells (round-2 item 1):
-            # a saturated objective carries no AEP-improvement signal, so its ~0%
-            # score would only dilute the mean-% / worst-cell aggregate.
+            # SCORE AGGREGATE excludes feasibility-only cells (saturated objective).
             if not fo:
-                scores.append(sc["score"])
-        if not feasible_all or not scores:
+                scored.append((_cell_farm(cell), sc["score"]))
+                all_scores.append(sc["score"])
+        if not feasible_all or not scored:
             return StageResult("B", False, per_cell, n_evals=n,
                                notes="infeasible cell (hard gate)")
-        fitness = statistics.fmean(scores)
-        worst = min(scores)
+        # FARM-BALANCED aggregate: mean over farms of the per-farm mean cell score,
+        # so each farm contributes equally regardless of how many cells it has
+        # (the training set has more DEI cells than Parque cells).
+        by_farm: Dict = {}
+        for farm, s in scored:
+            by_farm.setdefault(farm, []).append(s)
+        farm_means = [statistics.fmean(v) for v in by_farm.values()]
+        fitness = statistics.fmean(farm_means)
+        worst = min(all_scores)     # worst-cell tiebreak (over scored cells)
         return StageResult("B", True, per_cell, fitness=fitness,
-                           worst_cell=worst, n_evals=n)
+                           worst_cell=worst, n_evals=n,
+                           notes=f"farm-balanced over {sorted(by_farm)}")
 
     # ── STAGE B+ (elite-tier, gbar ONLY) ──────────────────────────────
     def stage_b_plus(self, elites: List[tuple]) -> Dict:

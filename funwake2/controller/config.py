@@ -44,7 +44,12 @@ class RunConfig:
     stage_a_seeds: List[int] = field(default_factory=lambda: [0, 1])
     stage_b_seeds: List[int] = field(default_factory=lambda: [0, 1, 2, 3, 4])
     stage_c_seeds: List[int] = field(default_factory=lambda: [0, 1, 2, 3, 4])
-    noise_floor_gwh: float = 3.0    # stage-A reject margin (GWh, DEI-scale)
+    # Stage-A is a GROSS fast-reject: reject a (cell,seed) iff infeasible OR AEP is
+    # more than this fraction below the reference (~1%). Deliberately NOT
+    # texture-floor-tight — a floor-tight Stage A would mass-reject the QD
+    # exploration the archive exists for. Floors are for selection margins only.
+    stage_a_reject_frac: float = 0.01
+    noise_floor_gwh: float = 3.0    # (legacy; not used by the gross Stage-A filter)
 
     # ── stage-B+ (elite-tier, gbar ONLY — never in the Mac evolution loop) ──
     # Top-k archive elites per generation re-scored on expensive high-N cells
