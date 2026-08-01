@@ -373,3 +373,60 @@ the gbar env standup (Phase-1/3 setup task).
 **Test set (point 7):** unchanged; high-N confirmatory cells are ONE-SHOT 30-seed
 runs where ~5-min evals are affordable — the ≤3-min evolution-loop cost limit does
 NOT apply to the confirmatory test set.
+
+---
+
+# PHASE-2 REVIEW ADDENDUM (accepted-contingent items 1–6)
+
+**Item 1 — `parque_n30_uniform` 0/10 reconciliation (BLOCKING, resolved: NO v2 bug).**
+The c·D native is 0/10 feasible on `parque_n30_uniform` (`max_sdf` 3–37 m). This is
+NOT a multizone fidelity gap: skeleton_v2's `_init_positions`, `multizone_penalty`,
+and `multizone_sdf` are the SAME function objects as the vetted `skeleton_multizone`
+(proven by `is` identity + seed-0 init max|Δ|=0), and the old schedule at lr0=50 run
+through skeleton_v2 reproduces the genuine old-pipeline regime (2/10 feasible incl.
+seed 5; per-seed point values diverge only through the documented G8 float32-vs-float64
+alpha0 chaos). The reference baselines the review cited are incomparable: the
+`parqo_native_ms` "12/12 feasible" is a **best-of-K=50 multistart** (only 2/50
+single-run feasible on `uniform|n30`), and the diameter-rule "9–10/10" was **Parque
+N=20, DEI rose**. The infeasibility is a genuine unidirectional-rose × tight-zone ×
+scale effect (recorded as a finding). Evidence: `funwake2/state/diag_n30/`.
+
+**Item 2 — SWAP.** `parque_n30_uniform` → **`parque_n14_uniform`** in stage-B. A probe
+of N∈{28…10} (c·D native, T=8000) showed N≥16 is a chaotic feasibility knife-edge
+(N16 3/4, N24 0/4) while N=14/12/10 are 4/4; N=14 is the LARGEST uniform-Parque N with
+a **10/10** c·D reference (10 seeds, mean 184.81 GWh). It preserves Parque×unidirectional
+coverage with an all-feasible reference. `parque_n30_uniform` → capability-frontier tier
+(`role="capability_frontier"`, gbar-only), beside `dei_n200_rosedei`.
+
+**Item 3 — stage-B global hard gate (FROZEN).** Stage-B keeps the **global per-cell
+hard gate**: a candidate must be feasible in EVERY stage-B cell (`cascade.stage_b`:
+`feasible_all = AND_c sc.feasible`; one infeasible cell ⇒ the whole candidate is
+rejected). This is coherent ONLY with all-feasible references — the item-2 swap
+guarantees all 7 stage-B references are 10/10 feasible. **Capability-frontier cells
+(`dei_n200_rosedei`, `parque_n30_uniform`) are elite-tier informational and NEVER
+gate** — they are scored (scale-constant fitness) but excluded from the hard gate.
+Locked in by unit test `test_candidate_infeasible_one_stage_b_cell_fails` (a candidate
+feasible everywhere but one stage-B cell FAILS stage B).
+
+**Item 4 — workspace-scoping LAUNCH GATE (built; smoke auth-blocked).**
+`funwake2/controller/workspace.py`: each mutation runs with cwd in a freshly
+materialized clean-room dir containing ONLY `INTERFACE.md` + sanitized harness/seeds/
+parent + firewalled `feedback.json`; `results/`, `paper/`, `specs/`, the prereg,
+audit docs, `funwake2/state/`, `baselines_g2.json`, and `evaluator.py` are OUTSIDE
+the readable tree. Enforced by cwd (Gemini `subprocess(cwd=)`, Claude
+`ClaudeAgentOptions(cwd=)`) + `allowed_tools=[]`. `sanitize()` strips seed docstrings +
+redacts residual forbidden tokens; `assert_clean()` RAISES on any leak; `scan_tree()`
+re-greps the post-run transcript. Unit-tested (`test_workspace_scoping.py`, 4 tests).
+The live 2-mutation smoke is AUTH-BLOCKED (no `CLAUDE_CODE_OAUTH_TOKEN`,
+`claude_agent_sdk` not installed) — requires author `claude setup-token` + SDK install
++ Gemini auth, then the smoke + transcript grep runs pre-launch.
+
+**Item 5 — test-cell floors.** Re-measured at test-set freeze on the actual test cells
+(`rowp_n200`/`rowp_n300` do NOT inherit n74's 0.64 GWh). Deferred to that step.
+
+**Item 6 — Parque heterogeneous test JSON: BUILT** locally —
+`parqo/problem_parqo_hetero.json` (`build_problem_hetero.py`), preserving the
+(12×20×20) per-cell WAsP maps. No gbar needed. gbar remains the long pole for n200
+classification + the full Phase-3 run. **Launch holds until items 1–4 land and the
+prereg reflects the final stage-B set** (done for 1–3 + item-4 build; item-4 smoke
+pending auth).

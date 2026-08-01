@@ -33,10 +33,13 @@ test set — and survive real-TopFarm stochastic re-validation?
 - **TEST set (FROZEN — touched exactly once, at the deployment decision;
   D-7 resolved Phase-2):**
   1. **ROWP high-N** — `rowp_n200_roserowp` and `rowp_n300_roserowp`.
-  2. **Parque real heterogeneous wind resource** — the currently-unused per-cell
-     WAsP Weibull A/k + speedup/turning maps (`problem_parqo.json` uses the
-     homogeneous site-averaged surrogate; the heterogeneous problem JSON is a
-     pre-test build from `parqo/build_problem.py`).
+  2. **Parque real heterogeneous wind resource** — the per-cell WAsP Weibull A/k
+     + speedup/turning maps (`problem_parqo.json` uses the homogeneous
+     site-averaged surrogate). **BUILT (Phase-2, item 6):**
+     `parqo/problem_parqo_hetero.json` (`parqo/build_problem_hetero.py`) preserves
+     the (12 wd × 20 × 20) heterogeneous maps; heterogeneous eval is wired at the
+     deployment/test stage (no runnable CELLS entry, so it cannot be scored during
+     search).
   3. **Unidirectional extreme on an unseen farm** — `rowp_n74_uniform` (ROWP
      polygon + uniform/unidirectional rose).
   (If the gbar 5-seed classification finds DEI n200 infeasible, it joins the
@@ -176,13 +179,19 @@ float32). Source: `funwake2/controller/baselines_g2.json`
 | `dei_n120_rosedei` | 120 | 240 | 13029.988 | 7.496 | 10/10 |
 | `dei_n50_uniform` | 50 | 240 | 5598.413 | 1.315 | 10/10 |
 | `parque_n20` | 20 | 80 | 231.505 | 0.688 | 10/10 |
-| `parque_n30_uniform` | 30 | 80 | 356.171 | 4.884 | **0/10 (infeasible ref)** |
+| `parque_n14_uniform` | 14 | 80 | 184.812 | 0.000 | 10/10 |
 | `parque_n10_omnidir` | 10 | 80 | 127.002 | 0.319 | 10/10 |
 
-`parque_n30_uniform`'s c·D reference is genuinely infeasible (`max_sdf` 3–37 m; 30
-turbines do not pack into the Parque zones under a unidirectional rose). Per the
-scale-constant fitness patch its `AEP_ref` normalizes candidate AEP but confers no
-feasibility credit; candidate feasibility at gamma_min is the independent hard
-gate. Author decision at sign-off (PHASE2_REPORT §7): retain as a hard stage-B cell
-or swap for a feasible lower-N Parque unidirectional cell — recorded here so the
-frozen protocol reflects whichever is chosen before launch.
+**All 7 stage-B references are 10/10 feasible** — the precondition for the
+global per-cell hard gate (a candidate must be feasible in EVERY stage-B cell;
+`cascade.stage_b`, unit-tested `test_candidate_infeasible_one_stage_b_cell_fails`).
+
+`parque_n14_uniform` replaces the originally-frozen `parque_n30_uniform`, whose
+c·D reference is 0/10 feasible (`max_sdf` 3–37 m). That was reconciled (PHASE2_REPORT
+§1a) as a genuine unidirectional-rose × tight-zone × scale effect — NOT a v2
+multizone bug (skeleton_v2's init/penalty/SDF are the same function objects as the
+vetted skeleton; the genuine old TopFarm multistart pipeline was itself only 2/50
+single-run feasible on `uniform|n30`; the "12/12" claim was best-of-50). N=14 is the
+largest uniform-Parque N with a 10/10 c·D reference (N≥16 is a chaotic knife-edge).
+`parque_n30_uniform` moves to the capability-frontier tier (informational, never
+gating), alongside `dei_n200_rosedei`.

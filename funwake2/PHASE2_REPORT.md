@@ -32,15 +32,41 @@ AEP retained for paired scoring).
 | `dei_n120_rosedei` | 120 | 240 | 13029.988 | 7.496 | 2.370 | 10/10 | **HIGH-N** |
 | `dei_n50_uniform` | 50 | 240 | 5598.413 | 1.315 | 0.416 | 10/10 | unidirectional |
 | `parque_n20` | 20 | 80 | 231.505 | 0.688 | 0.218 | 10/10 | stage-A smoke |
-| `parque_n30_uniform` | 30 | 80 | 356.171 | 4.884 | 1.544 | **0/10** | **INFEASIBLE reference** — see §7 flag; AEP used as a scale constant only |
+| `parque_n14_uniform` | 14 | 80 | 184.812 | 0.000 | 0.000 | 10/10 | **SWAP** (see §1a) — Parque×unidirectional |
 | `parque_n10_omnidir` | 10 | 80 | 127.002 | 0.319 | 0.101 | 10/10 | |
 
 (`funwake2/controller/baselines_g2.json`, `complete_10seed_all_cells=true`, per-seed
 AEP retained for paired scoring. Post-G8: `dei_n50` seed0 = 5560.7575185032 was the
 G8 canonical single-seed value; the 10-seed mean 5560.393 is the frozen reference.
-`parque_n30_uniform` is genuinely infeasible under the c·D native — `max_sdf` 3–37 m
-across seeds, 30 turbines do not pack into the Parque zones under a unidirectional
-rose; this is the scale-constant-fitness case, flagged for sign-off in §7.)
+**All 7 stage-B references are 10/10 feasible** — the coherent-hard-gate precondition
+(item 3). `parque_n14_uniform`'s per-seed layouts genuinely differ (max_sdf spans
+−5.2…−0.03 m, all interior); AEP agrees only to 4 dp, hence std≈0.)
+
+### 1a. SWAP: `parque_n30_uniform` → `parque_n14_uniform` (item-1 reconciliation)
+
+The originally-frozen `parque_n30_uniform` had a **0/10-feasible c·D reference**
+(`max_sdf` 3–37 m). Investigation (`funwake2/state/diag_n30/`) established this is
+**NOT a v2 multizone fidelity bug**, so the swap (not a launch block) is warranted:
+
+- The genuine old TopFarm multistart pipeline (`parqo_native_ms`, native_schedule,
+  T=6000) was itself only **2/50 single-run feasible** on `uniform|n30`; its "12/12
+  feasible" is the **best-of-K=50 multistart**, not per-run. The diameter-rule
+  "9–10/10" reference was **Parque N=20, DEI rose** — a different, easier cell.
+- skeleton_v2's multizone init/penalty/SDF are the **same function objects** as the
+  vetted `skeleton_multizone` (proven: `is` identity; seed-0 init max|Δ|=0). Running
+  the old schedule at **lr0=50** through skeleton_v2 reproduces the old 2/10 regime
+  (2/10 feasible incl. seed 5). Per-seed point values diverge only through the
+  documented alpha0 chaos (skeleton_v2 float32-canonicalizes alpha0 per G8; the old
+  pipeline used raw float64).
+- The c·D reference infeasibility on N=30-uniform is therefore a **genuine
+  unidirectional-rose × tight-zone × scale effect**, recorded as a finding.
+
+Per the swap rule ("largest uniform-Parque N with an all-feasible c·D reference"):
+a probe of N∈{28,26,24,22,20,18,16,14,12,10} (T=8000) showed N≥16 is a chaotic
+knife-edge (N=16→3/4, N=24→0/4) while **N=14/12/10 are 4/4 with interior margins**.
+N=14 is the largest, confirmed **10/10** at 10 seeds (mean 184.81 GWh). It fills the
+Parque×unidirectional stage-B slot with an all-feasible reference. `parque_n30_uniform`
+moves to the **capability-frontier tier** (§2b), informational, never gating.
 
 These per-cell means are the **frozen in-search c·D baseline**; fitness is
 `%-over-baseline` measured against them, paired by seed. Published in the
@@ -61,14 +87,27 @@ ROWP is in **NO** training cell (farm-level holdout).
 | `dei_n120_rosedei` | DEI | 120 | 240 | DEI | **HIGH-N (frozen)** — see §2d |
 | `dei_n50_uniform` | DEI | 50 | 240 | uniform (dir=0) | unidirectional extreme |
 | `parque_n20` | Parque (multizone) | 20 | 80 | DEI | stage-A smoke cell |
-| `parque_n30_uniform` | Parque (multizone) | 30 | 80 | uniform | unidirectional |
+| `parque_n14_uniform` | Parque (multizone) | 14 | 80 | uniform | Parque×unidirectional (**swap** ← n30; §1a) |
 | `parque_n10_omnidir` | Parque (multizone) | 10 | 80 | omnidir | |
 
 Span: D ∈ {80, 240}, N ∈ {10…120}, roses {dei, uniform, omnidir}, incl.
-multi-zone (Parque) + high-N (n120). Stage-A fast-reject cells = `dei_n50`,
-`parque_n20` (2 cheap cells; **NOT** any high-N cell).
+multi-zone (Parque) + high-N (n120). All 7 references 10/10 feasible (coherent
+hard gate, item 3). Stage-A fast-reject cells = `dei_n50`, `parque_n20` (2 cheap
+cells; **NOT** any high-N cell).
 
-### 2b. Stage-B+ elite tier (gbar-only) — `dei_n200_rosedei`
+### 2b. Capability-frontier / elite tier (informational, NEVER gating)
+Two cells sit outside the stage-B hard gate (item 3: frontier cells are
+elite-tier informational, never gating):
+
+- **`parque_n30_uniform`** (`role="capability_frontier"`, `gbar_only=True`) —
+  CONFIRMED capability-frontier: c·D native is 0/10 feasible (§1a). A candidate
+  that reaches **strict** feasibility here is a qualitatively new result. Scored
+  informationally (AEP_ref = scale constant); never enters the stage-B feasibility
+  gate.
+- **`dei_n200_rosedei`** (`role="stage_b_plus"`, `gbar_only=True`) — see below;
+  classification deferred to gbar.
+
+#### Stage-B+ elite tier (gbar-only) — `dei_n200_rosedei`
 `role="stage_b_plus"`, `gbar_only=True`. n200 is **NOT** in the per-generation
 stage-B (≈357 s/eval; it tripped the watchdog / was impractical). It is the
 elite-tier gbar cell: top-k archive elites × 2–3 paired seeds, run on gbar where
@@ -236,13 +275,32 @@ unit-tested `test_archive_binning`: peaks 0.833 / 0.833 / 1.35, cyclic in the
   the per-invocation engine logs; **clean abort at 90 % of either** (stop issuing
   mutations, finish in-flight, checkpoint, stop).
 
+### 4g. Workspace-scoping LAUNCH GATE (item 4) — firewall containment
+`funwake2/controller/workspace.py`. Before a mutation, `materialize()` builds a
+fresh clean-room dir (outside the repo tree) containing ONLY: `INTERFACE.md`
+(schedule signature), a sanitized `skeleton_v2.py`, sanitized `seeds/`, the
+sanitized `parent.py`, and firewalled `feedback.json` (%-scores + feasibility
+booleans; raw AEP rejected). Everything else — `results/`, `paper/`, `specs/`,
+the pre-registration, audit/EDITS docs, `funwake2/state/`, `baselines_g2.json`,
+and `evaluator.py` (which encodes holdout/test roles) — is OUTSIDE the scope.
+Containment is belt-and-suspenders: (1) the engine runs with **cwd** = the scope
+(Gemini `subprocess(cwd=)`, Claude `ClaudeAgentOptions(cwd=)`), and (2) the Claude
+engine ships `allowed_tools=[]` (no file tools at all). `sanitize()` strips seed
+docstrings + redacts residual forbidden tokens (e.g. `native.py`'s `results/…`
+provenance); `assert_clean()` scans the materialized scope and RAISES on any
+forbidden path/holdout token, so a launch cannot proceed with a leaky workspace;
+`scan_tree()` is reused post-run to grep the mutator transcript. Unit-tested:
+`tests/test_workspace_scoping.py` (4 tests) — scope-contains-only-allowed,
+assert_clean-raises-on-leak, raw-AEP-feedback-rejected, transcript-token-flagged.
+
 ---
 
 ## 5. DRY RUN — machinery validation (MOCK mutator, NO LLM spend)
 
 MOCK mutator (`MockEngine`), `--fake-eval` (jax-free deterministic stand-in) for
 the state-machine checks; the real-eval cache/skip-on-resume path is covered by the
-unit suite (`test_machinery.py`, 7/7). All scenarios via `funwake2/controller/run_dry.py`.
+unit suite (`funwake2/controller/tests/`, **13/13 pass**: machinery 8 + preflight 1
++ workspace-scoping 4). All scenarios via `funwake2/controller/run_dry.py`.
 
 | scenario | command | result |
 |---|---|---|
@@ -296,32 +354,44 @@ unit suite (`test_machinery.py`, 7/7). All scenarios via `funwake2/controller/ru
 
 ## 7. Flags — author decisions
 
-- **`parque_n30_uniform` reference is INFEASIBLE (0/10) — NEW, decide at sign-off.**
-  The post-G8 baseline sweep shows the c·D native cannot make `parque_n30_uniform`
-  feasible: `max_sdf` 3–37 m across all 10 seeds (turbines meters outside the
-  Parque zones), not a mm-scale artifact — 30 turbines simply do not pack into the
-  Parque zones under a unidirectional rose (contrast `parque_n20`/`parque_n10` at
-  ~0.01 m SDF). The design is **robust to this** (the scale-constant fitness patch,
-  §4c: `AEP_ref` normalizes cells but never confers feasibility credit; the
-  candidate's own feasibility at gamma_min is the independent hard gate), but an
-  infeasible reference was anticipated only for the n200 capability-frontier cell,
-  **not** for a stage-B training cell. **Decision:** (a) **retain** it as a hard
-  stage-B cell — a candidate reaching feasibility there does something the baseline
-  cannot, which is informative; or (b) **swap** it for a feasible lower-N Parque
-  unidirectional cell (e.g. `parque_n20_uniform`) so the unidirectional-Parque slot
-  has a feasible reference. The frozen cell set is NOT changed pending this call;
-  the baseline table records the reference faithfully as infeasible either way.
+- **`parque_n30_uniform` 0/10 reference — RESOLVED (item 1 + 2).** Reconciled as a
+  genuine unidirectional-rose × tight-zone × scale effect, NOT a v2 multizone
+  fidelity bug (§1a: same-object init/penalty/SDF; lr0=50 reproduces the old 2/10
+  regime; the "12/12" reference was best-of-50 multistart; "9–10/10" was N=20-DEI).
+  **Swapped** to `parque_n14_uniform` (largest uniform-Parque N with a 10/10 c·D
+  reference; §1a). `parque_n30_uniform` moved to the capability-frontier tier
+  (§2b), informational-only. No open decision — flagged FYI; revert the swap only
+  if you'd rather keep n30 in stage-B as an infeasible-reference (scale-constant)
+  cell.
+- **NEW — real-engine smoke is AUTH-BLOCKED (needs your action).** The Phase-3
+  workspace-scoping launch gate is BUILT and unit-tested (§4g), but the live
+  2-mutation smoke could not run here: `CLAUDE_CODE_OAUTH_TOKEN` is unset and
+  `claude_agent_sdk` is not installed. Claude needs `claude setup-token` (an
+  **interactive** login only you can run — e.g. `! claude setup-token` in this
+  session) + `pixi add`/`pip install claude-agent-sdk`; Gemini needs its CLI auth
+  confirmed. `ANTHROPIC_API_KEY` is correctly ABSENT (preflight would refuse it).
+  Once auth is present I run the 2-mutation smoke (scoped cwd) + grep the full
+  transcript for forbidden paths/holdout values.
 - **n200 classification (gbar):** run native@c·D 5 seeds on gbar to classify
   n200 as a stage-B+ elite cell (if feasible) or a capability-frontier test cell
   (if infeasible). The Mac 1-seed probe was infeasible but is not authoritative.
-- **Parque heterogeneous test cell:** the real heterogeneous WAsP resource is
-  frozen by COMPOSITION but its problem JSON must be BUILT (from
-  `parqo/build_problem.py`) as a pre-test step; not yet materialized.
-- **Real-engine smoke (pre-launch):** a 1–2 live-mutation smoke on Claude
-  (after `claude setup-token`) and Gemini (after Gemini auth) is the remaining
-  pre-launch step; NOT done here (no real spend).
-- **gbar env standup:** stage-B+ / high-N confirmatory runs need the clean-room
-  env on gbar (Phase-1/3 setup task).
+- **Parque heterogeneous test cell:** built locally as the item-6 pre-test step
+  (no gbar needed) — see §7a.
+- **gbar env standup:** stage-B+ / high-N confirmatory runs + the full Phase-3 run
+  need the clean-room env on gbar (the remaining long pole).
+
+### 7a. Parque heterogeneous TEST problem — BUILT (item 6, local)
+`parqo/build_problem_hetero.py` → `parqo/problem_parqo_hetero.json` (596 KB). Unlike
+`build_problem.py` (homogeneous site-average), it PRESERVES the per-cell, per-sector
+WAsP maps at hub height (70 m): `Weibull_A`, `Weibull_k`, `Sector_frequency`,
+`Speedup`, `Turning` as `(12 wd × 20 y × 20 x)` grids + the grid coords, so a
+deployment-time heterogeneous evaluator (py_wake `ParqueFicticioSite`, natively
+heterogeneous, or an interpolating wrapper) gives each turbine its local climate.
+The resource is genuinely heterogeneous (Weibull_A 1.49–12.62 m/s, std 2.22; Speedup
+0.18–1.68). It lives in the SOURCE tree (firewalled from mutators; a one-touch TEST
+cell). The heterogeneous eval is wired at the deployment/test stage (not the Mac
+evolution loop); no runnable CELLS entry is registered yet so it cannot be
+accidentally scored during search.
 
 ---
 
