@@ -103,9 +103,17 @@ CELLS = {
         # with a 10/10-feasible c*D reference (N>=16 is a chaotic knife-edge:
         # N16 3/4, N24 0/4). Preserves Parque x unidirectional coverage with an
         # all-feasible reference (native@c*D 10/10, mean AEP 184.81 GWh).
+        # FEASIBILITY-ONLY gate (round-2 item 1): the objective is SATURATED here
+        # — 14 x single-turbine free-stream AEP = 184.8117 = the optimized baseline
+        # (deficit -0.0003 GWh << 0.1 floor). Under dir=0 + the hard 2-sigma wake
+        # cone, every all-escape feasible layout scores exactly free-stream (no mask
+        # crossings, no texture -> std=0). So it carries NO AEP-improvement signal;
+        # it is retained as a HARD FEASIBILITY gate (candidate must be feasible in
+        # the Parque x unidirectional geometry) but EXCLUDED from the mean-% score
+        # aggregate. See cascade.stage_b + test_feasibility_only_cell_excluded.
         "problem": "parqo/problem_parqo.json",
         "rose": _ROSE_UNIFORM, "n": 14, "multizone": True, "feas_tol": 0.1,
-        "role": "train", "stage_a": False, "stage_b": True,
+        "role": "train", "stage_a": False, "stage_b": True, "feasibility_only": True,
         "baseline_0833D": 184.81,
     },
     "parque_n10_omnidir": {                         # Parque multizone, N=10, omnidir

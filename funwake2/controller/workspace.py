@@ -30,6 +30,7 @@ and RAISES if any are present, so a launch cannot proceed with a leaky workspace
 """
 from __future__ import annotations
 
+import ast
 import json
 import os
 import re
@@ -146,13 +147,29 @@ def _assert_feedback_firewalled(feedback: dict) -> None:
 
 
 def assert_clean(scope_dir: str) -> None:
-    """Scan every file under the scoped dir for forbidden path/value tokens.
-    RAISES on any hit — a launch must not proceed with a leaky workspace."""
+    """Gate the materialized workspace: (1) no forbidden path/value token in any
+    file, and (2) every .py reference file is SYNTACTICALLY VALID — so a
+    `sanitize()` REDACTED substitution can never hand the mutator broken reference
+    code (round-2 item 5). RAISES on any hit; a launch must not proceed with a
+    leaky OR broken workspace."""
     hits = scan_tree(scope_dir)
     if hits:
         raise AssertionError(
             "scoped workspace is NOT clean — forbidden tokens found:\n" +
             "\n".join(f"  {p}: {tok}" for p, tok in hits))
+    for dp, _dn, fn in os.walk(scope_dir):
+        for f in fn:
+            if not f.endswith(".py"):
+                continue
+            fp = os.path.join(dp, f)
+            with open(fp, errors="ignore") as fh:
+                text = fh.read()
+            try:
+                ast.parse(text)
+            except SyntaxError as e:
+                raise AssertionError(
+                    f"sanitized reference code is not parseable: "
+                    f"{os.path.relpath(fp, scope_dir)}: {e}") from e
 
 
 def scan_tree(root: str, extra_tokens=()):

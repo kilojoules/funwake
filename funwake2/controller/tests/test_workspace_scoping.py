@@ -72,6 +72,39 @@ def test_feedback_with_raw_aep_rejected():
     return {"raised": True}
 
 
+def test_sanitized_reference_code_parses():
+    # round-2 item 5: every sanitized .py in the scope (skeleton + seeds + parent,
+    # incl. native.py whose docstring is stripped + tokens redacted) must ast.parse
+    import ast
+    with tempfile.TemporaryDirectory() as d:
+        scope = _mk(os.path.join(d, "scope"),
+                    feedback={"dei_n50": {"score_pct": 0.1, "feasible": True}})
+        n = 0
+        for dp, _dn, fn in os.walk(scope):
+            for f in fn:
+                if f.endswith(".py"):
+                    ast.parse(open(os.path.join(dp, f)).read())  # raises on break
+                    n += 1
+        assert n >= 2, "expected skeleton + seed .py files in scope"
+    return {"parsed_py_files": n}
+
+
+def test_assert_clean_raises_on_broken_py():
+    # a syntactically-broken .py must be caught by the gate (fail-closed), so
+    # broken reference code never reaches the mutator
+    with tempfile.TemporaryDirectory() as d:
+        scope = _mk(os.path.join(d, "scope"))
+        with open(os.path.join(scope, "seeds", "broken.py"), "w") as f:
+            f.write("def schedule_fn(:\n    return\n")   # invalid syntax
+        raised = False
+        try:
+            W.assert_clean(scope)
+        except AssertionError as e:
+            raised = "not parseable" in str(e)
+        assert raised, "assert_clean must RAISE on unparseable reference code"
+    return {"raised": True}
+
+
 def test_scan_tree_flags_holdout_value_in_transcript():
     with tempfile.TemporaryDirectory() as d:
         tpath = os.path.join(d, "transcript.txt")

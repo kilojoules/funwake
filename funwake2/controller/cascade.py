@@ -44,6 +44,19 @@ BASELINE_PATH = os.path.join(_THIS, "baselines_g2.json")
 NATIVE_SEED = os.path.join(_FW2, "seeds", "native.py")
 
 
+def _is_feasibility_only(cell: str) -> bool:
+    """True if the cell is registered feasibility-only (saturated objective ->
+    hard feasibility gate retained, excluded from the mean-% score aggregate).
+    Defensive: returns False if evaluator/CELLS is unavailable (fake-eval/dry)."""
+    try:
+        if _FW2 not in sys.path:
+            sys.path.insert(0, _FW2)
+        import evaluator as ev
+        return bool(ev.CELLS.get(cell, {}).get("feasibility_only", False))
+    except Exception:
+        return False
+
+
 # ── schedule loading (from a source string, cached by hash) ───────────
 def _load_schedule_fn(source: str):
     fd, path = tempfile.mkstemp(suffix=".py", prefix="sched_")
@@ -196,10 +209,18 @@ class Cascade:
         per_cell, n, scores, feasible_all = {}, 0, [], True
         for cell in cells:
             sc = self._score_cell(h, fn, cell, seeds, gm, steps)
+            fo = _is_feasibility_only(cell)
+            sc["feasibility_only"] = fo
             per_cell[cell] = sc
             n += sc["n_evals"]
+            # HARD GATE (all cells, incl. feasibility-only): candidate must be
+            # feasible in EVERY stage-B cell.
             feasible_all = feasible_all and sc["feasible"]
-            scores.append(sc["score"])
+            # SCORE AGGREGATE excludes feasibility-only cells (round-2 item 1):
+            # a saturated objective carries no AEP-improvement signal, so its ~0%
+            # score would only dilute the mean-% / worst-cell aggregate.
+            if not fo:
+                scores.append(sc["score"])
         if not feasible_all or not scores:
             return StageResult("B", False, per_cell, n_evals=n,
                                notes="infeasible cell (hard gate)")

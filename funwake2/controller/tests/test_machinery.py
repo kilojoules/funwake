@@ -128,6 +128,44 @@ def test_candidate_infeasible_one_stage_b_cell_fails():
             "gate_note": b_bad.notes}
 
 
+def test_feasibility_only_cell_excluded_from_aggregate():
+    """Round-2 item 1: a FEASIBILITY-ONLY cell (parque_n14_uniform, saturated
+    objective) is kept in the hard gate but EXCLUDED from the mean-%/worst-cell
+    aggregate. (a) with the candidate feasible everywhere, fitness == the scored
+    cell's score alone (n14 not averaged in); (b) candidate infeasible on the
+    feasibility-only cell still FAILS the hard gate."""
+    from funwake2.controller.cascade import _is_feasibility_only
+    assert _is_feasibility_only("parque_n14_uniform"), "n14 must be feasibility_only"
+    assert not _is_feasibility_only("dei_n50")
+
+    cells = ["dei_n50", "parque_n14_uniform"]
+    base = {"cells": {"dei_n50": {"seeds": {str(s): 5560.0 for s in range(5)}},
+                      "parque_n14_uniform": {"seeds": {str(s): 184.8 for s in range(5)}}}}
+
+    # (a) feasible everywhere -> fitness excludes n14
+    ok = Cascade(_dry_cfg(tempfile.mkdtemp()), evaluate_fn=make_fake_eval(),
+                 baselines=base)
+    src = open(os.path.join(_SEED_DIR, "seed_cosine.py")).read()
+    b = ok.stage_b(src, cells, [0, 1])
+    assert b.passed, b.per_cell
+    assert b.per_cell["parque_n14_uniform"]["feasibility_only"] is True
+    assert b.per_cell["dei_n50"]["feasibility_only"] is False
+    # aggregate == the single scored cell's score, NOT the mean of both
+    assert abs(b.fitness - b.per_cell["dei_n50"]["score"]) < 1e-9, \
+        (b.fitness, b.per_cell["dei_n50"]["score"], b.per_cell["parque_n14_uniform"]["score"])
+    assert abs(b.worst_cell - b.per_cell["dei_n50"]["score"]) < 1e-9
+
+    # (b) infeasible on the feasibility-only cell -> hard gate still fails
+    bad = Cascade(_dry_cfg(tempfile.mkdtemp()),
+                  evaluate_fn=make_fake_eval(infeasible_cells=["parque_n14_uniform"]),
+                  baselines=base)
+    b2 = bad.stage_b(src, cells, [0, 1])
+    assert not b2.passed, "infeasible on a feasibility-only cell must still fail"
+    return {"aggregate_excludes_n14": True,
+            "n14_score_present": b.per_cell["parque_n14_uniform"]["score"],
+            "hard_gate_still_applies": (not b2.passed)}
+
+
 def test_fitness_scale_constant_with_infeasible_ref():
     # native reference infeasible on dei_n50; candidate feasible -> still scored.
     cfg = _dry_cfg(tempfile.mkdtemp())
