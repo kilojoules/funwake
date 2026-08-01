@@ -363,15 +363,19 @@ unit suite (`funwake2/controller/tests/`, **13/13 pass**: machinery 8 + prefligh
   (§2b), informational-only. No open decision — flagged FYI; revert the swap only
   if you'd rather keep n30 in stage-B as an infeasible-reference (scale-constant)
   cell.
-- **NEW — real-engine smoke is AUTH-BLOCKED (needs your action).** The Phase-3
-  workspace-scoping launch gate is BUILT and unit-tested (§4g), but the live
-  2-mutation smoke could not run here: `CLAUDE_CODE_OAUTH_TOKEN` is unset and
-  `claude_agent_sdk` is not installed. Claude needs `claude setup-token` (an
-  **interactive** login only you can run — e.g. `! claude setup-token` in this
-  session) + `pixi add`/`pip install claude-agent-sdk`; Gemini needs its CLI auth
-  confirmed. `ANTHROPIC_API_KEY` is correctly ABSENT (preflight would refuse it).
-  Once auth is present I run the 2-mutation smoke (scoped cwd) + grep the full
-  transcript for forbidden paths/holdout values.
+- **NEW — real-engine smoke is ENV-BLOCKED on BOTH engines (needs your action).**
+  The Phase-3 workspace-scoping launch gate is BUILT and unit-tested (§4g), but the
+  live 2-mutation smoke could not run here — neither engine is usable in this env:
+  - **Claude:** `CLAUDE_CODE_OAUTH_TOKEN` unset + `claude_agent_sdk` not installed.
+    Needs `pip install claude-agent-sdk` + `claude setup-token` (an **interactive**
+    login only you can run — e.g. `! claude setup-token`). `ANTHROPIC_API_KEY` is
+    correctly ABSENT (preflight would refuse it).
+  - **Gemini:** the installed CLI returns `IneligibleTierError` ("client no longer
+    supported for Gemini Code Assist for individuals" → migrate to Antigravity).
+    The Gemini engine wiring is unchanged, but a supported CLI/auth is required.
+  Once either engine is usable I run its scoped 2-mutation smoke + `scan_tree` the
+  full transcript for forbidden paths/holdout values. Until then the smoke is the
+  one open item-4 sub-task; the gate CODE is complete and tested.
 - **n200 classification (gbar):** run native@c·D 5 seeds on gbar to classify
   n200 as a stage-B+ elite cell (if feasible) or a capability-frontier test cell
   (if infeasible). The Mac 1-seed probe was infeasible but is not authoritative.

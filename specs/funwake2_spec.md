@@ -417,9 +417,12 @@ the readable tree. Enforced by cwd (Gemini `subprocess(cwd=)`, Claude
 `ClaudeAgentOptions(cwd=)`) + `allowed_tools=[]`. `sanitize()` strips seed docstrings +
 redacts residual forbidden tokens; `assert_clean()` RAISES on any leak; `scan_tree()`
 re-greps the post-run transcript. Unit-tested (`test_workspace_scoping.py`, 4 tests).
-The live 2-mutation smoke is AUTH-BLOCKED (no `CLAUDE_CODE_OAUTH_TOKEN`,
-`claude_agent_sdk` not installed) — requires author `claude setup-token` + SDK install
-+ Gemini auth, then the smoke + transcript grep runs pre-launch.
+The live 2-mutation smoke is ENV-BLOCKED on BOTH engines: Claude (no
+`CLAUDE_CODE_OAUTH_TOKEN`, `claude_agent_sdk` not installed → `pip install
+claude-agent-sdk` + interactive `claude setup-token`) and Gemini (installed CLI
+returns `IneligibleTierError`, unsupported individual-tier client → migrate/update).
+The gate code is complete + unit-tested; the smoke + transcript grep runs pre-launch
+once an engine is usable.
 
 **Item 5 — test-cell floors.** Re-measured at test-set freeze on the actual test cells
 (`rowp_n200`/`rowp_n300` do NOT inherit n74's 0.64 GWh). Deferred to that step.
