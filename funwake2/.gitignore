@@ -1,0 +1,6 @@
+# Ephemeral / regenerable — not committed
+__pycache__/
+*.pyc
+*.pyo
+# content-addressed result caches (regenerable; keyed by schedule hash)
+state/*/cache/

@@ -1,0 +1,127 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run unit tests
+        env:
+          OPENAI_API_KEY: test  # Mock API key for unit tests
+        run: |
+          # Run unit tests (all tests except integration/)
+          python -m unittest discover -s tests -p "test_*.py" -v
+          
+  integration-tests:
+    needs: unit-tests  # Only run if unit tests pass
+    runs-on: ubuntu-latest
+    timeout-minutes: 90  # Full integration suite (incl. real-LLM tests) can be slow
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          # math-verify is imported by optillm's cepo module but is NOT declared as a
+          # dependency of the optillm PyPI package, so `pip install optillm` alone
+          # leaves it missing and the server fails to start.
+          pip install optillm math-verify
+
+      - name: Cache HuggingFace models
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/huggingface
+          key: ${{ runner.os }}-hf-codelion-dhara-250m
+          restore-keys: |
+            ${{ runner.os }}-hf-
+
+      - name: Start optillm server
+        run: |
+          echo "Starting optillm server for integration tests..."
+          optillm --model codelion/dhara-250m --port 8000 > optillm_server.log 2>&1 &
+          echo $! > server.pid
+
+          # Poll until healthy. On a cold HuggingFace cache the model download can
+          # take a few minutes; fail fast if the server process dies (e.g. a missing
+          # dependency) instead of proceeding to tests with no server.
+          echo "Waiting for optillm server health..."
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:8000/health >/dev/null 2>&1; then
+              echo "optillm server healthy after ~$((i*10))s"
+              break
+            fi
+            if ! kill -0 "$(cat server.pid)" 2>/dev/null; then
+              echo "::error::optillm server process exited before becoming healthy"
+              cat optillm_server.log
+              exit 1
+            fi
+            sleep 10
+          done
+          if ! curl -sf http://localhost:8000/health >/dev/null 2>&1; then
+            echo "::error::optillm server did not become healthy in time"
+            tail -100 optillm_server.log
+            exit 1
+          fi
+        env:
+          OPTILLM_API_KEY: optillm
+          # Bound generation: dhara-250m does not reliably emit an EOS token and would
+          # otherwise ramble up to the default 4096 tokens per call (minutes each).
+          OPTILLM_MAX_TOKENS: "256"
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
+      - name: Run integration tests (full suite, including real-LLM tests)
+        env:
+          OPENAI_API_KEY: optillm
+          OPTILLM_API_KEY: optillm
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          # Run the ENTIRE integration suite against the local dhara model server.
+          # Slow real-LLM tests are intentionally NOT skipped so contributor PRs are
+          # exercised end-to-end (evolution loop, checkpoints, migration, library API).
+          pytest tests/integration -v --tb=short
+          
+      - name: Stop optillm server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) || true
+            rm server.pid
+          fi
+          pkill -f "optillm.*8000" || true
