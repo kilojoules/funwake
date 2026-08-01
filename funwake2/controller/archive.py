@@ -30,6 +30,9 @@ class Entry:
     island: int
     parent_ids: List[str] = field(default_factory=list)
     engine: str = ""
+    # firewall-safe per-cell feedback (%-scores + feasibility booleans only) so a
+    # sampled parent can pass its cascade results to the mutator prompt.
+    per_cell: Dict = field(default_factory=dict)
 
     def better_than(self, other: "Entry") -> bool:
         if other is None:
@@ -53,12 +56,13 @@ class MapElitesArchive:
         return "|".join(map(str, coord))
 
     def add(self, *, candidate_id, source, descriptors, fitness, worst_cell,
-            feasible, generation, island, parent_ids=None, engine="") -> Tuple[bool, Tuple]:
+            feasible, generation, island, parent_ids=None, engine="",
+            per_cell=None) -> Tuple[bool, Tuple]:
         """Attempt to place a candidate. Returns (accepted, coord)."""
         coord = bin_descriptors(descriptors)
         entry = Entry(candidate_id, source, descriptors, coord, fitness,
                       worst_cell, feasible, generation, island,
-                      parent_ids or [], engine)
+                      parent_ids or [], engine, per_cell or {})
         island = island % self.num_islands
         key = self._coord_key(coord)
         incumbent = self.islands[island].get(key)

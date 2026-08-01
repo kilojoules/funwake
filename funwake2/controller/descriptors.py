@@ -118,16 +118,23 @@ def compute_descriptors(schedule_fn, total_steps=None, ref=None):
 
 
 # ── binning to the FROZEN grid (D-8) ─────────────────────────────────
-def _bin_edges(value, edges):
+def _bin_edges(value, edges, right_closed=False):
+    """Index of the bin `value` falls in. Half-open lower-inclusive [a,b) by
+    default (`value < e`). ``right_closed`` makes the edge upper-inclusive
+    (`value <= e`) so a value exactly on an edge stays in the lower bin — used
+    for terminal_lr_m, whose frozen bin 0 is explicitly ``<= 0.01``."""
     for i, e in enumerate(edges):
-        if value < e:
+        if (value <= e) if right_closed else (value < e):
             return i
     return len(edges)
 
 
 def bin_descriptors(desc) -> tuple:
+    # peak_lr/D: half-open [a,b) (frozen bin 0 = "<0.5"); terminal_lr_m:
+    # upper-inclusive (frozen bin 0 = "<=0.01"), so a schedule decaying exactly to
+    # gamma_min lands in the intended terminal bin.
     peak_bin = _bin_edges(desc["peak_lr_over_D"], C.PEAK_LR_OVER_D_EDGES)
-    term_bin = _bin_edges(desc["terminal_lr_m"], C.TERMINAL_LR_M_EDGES)
+    term_bin = _bin_edges(desc["terminal_lr_m"], C.TERMINAL_LR_M_EDGES, right_closed=True)
     coup_bin = desc["coupling"]
     r = desc["restarts"]
     if r <= 0:

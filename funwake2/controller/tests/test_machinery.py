@@ -246,6 +246,91 @@ def test_stage_a_gross_filter_and_causes():
     return {"ok_case": a.causes, "below_ref_case": b.causes, "infeasible_case": c.causes}
 
 
+def test_bin_edges_terminal_inclusive():
+    """Codex P3 fix: terminal_lr_m is upper-inclusive per the frozen '<=0.01'
+    label, so a schedule ending exactly at gamma_min=0.01 lands in terminal bin 0
+    (not bin 1); peak stays half-open lower-inclusive per the frozen '<0.5'."""
+    b0 = bin_descriptors({"peak_lr_over_D": 0.83, "terminal_lr_m": 0.01,
+                          "coupling": "coupled", "restarts": 0})
+    b1 = bin_descriptors({"peak_lr_over_D": 0.83, "terminal_lr_m": 0.0100001,
+                          "coupling": "coupled", "restarts": 0})
+    assert b0[1] == 0, b0
+    assert b1[1] == 1, b1
+    p = bin_descriptors({"peak_lr_over_D": 0.5, "terminal_lr_m": 0.5,
+                         "coupling": "coupled", "restarts": 0})
+    assert p[0] == 1, p            # 0.5 -> bin 1 (0.5-0.8), not bin 0 (<0.5)
+    return {"term_at_edge": b0[1], "term_above": b1[1], "peak_at_edge": p[0]}
+
+
+def test_cost_reconcile_from_lineage():
+    """Codex P2 fix: on resume the cost tracker is reconciled UP to the lineage
+    totals so a mid-generation crash cannot silently exceed the 90% ceiling."""
+    cfg = _dry_cfg(tempfile.mkdtemp())
+    with open(cfg.lineage_path, "w") as f:
+        for u, pt, ct in [(0.7, 500, 500), (0.9, 400, 600)]:
+            f.write(json.dumps({"usd": u, "prompt_tokens": pt,
+                                "completion_tokens": ct}) + "\n")
+    ctrl = Controller(cfg, MockEngine(),
+                      Cascade(cfg, evaluate_fn=make_fake_eval(), baselines=_fake_baselines()))
+    ctrl.cost.state.usd, ctrl.cost.state.tokens, ctrl.cost.state.n_calls = 0.2, 300, 1
+    ctrl._reconcile_cost_from_lineage()
+    assert abs(ctrl.cost.state.usd - 1.6) < 1e-9, ctrl.cost.state.usd
+    assert ctrl.cost.state.tokens == 2000, ctrl.cost.state.tokens
+    assert ctrl.cost.state.n_calls == 2
+    return {"usd": ctrl.cost.state.usd, "tokens": ctrl.cost.state.tokens}
+
+
+def test_smoke_prompt_is_sanitized():
+    """Codex P2 fix: the parent source reaching a mutator PROMPT is sanitized, so
+    a gen-0 seed docstring carrying a forbidden path token cannot leak into the
+    prompt before the post-run transcript scan."""
+    from funwake2.controller.engines.claude_sdk import _build_prompt
+    from funwake2.controller.workspace import sanitize, FORBIDDEN_TOKENS
+    from funwake2.controller.engines.base import EvoContext
+    raw = open(os.path.join(_FW2, "seeds", "native.py")).read()
+    assert any(t.lower() in raw.lower() for t in FORBIDDEN_TOKENS)   # leaky BEFORE
+    ctx = EvoContext(parent_source=sanitize(raw), parent_id="native", generation=0,
+                     island=0, per_cell_fitness={"dei_n50": {"score_pct": 0.1, "feasible": True}})
+    prompt = _build_prompt(ctx, "")
+    hits = [t for t in FORBIDDEN_TOKENS if t.lower() in prompt.lower()]
+    assert not hits, hits
+    return {"leaky_before": True, "clean_prompt": True}
+
+
+def test_controller_feedback_and_malformed_child():
+    """Codex P2 fixes: (2) the mutator receives the parent's firewall-safe per-cell
+    feedback (not an empty dict); (3) a malformed child is logged + skipped, not
+    crashed."""
+    from funwake2.controller.engines.base import Engine, MutationResult, MutationLog
+    seen = []
+
+    class Capture(Engine):
+        name = "capture"
+
+        def __init__(self):
+            self.n = 0
+
+        def mutate(self, ctx):
+            self.n += 1
+            seen.append(dict(ctx.per_cell_fitness))
+            src = ("garbage not python :::" if self.n == 1 else
+                   "def schedule_fn(step,total_steps,D,min_spacing,n_turbines,"
+                   "gamma_min,alpha0):\n    return 0.8333*D, alpha0, 0.1, 0.2\n")
+            return MutationResult(source=src, log=MutationLog(
+                engine="capture", model="cap-1", prompt_tokens=5,
+                completion_tokens=5, usd=0.001, walltime_s=0.0))
+
+    cfg = _dry_cfg(tempfile.mkdtemp())
+    cfg.proposals_per_gen, cfg.num_islands, cfg.generations = 3, 1, 1
+    casc = Cascade(cfg, evaluate_fn=make_fake_eval(), baselines=_fake_baselines())
+    ctrl = Controller(cfg, Capture(), casc)
+    status = ctrl.run(max_generations=1)          # must NOT raise on the bad child
+    assert any(pc for pc in seen), "mutator never received non-empty per-cell feedback"
+    assert ctrl.generation >= 1
+    return {"proposals": len(seen), "feedback_seen": any(pc for pc in seen),
+            "status": status}
+
+
 def test_fitness_scale_constant_with_infeasible_ref():
     # native reference infeasible on dei_n50; candidate feasible -> still scored.
     cfg = _dry_cfg(tempfile.mkdtemp())

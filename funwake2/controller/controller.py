@@ -31,6 +31,7 @@ from .descriptors import compute_descriptors, bin_descriptors, cell_label
 from .lineage import LineageLog
 from .novelty import NoveltyFilter, novelty_aware_parent
 from .engines.base import EvoContext
+from .workspace import sanitize as _sanitize_src
 
 _THIS = os.path.dirname(os.path.abspath(__file__))
 _SEED_DIR = os.path.join(_THIS, "seeds")
@@ -131,6 +132,35 @@ class Controller:
             self.done = meta.get("done", False)
             self.aborted = meta.get("aborted", False)
             self.cost = CostTracker.from_dict(meta["cost"])
+            # The checkpointed cost is only as fresh as the last generation
+            # boundary; a mid-generation crash can leave spend that the lineage
+            # already recorded but meta.json does not. Reconcile UPWARD to the
+            # lineage totals so the 90% ceiling is never silently exceeded.
+            self._reconcile_cost_from_lineage()
+
+    def _reconcile_cost_from_lineage(self):
+        path = self.cfg.lineage_path
+        if not os.path.exists(path):
+            return
+        usd = 0.0; tokens = 0; calls = 0
+        try:
+            with open(path) as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    r = json.loads(line)
+                    u = float(r.get("usd", 0) or 0)
+                    pt = int(r.get("prompt_tokens", 0) or 0)
+                    ct = int(r.get("completion_tokens", 0) or 0)
+                    if u or pt or ct:
+                        usd += u; tokens += pt + ct; calls += 1
+        except Exception:
+            return
+        st = self.cost.state
+        st.usd = max(st.usd, usd)
+        st.tokens = max(st.tokens, tokens)
+        st.n_calls = max(st.n_calls, calls)
 
     # ── gen-0 seeding ─────────────────────────────────────────────────
     def seed_gen0(self):
@@ -150,7 +180,8 @@ class Controller:
                 fitness, worst, feas, per_cell, stage = float("-inf"), float("-inf"), False, {}, "A"
             self.archive.add(candidate_id=h, source=src, descriptors=desc,
                              fitness=fitness, worst_cell=worst, feasible=feas,
-                             generation=0, island=0, parent_ids=[], engine="seed")
+                             generation=0, island=0, parent_ids=[], engine="seed",
+                             per_cell=per_cell)
             self.lineage.log_candidate(
                 candidate_id=h, parent_ids=[], engine="seed", model="seed",
                 prompt_tokens=0, completion_tokens=0, usd=0.0, walltime_s=0.0,
@@ -172,9 +203,15 @@ class Controller:
             if parent is None:
                 break
             island = i % self.cfg.num_islands
-            ctx = EvoContext(parent_source=parent.source, parent_id=parent.candidate_id,
+            # FIREWALL: sanitize the parent source before it enters the prompt
+            # (a gen-0 seed's docstring can carry a forbidden path token); and
+            # pass the parent's firewall-safe per-cell fitness so the mutator
+            # actually sees the cascade feedback it is meant to improve on.
+            ctx = EvoContext(parent_source=_sanitize_src(parent.source),
+                             parent_id=parent.candidate_id,
                              generation=g, island=island, child_index=i,
-                             per_cell_fitness={}, notes="")
+                             per_cell_fitness=dict(getattr(parent, "per_cell", {}) or {}),
+                             notes="")
             res = self.engine.mutate(ctx)
             # cost accounting from the per-invocation engine log
             self.cost.add(res.log.usd, res.log.tokens)
@@ -202,7 +239,22 @@ class Controller:
                     status="rejected-duplicate")
                 continue
             self.novelty.register(child)
-            desc = compute_descriptors(_fn_from_source(child))
+            # A real LLM can return syntactically invalid Python or a module with
+            # no schedule_fn; log it as failed and continue rather than crash the
+            # whole run.
+            try:
+                child_fn = _fn_from_source(child)
+                desc = compute_descriptors(child_fn)
+            except Exception as e:
+                self.lineage.log_candidate(
+                    candidate_id=h, parent_ids=[parent.candidate_id],
+                    engine=res.log.engine, model=res.log.model,
+                    prompt_tokens=res.log.prompt_tokens,
+                    completion_tokens=res.log.completion_tokens, usd=res.log.usd,
+                    walltime_s=res.log.walltime_s, descriptors={}, per_cell_fitness={},
+                    generation=g, island=island, stage_reached="validate",
+                    status="invalid-schedule")
+                continue
             a = self.cascade.stage_a(child, self.stage_a_cells, self.cfg.stage_a_seeds)
             if not a.passed:
                 self.archive.add(candidate_id=h, source=child, descriptors=desc,
@@ -216,7 +268,8 @@ class Controller:
             accepted, coord = self.archive.add(
                 candidate_id=h, source=child, descriptors=desc, fitness=b.fitness,
                 worst_cell=b.worst_cell, feasible=b.passed, generation=g,
-                island=island, parent_ids=[parent.candidate_id], engine=res.log.engine)
+                island=island, parent_ids=[parent.candidate_id], engine=res.log.engine,
+                per_cell=per_cell)
             status = "elite" if (b.passed and accepted) else (
                 "feasible" if b.passed else "infeasible")
             # Stage C only for a newly-accepted feasible elite

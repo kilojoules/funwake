@@ -82,7 +82,10 @@ def main():
         sys.exit(2)
     print(f"[smoke] {eng.name} preflight OK (cwd-scoped)")
 
-    ctx = EvoContext(parent_source=parent_source, parent_id="native_gen0",
+    # FIREWALL: sanitize the parent source before it enters the prompt (native.py's
+    # docstring carries the forbidden token 'results/'); the scoped workspace copy is
+    # already sanitized, but the prompt is built from ctx.parent_source directly.
+    ctx = EvoContext(parent_source=W.sanitize(parent_source), parent_id="native_gen0",
                      per_cell_fitness=feedback, generation=0, island=0, notes="")
     prompt = _build_prompt(ctx, "") if args.engine == "claude" else _build_prompt(ctx)
 
