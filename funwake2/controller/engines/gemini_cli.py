@@ -23,10 +23,14 @@ class GeminiCLIEngine(Engine):
     name = "gemini_cli"
 
     def __init__(self, model: str = DEFAULT_MODEL, binary: str = "gemini",
-                 timeout_s: int = 180):
+                 timeout_s: int = 180, cwd: str | None = None):
         self.model = model
         self.binary = binary
         self.timeout_s = timeout_s
+        # LAUNCH-GATE scoping: run the CLI with cwd in the scoped clean-room dir
+        # (outside the repo tree), so any file the CLI reads resolves inside the
+        # scope and cannot reach results/ paper/ specs/ prereg/ state/.
+        self.cwd = cwd
 
     def preflight(self) -> None:
         if shutil.which(self.binary) is None:
@@ -45,7 +49,8 @@ class GeminiCLIEngine(Engine):
         prompt = _build_prompt(ctx)
         proc = subprocess.run(
             [self.binary, "-m", self.model, "-p", prompt],
-            capture_output=True, text=True, timeout=self.timeout_s)
+            capture_output=True, text=True, timeout=self.timeout_s,
+            cwd=self.cwd or None)
         out = proc.stdout or ""
         child = _extract_code(out)
         # token accounting: parse CLI usage line if present, else estimate ~4 chars/token

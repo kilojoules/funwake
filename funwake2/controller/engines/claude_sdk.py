@@ -39,9 +39,14 @@ class AnthropicApiKeyPresentError(RuntimeError):
 class ClaudeSDKEngine(Engine):
     name = "claude_agent_sdk"
 
-    def __init__(self, model: str = DEFAULT_MODEL, system_prompt: str = ""):
+    def __init__(self, model: str = DEFAULT_MODEL, system_prompt: str = "",
+                 cwd: str | None = None):
         self.model = model
         self.system_prompt = system_prompt
+        # LAUNCH-GATE scoping: the SDK runs with cwd pointed at the scoped clean-
+        # room workspace (harness + seeds + firewalled feedback only). Combined
+        # with allowed_tools=[] the mutator cannot reach the source tree at all.
+        self.cwd = cwd
 
     # ── HARD-REQUIREMENT preflight (unit-tested) ─────────────────────
     def preflight(self) -> None:
@@ -70,8 +75,11 @@ class ClaudeSDKEngine(Engine):
         from claude_agent_sdk import query, ClaudeAgentOptions  # noqa: F401
 
         prompt = _build_prompt(ctx, self.system_prompt)
-        options = ClaudeAgentOptions(model=self.model, system_prompt=self.system_prompt,
-                                     allowed_tools=[], permission_mode="bypassPermissions")
+        opt_kwargs = dict(model=self.model, system_prompt=self.system_prompt,
+                          allowed_tools=[], permission_mode="bypassPermissions")
+        if self.cwd:                       # confine any file resolution to the scope
+            opt_kwargs["cwd"] = self.cwd
+        options = ClaudeAgentOptions(**opt_kwargs)
         child_src, pt, ct, resolved_model = _run_query(query, prompt, options, self.model)
         usd = self._usd(pt, ct)
         log = MutationLog(engine=self.name, model=resolved_model,
