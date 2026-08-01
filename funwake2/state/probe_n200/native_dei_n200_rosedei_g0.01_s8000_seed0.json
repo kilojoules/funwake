@@ -1,0 +1,1 @@
+{"cell": "dei_n200_rosedei", "seed": 0, "steps": 8000, "gamma_min": 0.01, "D": 240.0, "n": 200, "min_spacing": 960.0, "aep_gwh": 20964.4381, "feasible": false, "time_s": 357.1, "boundary_penalty": 0.001176, "min_dist_m": 960.02, "tag": "native", "schedule_file": "native.py"}

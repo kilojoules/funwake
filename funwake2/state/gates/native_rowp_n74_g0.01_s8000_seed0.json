@@ -1,0 +1,1 @@
+{"cell": "rowp_n74", "seed": 0, "steps": 8000, "gamma_min": 0.01, "D": 198.0, "n": 74, "min_spacing": 792.0, "aep_gwh": 4264.4188, "feasible": true, "time_s": 27.3, "boundary_penalty": 8.3e-05, "min_dist_m": 846.22, "tag": "native", "schedule_file": "native.py"}

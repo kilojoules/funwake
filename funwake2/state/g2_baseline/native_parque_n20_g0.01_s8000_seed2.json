@@ -1,0 +1,1 @@
+{"cell": "parque_n20", "seed": 2, "steps": 8000, "gamma_min": 0.01, "D": 80.0, "n": 20, "min_spacing": 160.0, "aep_gwh": 230.7143, "feasible": true, "time_s": 9.2, "max_sdf_m": 0.0107, "min_dist_m": 160.02, "feas_tol_m": 0.1, "tag": "native", "schedule_file": "native.py"}

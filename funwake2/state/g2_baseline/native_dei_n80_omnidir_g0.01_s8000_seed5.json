@@ -1,0 +1,1 @@
+{"cell": "dei_n80_omnidir", "seed": 5, "steps": 8000, "gamma_min": 0.01, "D": 240.0, "n": 80, "min_spacing": 960.0, "aep_gwh": 8814.3295, "feasible": true, "time_s": 65.9, "boundary_penalty": 0.000138, "min_dist_m": 1409.01, "tag": "native", "schedule_file": "native.py"}

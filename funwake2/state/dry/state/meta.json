@@ -1,0 +1,61 @@
+{
+  "run_id": "dry_full",
+  "generation": 3,
+  "seeded": true,
+  "done": true,
+  "aborted": false,
+  "cost": {
+    "state": {
+      "usd": 0.09404000000000001,
+      "tokens": 20608,
+      "n_calls": 9
+    },
+    "max_usd": 1000.0,
+    "max_tokens": 10000000,
+    "abort_fraction": 0.9
+  },
+  "config": {
+    "run_id": "dry_full",
+    "state_dir": "funwake2/state/dry/state",
+    "cache_dir": "funwake2/state/dry/cache",
+    "lineage_path": "funwake2/state/dry/lineage.jsonl",
+    "gamma_min": 0.01,
+    "total_steps": 8000,
+    "stage_a_seeds": [
+      0,
+      1
+    ],
+    "stage_b_seeds": [
+      0,
+      1
+    ],
+    "stage_c_seeds": [
+      0
+    ],
+    "noise_floor_gwh": 3.0,
+    "enable_stage_b_plus": false,
+    "stage_b_plus_seeds": [
+      0,
+      1,
+      2
+    ],
+    "stage_b_plus_top_k": 3,
+    "stage_b_plus_cells": [],
+    "high_n_cell": "dei_n120_rosedei",
+    "heartbeat": true,
+    "watchdog_seconds": 900,
+    "holdout_floor_gwh": 0.1,
+    "num_islands": 2,
+    "generations": 3,
+    "proposals_per_gen": 3,
+    "novelty_threshold": 0.92,
+    "max_usd": 1000.0,
+    "max_tokens": 10000000,
+    "abort_fraction": 0.9,
+    "dry_run": true,
+    "dry_cells": [
+      "dei_n50",
+      "parque_n20"
+    ]
+  }
+}

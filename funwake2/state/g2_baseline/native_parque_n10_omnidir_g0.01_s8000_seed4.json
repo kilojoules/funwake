@@ -1,0 +1,1 @@
+{"cell": "parque_n10_omnidir", "seed": 4, "steps": 8000, "gamma_min": 0.01, "D": 80.0, "n": 10, "min_spacing": 160.0, "aep_gwh": 127.1722, "feasible": true, "time_s": 4.4, "max_sdf_m": 0.0079, "min_dist_m": 213.73, "feas_tol_m": 0.1, "tag": "native", "schedule_file": "native.py"}

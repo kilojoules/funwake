@@ -1,0 +1,1 @@
+{"cell": "dei_n50_uniform", "seed": 3, "steps": 8000, "gamma_min": 0.01, "D": 240.0, "n": 50, "min_spacing": 960.0, "aep_gwh": 5599.1845, "feasible": true, "time_s": 23.5, "boundary_penalty": 0.000294, "min_dist_m": 960.0, "tag": "native", "schedule_file": "native.py"}

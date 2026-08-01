@@ -1,0 +1,1 @@
+{"cell": "parque_n30_uniform", "seed": 5, "steps": 8000, "gamma_min": 0.01, "D": 80.0, "n": 30, "min_spacing": 160.0, "aep_gwh": 354.8726, "feasible": false, "time_s": 14.6, "max_sdf_m": 0.1009, "min_dist_m": 159.99, "feas_tol_m": 0.1, "tag": "native", "schedule_file": "native.py"}

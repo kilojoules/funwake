@@ -1,0 +1,1 @@
+{"cell": "dei_n50", "seed": 1, "steps": 8000, "gamma_min": 0.01, "D": 240.0, "n": 50, "min_spacing": 960.0, "aep_gwh": 5557.2232, "feasible": true, "time_s": 25.4, "boundary_penalty": 0.000171, "min_dist_m": 1655.87, "tag": "iter192", "schedule_file": "iter192.py"}
