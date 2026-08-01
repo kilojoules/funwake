@@ -22,8 +22,12 @@ test set — and survive real-TopFarm stochastic re-validation?
   scores within the noise floor on all shared cells. No reproduction ⇒ no search.
 - **Search:** islands + MAP-elites evolutionary run (chassis per spec §3),
   cascade evaluator (spec §3.2), Claude Agent-SDK + Gemini-CLI mutators. Fitness
-  = paired multi-seed mean AEP as %-over-c·D-baseline per training cell, hard
-  feasibility gate at gamma_min, cross-cell aggregate per spec §2.1. Training
+  = paired multi-seed `score_c = 100·(AEP_cand − AEP_ref,c)/AEP_ref,c`
+  (%-over-c·D-baseline) per training cell, with a **FARM-BALANCED aggregate**:
+  `fitness = mean over farms of (mean over that farm's scored cells of score_c)`,
+  so each farm contributes equally regardless of its cell count (the training set
+  has more DEI than Parque cells). Worst-cell tiebreak = `min_c score_c`; hard
+  feasibility gate at gamma_min in every scored + feasibility-only cell. Training
   cells span ≥2 rotor diameters incl. hard cells (spec §2.2). Holdout/test AEP
   firewalled from every mutator context/transcript (key-only).
 - **Selection (holdout = ROWP, margin-aware, NEVER single-eval argmax):**
@@ -199,8 +203,13 @@ saturated — 14× single-turbine free-stream AEP = 184.8117 = the optimized bas
 (deficit −0.0003 GWh ≪ the 0.1 floor), so every all-escape feasible layout scores
 exactly free-stream (std=0, no texture). It is retained as a hard feasibility gate
 but **EXCLUDED from the mean-% aggregate** (6 cells scored; unit-tested
-`test_feasibility_only_cell_excluded_from_aggregate`). Fitness = mean over the 6
-scored cells' `score_c`, hard-gated on feasibility in all 7.
+`test_feasibility_only_cell_excluded_from_aggregate`). Fitness is the
+**farm-balanced** mean over farms of each farm's mean `score_c` (DEI: 4 scored
+cells; Parque: 2), hard-gated on feasibility in all 7; the feasibility-only cell
+is evaluated at 2 seeds. Capability-frontier cells (`dei_n200_rosedei`,
+`parque_n30_uniform`) are `gbar_only`: off gbar they are PENDING (deferred to the
+elite tier) and never gate. Verified: `test_farm_balanced_aggregate_parity`,
+`test_gbar_only_cell_pending_off_gbar`.
 
 `parque_n14_uniform` replaces the originally-frozen `parque_n30_uniform`, whose
 c·D reference is 0/10 feasible (`max_sdf` 3–37 m). That was reconciled (PHASE2_REPORT

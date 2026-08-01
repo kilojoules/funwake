@@ -476,3 +476,46 @@ closed). Tests: `test_sanitized_reference_code_parses`, `test_assert_clean_raise
 **Phase-3 launch review = saturation resolved (R2-1 ✓) + Claude smoke clean (pending
 auth) + prereg current (✓).** gbar standup (n200 classification + full run) remains
 the long pole.
+
+---
+
+# ROUND-3 REVIEW ADDENDUM (methodology-draft fixes, pre-pilot)
+
+**R3-1 — FARM-BALANCED aggregate (resolves D-3).** The cross-cell aggregate is
+`fitness = mean over farms of (mean over that farm's scored cells of score_c)`, so
+each farm contributes equally irrespective of its cell count (the training set has 4
+scored DEI cells vs 2 scored Parque cells). Worst-cell tiebreak (`min_c score_c`) and
+the hard feasibility gate are unchanged. Implemented in `cascade.stage_b`
+(`_cell_farm`); parity unit test `test_farm_balanced_aggregate_parity` (a uniform +1%
+across a farm's cells raises fitness by 1%/n_farms, equal across farms). Companion
+items: **feasibility-only cells run at 2 seeds** (they gate feasibility only); and
+**gbar-only capability-frontier cells are PENDING off gbar** (deferred to the elite
+tier, never gating) — `test_gbar_only_cell_pending_off_gbar`.
+
+**R3-2 — Stage A is a GROSS fast-reject.** Reject a (cell,seed) iff INFEASIBLE at
+gamma_min OR AEP more than `stage_a_reject_frac` (~1%) below the reference — NOT
+texture-floor-tight (a floor-tight Stage A would mass-reject the QD exploration the
+archive exists for). Texture floors are used for selection margins only.
+`StageResult.causes` tallies rejection reason (ok / infeasible / below_ref / error) as
+the pilot Stage-A-rejection-rate-by-cause metric. Test
+`test_stage_a_gross_filter_and_causes` (a 0.5%-below candidate PASSES).
+
+**R3-3 — Reproducibility scope.** Same-platform: evaluation is bit-identical across
+independent processes (float32-canonicalized alpha0, G8). Cross-platform: agreement to
+within the measured drift tolerance (v1 arm64/x86: ±1.7 GWh). The framework is a
+deterministic function of seeds/config/budget on a fixed platform; cross-platform
+results agree within that drift.
+
+**R3-4 — Training resources / test set / floors / bib.** Training spans THREE resource
+types (DEI rose, omnidirectional, unidirectional); the ROWP rose is held-out only. The
+frozen TEST set is ROWP high-N (`rowp_n200_roserowp`, `rowp_n300_roserowp`), the Parque
+real heterogeneous resource (`problem_parqo_hetero.json`), and the ROWP unidirectional
+extreme (`rowp_n74_uniform`). Per-cell texture floors: DEI 0.3, Parque 0.1, ROWP 0.64
+GWh. Bibliography: cite Quick et al. **2022** (WES Discussions) consistently with the
+companion paper.
+
+**R3-5 — Capability-frontier tier (named).** `dei_n200_rosedei` and
+`parque_n30_uniform` are the capability-frontier tier: reference-infeasible cells
+tracked at the elite tier as qualitative probes (a candidate reaching strict
+feasibility there is a qualitatively new result), never gating the per-generation
+search.
