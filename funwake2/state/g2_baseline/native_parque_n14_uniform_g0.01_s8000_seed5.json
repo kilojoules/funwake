@@ -1,0 +1,1 @@
+{"cell": "parque_n14_uniform", "seed": 5, "steps": 8000, "gamma_min": 0.01, "D": 80.0, "n": 14, "min_spacing": 160.0, "aep_gwh": 184.8117, "feasible": true, "time_s": 4.8, "max_sdf_m": -0.3082, "min_dist_m": 167.61, "feas_tol_m": 0.1, "tag": "native", "schedule_file": "native.py"}

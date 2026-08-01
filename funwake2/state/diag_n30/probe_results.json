@@ -1,0 +1,130 @@
+[
+  {
+    "n": 28,
+    "seed": 0,
+    "max_sdf": 3.4861,
+    "min_dist": 159.99,
+    "feasible": false,
+    "aep": 334.48
+  },
+  {
+    "n": 28,
+    "seed": 1,
+    "max_sdf": 3.2756,
+    "min_dist": 160.0,
+    "feasible": false,
+    "aep": 336.47
+  },
+  {
+    "n": 28,
+    "seed": 2,
+    "max_sdf": 0.0466,
+    "min_dist": 160.0,
+    "feasible": true,
+    "aep": 342.99
+  },
+  {
+    "n": 28,
+    "seed": 3,
+    "max_sdf": 3.4487,
+    "min_dist": 159.99,
+    "feasible": false,
+    "aep": 346.55
+  },
+  {
+    "n": 26,
+    "seed": 0,
+    "max_sdf": 0.0646,
+    "min_dist": 159.99,
+    "feasible": true,
+    "aep": 319.95
+  },
+  {
+    "n": 26,
+    "seed": 1,
+    "max_sdf": 0.1251,
+    "min_dist": 160.0,
+    "feasible": false,
+    "aep": 325.67
+  },
+  {
+    "n": 26,
+    "seed": 2,
+    "max_sdf": 16.1985,
+    "min_dist": 159.98,
+    "feasible": false,
+    "aep": 317.93
+  },
+  {
+    "n": 26,
+    "seed": 3,
+    "max_sdf": 0.0581,
+    "min_dist": 160.01,
+    "feasible": true,
+    "aep": 320.19
+  },
+  {
+    "n": 24,
+    "seed": 0,
+    "max_sdf": 16.165,
+    "min_dist": 160.01,
+    "feasible": false,
+    "aep": 296.55
+  },
+  {
+    "n": 24,
+    "seed": 1,
+    "max_sdf": 0.3315,
+    "min_dist": 160.01,
+    "feasible": false,
+    "aep": 303.07
+  },
+  {
+    "n": 24,
+    "seed": 2,
+    "max_sdf": 9.2231,
+    "min_dist": 159.99,
+    "feasible": false,
+    "aep": 303.96
+  },
+  {
+    "n": 24,
+    "seed": 3,
+    "max_sdf": 0.2119,
+    "min_dist": 160.01,
+    "feasible": false,
+    "aep": 300.77
+  },
+  {
+    "n": 22,
+    "seed": 0,
+    "max_sdf": 0.985,
+    "min_dist": 160.02,
+    "feasible": false,
+    "aep": 268.48
+  },
+  {
+    "n": 22,
+    "seed": 1,
+    "max_sdf": 0.0384,
+    "min_dist": 160.0,
+    "feasible": true,
+    "aep": 281.18
+  },
+  {
+    "n": 22,
+    "seed": 2,
+    "max_sdf": 0.0165,
+    "min_dist": 160.0,
+    "feasible": true,
+    "aep": 281.46
+  },
+  {
+    "n": 22,
+    "seed": 3,
+    "max_sdf": 0.0972,
+    "min_dist": 160.01,
+    "feasible": true,
+    "aep": 281.52
+  }
+]

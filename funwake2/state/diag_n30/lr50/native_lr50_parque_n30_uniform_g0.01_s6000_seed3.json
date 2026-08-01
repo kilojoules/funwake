@@ -1,0 +1,1 @@
+{"cell": "parque_n30_uniform", "seed": 3, "steps": 6000, "gamma_min": 0.01, "D": 80.0, "n": 30, "min_spacing": 160.0, "aep_gwh": 359.9596, "feasible": false, "time_s": 10.4, "max_sdf_m": 6.6947, "min_dist_m": 160.01, "feas_tol_m": 0.1, "tag": "native_lr50", "schedule_file": "native_lr50.py"}

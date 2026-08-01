@@ -17,7 +17,7 @@ INDIR = os.path.join(HERE, "state", "g2_baseline")
 OUT = os.path.join(HERE, "controller", "baselines_g2.json")
 
 FROZEN_CELLS = ["dei_n50", "dei_n80_omnidir", "dei_n120_rosedei", "dei_n50_uniform",
-                "parque_n20", "parque_n30_uniform", "parque_n10_omnidir"]
+                "parque_n20", "parque_n14_uniform", "parque_n10_omnidir"]
 
 
 def collect():

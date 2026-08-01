@@ -95,10 +95,18 @@ CELLS = {
         "role": "train", "stage_a": True, "stage_b": True,
         "baseline_0833D": 231.06, "sem": 0.32,
     },
-    "parque_n30_uniform": {                         # Parque multizone, N=30, unidirectional
+    "parque_n14_uniform": {                         # Parque multizone, N=14, unidirectional
+        # SWAP (item-1 reconciliation): replaced parque_n30_uniform in stage-B.
+        # N=30 uniform has NO all-feasible c*D reference (0/10; the genuine old
+        # multistart pipeline was only 2/50 single-run feasible) -> incoherent as
+        # a hard-gated stage-B cell. N=14 is the LARGEST uniform-rose Parque N
+        # with a 10/10-feasible c*D reference (N>=16 is a chaotic knife-edge:
+        # N16 3/4, N24 0/4). Preserves Parque x unidirectional coverage with an
+        # all-feasible reference (native@c*D 10/10, mean AEP 184.81 GWh).
         "problem": "parqo/problem_parqo.json",
-        "rose": _ROSE_UNIFORM, "n": 30, "multizone": True, "feas_tol": 0.1,
+        "rose": _ROSE_UNIFORM, "n": 14, "multizone": True, "feas_tol": 0.1,
         "role": "train", "stage_a": False, "stage_b": True,
+        "baseline_0833D": 184.81,
     },
     "parque_n10_omnidir": {                         # Parque multizone, N=10, omnidir
         "problem": "parqo/problem_parqo.json",
@@ -106,6 +114,22 @@ CELLS = {
         "role": "train", "stage_a": False, "stage_b": True,
     },
 
+    # ── CAPABILITY-FRONTIER / ELITE-TIER (informational, NEVER gating) ─
+    "parque_n30_uniform": {                         # Parque multizone, N=30, unidirectional
+        # CONFIRMED capability-frontier (item-1): the c*D native is 0/10 feasible
+        # here (max_sdf 3-37 m); the genuine old TopFarm multistart pipeline was
+        # only 2/50 single-run feasible. NOT a v2 bug — the multizone init/penalty/
+        # sdf are the SAME functions as the vetted skeleton (proven: same object,
+        # seed-0 init max|dx|=0), and lr0=50 through skeleton_v2 reproduces the
+        # old 2/10 regime; it is a genuine unidirectional-rose x tight-zone x scale
+        # effect. Moved OUT of stage-B (no all-feasible reference -> would break
+        # the hard gate). Elite-tier informational only; a candidate that reaches
+        # STRICT feasibility here is a qualitatively new result.
+        "problem": "parqo/problem_parqo.json",
+        "rose": _ROSE_UNIFORM, "n": 30, "multizone": True, "feas_tol": 0.1,
+        "role": "capability_frontier", "stage_a": False, "stage_b": False,
+        "gbar_only": True,
+    },
     # ── DEFERRED (author decision; NOT in stage-B) ────────────────────
     "dei_n200_rosedei": {                           # high-N; gbar-only stage-B+ cell
         "problem": "results/matrix/problem_dei_n200_rosedei.json",

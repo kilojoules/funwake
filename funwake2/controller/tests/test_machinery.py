@@ -95,6 +95,39 @@ def test_cascade_order_and_fast_reject():
             "stageB_pass": b.passed, "fast_reject_works": (not a2.passed)}
 
 
+def test_candidate_infeasible_one_stage_b_cell_fails():
+    """Item-3 hard gate: a candidate FEASIBLE (and positive-scoring) in every
+    stage-B cell but ONE, where it is infeasible, must FAIL stage B — the global
+    per-cell feasibility gate. Coherent only because all stage-B references are
+    themselves all-feasible (guaranteed by the parque_n30_uniform -> n14 swap)."""
+    cells = ["dei_n50", "parque_n20", "parque_n10_omnidir"]
+    # baseline (all-feasible references) present for every cell
+    base = _fake_baselines()
+
+    # (a) candidate feasible everywhere -> stage B PASSES
+    ok = Cascade(_dry_cfg(tempfile.mkdtemp()), evaluate_fn=make_fake_eval(),
+                 baselines=base)
+    src = open(os.path.join(_SEED_DIR, "seed_cosine.py")).read()
+    b_ok = ok.stage_b(src, cells, [0, 1])
+    assert b_ok.passed, b_ok.per_cell
+
+    # (b) SAME candidate made infeasible in exactly ONE cell -> stage B FAILS
+    bad = Cascade(_dry_cfg(tempfile.mkdtemp()),
+                  evaluate_fn=make_fake_eval(infeasible_cells=["parque_n10_omnidir"]),
+                  baselines=base)
+    b_bad = bad.stage_b(src, cells, [0, 1])
+    assert not b_bad.passed, "one infeasible stage-B cell must fail the hard gate"
+    assert not b_bad.per_cell["parque_n10_omnidir"]["feasible"]
+    assert b_bad.per_cell["parque_n10_omnidir"]["score"] == float("-inf")
+    # the other cells are still individually feasible — it's the GLOBAL gate that
+    # rejects, not those cells
+    assert b_bad.per_cell["dei_n50"]["feasible"]
+    assert b_bad.per_cell["parque_n20"]["feasible"]
+    return {"pass_when_all_feasible": b_ok.passed,
+            "fail_when_one_infeasible": (not b_bad.passed),
+            "gate_note": b_bad.notes}
+
+
 def test_fitness_scale_constant_with_infeasible_ref():
     # native reference infeasible on dei_n50; candidate feasible -> still scored.
     cfg = _dry_cfg(tempfile.mkdtemp())
