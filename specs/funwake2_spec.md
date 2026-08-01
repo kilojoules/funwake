@@ -433,3 +433,46 @@ once an engine is usable.
 classification + the full Phase-3 run. **Launch holds until items 1–4 land and the
 prereg reflects the final stage-B set** (done for 1–3 + item-4 build; item-4 smoke
 pending auth).
+
+---
+
+# ROUND-2 REVIEW ADDENDUM (saturation + launch-prep)
+
+**R2-1 — `parque_n14_uniform` is FEASIBILITY-ONLY (saturation confirmed).** 14 ×
+single-turbine free-stream AEP under the uniform rose = 184.8117 GWh = the optimized
+n14 baseline (deficit −0.0003 GWh ≪ the 0.1 GWh Parque floor;
+`funwake2/state/diag_n30/n14_saturation.json`). The objective is SATURATED: under
+dir=0 + the hard 2σ wake cone, every all-escape feasible layout scores exactly
+free-stream (std=0, no texture, no AEP signal). n14 is therefore a **feasibility-only
+stage-B gate** — `CELLS[...]["feasibility_only"]=True`; the hard feasibility gate is
+retained but its ~0 % score is EXCLUDED from the mean-%/worst-cell aggregate
+(`cascade.stage_b`; 6 of 7 cells scored). Unit test
+`test_feasibility_only_cell_excluded_from_aggregate`.
+
+**R2-2 — n30 reconciliation postscript.** The reviewer-cited "12/12 feasible" is
+CELL-level best-of-K=50 (12 rose×N cells each had ≥1 feasible start), not per-run;
+per-run feasibility on `uniform|n30` was always ~4 % (2/50). No fidelity gap was
+implied. `funwake2/state/diag_n30/` diagnostics are retained as reusable fidelity
+assets.
+
+**R2-3 — Claude-first launch; Gemini restoration is parallel/non-blocking.** Phase-3
+launches on the Claude Agent-SDK engine alone. Gemini restoration (updated CLI/auth,
+or a metered-API engine on Google credits) is non-blocking. Archival note: v1's
+Gemini CLI tier (individual Gemini Code Assist) is deprecated upstream
+(`IneligibleTierError`), which is why the v1 `gemini -p` path no longer authenticates.
+
+**R2-4 — Heterogeneous-Parque PRE-TEST evaluator gate (prereg-frozen).** Before the
+heterogeneous Parque test cell is unblinded, the heterogeneous evaluator must be built
+AND validated: fed the site-averaged climate it must reproduce the homogeneous
+surrogate's AEP within the Parque floor (0.1 GWh) or a documented expected offset. A
+heterogeneous evaluator that fails this degenerate check is a bug; its test result
+would be uninterpretable.
+
+**R2-5 — `assert_clean` ast-parses sanitized reference code.** The scoping gate now
+`ast.parse`s every .py in the materialized scope, so a `sanitize()` REDACTED
+substitution can never hand the mutator syntactically broken reference code (fail-
+closed). Tests: `test_sanitized_reference_code_parses`, `test_assert_clean_raises_on_broken_py`.
+
+**Phase-3 launch review = saturation resolved (R2-1 ✓) + Claude smoke clean (pending
+auth) + prereg current (✓).** gbar standup (n200 classification + full run) remains
+the long pole.

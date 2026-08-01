@@ -40,6 +40,15 @@ test set — and survive real-TopFarm stochastic re-validation?
      the (12 wd × 20 × 20) heterogeneous maps; heterogeneous eval is wired at the
      deployment/test stage (no runnable CELLS entry, so it cannot be scored during
      search).
+     **PRE-TEST EVALUATOR GATE (frozen; round-2 item 4).** Before this cell is
+     unblinded, the heterogeneous evaluator MUST be built AND validated by a
+     degenerate-input check: when fed the **site-averaged** climate (the same
+     reduction `build_problem.py` performs), it must reproduce the homogeneous
+     surrogate's AEP on a fixed layout to within the Parque texture floor
+     (0.1 GWh), OR match a **documented, pre-registered expected offset** (e.g. a
+     known speedup-normalization convention). Only after this gate passes may the
+     heterogeneous maps be used; a heterogeneous evaluator that fails the
+     degenerate check is a bug, and its test result would be uninterpretable.
   3. **Unidirectional extreme on an unseen farm** — `rowp_n74_uniform` (ROWP
      polygon + uniform/unidirectional rose).
   (If the gbar 5-seed classification finds DEI n200 infeasible, it joins the
@@ -179,12 +188,19 @@ float32). Source: `funwake2/controller/baselines_g2.json`
 | `dei_n120_rosedei` | 120 | 240 | 13029.988 | 7.496 | 10/10 |
 | `dei_n50_uniform` | 50 | 240 | 5598.413 | 1.315 | 10/10 |
 | `parque_n20` | 20 | 80 | 231.505 | 0.688 | 10/10 |
-| `parque_n14_uniform` | 14 | 80 | 184.812 | 0.000 | 10/10 |
+| `parque_n14_uniform` | 14 | 80 | 184.812 | 0.000 | 10/10 (feas-only) |
 | `parque_n10_omnidir` | 10 | 80 | 127.002 | 0.319 | 10/10 |
 
 **All 7 stage-B references are 10/10 feasible** — the precondition for the
 global per-cell hard gate (a candidate must be feasible in EVERY stage-B cell;
 `cascade.stage_b`, unit-tested `test_candidate_infeasible_one_stage_b_cell_fails`).
+**`parque_n14_uniform` is FEASIBILITY-ONLY** (round-2 item 1): its objective is
+saturated — 14× single-turbine free-stream AEP = 184.8117 = the optimized baseline
+(deficit −0.0003 GWh ≪ the 0.1 floor), so every all-escape feasible layout scores
+exactly free-stream (std=0, no texture). It is retained as a hard feasibility gate
+but **EXCLUDED from the mean-% aggregate** (6 cells scored; unit-tested
+`test_feasibility_only_cell_excluded_from_aggregate`). Fitness = mean over the 6
+scored cells' `score_c`, hard-gated on feasibility in all 7.
 
 `parque_n14_uniform` replaces the originally-frozen `parque_n30_uniform`, whose
 c·D reference is 0/10 feasible (`max_sdf` 3–37 m). That was reconciled (PHASE2_REPORT

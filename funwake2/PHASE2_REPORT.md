@@ -39,8 +39,9 @@ AEP retained for paired scoring).
 AEP retained for paired scoring. Post-G8: `dei_n50` seed0 = 5560.7575185032 was the
 G8 canonical single-seed value; the 10-seed mean 5560.393 is the frozen reference.
 **All 7 stage-B references are 10/10 feasible** — the coherent-hard-gate precondition
-(item 3). `parque_n14_uniform`'s per-seed layouts genuinely differ (max_sdf spans
-−5.2…−0.03 m, all interior); AEP agrees only to 4 dp, hence std≈0.)
+(item 3). `parque_n14_uniform` is a **FEASIBILITY-ONLY** gate (round-2 item 1, §1b):
+its objective is saturated, so it is in the hard gate but **excluded from the mean-%
+aggregate** — 6 cells are scored.)
 
 ### 1a. SWAP: `parque_n30_uniform` → `parque_n14_uniform` (item-1 reconciliation)
 
@@ -60,6 +61,29 @@ The originally-frozen `parque_n30_uniform` had a **0/10-feasible c·D reference*
   pipeline used raw float64).
 - The c·D reference infeasibility on N=30-uniform is therefore a **genuine
   unidirectional-rose × tight-zone × scale effect**, recorded as a finding.
+
+**Reconciliation postscript (item 2).** The reviewer-cited "12/12 strictly feasible"
+is **cell-level** feasibility — 12 (rose × N) cells each had ≥1 feasible start out of
+K=50 (best-of-50). The **per-run** feasibility rate on `uniform|n30` was always
+~**2/50 ≈ 4 %**; skeleton_v2's 0/10 single-run is the same regime. No fidelity gap was
+ever implied. The `funwake2/state/diag_n30/` diagnostics (same-object proof,
+lr0=50-through-v2 reproduction, N-sweep, saturation check) are retained as reusable
+**fidelity assets** for future multizone changes.
+
+### 1b. `parque_n14_uniform` is a FEASIBILITY-ONLY gate (round-2 item 1)
+
+n14's baseline std is exactly 0 because the objective is **saturated**:
+`14 × single-turbine free-stream AEP = 184.8117 GWh = the optimized baseline`
+(deficit **−0.0003 GWh**, ≪ the 0.1 GWh Parque floor;
+`funwake2/state/diag_n30/n14_saturation.json`). Under dir=0 + the hard 2σ wake
+cone, every all-escape feasible layout scores exactly free-stream — no mask
+crossings, no texture, no AEP-improvement signal. So n14 is reclassified
+**feasibility-only**: `CELLS["parque_n14_uniform"]["feasibility_only"]=True`; the
+**hard feasibility gate is retained** (a candidate must reach a feasible Parque ×
+unidirectional layout) but its ~0 % score is **excluded from the mean-%/worst-cell
+aggregate** (`cascade.stage_b`; 6 cells scored). Locked by
+`test_feasibility_only_cell_excluded_from_aggregate` (aggregate excludes n14; the
+hard gate still fails a candidate infeasible there).
 
 Per the swap rule ("largest uniform-Parque N with an all-feasible c·D reference"):
 a probe of N∈{28,26,24,22,20,18,16,14,12,10} (T=8000) showed N≥16 is a chaotic
@@ -87,13 +111,14 @@ ROWP is in **NO** training cell (farm-level holdout).
 | `dei_n120_rosedei` | DEI | 120 | 240 | DEI | **HIGH-N (frozen)** — see §2d |
 | `dei_n50_uniform` | DEI | 50 | 240 | uniform (dir=0) | unidirectional extreme |
 | `parque_n20` | Parque (multizone) | 20 | 80 | DEI | stage-A smoke cell |
-| `parque_n14_uniform` | Parque (multizone) | 14 | 80 | uniform | Parque×unidirectional (**swap** ← n30; §1a) |
+| `parque_n14_uniform` | Parque (multizone) | 14 | 80 | uniform | **FEASIBILITY-ONLY** (swap ← n30, §1a; saturated, §1b) |
 | `parque_n10_omnidir` | Parque (multizone) | 10 | 80 | omnidir | |
 
 Span: D ∈ {80, 240}, N ∈ {10…120}, roses {dei, uniform, omnidir}, incl.
 multi-zone (Parque) + high-N (n120). All 7 references 10/10 feasible (coherent
-hard gate, item 3). Stage-A fast-reject cells = `dei_n50`, `parque_n20` (2 cheap
-cells; **NOT** any high-N cell).
+hard gate, item 3). **6 cells enter the mean-% aggregate**; `parque_n14_uniform`
+is a feasibility-only gate (§1b). Stage-A fast-reject cells = `dei_n50`,
+`parque_n20` (2 cheap cells; **NOT** any high-N cell).
 
 ### 2b. Capability-frontier / elite tier (informational, NEVER gating)
 Two cells sit outside the stage-B hard gate (item 3: frontier cells are
@@ -372,10 +397,14 @@ unit suite (`funwake2/controller/tests/`, **13/13 pass**: machinery 8 + prefligh
     correctly ABSENT (preflight would refuse it).
   - **Gemini:** the installed CLI returns `IneligibleTierError` ("client no longer
     supported for Gemini Code Assist for individuals" → migrate to Antigravity).
-    The Gemini engine wiring is unchanged, but a supported CLI/auth is required.
-  Once either engine is usable I run its scoped 2-mutation smoke + `scan_tree` the
-  full transcript for forbidden paths/holdout values. Until then the smoke is the
-  one open item-4 sub-task; the gate CODE is complete and tested.
+  **LAUNCH IS CLAUDE-FIRST (item 3):** Gemini is NOT required for Phase-3 launch.
+  Its restoration — an updated CLI/auth or a metered-API engine on Google credits —
+  is a **parallel, non-blocking** task; the `gemini_cli.py` wiring is unchanged and
+  ready. *Archival note:* the v1 Gemini CLI tier (individual Gemini Code Assist) is
+  now **deprecated** upstream, which is why the v1-era `gemini -p` path no longer
+  authenticates. Once Claude auth lands I run the scoped 2-mutation Claude smoke +
+  `scan_tree` the full transcript for forbidden paths/holdout values. The gate CODE
+  is complete and tested; the Claude smoke is the one launch-blocking item-4 sub-task.
 - **n200 classification (gbar):** run native@c·D 5 seeds on gbar to classify
   n200 as a stage-B+ elite cell (if feasible) or a capability-frontier test cell
   (if infeasible). The Mac 1-seed probe was infeasible but is not authoritative.
