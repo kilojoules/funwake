@@ -1,0 +1,342 @@
+{
+  "cell": "dei_n50",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "baseline_mean": 5560.81034,
+  "prior_art": true,
+  "engine": "codex",
+  "trajectory": [
+    {
+      "iter": 1,
+      "aep": 5560.0249,
+      "pct": -0.0141,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 2,
+      "aep": 5561.5884,
+      "pct": 0.014,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 3,
+      "aep": 5560.597,
+      "pct": -0.0038,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 4,
+      "aep": 5560.1766,
+      "pct": -0.0114,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 5,
+      "aep": 5561.4656,
+      "pct": 0.0118,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 6,
+      "aep": 5558.6707,
+      "pct": -0.0385,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 7,
+      "aep": 5561.0149,
+      "pct": 0.0037,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 1
+    },
+    {
+      "iter": 8,
+      "aep": 5561.8899,
+      "pct": 0.0194,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 9,
+      "aep": 5561.1994,
+      "pct": 0.007,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 7
+    },
+    {
+      "iter": 10,
+      "aep": 5558.5407,
+      "pct": -0.0408,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 11,
+      "aep": 5558.2551,
+      "pct": -0.046,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 9
+    },
+    {
+      "iter": 12,
+      "aep": 5558.0547,
+      "pct": -0.0496,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 13,
+      "aep": 5561.3561,
+      "pct": 0.0098,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 8
+    },
+    {
+      "iter": 14,
+      "aep": 5559.6299,
+      "pct": -0.0212,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 15,
+      "aep": 5561.2548,
+      "pct": 0.008,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 5
+    },
+    {
+      "iter": 16,
+      "aep": 5559.8388,
+      "pct": -0.0175,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 5
+    },
+    {
+      "iter": 17,
+      "aep": 5560.5515,
+      "pct": -0.0047,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 18,
+      "aep": 5560.3896,
+      "pct": -0.0076,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 19,
+      "aep": 5560.9863,
+      "pct": 0.0032,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 20,
+      "aep": 5560.1984,
+      "pct": -0.011,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 5
+    },
+    {
+      "iter": 21,
+      "aep": 5560.8086,
+      "pct": -0.0,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 22,
+      "aep": 5560.6082,
+      "pct": -0.0036,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 23,
+      "aep": 5558.8382,
+      "pct": -0.0355,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 8
+    },
+    {
+      "iter": 24,
+      "aep": 5563.6353,
+      "pct": 0.0508,
+      "feasible": false,
+      "viol": 10.089846,
+      "parent": 0
+    },
+    {
+      "iter": 25,
+      "aep": 5560.1559,
+      "pct": -0.0118,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 26,
+      "aep": 5559.8195,
+      "pct": -0.0178,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 27,
+      "aep": 5559.2626,
+      "pct": -0.0278,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 13
+    },
+    {
+      "iter": 28,
+      "aep": 5560.6656,
+      "pct": -0.0026,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 29,
+      "aep": 5561.5216,
+      "pct": 0.0128,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 30,
+      "aep": 5562.672,
+      "pct": 0.0335,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 31,
+      "aep": 5559.2685,
+      "pct": -0.0277,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 32,
+      "aep": 5559.5206,
+      "pct": -0.0232,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 33,
+      "aep": 5560.4785,
+      "pct": -0.006,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 34,
+      "aep": 5562.0239,
+      "pct": 0.0218,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 35,
+      "aep": 5560.3197,
+      "pct": -0.0088,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 36,
+      "aep": 5561.435,
+      "pct": 0.0112,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 37,
+      "aep": 5560.8648,
+      "pct": 0.001,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    }
+  ],
+  "best_feasible": {
+    "pct": 0.0390702050089946,
+    "aep": 5562.982959999999,
+    "iter": 0
+  },
+  "pool": [
+    {
+      "pct": 0.0390702050089946,
+      "iter": 0
+    },
+    {
+      "pct": 0.03347821425609858,
+      "iter": 30
+    },
+    {
+      "pct": 0.021823438056694146,
+      "iter": 34
+    },
+    {
+      "pct": 0.0194,
+      "iter": 8
+    },
+    {
+      "pct": 0.014,
+      "iter": 2
+    },
+    {
+      "pct": 0.012790222225051362,
+      "iter": 29
+    }
+  ]
+}

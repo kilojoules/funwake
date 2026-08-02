@@ -1,0 +1,105 @@
+{
+  "cell": "dei_n50",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "baseline_mean": 5560.81034,
+  "prior_art": true,
+  "trajectory": [
+    {
+      "iter": 1,
+      "aep": 5560.535,
+      "pct": -0.005,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.005
+    },
+    {
+      "iter": 2,
+      "aep": 5560.5273,
+      "pct": -0.0051,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0051
+    },
+    {
+      "iter": 3,
+      "aep": 5559.9395,
+      "pct": -0.0157,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0157
+    },
+    {
+      "iter": 4,
+      "aep": 5562.983,
+      "pct": 0.0391,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": 0.0391
+    },
+    {
+      "iter": 5,
+      "aep": 5560.0862,
+      "pct": -0.013,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.013
+    },
+    {
+      "iter": 6,
+      "aep": 5560.46,
+      "pct": -0.0063,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0063
+    },
+    {
+      "iter": 7,
+      "aep": 5560.8407,
+      "pct": 0.0005,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": 0.0005
+    },
+    {
+      "iter": 8,
+      "aep": 5561.0396,
+      "pct": 0.0041,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": 0.0041
+    },
+    {
+      "iter": 9,
+      "aep": 5559.7825,
+      "pct": -0.0185,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0185
+    },
+    {
+      "iter": 10,
+      "aep": 5561.6834,
+      "pct": 0.0157,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": 0.0157
+    }
+  ],
+  "best_feasible": {
+    "pct": 0.0390702050089946,
+    "aep": 5562.982959999999,
+    "iter": 4
+  },
+  "final_parent": {
+    "pct": 0.0390702050089946,
+    "viol": 0.0,
+    "feas": true,
+    "iter": 4
+  }
+}

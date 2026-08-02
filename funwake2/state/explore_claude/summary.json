@@ -1,0 +1,63 @@
+{
+  "cell": "dei_n50",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "baseline_mean": 5561.377466666668,
+  "prior_art": true,
+  "trajectory": [
+    {
+      "iter": 1,
+      "aep": 5560.4358,
+      "pct": -0.0169,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0169
+    },
+    {
+      "iter": 2,
+      "aep": 5561.6331,
+      "pct": 0.0046,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": 0.0046
+    },
+    {
+      "iter": 3,
+      "aep": 5560.6231,
+      "pct": -0.0136,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0136
+    },
+    {
+      "iter": 4,
+      "aep": 5560.6231,
+      "pct": -0.0136,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0136
+    },
+    {
+      "iter": 5,
+      "aep": 5560.018,
+      "pct": -0.0244,
+      "feasible": true,
+      "viol": 0.0,
+      "merit": -0.0244
+    }
+  ],
+  "best_feasible": {
+    "pct": 0.004595983666467324,
+    "aep": 5561.633066666666,
+    "iter": 2
+  },
+  "final_parent": {
+    "pct": 0.004595983666467324,
+    "viol": 0.0,
+    "feas": true,
+    "iter": 2
+  }
+}
