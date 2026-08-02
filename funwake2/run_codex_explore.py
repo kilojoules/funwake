@@ -14,6 +14,7 @@ import argparse
 import json
 import os
 import random
+import signal
 import statistics
 import sys
 import time
@@ -65,12 +66,26 @@ def _valid(src):
     return any(getattr(n, "name", "") == "schedule_fn" for n in ast.walk(t))
 
 
-def _score(src, seeds, steps):
+def _score(src, seeds, steps, timeout_s=200):
     path = os.path.join(OUT, "_cand.py")
     with open(path, "w") as f:
         f.write(src)
     fn = E.load_schedule(path)
-    recs = [E.evaluate(CELL, fn, seed=s, total_steps=steps, gamma_min=0.01) for s in seeds]
+    # Watchdog: some candidates compile/run much slower (~5x) than native. Cap the
+    # whole per-candidate eval so one pathological schedule can't stall the run —
+    # a timeout raises, the caller catches it (logged eval-error) and moves on.
+    have_alarm = hasattr(signal, "SIGALRM")
+    if have_alarm:
+        def _to(signum, frame):
+            raise TimeoutError(f"eval > {timeout_s}s ({len(seeds)} seeds)")
+        _old = signal.signal(signal.SIGALRM, _to)
+        signal.alarm(int(timeout_s))
+    try:
+        recs = [E.evaluate(CELL, fn, seed=s, total_steps=steps, gamma_min=0.01) for s in seeds]
+    finally:
+        if have_alarm:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, _old)
     aeps = [r["aep_gwh"] for r in recs]
     feas = all(r["feasible"] for r in recs)
     ms = float(recs[0].get("min_spacing") or 0.0)
@@ -263,7 +278,13 @@ def main():
             _ckpt(); continue
         with open(os.path.join(OUT, f"iter_{it:03d}.py"), "w") as f:
             f.write(child)
-        sc = _score(child, args.seeds, args.steps)
+        try:                               # a candidate can parse yet raise at eval
+            sc = _score(child, args.seeds, args.steps)
+        except Exception as e:             # (e.g. float(alpha0) inside the jit loop)
+            print(f"[{args.engine}] iter {it}: EVAL ERROR "
+                  f"({type(e).__name__}: {str(e)[:70]}) [{time.time()-t0:.0f}s]", flush=True)
+            traj.append({"iter": it, "status": "eval-error", "parent": parent["iter"]})
+            _ckpt(); continue
         sc["pct"] = 100.0 * (sc["aep"] - base_mean) / base_mean
         sc["src"], sc["iter"] = child, it
         tag = "FEAS" if sc["feas"] else f"infeas(v={sc['viol']:.1e})"
