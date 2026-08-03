@@ -67,10 +67,23 @@ class GeminiCLIEngine(Engine):
 def _build_prompt(ctx: EvoContext) -> str:
     fit = "\n".join(f"  {c}: {v}" for c, v in sorted(ctx.per_cell_fitness.items()))
     return (
-        "Evolve this TopFarm-SGD schedule_fn(step, total_steps, D, min_spacing, "
-        "n_turbines, gamma_min, alpha0). Return ONLY a Python code block defining "
-        "schedule_fn.\n\n```python\n" + ctx.parent_source + "\n```\n\n"
-        f"Parent per-cell fitness (%-over-baseline; feasibility only):\n{fit}\n")
+        "You are evolving a TopFarm-SGD learning-rate/penalty schedule for a wind-"
+        "farm layout optimizer. A fixed Adam skeleton calls your function each step "
+        "and does the rest; you ONLY choose (lr, alpha, beta1, beta2).\n\n"
+        "Return ONE improved, self-contained Python module that defines ONLY:\n"
+        "  def schedule_fn(step, total_steps, D, min_spacing, n_turbines, gamma_min, alpha0):\n"
+        "      ... ; return lr, alpha, beta1, beta2\n"
+        "Rules: build the exploration learning rate from the rotor diameter D (no "
+        "hardcoded lr0); decay lr toward gamma_min (the metre-valued tolerance); "
+        "alpha0 = mean|grad J|/D is supplied; use jax.numpy (import jax.numpy as jnp) "
+        "and keep it traceable (no Python branches on step). IMPORTANT: do NOT call "
+        "float()/int() on step or alpha0 — they are traced JAX values inside the jit "
+        "loop; use jnp arithmetic (jnp.asarray to cast). Output ONLY the code in a "
+        "single ```python block; do not run anything or use any tools.\n\n"
+        f"Parent schedule (generation {ctx.generation}):\n```python\n"
+        + ctx.parent_source + "\n```\n\n"
+        f"Parent per-cell fitness (%-over-baseline; feasibility booleans; AEP "
+        f"firewalled):\n{fit}\n\n{ctx.notes}\n")
 
 
 def _parse_tokens(out: str, prompt: str):
