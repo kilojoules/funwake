@@ -1,0 +1,1075 @@
+{
+  "cell": "dei_n50",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "baseline_mean": 5560.81034,
+  "prior_art": true,
+  "engine": "antigravity",
+  "trajectory": [
+    {
+      "iter": 1,
+      "aep": 5563.5113,
+      "pct": 0.0486,
+      "feasible": false,
+      "viol": 0.194129,
+      "parent": 0
+    },
+    {
+      "iter": 2,
+      "aep": 5559.5445,
+      "pct": -0.0228,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 3,
+      "aep": 5559.7818,
+      "pct": -0.0185,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 2
+    },
+    {
+      "iter": 4,
+      "aep": 5560.8944,
+      "pct": 0.0015,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 3
+    },
+    {
+      "iter": 5,
+      "aep": 5560.5756,
+      "pct": -0.0042,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 4
+    },
+    {
+      "iter": 6,
+      "aep": 5561.3139,
+      "pct": 0.0091,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 4
+    },
+    {
+      "iter": 7,
+      "aep": 5561.3182,
+      "pct": 0.0091,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 3
+    },
+    {
+      "iter": 8,
+      "aep": 5561.7612,
+      "pct": 0.0171,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 7
+    },
+    {
+      "iter": 9,
+      "aep": 5558.3646,
+      "pct": -0.044,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 5
+    },
+    {
+      "iter": 10,
+      "aep": 5559.4009,
+      "pct": -0.0253,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 8
+    },
+    {
+      "iter": 11,
+      "aep": 5563.6427,
+      "pct": 0.0509,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 5
+    },
+    {
+      "iter": 12,
+      "aep": 5561.3309,
+      "pct": 0.0094,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 13,
+      "aep": 5561.8615,
+      "pct": 0.0189,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 8
+    },
+    {
+      "iter": 14,
+      "aep": 5563.5952,
+      "pct": 0.0501,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 15,
+      "aep": 5562.5516,
+      "pct": 0.0313,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 8
+    },
+    {
+      "iter": 16,
+      "aep": 5561.8877,
+      "pct": 0.0194,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 13
+    },
+    {
+      "iter": 17,
+      "aep": 5562.2971,
+      "pct": 0.0267,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 18,
+      "aep": 5562.6389,
+      "pct": 0.0329,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 19,
+      "aep": 5561.2112,
+      "pct": 0.0072,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 20,
+      "aep": 5562.2587,
+      "pct": 0.026,
+      "feasible": false,
+      "viol": 0.005322,
+      "parent": 15
+    },
+    {
+      "iter": 21,
+      "aep": 5562.0298,
+      "pct": 0.0219,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 22,
+      "aep": 5560.7268,
+      "pct": -0.0015,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 23,
+      "aep": 5561.4513,
+      "pct": 0.0115,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 14
+    },
+    {
+      "iter": 24,
+      "aep": 5561.3322,
+      "pct": 0.0094,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 25,
+      "aep": 5562.4334,
+      "pct": 0.0292,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 26,
+      "aep": 5563.3938,
+      "pct": 0.0465,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 27,
+      "aep": 5560.6583,
+      "pct": -0.0027,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 15
+    },
+    {
+      "iter": 28,
+      "aep": 5560.5046,
+      "pct": -0.0055,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 29,
+      "aep": 5560.5146,
+      "pct": -0.0053,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 30,
+      "aep": 5562.3992,
+      "pct": 0.0286,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 31,
+      "aep": 5561.0189,
+      "pct": 0.0038,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 32,
+      "aep": 5560.3963,
+      "pct": -0.0074,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 33,
+      "aep": 5559.5792,
+      "pct": -0.0221,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 34,
+      "aep": 5561.4482,
+      "pct": 0.0115,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 35,
+      "aep": 5561.6648,
+      "pct": 0.0154,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 36,
+      "aep": 5560.9995,
+      "pct": 0.0034,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 37,
+      "aep": 5562.1284,
+      "pct": 0.0237,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 38,
+      "aep": 5560.4599,
+      "pct": -0.0063,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 39,
+      "aep": 5560.1284,
+      "pct": -0.0123,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 40,
+      "aep": 5560.9134,
+      "pct": 0.0019,
+      "feasible": false,
+      "viol": 0.162412,
+      "parent": 11
+    },
+    {
+      "iter": 41,
+      "aep": 5559.4564,
+      "pct": -0.0243,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 42,
+      "aep": 5561.5015,
+      "pct": 0.0124,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 43,
+      "aep": 5563.2685,
+      "pct": 0.0442,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 44,
+      "aep": 5560.7929,
+      "pct": -0.0003,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 18
+    },
+    {
+      "iter": 45,
+      "aep": 5561.8136,
+      "pct": 0.018,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 46,
+      "aep": 5560.4259,
+      "pct": -0.0069,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 47,
+      "aep": 5561.6706,
+      "pct": 0.0155,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 48,
+      "aep": 5560.3893,
+      "pct": -0.0076,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 49,
+      "aep": 5561.1308,
+      "pct": 0.0058,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 15
+    },
+    {
+      "iter": 50,
+      "aep": 5561.4582,
+      "pct": 0.0117,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 51,
+      "aep": 5559.6959,
+      "pct": -0.02,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 52,
+      "aep": 5560.9553,
+      "pct": 0.0026,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 53,
+      "aep": 5561.0537,
+      "pct": 0.0044,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 18
+    },
+    {
+      "iter": 54,
+      "aep": 5561.3774,
+      "pct": 0.0102,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 55,
+      "aep": 5560.7312,
+      "pct": -0.0014,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 56,
+      "aep": 5560.5126,
+      "pct": -0.0054,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 57,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 58,
+      "aep": 5561.603,
+      "pct": 0.0143,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 59,
+      "aep": 5562.7149,
+      "pct": 0.0342,
+      "feasible": false,
+      "viol": 1.433497,
+      "parent": 26
+    },
+    {
+      "iter": 60,
+      "aep": 5561.2097,
+      "pct": 0.0072,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 61,
+      "aep": 5560.8371,
+      "pct": 0.0005,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 62,
+      "aep": 5560.4027,
+      "pct": -0.0073,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 14
+    },
+    {
+      "iter": 63,
+      "aep": 5562.0929,
+      "pct": 0.0231,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 64,
+      "aep": 5562.3712,
+      "pct": 0.0281,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 65,
+      "aep": 5560.1309,
+      "pct": -0.0122,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 66,
+      "aep": 5561.4673,
+      "pct": 0.0118,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 67,
+      "aep": 5559.2112,
+      "pct": -0.0288,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 14
+    },
+    {
+      "iter": 68,
+      "aep": 5561.6482,
+      "pct": 0.0151,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 26
+    },
+    {
+      "iter": 69,
+      "aep": 5561.4243,
+      "pct": 0.011,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 43
+    },
+    {
+      "iter": 70,
+      "aep": 5560.2555,
+      "pct": -0.01,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 71,
+      "aep": 5560.4518,
+      "pct": -0.0064,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 72,
+      "aep": 5562.1469,
+      "pct": 0.024,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 0
+    },
+    {
+      "iter": 73,
+      "aep": 5560.3462,
+      "pct": -0.0083,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 74,
+      "aep": 5560.8076,
+      "pct": -0.0,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 75,
+      "aep": 5561.579,
+      "pct": 0.0138,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 76,
+      "aep": 5562.3167,
+      "pct": 0.0271,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 77,
+      "aep": 5561.7109,
+      "pct": 0.0162,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 78,
+      "aep": 5560.9684,
+      "pct": 0.0028,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 79,
+      "aep": 5561.5685,
+      "pct": 0.0136,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 80,
+      "aep": 5561.1893,
+      "pct": 0.0068,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 81,
+      "aep": 5555.4862,
+      "pct": -0.0957,
+      "feasible": false,
+      "viol": 0.025353,
+      "parent": 26
+    },
+    {
+      "iter": 82,
+      "aep": 5559.4439,
+      "pct": -0.0246,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 83,
+      "aep": 5561.1224,
+      "pct": 0.0056,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 84,
+      "aep": 5558.5047,
+      "pct": -0.0415,
+      "feasible": false,
+      "viol": 1.586112,
+      "parent": 0
+    },
+    {
+      "iter": 85,
+      "aep": 5561.3662,
+      "pct": 0.01,
+      "feasible": false,
+      "viol": 2.855466,
+      "parent": 11
+    },
+    {
+      "iter": 86,
+      "aep": 5559.98,
+      "pct": -0.0149,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 15
+    },
+    {
+      "iter": 87,
+      "aep": 5560.2319,
+      "pct": -0.0104,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 88,
+      "aep": 5561.264,
+      "pct": 0.0082,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 89,
+      "aep": 5559.2548,
+      "pct": -0.028,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 90,
+      "aep": 5562.361,
+      "pct": 0.0279,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 15
+    },
+    {
+      "iter": 91,
+      "aep": 5561.9385,
+      "pct": 0.0203,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 15
+    },
+    {
+      "iter": 92,
+      "aep": 5560.6669,
+      "pct": -0.0026,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 93,
+      "aep": 5559.8217,
+      "pct": -0.0178,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 11
+    },
+    {
+      "iter": 94,
+      "aep": 5558.6615,
+      "pct": -0.0386,
+      "feasible": true,
+      "viol": 0.0,
+      "parent": 43
+    },
+    {
+      "iter": 95,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 96,
+      "status": "invalid",
+      "parent": 0
+    },
+    {
+      "iter": 97,
+      "status": "invalid",
+      "parent": 15
+    },
+    {
+      "iter": 98,
+      "status": "invalid",
+      "parent": 14
+    },
+    {
+      "iter": 99,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 100,
+      "status": "invalid",
+      "parent": 26
+    },
+    {
+      "iter": 101,
+      "status": "invalid",
+      "parent": 26
+    },
+    {
+      "iter": 102,
+      "status": "invalid",
+      "parent": 14
+    },
+    {
+      "iter": 103,
+      "status": "invalid",
+      "parent": 18
+    },
+    {
+      "iter": 104,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 105,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 106,
+      "status": "invalid",
+      "parent": 26
+    },
+    {
+      "iter": 107,
+      "status": "invalid",
+      "parent": 18
+    },
+    {
+      "iter": 108,
+      "status": "invalid",
+      "parent": 0
+    },
+    {
+      "iter": 109,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 110,
+      "status": "invalid",
+      "parent": 26
+    },
+    {
+      "iter": 111,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 112,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 113,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 114,
+      "status": "invalid",
+      "parent": 14
+    },
+    {
+      "iter": 115,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 116,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 117,
+      "status": "invalid",
+      "parent": 43
+    },
+    {
+      "iter": 118,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 119,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 120,
+      "status": "invalid",
+      "parent": 0
+    },
+    {
+      "iter": 121,
+      "status": "invalid",
+      "parent": 15
+    },
+    {
+      "iter": 122,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 123,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 124,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 125,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 126,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 127,
+      "status": "invalid",
+      "parent": 15
+    },
+    {
+      "iter": 128,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 129,
+      "status": "invalid",
+      "parent": 14
+    },
+    {
+      "iter": 130,
+      "status": "invalid",
+      "parent": 15
+    },
+    {
+      "iter": 131,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 132,
+      "status": "invalid",
+      "parent": 0
+    },
+    {
+      "iter": 133,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 134,
+      "status": "invalid",
+      "parent": 26
+    },
+    {
+      "iter": 135,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 136,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 137,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 138,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 139,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 140,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 141,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 142,
+      "status": "invalid",
+      "parent": 15
+    },
+    {
+      "iter": 143,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 144,
+      "status": "invalid",
+      "parent": 0
+    },
+    {
+      "iter": 145,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 146,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 147,
+      "status": "invalid",
+      "parent": 43
+    },
+    {
+      "iter": 148,
+      "status": "invalid",
+      "parent": 43
+    },
+    {
+      "iter": 149,
+      "status": "invalid",
+      "parent": 11
+    },
+    {
+      "iter": 150,
+      "status": "invalid",
+      "parent": 11
+    }
+  ],
+  "best_feasible": {
+    "pct": 0.05093466287864495,
+    "aep": 5563.64272,
+    "iter": 11
+  },
+  "pool": [
+    {
+      "pct": 0.05093466287864495,
+      "iter": 11
+    },
+    {
+      "pct": 0.05008083048559001,
+      "iter": 14
+    },
+    {
+      "pct": 0.04645905618136458,
+      "iter": 26
+    },
+    {
+      "pct": 0.04420434882158264,
+      "iter": 43
+    },
+    {
+      "pct": 0.032883696587282345,
+      "iter": 18
+    },
+    {
+      "pct": 0.031313062189434304,
+      "iter": 15
+    }
+  ]
+}
