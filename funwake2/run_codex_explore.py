@@ -31,10 +31,12 @@ from funwake2.controller.engines.base import EvoContext         # noqa: E402
 from funwake2.controller.engines.codex_cli import CodexCLIEngine  # noqa: E402
 from funwake2.controller.engines.claude_cli import ClaudeCLIEngine  # noqa: E402
 from funwake2.controller.engines.gemini_cli import GeminiCLIEngine  # noqa: E402
+from funwake2.controller.engines.antigravity_cli import AntigravityCLIEngine  # noqa: E402
 
 _ENGINES = {"codex": (CodexCLIEngine, "gpt-5.5"),
             "claude": (ClaudeCLIEngine, "claude-opus-4-8"),
-            "gemini": (GeminiCLIEngine, "gemini-2.5-flash")}
+            "gemini": (GeminiCLIEngine, "gemini-2.5-flash"),
+            "antigravity": (AntigravityCLIEngine, "Gemini 3.1 Pro (High)")}
 
 OUT = os.path.join(_THIS, "state", "codex_explore")
 CELL = "dei_n50"
