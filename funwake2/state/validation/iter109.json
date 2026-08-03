@@ -1,0 +1,437 @@
+{
+  "cand": "funwake2/state/seed_claude150_iter109.py",
+  "cells": {
+    "dei_n50@10": {
+      "cell": "dei_n50",
+      "n_seeds": 10,
+      "cand_mean": 5562.8646,
+      "native_mean": 5560.3928,
+      "delta_pct": 0.0445,
+      "cand_feasible": "10/10",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "rows": [
+        {
+          "seed": 0,
+          "cand_aep": 5566.4494,
+          "cand_feas": true,
+          "native_aep": 5560.549,
+          "native_feas": true,
+          "delta": 5.9004
+        },
+        {
+          "seed": 1,
+          "cand_aep": 5564.515,
+          "cand_feas": true,
+          "native_aep": 5562.9503,
+          "native_feas": true,
+          "delta": 1.5647
+        },
+        {
+          "seed": 2,
+          "cand_aep": 5564.939,
+          "cand_feas": true,
+          "native_aep": 5560.6331,
+          "native_feas": true,
+          "delta": 4.3059
+        },
+        {
+          "seed": 3,
+          "cand_aep": 5560.5531,
+          "cand_feas": true,
+          "native_aep": 5560.126,
+          "native_feas": true,
+          "delta": 0.4271
+        },
+        {
+          "seed": 4,
+          "cand_aep": 5563.6478,
+          "cand_feas": true,
+          "native_aep": 5559.7933,
+          "native_feas": true,
+          "delta": 3.8545
+        },
+        {
+          "seed": 5,
+          "cand_aep": 5561.4517,
+          "cand_feas": true,
+          "native_aep": 5559.3432,
+          "native_feas": true,
+          "delta": 2.1085
+        },
+        {
+          "seed": 6,
+          "cand_aep": 5560.9187,
+          "cand_feas": true,
+          "native_aep": 5561.4192,
+          "native_feas": true,
+          "delta": -0.5005
+        },
+        {
+          "seed": 7,
+          "cand_aep": 5560.9792,
+          "cand_feas": true,
+          "native_aep": 5562.2107,
+          "native_feas": true,
+          "delta": -1.2315
+        },
+        {
+          "seed": 8,
+          "cand_aep": 5564.3209,
+          "cand_feas": true,
+          "native_aep": 5557.6346,
+          "native_feas": true,
+          "delta": 6.6863
+        },
+        {
+          "seed": 9,
+          "cand_aep": 5560.8713,
+          "cand_feas": true,
+          "native_aep": 5559.2685,
+          "native_feas": true,
+          "delta": 1.6028
+        }
+      ]
+    },
+    "rowp_n74@10": {
+      "cell": "rowp_n74",
+      "n_seeds": 10,
+      "cand_mean": 4265.5609,
+      "native_mean": 4261.7122,
+      "delta_pct": 0.0903,
+      "cand_feasible": "10/10",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "rows": [
+        {
+          "seed": 0,
+          "cand_aep": 4262.8891,
+          "cand_feas": true,
+          "native_aep": 4258.7273,
+          "native_feas": true,
+          "delta": 4.1618
+        },
+        {
+          "seed": 1,
+          "cand_aep": 4267.5361,
+          "cand_feas": true,
+          "native_aep": 4263.135,
+          "native_feas": true,
+          "delta": 4.4011
+        },
+        {
+          "seed": 2,
+          "cand_aep": 4267.4784,
+          "cand_feas": true,
+          "native_aep": 4256.3755,
+          "native_feas": true,
+          "delta": 11.1029
+        },
+        {
+          "seed": 3,
+          "cand_aep": 4264.2677,
+          "cand_feas": true,
+          "native_aep": 4260.915,
+          "native_feas": true,
+          "delta": 3.3527
+        },
+        {
+          "seed": 4,
+          "cand_aep": 4264.0103,
+          "cand_feas": true,
+          "native_aep": 4262.3389,
+          "native_feas": true,
+          "delta": 1.6714
+        },
+        {
+          "seed": 5,
+          "cand_aep": 4265.1338,
+          "cand_feas": true,
+          "native_aep": 4260.7518,
+          "native_feas": true,
+          "delta": 4.382
+        },
+        {
+          "seed": 6,
+          "cand_aep": 4266.6111,
+          "cand_feas": true,
+          "native_aep": 4264.2173,
+          "native_feas": true,
+          "delta": 2.3938
+        },
+        {
+          "seed": 7,
+          "cand_aep": 4269.3054,
+          "cand_feas": true,
+          "native_aep": 4263.9245,
+          "native_feas": true,
+          "delta": 5.3809
+        },
+        {
+          "seed": 8,
+          "cand_aep": 4266.0203,
+          "cand_feas": true,
+          "native_aep": 4263.4463,
+          "native_feas": true,
+          "delta": 2.574
+        },
+        {
+          "seed": 9,
+          "cand_aep": 4262.3567,
+          "cand_feas": true,
+          "native_aep": 4263.2905,
+          "native_feas": true,
+          "delta": -0.9338
+        }
+      ]
+    },
+    "parque_n20@5": {
+      "cell": "parque_n20",
+      "n_seeds": 5,
+      "cand_mean": 229.1171,
+      "native_mean": 231.7318,
+      "delta_pct": -1.1283,
+      "cand_feasible": "5/5",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "rows": [
+        {
+          "seed": 0,
+          "cand_aep": 229.278,
+          "cand_feas": true,
+          "native_aep": 232.9971,
+          "native_feas": true,
+          "delta": -3.7191
+        },
+        {
+          "seed": 1,
+          "cand_aep": 228.8881,
+          "cand_feas": true,
+          "native_aep": 231.3747,
+          "native_feas": true,
+          "delta": -2.4866
+        },
+        {
+          "seed": 2,
+          "cand_aep": 229.4142,
+          "cand_feas": true,
+          "native_aep": 230.7143,
+          "native_feas": true,
+          "delta": -1.3001
+        },
+        {
+          "seed": 3,
+          "cand_aep": 228.2578,
+          "cand_feas": true,
+          "native_aep": 231.4185,
+          "native_feas": true,
+          "delta": -3.1607
+        },
+        {
+          "seed": 4,
+          "cand_aep": 229.7472,
+          "cand_feas": true,
+          "native_aep": 232.1543,
+          "native_feas": true,
+          "delta": -2.4071
+        }
+      ]
+    },
+    "parque_n10_omnidir@5": {
+      "cell": "parque_n10_omnidir",
+      "n_seeds": 5,
+      "cand_mean": 126.8012,
+      "native_mean": 127.1227,
+      "delta_pct": -0.2529,
+      "cand_feasible": "5/5",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "rows": [
+        {
+          "seed": 0,
+          "cand_aep": 126.7406,
+          "cand_feas": true,
+          "native_aep": 126.7993,
+          "native_feas": true,
+          "delta": -0.0587
+        },
+        {
+          "seed": 1,
+          "cand_aep": 126.7456,
+          "cand_feas": true,
+          "native_aep": 127.7005,
+          "native_feas": true,
+          "delta": -0.9549
+        },
+        {
+          "seed": 2,
+          "cand_aep": 126.8052,
+          "cand_feas": true,
+          "native_aep": 127.0007,
+          "native_feas": true,
+          "delta": -0.1955
+        },
+        {
+          "seed": 3,
+          "cand_aep": 126.618,
+          "cand_feas": true,
+          "native_aep": 126.9407,
+          "native_feas": true,
+          "delta": -0.3227
+        },
+        {
+          "seed": 4,
+          "cand_aep": 127.0968,
+          "cand_feas": true,
+          "native_aep": 127.1722,
+          "native_feas": true,
+          "delta": -0.0754
+        }
+      ]
+    },
+    "dei_n80_omnidir@5": {
+      "cell": "dei_n80_omnidir",
+      "n_seeds": 5,
+      "cand_mean": 8821.0633,
+      "native_mean": 8818.1363,
+      "delta_pct": 0.0332,
+      "cand_feasible": "5/5",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "rows": [
+        {
+          "seed": 0,
+          "cand_aep": 8821.2581,
+          "cand_feas": true,
+          "native_aep": 8819.4495,
+          "native_feas": true,
+          "delta": 1.8086
+        },
+        {
+          "seed": 1,
+          "cand_aep": 8826.427,
+          "cand_feas": true,
+          "native_aep": 8811.1467,
+          "native_feas": true,
+          "delta": 15.2803
+        },
+        {
+          "seed": 2,
+          "cand_aep": 8817.2736,
+          "cand_feas": true,
+          "native_aep": 8821.4988,
+          "native_feas": true,
+          "delta": -4.2252
+        },
+        {
+          "seed": 3,
+          "cand_aep": 8819.9381,
+          "cand_feas": true,
+          "native_aep": 8816.9537,
+          "native_feas": true,
+          "delta": 2.9844
+        },
+        {
+          "seed": 4,
+          "cand_aep": 8820.4195,
+          "cand_feas": true,
+          "native_aep": 8821.6326,
+          "native_feas": true,
+          "delta": -1.2131
+        }
+      ]
+    },
+    "dei_n50_uniform@5": {
+      "cell": "dei_n50_uniform",
+      "n_seeds": 5,
+      "cand_mean": 5591.7907,
+      "native_mean": 5598.199,
+      "delta_pct": -0.1145,
+      "cand_feasible": "4/5",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "rows": [
+        {
+          "seed": 0,
+          "cand_aep": 5592.2484,
+          "cand_feas": false,
+          "native_aep": 5599.4271,
+          "native_feas": true,
+          "delta": -7.1787
+        },
+        {
+          "seed": 1,
+          "cand_aep": 5593.2425,
+          "cand_feas": true,
+          "native_aep": 5599.2072,
+          "native_feas": true,
+          "delta": -5.9647
+        },
+        {
+          "seed": 2,
+          "cand_aep": 5593.2251,
+          "cand_feas": true,
+          "native_aep": 5597.2381,
+          "native_feas": true,
+          "delta": -4.013
+        },
+        {
+          "seed": 3,
+          "cand_aep": 5591.1517,
+          "cand_feas": true,
+          "native_aep": 5599.1845,
+          "native_feas": true,
+          "delta": -8.0328
+        },
+        {
+          "seed": 4,
+          "cand_aep": 5589.0859,
+          "cand_feas": true,
+          "native_aep": 5595.9381,
+          "native_feas": true,
+          "delta": -6.8522
+        }
+      ]
+    }
+  }
+}
