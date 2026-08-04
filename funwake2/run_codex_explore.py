@@ -255,7 +255,15 @@ def main():
                    "pool": [{"pct": p["pct"], "iter": p["iter"]} for p in pool]},
                   open(ckpt_path, "w"), indent=2)
 
-    for it in range(start_it, args.iters + 1):
+    # Budget is measured in REAL scored attempts (traj holds only those). A mutation
+    # that returns no code (e.g. a rate-limited CLI) neither consumes the budget nor
+    # spins the loop: consecutive failures back off exponentially, and a long run of
+    # them aborts this python invocation (the outer run_gen loop can re-resume later).
+    # `it` is a monotonic index for iter_NNN.py filenames / parent selection.
+    it = max((x.get("iter", 0) for x in traj), default=0) + 1
+    consec_invalid = 0
+    GIVE_UP = 15
+    while len(traj) < args.iters:
         rng = random.Random(f"parent:{it}")
         if it % args.restart_every == 0:        # explore a fresh basin
             parent = native_state
@@ -274,10 +282,19 @@ def main():
         res = eng.mutate(ctx)
         child = res.source
         if not child or not _valid(child):
+            consec_invalid += 1
+            backoff = min(120, 5 * 2 ** min(consec_invalid - 1, 5))   # 5,10,20,40,80,120..
             print(f"[{args.engine}] iter {it}: no valid schedule ({res.log.error[:50]}) "
-                  f"[{time.time()-t0:.0f}s]", flush=True)
-            traj.append({"iter": it, "status": "invalid", "parent": parent["iter"]})
-            _ckpt(); continue
+                  f"[{time.time()-t0:.0f}s] invalid#{consec_invalid} backoff {backoff}s "
+                  f"(does NOT consume budget)", flush=True)
+            it += 1
+            if consec_invalid >= GIVE_UP:
+                print(f"[{args.engine}] {GIVE_UP} consecutive mutation failures "
+                      f"(engine throttled/down?) — aborting this run; resume later.", flush=True)
+                break
+            time.sleep(backoff)
+            continue
+        consec_invalid = 0
         with open(os.path.join(OUT, f"iter_{it:03d}.py"), "w") as f:
             f.write(child)
         try:                               # a candidate can parse yet raise at eval
@@ -286,7 +303,7 @@ def main():
             print(f"[{args.engine}] iter {it}: EVAL ERROR "
                   f"({type(e).__name__}: {str(e)[:70]}) [{time.time()-t0:.0f}s]", flush=True)
             traj.append({"iter": it, "status": "eval-error", "parent": parent["iter"]})
-            _ckpt(); continue
+            _ckpt(); it += 1; continue
         sc["pct"] = 100.0 * (sc["aep"] - base_mean) / base_mean
         sc["src"], sc["iter"] = child, it
         tag = "FEAS" if sc["feas"] else f"infeas(v={sc['viol']:.1e})"
@@ -300,7 +317,7 @@ def main():
             pool = sorted(pool + [sc], key=lambda p: p["pct"], reverse=True)[:args.pool_k]
             if best is None or sc["pct"] > best["pct"]:
                 best = sc
-        _ckpt()
+        _ckpt(); it += 1
 
     print("\n=== SEARCH DONE ===", flush=True)
     nf = sum(1 for t in traj if t.get("feasible"))
