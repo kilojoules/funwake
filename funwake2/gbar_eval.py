@@ -27,6 +27,14 @@ for _p in (_ROOT, _THIS):
 
 
 def _eval_one(task):
+    # pin each worker to a single thread BEFORE jax imports, so N parallel workers
+    # cleanly use N cores instead of each grabbing all cores (XLA CPU default) and
+    # thrashing. Set at process start (spawn) — effective for this worker's jax.
+    os.environ.setdefault("OMP_NUM_THREADS", "1")
+    os.environ.setdefault("MKL_NUM_THREADS", "1")
+    os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+    os.environ.setdefault("XLA_FLAGS", "--xla_cpu_multi_thread_eigen=false "
+                          "intra_op_parallelism_threads=1")
     cell, seed, sched_path, steps = task
     import evaluator as E                       # imported inside worker (spawn)
     fn = E.load_schedule(sched_path)
