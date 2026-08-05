@@ -25,6 +25,7 @@ import os
 import random
 import signal
 import statistics
+import subprocess
 import sys
 import time
 
@@ -109,6 +110,93 @@ def _score(src, cells, seeds, steps, native, timeout_s=450):
             "n_feas_cells": sum(1 for c in cells if per[c]["feas"]), "per": per}
 
 
+# ---------------------------------------------------------------------------
+# gbar eval backend: dispatch each candidate to a persistent worker on a DTU
+# hpc compute node via a shared-filesystem queue. Same score aggregation, but the
+# 5x3 evals run in parallel there (~one eval's wall-time) instead of sequentially.
+# LLM mutation stays local (firewall). Baselines are gbar-native (same-platform).
+# ---------------------------------------------------------------------------
+_CM = os.path.expanduser("~/.ssh/cm_gbar_funwake")
+_SSH = ["ssh", "-o", "BatchMode=yes", "-o", "ControlMaster=auto",
+        "-o", f"ControlPath={_CM}", "-o", "ControlPersist=600", "-o", "ConnectTimeout=20"]
+_QDIR = "~/funwake/gbar_queue"
+_gbar_ctr = [0]
+
+
+def _aggregate(raw_cells, cells, seeds, native):
+    """Build the same score dict as _score from raw per-(cell,seed) AEP/feasibility."""
+    per = {}
+    for c in cells:
+        cs = raw_cells[c]
+        aeps = [cs[str(s)]["aep"] for s in seeds]
+        feasl = [bool(cs[str(s)]["feasible"]) for s in seeds]
+        feas = all(feasl)
+        cand_mean = statistics.fmean(aeps)
+        nat_mean = statistics.fmean(native[c][s] for s in seeds)
+        ms = float(cs[str(seeds[0])].get("min_spacing") or 0.0)
+        max_bnd = max(float(cs[str(s)].get("boundary_penalty", 0.0) or 0.0) for s in seeds)
+        min_dist = min(float(cs[str(s)].get("min_dist_m", 1e9) or 1e9) for s in seeds)
+        short = max(0.0, (ms - min_dist) / ms) if ms else 0.0
+        per[c] = {"score_c": 100.0 * (cand_mean - nat_mean) / nat_mean, "feas": feas,
+                  "n_feas": sum(1 for x in feasl if x), "max_bnd": max_bnd,
+                  "min_dist": min_dist, "min_spacing": ms,
+                  "viol_c": 0.0 if feas else (max_bnd + short)}
+    all_feas = all(per[c]["feas"] for c in cells)
+    fb_mean = statistics.fmean(per[c]["score_c"] for c in cells)
+    worst = min(per[c]["score_c"] for c in cells)
+    viol = 0.0 if all_feas else sum(per[c]["viol_c"] for c in cells)
+    return {"pct": fb_mean, "worst": worst, "feas": all_feas, "viol": viol,
+            "n_feas_cells": sum(1 for c in cells if per[c]["feas"]), "per": per}
+
+
+def _fetch_gbar_baselines(cells, seeds, host="gbar", wait_s=2400):
+    """Pull the gbar-native baselines (worker bootstraps them on first start)."""
+    t0 = time.time()
+    while time.time() - t0 < wait_s:
+        p = subprocess.run(_SSH + [host, "cat ~/funwake/gbar_native_baselines.json 2>/dev/null"],
+                           capture_output=True, text=True, timeout=60)
+        if p.stdout.strip():
+            try:
+                d = json.loads(p.stdout)
+            except json.JSONDecodeError:
+                time.sleep(10); continue
+            return {c: {s: d["cells"][c][str(s)]["aep"] for s in seeds} for c in cells}
+        print("[gbar] waiting for native baselines (worker bootstrapping)...", flush=True)
+        time.sleep(20)
+    raise RuntimeError("gbar native baselines not ready (worker not started?)")
+
+
+def _score_gbar(src, cells, seeds, steps, native, host="gbar", jobs=15, timeout_s=900):
+    """Dispatch one candidate to the gbar worker; block until scored; aggregate."""
+    _gbar_ctr[0] += 1
+    rid = f"{os.getpid()}_{_gbar_ctr[0]}"
+    req_local = os.path.join(OUT, f"_req_{rid}.py")
+    with open(req_local, "w") as f:
+        f.write(src)
+    # ship atomically: write to a dotfile, then rename into req_<id>.py (worker globs req_*)
+    with open(req_local, "rb") as f:
+        subprocess.run(_SSH + [host, f"cat > {_QDIR}/.tmp_{rid}.py && mv {_QDIR}/.tmp_{rid}.py "
+                               f"{_QDIR}/req_{rid}.py"], stdin=f, check=True, timeout=90)
+    os.remove(req_local)
+    raw = None
+    t0 = time.time()
+    while time.time() - t0 < timeout_s:
+        p = subprocess.run(_SSH + [host, f"cat {_QDIR}/resp_{rid}.json 2>/dev/null"],
+                           capture_output=True, text=True, timeout=60)
+        if p.stdout.strip():
+            try:
+                raw = json.loads(p.stdout)
+                break
+            except json.JSONDecodeError:
+                time.sleep(2); continue
+        time.sleep(3)
+    subprocess.run(_SSH + [host, f"rm -f {_QDIR}/resp_{rid}.json {_QDIR}/req_{rid}.py "
+                           f"{_QDIR}/proc_{rid}.py"], timeout=60)
+    if raw is None:
+        raise TimeoutError(f"gbar eval timeout ({timeout_s}s)")
+    return _aggregate(raw["cells"], cells, seeds, native)
+
+
 def _fb(sc, cells, seeds):
     """Firewall-safe per-cell feedback (training cells only)."""
     out = {}
@@ -150,19 +238,29 @@ def main():
     ap.add_argument("--no-prior-art", dest="prior_art", action="store_false")
     ap.add_argument("--reflect", action="store_true", default=True)
     ap.add_argument("--no-reflect", dest="reflect", action="store_false")
+    ap.add_argument("--eval-backend", dest="eval_backend", choices=["local", "gbar"],
+                    default="local", help="score locally, or dispatch to the gbar worker")
+    ap.add_argument("--gbar-host", dest="gbar_host", default="gbar")
+    ap.add_argument("--gbar-jobs", dest="gbar_jobs", type=int, default=15)
     args = ap.parse_args()
 
     global OUT
     OUT = os.path.join(_THIS, "state", "explore_" + (args.tag or ("port_" + args.engine)))
     os.makedirs(OUT, exist_ok=True)
     cells, seeds = args.cells, args.seeds
-    native = _native(cells, seeds)
+    if args.eval_backend == "gbar":
+        native = _fetch_gbar_baselines(cells, seeds, host=args.gbar_host)
+        def SCORE(src, c, s, st, nat):
+            return _score_gbar(src, c, s, st, nat, host=args.gbar_host, jobs=args.gbar_jobs)
+    else:
+        native = _native(cells, seeds)
+        SCORE = _score
     EngCls, default_model = _ENGINES[args.engine]
     model = args.model or default_model
     scope = os.path.join(OUT, "scope")
     eng = EngCls(model=model, cwd=scope)
     eng.preflight()
-    print(f"[{args.engine}] PORTFOLIO engine={eng.name} model={model}", flush=True)
+    print(f"[{args.engine}] PORTFOLIO engine={eng.name} model={model} backend={args.eval_backend}", flush=True)
     print(f"[{args.engine}] farms={cells} seeds={seeds} (farm-balanced fitness)", flush=True)
 
     native_src = open(os.path.join(_THIS, "seeds", "native.py")).read()
@@ -201,7 +299,7 @@ def main():
               f"best={('%+.4f%%' % best['pct']) if best else 'none'}", flush=True)
     elif args.seed_from:
         seed_src = open(args.seed_from).read()
-        s0 = _score(seed_src, cells, seeds, args.steps, native)
+        s0 = SCORE(seed_src, cells, seeds, args.steps, native)
         s0.update({"src": seed_src, "iter": 0})
         with open(os.path.join(OUT, "iter_000.py"), "w") as f:
             f.write(seed_src)
@@ -296,7 +394,7 @@ def main():
         with open(os.path.join(OUT, f"iter_{it:03d}.py"), "w") as f:
             f.write(child)
         try:
-            sc = _score(child, cells, seeds, args.steps, native)
+            sc = SCORE(child, cells, seeds, args.steps, native)
         except Exception as e:
             print(f"[{args.engine}] iter {it}: EVAL ERROR ({type(e).__name__}: {str(e)[:60]})", flush=True)
             traj.append({"iter": it, "status": "eval-error", "parent": parent["iter"]})
