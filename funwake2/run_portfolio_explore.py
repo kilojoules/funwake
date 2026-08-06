@@ -116,9 +116,9 @@ def _score(src, cells, seeds, steps, native, timeout_s=450):
 # 5x3 evals run in parallel there (~one eval's wall-time) instead of sequentially.
 # LLM mutation stays local (firewall). Baselines are gbar-native (same-platform).
 # ---------------------------------------------------------------------------
-_CM = os.path.expanduser("~/.ssh/cm_gbar_funwake")
-_SSH = ["ssh", "-o", "BatchMode=yes", "-o", "ControlMaster=auto",
-        "-o", f"ControlPath={_CM}", "-o", "ControlPersist=600", "-o", "ConnectTimeout=20"]
+# plain BatchMode SSH (ControlMaster multiplexing tripped on the DTU login banner);
+# each candidate uses ONE blocking SSH that polls server-side for its result.
+_SSH = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=20"]
 _QDIR = "~/funwake/gbar_queue"
 _gbar_ctr = [0]
 
@@ -178,18 +178,18 @@ def _score_gbar(src, cells, seeds, steps, native, host="gbar", jobs=15, timeout_
         subprocess.run(_SSH + [host, f"cat > {_QDIR}/.tmp_{rid}.py && mv {_QDIR}/.tmp_{rid}.py "
                                f"{_QDIR}/req_{rid}.py"], stdin=f, check=True, timeout=90)
     os.remove(req_local)
+    # ONE blocking SSH: poll server-side for the resp, print it when ready
+    poll = (f"for i in $(seq 1 {max(1, timeout_s // 3)}); do "
+            f"if [ -f {_QDIR}/resp_{rid}.json ]; then cat {_QDIR}/resp_{rid}.json; exit 0; fi; "
+            f"sleep 3; done; exit 7")
     raw = None
-    t0 = time.time()
-    while time.time() - t0 < timeout_s:
-        p = subprocess.run(_SSH + [host, f"cat {_QDIR}/resp_{rid}.json 2>/dev/null"],
-                           capture_output=True, text=True, timeout=60)
-        if p.stdout.strip():
-            try:
-                raw = json.loads(p.stdout)
-                break
-            except json.JSONDecodeError:
-                time.sleep(2); continue
-        time.sleep(3)
+    try:
+        p = subprocess.run(_SSH + [host, poll], capture_output=True, text=True,
+                           timeout=timeout_s + 60)
+        if p.returncode == 0 and p.stdout.strip():
+            raw = json.loads(p.stdout)
+    except (subprocess.TimeoutExpired, json.JSONDecodeError):
+        raw = None
     subprocess.run(_SSH + [host, f"rm -f {_QDIR}/resp_{rid}.json {_QDIR}/req_{rid}.py "
                            f"{_QDIR}/proc_{rid}.py"], timeout=60)
     if raw is None:
@@ -279,9 +279,15 @@ def main():
         return open(p).read() if os.path.exists(p) else None
 
     def _mk(t):
+        # trajectory stores per as a flat {cell: score_c}; rebuild the full per-cell
+        # dict shape (score_c/feas/...) that _fb and _note expect (feasible parent).
+        flat = t.get("per", {})
+        per = {c: {"score_c": flat.get(c, 0.0), "feas": True, "n_feas": len(seeds),
+                   "max_bnd": 0.0, "min_dist": None, "min_spacing": None, "viol_c": 0.0}
+               for c in cells}
         return {"src": _iter_src(t["iter"]), "pct": t["pct"], "worst": t.get("worst"),
                 "iter": t["iter"], "feas": True, "viol": 0.0,
-                "n_feas_cells": len(cells), "per": t.get("per", ns["per"])}
+                "n_feas_cells": len(cells), "per": per}
 
     if args.resume and os.path.exists(ckpt_path):
         prev = json.load(open(ckpt_path))

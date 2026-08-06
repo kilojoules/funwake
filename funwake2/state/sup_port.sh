@@ -26,10 +26,11 @@ PY
 while :; do
   n=$(count)
   if [ "$n" -ge "$ITERS" ]; then echo "[sup:port_gbar] $(date '+%m-%d %H:%M:%S') DONE $(stat)" >> "$SLOG"; break; fi
-  # (1) keep the gbar worker alive (resubmit if no RUN/PEND funwake_wk job)
-  if ! $GBAR 'bjobs -J funwake_wk 2>/dev/null | grep -qE "RUN|PEND"' 2>/dev/null; then
+  # (1) keep the gbar worker alive (resubmit if no RUN/PEND funwake_wk job).
+  # Use a LOGIN shell (bash -lc) so the LSF env (bjobs/bsub) is on PATH.
+  if ! $GBAR 'bash -lc "bjobs -J funwake_wk 2>/dev/null | grep -qE \"RUN|PEND\""' 2>/dev/null; then
     echo "[sup:port_gbar] $(date '+%m-%d %H:%M:%S') gbar worker down -> resubmit" >> "$SLOG"
-    $GBAR 'cd ~/funwake && bsub < funwake2/gbar_worker.sh' >> "$SLOG" 2>&1
+    $GBAR 'bash -lc "cd ~/funwake && bsub < funwake2/gbar_worker.sh"' >> "$SLOG" 2>&1
   fi
   # (2) keep the local mutation/dispatch loop alive
   if ! pgrep -f "run_port_loop.sh" >/dev/null 2>&1; then
