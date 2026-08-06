@@ -1,0 +1,453 @@
+[sup:port_gbar] 08-05 13:09:47 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:09:47 loop DEAD -> relaunch detached
+[sup:port_gbar] 08-05 13:09:47 n=0 (no data yet)
+[sup:port_gbar] 08-05 13:14:48 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:14:48 n=0 (no data yet)
+[sup:port_gbar] 08-05 13:19:50 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:19:51 n=1/200 best=+0.0000%(it? worst+0.0000%) allfeas=0/1
+[sup:port_gbar] 08-05 13:24:54 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:24:54 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 13:29:55 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:29:56 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 13:34:57 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:34:57 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 13:39:59 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:39:59 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 13:45:00 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:45:01 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 13:50:02 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:50:03 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 13:55:04 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 13:55:04 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:00:05 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:00:05 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:05:06 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:05:07 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:10:08 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:10:08 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:15:09 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:15:09 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:20:10 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:20:10 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:25:11 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:25:12 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:30:12 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:30:13 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:35:14 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:35:14 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:40:15 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:40:16 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:45:17 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:45:17 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:50:18 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:50:18 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 14:55:19 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 14:55:19 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:00:20 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:00:21 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:05:22 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:05:22 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:10:23 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:10:24 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:15:24 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:15:25 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:20:26 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:20:27 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:25:28 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:25:28 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:30:29 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:30:30 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:35:31 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:35:31 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:40:32 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:40:32 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:45:34 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:45:34 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:50:35 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:50:36 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 15:55:37 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 15:55:37 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:00:38 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:00:38 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:05:39 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:05:39 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:10:40 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:10:41 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:15:42 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:15:42 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:20:43 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:20:44 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:25:44 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:25:45 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:30:46 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:30:46 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:35:47 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:35:47 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:40:48 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:40:49 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:45:49 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:45:50 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:50:51 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:50:51 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 16:55:52 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 16:55:52 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:00:53 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:00:54 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:05:55 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:05:55 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:10:56 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:10:56 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:15:57 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:15:58 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:20:59 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:21:00 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:26:01 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:26:01 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:31:02 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:31:03 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:36:04 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:36:04 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:41:05 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:41:05 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:46:06 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:46:07 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:51:08 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:51:08 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 17:56:09 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 17:56:09 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:01:12 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:01:13 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:06:16 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:06:16 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:11:20 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:11:20 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:16:21 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:16:22 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:21:23 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:21:24 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:26:25 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:26:25 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:31:26 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:31:27 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:36:27 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:36:28 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:41:29 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:41:29 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:46:30 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:46:31 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:51:33 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:51:33 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 18:56:34 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 18:56:35 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:01:36 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:01:36 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:06:37 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:06:37 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:11:38 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:11:39 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:16:40 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:16:40 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:21:41 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:21:41 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:26:42 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:26:43 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:31:44 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:31:44 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:36:45 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:36:45 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:41:46 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:41:47 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:46:48 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:46:48 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:51:49 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:51:50 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 19:56:51 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 19:56:51 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:01:52 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:01:52 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:06:53 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:06:54 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:11:55 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:11:55 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:16:56 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:16:56 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:21:57 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:21:58 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:26:58 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:26:59 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:32:00 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:32:00 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:37:01 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:37:02 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:42:03 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:42:03 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:47:04 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:47:05 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:52:06 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:52:06 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 20:57:07 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 20:57:08 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 21:02:09 gbar worker down -> resubmit
+bash: line 1: bsub: command not found
+[sup:port_gbar] 08-05 21:02:09 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 21:07:11 loop DEAD -> relaunch detached
+[sup:port_gbar] 08-05 21:07:11 n=2/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/2
+[sup:port_gbar] 08-05 21:12:13 n=3/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/3
+[sup:port_gbar] 08-05 21:17:14 n=4/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/4
+[sup:port_gbar] 08-05 21:22:16 n=5/200 best=+0.0157%(it2 worst-0.0914%) allfeas=1/5
+[sup:port_gbar] 08-05 21:27:17 n=6/200 best=+0.1177%(it6 worst+0.0045%) allfeas=2/6
+[sup:port_gbar] 08-05 21:32:19 n=8/200 best=+0.1177%(it6 worst+0.0045%) allfeas=3/8
+[sup:port_gbar] 08-05 21:37:20 n=9/200 best=+0.1177%(it6 worst+0.0045%) allfeas=4/9
+[sup:port_gbar] 08-05 21:42:22 n=10/200 best=+0.1177%(it6 worst+0.0045%) allfeas=4/10
+[sup:port_gbar] 08-05 21:47:24 n=12/200 best=+0.1177%(it6 worst+0.0045%) allfeas=4/12
+[sup:port_gbar] 08-05 21:52:26 n=13/200 best=+0.1177%(it6 worst+0.0045%) allfeas=4/13
+[sup:port_gbar] 08-05 21:57:27 n=14/200 best=+0.1177%(it6 worst+0.0045%) allfeas=5/14
+[sup:port_gbar] 08-05 22:02:30 n=16/200 best=+0.1762%(it16 worst-0.0539%) allfeas=7/16
+[sup:port_gbar] 08-05 22:07:31 n=17/200 best=+0.1762%(it16 worst-0.0539%) allfeas=8/17
+[sup:port_gbar] 08-05 22:12:33 n=18/200 best=+0.1762%(it16 worst-0.0539%) allfeas=9/18
+[sup:port_gbar] 08-05 22:17:34 n=19/200 best=+0.1762%(it16 worst-0.0539%) allfeas=10/19
+[sup:port_gbar] 08-05 22:22:36 n=21/200 best=+0.1869%(it21 worst-0.0165%) allfeas=12/21
+[sup:port_gbar] 08-05 22:27:38 n=22/200 best=+0.1869%(it21 worst-0.0165%) allfeas=13/22
+[sup:port_gbar] 08-05 22:32:39 n=23/200 best=+0.1869%(it21 worst-0.0165%) allfeas=13/23
+[sup:port_gbar] 08-05 22:37:41 n=25/200 best=+0.1882%(it25 worst-0.0002%) allfeas=14/25
+[sup:port_gbar] 08-05 22:42:42 n=26/200 best=+0.1882%(it25 worst-0.0002%) allfeas=15/26
+[sup:port_gbar] 08-05 22:47:43 n=27/200 best=+0.1882%(it25 worst-0.0002%) allfeas=15/27
+[sup:port_gbar] 08-05 22:52:46 n=28/200 best=+0.1882%(it25 worst-0.0002%) allfeas=16/28
+[sup:port_gbar] 08-05 22:57:48 n=30/200 best=+0.1894%(it29 worst+0.0005%) allfeas=17/30
+[sup:port_gbar] 08-05 23:02:49 n=31/200 best=+0.1894%(it29 worst+0.0005%) allfeas=17/31
+[sup:port_gbar] 08-05 23:07:52 n=32/200 best=+0.1894%(it29 worst+0.0005%) allfeas=18/32
+[sup:port_gbar] 08-05 23:12:54 n=34/200 best=+0.1894%(it29 worst+0.0005%) allfeas=19/34
+[sup:port_gbar] 08-05 23:17:55 n=35/200 best=+0.1894%(it29 worst+0.0005%) allfeas=19/35
+[sup:port_gbar] 08-05 23:22:57 n=36/200 best=+0.1894%(it29 worst+0.0005%) allfeas=20/36
+[sup:port_gbar] 08-05 23:27:58 n=38/200 best=+0.1894%(it29 worst+0.0005%) allfeas=20/38
+[sup:port_gbar] 08-05 23:33:00 n=39/200 best=+0.1894%(it29 worst+0.0005%) allfeas=21/39
+[sup:port_gbar] 08-05 23:38:01 n=40/200 best=+0.1894%(it29 worst+0.0005%) allfeas=21/40
+[sup:port_gbar] 08-05 23:43:03 n=42/200 best=+0.1894%(it29 worst+0.0005%) allfeas=22/42
+[sup:port_gbar] 08-05 23:48:04 n=43/200 best=+0.1894%(it29 worst+0.0005%) allfeas=23/43
+[sup:port_gbar] 08-05 23:53:06 n=44/200 best=+0.1894%(it29 worst+0.0005%) allfeas=24/44
+[sup:port_gbar] 08-05 23:58:08 n=46/200 best=+0.1894%(it29 worst+0.0005%) allfeas=25/46
+[sup:port_gbar] 08-06 00:03:09 n=47/200 best=+0.1894%(it29 worst+0.0005%) allfeas=25/47
+[sup:port_gbar] 08-06 00:08:12 n=48/200 best=+0.1894%(it29 worst+0.0005%) allfeas=26/48
+[sup:port_gbar] 08-06 00:13:14 n=49/200 best=+0.1894%(it29 worst+0.0005%) allfeas=27/49
+[sup:port_gbar] 08-06 00:18:17 n=51/200 best=+0.1894%(it29 worst+0.0005%) allfeas=28/51
+[sup:port_gbar] 08-06 00:23:20 n=52/200 best=+0.1894%(it29 worst+0.0005%) allfeas=29/52
+[sup:port_gbar] 08-06 00:28:21 n=53/200 best=+0.1894%(it29 worst+0.0005%) allfeas=29/53
+[sup:port_gbar] 08-06 00:33:24 n=55/200 best=+0.1894%(it29 worst+0.0005%) allfeas=30/55
+[sup:port_gbar] 08-06 00:38:27 n=56/200 best=+0.1894%(it29 worst+0.0005%) allfeas=30/56
+[sup:port_gbar] 08-06 00:43:29 n=57/200 best=+0.1894%(it29 worst+0.0005%) allfeas=30/57
+[sup:port_gbar] 08-06 00:48:32 n=59/200 best=+0.1894%(it29 worst+0.0005%) allfeas=30/59
+[sup:port_gbar] 08-06 00:53:35 n=60/200 best=+0.1894%(it29 worst+0.0005%) allfeas=30/60
+[sup:port_gbar] 08-06 00:58:38 gbar worker down -> resubmit
+LSF is processing your request. Please wait ...
+Job <29038986> is submitted to queue <hpc>.
+[sup:port_gbar] 08-06 00:58:50 n=61/200 best=+0.1894%(it29 worst+0.0005%) allfeas=30/61
+[sup:port_gbar] 08-06 01:03:52 n=62/200 best=+0.1894%(it29 worst+0.0005%) allfeas=31/62
+[sup:port_gbar] 08-06 01:08:54 n=63/200 best=+0.1894%(it29 worst+0.0005%) allfeas=31/63
+[sup:port_gbar] 08-06 01:13:57 n=65/200 best=+0.1894%(it29 worst+0.0005%) allfeas=33/65
+[sup:port_gbar] 08-06 01:18:59 n=66/200 best=+0.1894%(it29 worst+0.0005%) allfeas=34/66
+[sup:port_gbar] 08-06 01:24:01 n=67/200 best=+0.1894%(it29 worst+0.0005%) allfeas=35/67
+[sup:port_gbar] 08-06 01:29:04 n=69/200 best=+0.1894%(it29 worst+0.0005%) allfeas=36/69
+[sup:port_gbar] 08-06 01:34:07 n=70/200 best=+0.1894%(it29 worst+0.0005%) allfeas=37/70
+[sup:port_gbar] 08-06 01:39:09 n=71/200 best=+0.1894%(it29 worst+0.0005%) allfeas=38/71
+[sup:port_gbar] 08-06 01:44:11 n=73/200 best=+0.1894%(it29 worst+0.0005%) allfeas=40/73
+[sup:port_gbar] 08-06 01:49:13 n=74/200 best=+0.1894%(it29 worst+0.0005%) allfeas=40/74
+[sup:port_gbar] 08-06 01:54:15 n=75/200 best=+0.1894%(it29 worst+0.0005%) allfeas=41/75
+[sup:port_gbar] 08-06 01:59:19 n=77/200 best=+0.1894%(it29 worst+0.0005%) allfeas=41/77
+[sup:port_gbar] 08-06 02:04:20 n=78/200 best=+0.1894%(it29 worst+0.0005%) allfeas=41/78
+[sup:port_gbar] 08-06 02:09:23 n=79/200 best=+0.1894%(it29 worst+0.0005%) allfeas=41/79
+[sup:port_gbar] 08-06 02:14:25 n=81/200 best=+0.1894%(it29 worst+0.0005%) allfeas=42/81
+[sup:port_gbar] 08-06 02:19:28 n=82/200 best=+0.1894%(it29 worst+0.0005%) allfeas=43/82
+[sup:port_gbar] 08-06 02:24:31 n=83/200 best=+0.1894%(it29 worst+0.0005%) allfeas=44/83
+[sup:port_gbar] 08-06 02:29:34 n=85/200 best=+0.1894%(it29 worst+0.0005%) allfeas=44/85
+[sup:port_gbar] 08-06 02:34:36 n=86/200 best=+0.1894%(it29 worst+0.0005%) allfeas=45/86
+[sup:port_gbar] 08-06 02:39:39 n=87/200 best=+0.1894%(it29 worst+0.0005%) allfeas=45/87
+[sup:port_gbar] 08-06 02:44:42 n=89/200 best=+0.1894%(it29 worst+0.0005%) allfeas=46/89
+[sup:port_gbar] 08-06 02:49:43 n=90/200 best=+0.1894%(it29 worst+0.0005%) allfeas=46/90
+[sup:port_gbar] 08-06 02:54:46 n=91/200 best=+0.1894%(it29 worst+0.0005%) allfeas=46/91
+[sup:port_gbar] 08-06 02:59:49 n=93/200 best=+0.1894%(it29 worst+0.0005%) allfeas=48/93
+[sup:port_gbar] 08-06 03:04:50 n=94/200 best=+0.1894%(it29 worst+0.0005%) allfeas=49/94
+[sup:port_gbar] 08-06 03:09:53 n=95/200 best=+0.1894%(it29 worst+0.0005%) allfeas=50/95
+[sup:port_gbar] 08-06 03:14:56 n=96/200 best=+0.1894%(it29 worst+0.0005%) allfeas=50/96
+[sup:port_gbar] 08-06 03:19:59 n=98/200 best=+0.1894%(it29 worst+0.0005%) allfeas=50/98
+[sup:port_gbar] 08-06 03:25:01 n=99/200 best=+0.1896%(it99 worst-0.0059%) allfeas=51/99
+[sup:port_gbar] 08-06 03:30:04 n=100/200 best=+0.1896%(it99 worst-0.0059%) allfeas=51/100
+[sup:port_gbar] 08-06 03:35:07 n=101/200 best=+0.1896%(it99 worst-0.0059%) allfeas=52/101
+[sup:port_gbar] 08-06 03:40:09 n=103/200 best=+0.1903%(it102 worst-0.0025%) allfeas=54/103
+[sup:port_gbar] 08-06 03:45:11 n=104/200 best=+0.1903%(it102 worst-0.0025%) allfeas=55/104
+[sup:port_gbar] 08-06 03:50:14 n=106/200 best=+0.1903%(it102 worst-0.0025%) allfeas=57/106
+[sup:port_gbar] 08-06 03:55:17 n=107/200 best=+0.1903%(it102 worst-0.0025%) allfeas=58/107
+[sup:port_gbar] 08-06 04:00:20 n=108/200 best=+0.1903%(it102 worst-0.0025%) allfeas=58/108
+[sup:port_gbar] 08-06 04:05:21 n=110/200 best=+0.1903%(it102 worst-0.0025%) allfeas=60/110
+[sup:port_gbar] 08-06 04:10:24 n=111/200 best=+0.1903%(it102 worst-0.0025%) allfeas=61/111
+[sup:port_gbar] 08-06 04:15:27 n=112/200 best=+0.1903%(it102 worst-0.0025%) allfeas=62/112
+[sup:port_gbar] 08-06 04:20:30 n=114/200 best=+0.1903%(it102 worst-0.0025%) allfeas=64/114
+[sup:port_gbar] 08-06 04:25:31 n=115/200 best=+0.1903%(it102 worst-0.0025%) allfeas=65/115
+[sup:port_gbar] 08-06 04:30:34 n=116/200 best=+0.1903%(it102 worst-0.0025%) allfeas=66/116
+[sup:port_gbar] 08-06 04:35:37 n=118/200 best=+0.1903%(it102 worst-0.0025%) allfeas=68/118
+[sup:port_gbar] 08-06 04:40:40 n=119/200 best=+0.1903%(it102 worst-0.0025%) allfeas=69/119
+[sup:port_gbar] 08-06 04:45:43 n=120/200 best=+0.1911%(it120 worst+0.0015%) allfeas=70/120
+[sup:port_gbar] 08-06 04:50:44 n=122/200 best=+0.1911%(it120 worst+0.0015%) allfeas=72/122
+[sup:port_gbar] 08-06 04:55:46 n=123/200 best=+0.1911%(it120 worst+0.0015%) allfeas=73/123
+[sup:port_gbar] 08-06 05:00:49 n=124/200 best=+0.1911%(it120 worst+0.0015%) allfeas=74/124
+[sup:port_gbar] 08-06 05:05:51 n=125/200 best=+0.1911%(it120 worst+0.0015%) allfeas=75/125
+[sup:port_gbar] 08-06 05:10:53 n=127/200 best=+0.1911%(it120 worst+0.0015%) allfeas=77/127
+[sup:port_gbar] 08-06 05:15:56 n=128/200 best=+0.1911%(it120 worst+0.0015%) allfeas=77/128
+[sup:port_gbar] 08-06 05:20:59 n=130/200 best=+0.1911%(it120 worst+0.0015%) allfeas=79/130
+[sup:port_gbar] 08-06 05:26:01 n=131/200 best=+0.1911%(it120 worst+0.0015%) allfeas=80/131
+[sup:port_gbar] 08-06 05:31:04 n=132/200 best=+0.1917%(it132 worst+0.0044%) allfeas=81/132
+[sup:port_gbar] 08-06 05:36:07 n=134/200 best=+0.1917%(it132 worst+0.0044%) allfeas=82/134
+[sup:port_gbar] 08-06 05:41:10 n=135/200 best=+0.1952%(it135 worst+0.0139%) allfeas=83/135
+[sup:port_gbar] 08-06 05:46:12 n=136/200 best=+0.1952%(it135 worst+0.0139%) allfeas=83/136
+[sup:port_gbar] 08-06 05:51:13 n=137/200 best=+0.1952%(it135 worst+0.0139%) allfeas=83/137
+[sup:port_gbar] 08-06 05:56:15 n=138/200 best=+0.1952%(it135 worst+0.0139%) allfeas=84/138
+[sup:port_gbar] 08-06 06:01:16 n=139/200 best=+0.1952%(it135 worst+0.0139%) allfeas=85/139
+[sup:port_gbar] 08-06 06:06:20 n=141/200 best=+0.1952%(it135 worst+0.0139%) allfeas=86/141
+[sup:port_gbar] 08-06 06:11:23 n=142/200 best=+0.1952%(it135 worst+0.0139%) allfeas=87/142
+[sup:port_gbar] 08-06 06:16:24 n=143/200 best=+0.1952%(it135 worst+0.0139%) allfeas=87/143
+[sup:port_gbar] 08-06 06:21:27 n=144/200 best=+0.1952%(it135 worst+0.0139%) allfeas=88/144
+[sup:port_gbar] 08-06 06:26:30 n=146/200 best=+0.1952%(it135 worst+0.0139%) allfeas=90/146
+[sup:port_gbar] 08-06 06:31:32 n=147/200 best=+0.1952%(it135 worst+0.0139%) allfeas=91/147
+[sup:port_gbar] 08-06 06:36:34 n=148/200 best=+0.1959%(it148 worst+0.0139%) allfeas=92/148
+[sup:port_gbar] 08-06 06:41:37 n=149/200 best=+0.1959%(it148 worst+0.0139%) allfeas=93/149
+[sup:port_gbar] 08-06 06:46:40 n=150/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/150
+[sup:port_gbar] 08-06 06:51:43 n=150/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/150
+[sup:port_gbar] 08-06 06:56:45 n=150/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/150
+[sup:port_gbar] 08-06 07:01:48 n=151/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/151
+[sup:port_gbar] 08-06 07:06:50 n=152/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/152
+[sup:port_gbar] 08-06 07:11:52 n=153/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/153
+[sup:port_gbar] 08-06 07:16:56 n=154/200 best=+0.1959%(it148 worst+0.0139%) allfeas=94/154
+[sup:port_gbar] 08-06 07:21:58 n=156/200 best=+0.1959%(it148 worst+0.0139%) allfeas=95/156
+[sup:port_gbar] 08-06 07:27:01 n=157/200 best=+0.1959%(it148 worst+0.0139%) allfeas=96/157
+[sup:port_gbar] 08-06 07:32:03 n=158/200 best=+0.1959%(it148 worst+0.0139%) allfeas=96/158
+[sup:port_gbar] 08-06 07:37:05 n=159/200 best=+0.1959%(it148 worst+0.0139%) allfeas=97/159
+[sup:port_gbar] 08-06 07:42:07 n=160/200 best=+0.1959%(it148 worst+0.0139%) allfeas=98/160
+[sup:port_gbar] 08-06 07:47:10 n=161/200 best=+0.1959%(it148 worst+0.0139%) allfeas=99/161
+[sup:port_gbar] 08-06 07:52:13 n=162/200 best=+0.1959%(it148 worst+0.0139%) allfeas=99/162
+[sup:port_gbar] 08-06 07:57:16 n=163/200 best=+0.1959%(it148 worst+0.0139%) allfeas=100/163
+[sup:port_gbar] 08-06 08:02:18 n=164/200 best=+0.1959%(it148 worst+0.0139%) allfeas=100/164
+[sup:port_gbar] 08-06 08:07:21 n=166/200 best=+0.1959%(it148 worst+0.0139%) allfeas=101/166
+[sup:port_gbar] 08-06 08:12:24 n=166/200 best=+0.1959%(it148 worst+0.0139%) allfeas=101/166
+[sup:port_gbar] 08-06 08:17:27 n=166/200 best=+0.1959%(it148 worst+0.0139%) allfeas=101/166
+[sup:port_gbar] 08-06 08:22:30 n=166/200 best=+0.1959%(it148 worst+0.0139%) allfeas=101/166
+[sup:port_gbar] 08-06 08:27:32 n=168/200 best=+0.1959%(it148 worst+0.0139%) allfeas=101/168
+[sup:port_gbar] 08-06 08:32:35 n=169/200 best=+0.1959%(it148 worst+0.0139%) allfeas=102/169
+[sup:port_gbar] 08-06 08:37:38 n=170/200 best=+0.1959%(it148 worst+0.0139%) allfeas=103/170
+[sup:port_gbar] 08-06 08:42:40 n=171/200 best=+0.1959%(it148 worst+0.0139%) allfeas=104/171
+[sup:port_gbar] 08-06 08:47:43 n=172/200 best=+0.1959%(it148 worst+0.0139%) allfeas=105/172
+[sup:port_gbar] 08-06 08:52:46 n=174/200 best=+0.1959%(it148 worst+0.0139%) allfeas=106/174
+[sup:port_gbar] 08-06 08:57:48 n=175/200 best=+0.1959%(it148 worst+0.0139%) allfeas=106/175
+[sup:port_gbar] 08-06 09:02:51 n=176/200 best=+0.1959%(it148 worst+0.0139%) allfeas=107/176
+[sup:port_gbar] 08-06 09:07:53 n=177/200 best=+0.1959%(it148 worst+0.0139%) allfeas=107/177
+[sup:port_gbar] 08-06 09:12:56 n=178/200 best=+0.1959%(it148 worst+0.0139%) allfeas=108/178
+[sup:port_gbar] 08-06 09:17:57 n=180/200 best=+0.1959%(it148 worst+0.0139%) allfeas=109/180
+[sup:port_gbar] 08-06 09:22:59 n=181/200 best=+0.1959%(it148 worst+0.0139%) allfeas=110/181
+[sup:port_gbar] 08-06 09:28:01 n=182/200 best=+0.1959%(it148 worst+0.0139%) allfeas=110/182
+[sup:port_gbar] 08-06 09:33:04 n=183/200 best=+0.1959%(it148 worst+0.0139%) allfeas=111/183
+[sup:port_gbar] 08-06 09:38:07 n=185/200 best=+0.1959%(it148 worst+0.0139%) allfeas=112/185
+[sup:port_gbar] 08-06 09:43:10 n=186/200 best=+0.1959%(it148 worst+0.0139%) allfeas=112/186
+[sup:port_gbar] 08-06 09:48:11 n=187/200 best=+0.1959%(it148 worst+0.0139%) allfeas=113/187
+[sup:port_gbar] 08-06 09:53:13 n=188/200 best=+0.1959%(it148 worst+0.0139%) allfeas=113/188
+[sup:port_gbar] 08-06 09:58:15 n=189/200 best=+0.1959%(it148 worst+0.0139%) allfeas=114/189
+[sup:port_gbar] 08-06 10:03:17 n=190/200 best=+0.2007%(it190 worst+0.0151%) allfeas=115/190
+[sup:port_gbar] 08-06 10:08:20 n=192/200 best=+0.2007%(it190 worst+0.0151%) allfeas=116/192
+[sup:port_gbar] 08-06 10:13:23 n=193/200 best=+0.2007%(it190 worst+0.0151%) allfeas=116/193
+[sup:port_gbar] 08-06 10:18:26 n=194/200 best=+0.2007%(it190 worst+0.0151%) allfeas=117/194
+[sup:port_gbar] 08-06 10:23:27 n=195/200 best=+0.2007%(it190 worst+0.0151%) allfeas=118/195
+[sup:port_gbar] 08-06 10:28:29 n=196/200 best=+0.2007%(it190 worst+0.0151%) allfeas=119/196
+[sup:port_gbar] 08-06 10:33:32 n=198/200 best=+0.2007%(it190 worst+0.0151%) allfeas=119/198
+[sup:port_gbar] 08-06 10:38:35 n=198/200 best=+0.2007%(it190 worst+0.0151%) allfeas=119/198
+[sup:port_gbar] 08-06 10:43:35 DONE n=200/200 best=+0.2007%(it190 worst+0.0151%) allfeas=121/200
