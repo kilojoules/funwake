@@ -4,7 +4,7 @@
 # so select_deploy.py compares them apples-to-apples. Resumable per cell@nseeds.
 set -u
 cd /Users/julianquick/working/funwake
-CAND=funwake2/state/seed_port_gbar_iter190.py
+CAND=funwake2/state/seed_port_gbar_iter190_clean.py
 OUT=funwake2/state/validation/port190.json
 mkdir -p funwake2/state/validation
 ncells() { python3 -c "import json,os;print(len(json.load(open('$OUT'))['cells']) if os.path.exists('$OUT') else 0)" 2>/dev/null || echo 0; }
