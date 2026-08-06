@@ -17,7 +17,6 @@ import multiprocessing as mp
 import os
 import sys
 import time
-from concurrent.futures import ProcessPoolExecutor
 
 _THIS = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_THIS)
@@ -59,11 +58,12 @@ def main():
     sched = os.path.abspath(a.schedule)
     tasks = [(c, s, sched, a.steps) for c in a.cells for s in a.seeds]
     t0 = time.time()
+    # maxtasksperchild=1: each eval runs in a brand-new interpreter, so a schedule
+    # that caches a traced value at module scope (e.g. it190's _decay_table) can
+    # never leak that tracer into the next eval. spawn context for clean jax init.
     ctx = mp.get_context("spawn")
-    results = []
-    with ProcessPoolExecutor(max_workers=min(a.jobs, len(tasks)), mp_context=ctx) as ex:
-        for r in ex.map(_eval_one, tasks):
-            results.append(r)
+    with ctx.Pool(processes=min(a.jobs, len(tasks)), maxtasksperchild=1) as pool:
+        results = pool.map(_eval_one, tasks)
     out = {}
     for r in results:
         out.setdefault(r["cell"], {})[str(r["seed"])] = {
