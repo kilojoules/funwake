@@ -27,6 +27,7 @@ LABELS = {
     "antigravity488.json": "Antigravity it488",
     "codex021.json": "Codex it21",
     "iter04.json": "Codex it04 (old)",
+    "port190.json": "Portfolio it190",
 }
 
 
@@ -145,5 +146,3 @@ if __name__ == "__main__":
     main()
 
 
-if __name__ == "__main__":
-    main()
