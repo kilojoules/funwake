@@ -1,0 +1,190 @@
+{
+  "cells": {
+    "dei_n100": {
+      "0": {
+        "aep": 10937.7457,
+        "feasible": true,
+        "min_dist_m": 1090.93,
+        "boundary_penalty": 0.000724,
+        "min_spacing": 960.0
+      },
+      "1": {
+        "aep": 10939.7681,
+        "feasible": true,
+        "min_dist_m": 1173.53,
+        "boundary_penalty": 0.000645,
+        "min_spacing": 960.0
+      },
+      "2": {
+        "aep": 10938.2204,
+        "feasible": true,
+        "min_dist_m": 1164.16,
+        "boundary_penalty": 0.000854,
+        "min_spacing": 960.0
+      },
+      "3": {
+        "aep": 10944.1887,
+        "feasible": true,
+        "min_dist_m": 1243.66,
+        "boundary_penalty": 0.000574,
+        "min_spacing": 960.0
+      },
+      "4": {
+        "aep": 10938.2443,
+        "feasible": true,
+        "min_dist_m": 1096.4,
+        "boundary_penalty": 0.000381,
+        "min_spacing": 960.0
+      }
+    },
+    "dei_n120_rosedei": {
+      "0": {
+        "aep": 13034.2919,
+        "feasible": false,
+        "min_dist_m": 1055.84,
+        "boundary_penalty": 0.001238,
+        "min_spacing": 960.0
+      },
+      "1": {
+        "aep": 13029.239,
+        "feasible": false,
+        "min_dist_m": 999.02,
+        "boundary_penalty": 0.001073,
+        "min_spacing": 960.0
+      },
+      "2": {
+        "aep": 13026.0459,
+        "feasible": false,
+        "min_dist_m": 1145.03,
+        "boundary_penalty": 0.001368,
+        "min_spacing": 960.0
+      },
+      "3": {
+        "aep": 13023.3719,
+        "feasible": true,
+        "min_dist_m": 1065.23,
+        "boundary_penalty": 0.000923,
+        "min_spacing": 960.0
+      },
+      "4": {
+        "aep": 13026.6239,
+        "feasible": true,
+        "min_dist_m": 1007.75,
+        "boundary_penalty": 0.000839,
+        "min_spacing": 960.0
+      }
+    },
+    "parque_n30_uniform": {
+      "0": {
+        "aep": 364.6725,
+        "feasible": false,
+        "min_dist_m": 160.0,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      },
+      "1": {
+        "aep": 350.5562,
+        "feasible": false,
+        "min_dist_m": 159.99,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      },
+      "2": {
+        "aep": 357.2181,
+        "feasible": false,
+        "min_dist_m": 160.0,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      },
+      "3": {
+        "aep": 353.735,
+        "feasible": false,
+        "min_dist_m": 159.99,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      },
+      "4": {
+        "aep": 364.9116,
+        "feasible": false,
+        "min_dist_m": 160.0,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      }
+    },
+    "rowp_n74": {
+      "0": {
+        "aep": 4264.275,
+        "feasible": true,
+        "min_dist_m": 792.04,
+        "boundary_penalty": 5.5e-05,
+        "min_spacing": 792.0
+      },
+      "1": {
+        "aep": 4262.5411,
+        "feasible": true,
+        "min_dist_m": 875.19,
+        "boundary_penalty": 4.5e-05,
+        "min_spacing": 792.0
+      },
+      "2": {
+        "aep": 4265.7314,
+        "feasible": true,
+        "min_dist_m": 792.04,
+        "boundary_penalty": 0.000392,
+        "min_spacing": 792.0
+      },
+      "3": {
+        "aep": 4262.4477,
+        "feasible": true,
+        "min_dist_m": 792.03,
+        "boundary_penalty": 9.9e-05,
+        "min_spacing": 792.0
+      },
+      "4": {
+        "aep": 4261.1541,
+        "feasible": true,
+        "min_dist_m": 792.02,
+        "boundary_penalty": 0.0,
+        "min_spacing": 792.0
+      }
+    },
+    "rowp_n74_uniform": {
+      "0": {
+        "aep": 5738.3738,
+        "feasible": false,
+        "min_dist_m": 792.0,
+        "boundary_penalty": 0.017478,
+        "min_spacing": 792.0
+      },
+      "1": {
+        "aep": 5735.4898,
+        "feasible": false,
+        "min_dist_m": 792.0,
+        "boundary_penalty": 0.004125,
+        "min_spacing": 792.0
+      },
+      "2": {
+        "aep": 5738.7459,
+        "feasible": false,
+        "min_dist_m": 791.99,
+        "boundary_penalty": 0.445972,
+        "min_spacing": 792.0
+      },
+      "3": {
+        "aep": 5737.8413,
+        "feasible": false,
+        "min_dist_m": 792.0,
+        "boundary_penalty": 0.001457,
+        "min_spacing": 792.0
+      },
+      "4": {
+        "aep": 5739.1364,
+        "feasible": false,
+        "min_dist_m": 791.99,
+        "boundary_penalty": 0.379894,
+        "min_spacing": 792.0
+      }
+    }
+  },
+  "walltime_s": 373.1
+}
