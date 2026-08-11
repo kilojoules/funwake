@@ -1,0 +1,44 @@
+{
+  "folds": [
+    {
+      "heldout": "dei_n50",
+      "best_iter": "45",
+      "heldout_delta_pct": -0.0325,
+      "heldout_feasible": "3/3",
+      "win_mean": 5559.6237,
+      "native_mean": 5561.4329
+    },
+    {
+      "heldout": "dei_n50_uniform",
+      "best_iter": "50",
+      "heldout_delta_pct": 0.0181,
+      "heldout_feasible": "2/3",
+      "win_mean": 5599.118,
+      "native_mean": 5598.1071
+    },
+    {
+      "heldout": "dei_n80_omnidir",
+      "status": "no-feasible-winner"
+    },
+    {
+      "heldout": "parque_n10_omnidir",
+      "best_iter": "16",
+      "heldout_delta_pct": -0.0929,
+      "heldout_feasible": "3/3",
+      "win_mean": 126.946,
+      "native_mean": 127.064
+    },
+    {
+      "heldout": "parque_n20",
+      "best_iter": "23",
+      "heldout_delta_pct": 0.6529,
+      "heldout_feasible": "2/3",
+      "win_mean": 232.3366,
+      "native_mean": 230.8294
+    }
+  ],
+  "mean_heldout": 0.1364,
+  "n_positive": 2,
+  "n_feasible_winner": 4,
+  "n_no_feasible": 1
+}

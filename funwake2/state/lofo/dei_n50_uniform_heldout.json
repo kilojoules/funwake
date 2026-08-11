@@ -1,0 +1,8 @@
+{
+  "heldout": "dei_n50_uniform",
+  "best_iter": "50",
+  "heldout_delta_pct": 0.0181,
+  "heldout_feasible": "2/3",
+  "win_mean": 5599.118,
+  "native_mean": 5598.1071
+}
