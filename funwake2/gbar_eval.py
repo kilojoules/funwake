@@ -36,6 +36,11 @@ def _eval_one(task):
                           "intra_op_parallelism_threads=1")
     cell, seed, sched_path, steps = task
     import evaluator as E                       # imported inside worker (spawn)
+    try:                                        # register matrix farms if present
+        import matrix_cells
+        matrix_cells.register(E)
+    except Exception:
+        pass
     fn = E.load_schedule(sched_path)
     r = E.evaluate(cell, fn, seed=seed, total_steps=steps, gamma_min=0.01)
     return {"cell": cell, "seed": int(seed), "aep": float(r["aep_gwh"]),
