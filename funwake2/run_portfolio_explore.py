@@ -242,6 +242,9 @@ def main():
                     default="local", help="score locally, or dispatch to the gbar worker")
     ap.add_argument("--gbar-host", dest="gbar_host", default="gbar")
     ap.add_argument("--gbar-jobs", dest="gbar_jobs", type=int, default=15)
+    ap.add_argument("--feas-slack", dest="feas_slack", type=int, default=0,
+                    help="pool/best eligibility allows this many infeasible farms "
+                    "(for diverse portfolios where even native isn't all-feasible)")
     args = ap.parse_args()
 
     global OUT
@@ -415,7 +418,12 @@ def main():
                      "feasible": sc["feas"], "viol": round(sc["viol"], 6),
                      "per": {c: round(sc["per"][c]["score_c"], 4) for c in cells},
                      "parent": parent["iter"]})
-        if sc["feas"]:
+        # eligibility for pool/best: feasible on >= (n_cells - feas_slack) farms.
+        # For diverse portfolios where even native can't be feasible on every farm
+        # (uniform-wind farms), a small slack lets the search hill-climb instead of
+        # degenerating (no all-feasible candidate -> best stays None -> parents=native).
+        elig = sc["n_feas_cells"] >= len(cells) - args.feas_slack
+        if elig:
             pool = sorted(pool + [sc], key=lambda p: p["pct"], reverse=True)[:args.pool_k]
             if best is None or sc["pct"] > best["pct"]:
                 best = sc
