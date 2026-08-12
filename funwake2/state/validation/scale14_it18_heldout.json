@@ -1,0 +1,143 @@
+{
+  "cells": {
+    "dei_n40_rosedei": {
+      "0": {
+        "aep": 4458.0341,
+        "feasible": true,
+        "min_dist_m": 1987.77,
+        "boundary_penalty": 0.000177,
+        "min_spacing": 960.0
+      },
+      "1": {
+        "aep": 4458.631,
+        "feasible": true,
+        "min_dist_m": 2016.5,
+        "boundary_penalty": 0.000127,
+        "min_spacing": 960.0
+      },
+      "2": {
+        "aep": 4457.4754,
+        "feasible": true,
+        "min_dist_m": 2518.05,
+        "boundary_penalty": 9.8e-05,
+        "min_spacing": 960.0
+      }
+    },
+    "dei_n70_roseuniform": {
+      "0": {
+        "aep": 7826.6354,
+        "feasible": true,
+        "min_dist_m": 960.0,
+        "boundary_penalty": 1.5e-05,
+        "min_spacing": 960.0
+      },
+      "1": {
+        "aep": 7827.6014,
+        "feasible": true,
+        "min_dist_m": 960.01,
+        "boundary_penalty": 0.000273,
+        "min_spacing": 960.0
+      },
+      "2": {
+        "aep": 7828.3884,
+        "feasible": true,
+        "min_dist_m": 960.09,
+        "boundary_penalty": 2.3e-05,
+        "min_spacing": 960.0
+      }
+    },
+    "dei_n50_roseomnidir": {
+      "0": {
+        "aep": 5564.3467,
+        "feasible": true,
+        "min_dist_m": 2013.28,
+        "boundary_penalty": 0.000265,
+        "min_spacing": 960.0
+      },
+      "1": {
+        "aep": 5561.5282,
+        "feasible": true,
+        "min_dist_m": 2169.47,
+        "boundary_penalty": 0.000358,
+        "min_spacing": 960.0
+      },
+      "2": {
+        "aep": 5563.1949,
+        "feasible": true,
+        "min_dist_m": 1862.95,
+        "boundary_penalty": 0.000273,
+        "min_spacing": 960.0
+      }
+    },
+    "dei_n120_rosedei": {
+      "0": {
+        "aep": 13025.1157,
+        "feasible": false,
+        "min_dist_m": 1093.2,
+        "boundary_penalty": 0.003635,
+        "min_spacing": 960.0
+      },
+      "1": {
+        "aep": 13031.0086,
+        "feasible": false,
+        "min_dist_m": 1157.32,
+        "boundary_penalty": 0.004511,
+        "min_spacing": 960.0
+      },
+      "2": {
+        "aep": 13022.6746,
+        "feasible": false,
+        "min_dist_m": 1077.88,
+        "boundary_penalty": 0.002288,
+        "min_spacing": 960.0
+      }
+    },
+    "parque_n14_uniform": {
+      "0": {
+        "aep": 184.8117,
+        "feasible": true,
+        "min_dist_m": 160.48,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      },
+      "1": {
+        "aep": 184.8117,
+        "feasible": true,
+        "min_dist_m": 191.93,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      },
+      "2": {
+        "aep": 184.8117,
+        "feasible": true,
+        "min_dist_m": 162.19,
+        "boundary_penalty": 0.0,
+        "min_spacing": 160.0
+      }
+    },
+    "rowp_n74": {
+      "0": {
+        "aep": 4262.5812,
+        "feasible": true,
+        "min_dist_m": 792.03,
+        "boundary_penalty": 0.000433,
+        "min_spacing": 792.0
+      },
+      "1": {
+        "aep": 4266.5697,
+        "feasible": true,
+        "min_dist_m": 792.09,
+        "boundary_penalty": 6.7e-05,
+        "min_spacing": 792.0
+      },
+      "2": {
+        "aep": 4267.6632,
+        "feasible": true,
+        "min_dist_m": 792.56,
+        "boundary_penalty": 0.000307,
+        "min_spacing": 792.0
+      }
+    }
+  },
+  "walltime_s": 335.6
+}
