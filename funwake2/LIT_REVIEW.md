@@ -4,6 +4,50 @@
 > independently verified against arXiv/web by the author before inclusion. Individual
 > recent (2024–2026) citations should still be citation-checked before use in a paper.
 
+---
+
+## ⚠ Primary-source correction (EvoStage) — supersedes the claims below
+
+After the workflow, the EvoStage paper (Lu, Xue, Gao, Shi, Xu, Yuan, Qian & Zhou,
+arXiv:2603.07970, Mar 2026) was read in full (§3 + Figs. 3–4). It confirms and
+**strengthens** the scooping finding, and corrects two errors made below:
+
+- **EvoStage designs the learning-rate schedule** for the Adam optimizer in chip
+  global placement (§3 title; "design the learning rate schedule for the Adam
+  optimizer"; the designed object is a "strategy function" of the optimization state
+  — decay factor adjusted on hpwl/overflow/grad-norm, Figs. 3–4). Confirmed.
+- **EvoStage ALSO designs the constraint-PENALTY schedule.** For the commercial 3D
+  tool it evolves "the learning rate schedules **as well as the density weight
+  schedules**"; the density weight is the Lagrangian/penalty coefficient λ in
+  `min Σ WL + λ·D(x,y)` s.t. density ≤ dₜ. **This invalidates the claim below (and in
+  the appendix) that a coupled feasibility/penalty co-schedule is FunWake-2's
+  distinctive contribution — it is not; EvoStage anticipates it.** The substrate
+  (minimize wirelength s.t. a density constraint, via increasing-penalty Lagrangian
+  relaxation) is structurally the same constrained-layout problem shape as WFLO.
+
+**Re-centered novelty (what EvoStage does NOT do):** the schedule-discovery *paradigm*
+and the *penalty co-scheduling* are both anticipated. FunWake-2's genuinely novel,
+un-scooped core is therefore narrower and lies in the **generalization science**, not
+the method:
+1. **Cross-instance / axis-coverage generalization study** — specialists → farm-balanced
+   *portfolio* training → the finding that transfer is limited to farm-characteristic
+   axes *covered* in training (wind-rose directionality, turbine count N) → leave-one-
+   farm-out CV → deployment selection by a farm-balanced-mean metric. EvoStage has no
+   analogue: it reports SOTA per chip case, optimizing each instance, with no held-out /
+   distribution-transfer framing.
+2. **Scale-aware descriptor conditioning for one-schedule-many-instances** — the schedule
+   is a function of `(D, N, min-spacing, alpha0)`, so a *single* discovered schedule
+   transfers across farms; EvoStage re-designs per case.
+3. **Mechanism difference** — EvoStage's schedule is closed-loop/adaptive on runtime
+   state with stagewise feedback; FunWake-2's is a mostly open-loop function of step +
+   static farm descriptors.
+
+Frame the writeup around the **generalization study + WFLO domain transfer**, cite
+EvoStage as the closest concurrent *method*, and do **not** claim the LLM-schedule-
+discovery paradigm or penalty co-scheduling as novel.
+
+---
+
 # Positioning FunWake-2: A Literature Review
 
 FunWake-2 uses LLM agents (Claude Opus, a GPT-5-class "codex", and Gemini-3-Pro via "antigravity") in an evolutionary loop to write and mutate the **learning-rate and constraint-penalty schedule** — a function returning `(lr, alpha, beta1, beta2)` per step — for a *fixed* gradient-based (Adam / TopFarm-SGD) wind-farm layout optimizer. Candidates are scored by actually running ~8000 optimizer steps on wind-farm problems and measuring Annual Energy Production (AEP) under boundary and inter-turbine spacing feasibility. This review situates that contribution against five adjacent bodies of work.
