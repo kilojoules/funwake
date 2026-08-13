@@ -51,11 +51,14 @@ def _eval_one(task):
         matrix_cells.register(E)
     except Exception:
         pass
-    if form == "quadratic":
+    # set the form EXPLICITLY (skeleton default is now quad-norm, so "linear" must be
+    # forced back to the pixwake linear form for an apples-to-apples comparison).
+    if form == "linear":
+        skeleton_v2.spacing_penalty = skeleton_v2._spacing_penalty_linear
+    elif form == "quadratic":
         skeleton_v2.spacing_penalty = _make_quad(norm=False)
     elif form == "quadratic_norm":
         skeleton_v2.spacing_penalty = _make_quad(norm=True)
-    # form == "linear": leave the imported (pixwake) spacing_penalty as-is
     fn = E.load_schedule(sched)
     r = E.evaluate(cell, fn, seed=seed, total_steps=steps, gamma_min=0.01)
     return {"cell": cell, "seed": int(seed), "form": form,
