@@ -43,11 +43,40 @@ for _p in (os.path.join(_ROOT, "dependencies", "pixwake", "src"),
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
-from pixwake.optim.sgd import boundary_penalty, spacing_penalty  # noqa: E402
+from pixwake.optim.sgd import boundary_penalty  # noqa: E402
+from pixwake.optim.sgd import spacing_penalty as _spacing_penalty_linear  # noqa: E402
 # multizone boundary handling reused verbatim from the vetted Parque skeleton
 from skeleton_multizone import (                                  # noqa: E402
     _init_positions, multizone_penalty,
 )
+
+# ── Constraint form (FunWake-2 decision, 2026-08) ─────────────────────────────
+# The spacing penalty is the SCALE-MATCHED QUADRATIC form, replacing pixwake's
+# linear/exact form ``sum(max(0, s^2 - d^2))``. Motivation (spacing-form ablation):
+# the linear penalty's restoring gradient ~2*dx VANISHES as turbines approach overlap,
+# so it cannot reliably reach feasibility on uniform-wind farms (native 0/3 on
+# dei_n{50,70,80}_*uniform). The normalized quadratic ``sum(max(0, s^2-d^2)^2)/s^2``
+# gives a stronger near-overlap force AT MATCHED gradient scale — so the schedules'
+# alpha-calibration transfers — and fixes native -> 3/3 on those farms with no cost on
+# rose controls. The RAW (unnormalized) quadratic breaks alpha-calibration and was
+# WORSE, so the /s^2 normalization is essential. Boundary penalty (quadratic, pixwake)
+# is unchanged. Set _SPACING_QUADRATIC=False to reproduce the pre-switch linear results.
+_SPACING_QUADRATIC = True
+
+
+def spacing_penalty(x, y, min_spacing, rho: float = 100.0):
+    if not _SPACING_QUADRATIC:
+        return _spacing_penalty_linear(x, y, min_spacing, rho)
+    n = x.shape[0]
+    if n < 2:
+        return jnp.array(0.0)
+    dx = x[:, None] - x[None, :]
+    dy = y[:, None] - y[None, :]
+    dsq = dx**2 + dy**2
+    iu, ju = jnp.triu_indices(n, k=1)
+    pair = dsq[iu, ju]
+    viol = jnp.maximum(0.0, min_spacing**2 - pair)
+    return jnp.sum(viol**2) / (min_spacing**2)
 
 
 def _adam_loop(grad_obj, grad_con, schedule_fn, x, y, D, min_spacing,
