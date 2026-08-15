@@ -159,7 +159,18 @@ def main():
                 "min_dist": None, "min_spacing": None, "viol": 0.0}
 
     if args.resume and os.path.exists(ckpt_path):
-        prev = json.load(open(ckpt_path))
+        try:
+            with open(ckpt_path) as f:
+                prev = json.load(f)
+        except (json.JSONDecodeError, ValueError) as e:
+            bak = ckpt_path + ".bak"
+            if os.path.exists(bak):
+                print(f"[resume] {ckpt_path} corrupt ({e}); using {bak}", flush=True)
+                with open(bak) as f:
+                    prev = json.load(f)
+            else:
+                print(f"[resume] {ckpt_path} corrupt ({e}) and no .bak; starting fresh", flush=True)
+                prev = {}
         traj = prev.get("trajectory", [])
         start_it = len(traj) + 1
         feas = sorted([t for t in traj if t.get("feasible") and _iter_src(t["iter"])],
@@ -248,12 +259,22 @@ def main():
         if pa else "")
 
     def _ckpt():
-        json.dump({"cell": CELL, "seeds": args.seeds, "baseline_mean": base_mean,
+        # atomic write + .bak rotation (review 1.4): a crash mid-dump must never
+        # leave a truncated summary.json that aborts the next --resume.
+        payload = {"cell": CELL, "seeds": args.seeds, "baseline_mean": base_mean,
                    "prior_art": bool(pa), "engine": args.engine, "trajectory": traj,
                    "best_feasible": ({k: best[k] for k in ("pct", "aep", "iter")}
                                      if best else None),
-                   "pool": [{"pct": p["pct"], "iter": p["iter"]} for p in pool]},
-                  open(ckpt_path, "w"), indent=2)
+                   "pool": [{"pct": p["pct"], "iter": p["iter"]} for p in pool]}
+        tmp = ckpt_path + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(payload, f, indent=2)
+        if os.path.exists(ckpt_path):
+            try:
+                os.replace(ckpt_path, ckpt_path + ".bak")
+            except OSError:
+                pass
+        os.replace(tmp, ckpt_path)
 
     # Budget is measured in REAL scored attempts (traj holds only those). A mutation
     # that returns no code (e.g. a rate-limited CLI) neither consumes the budget nor

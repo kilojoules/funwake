@@ -61,7 +61,11 @@ OUT = None
 # infeasible layouts scoring +14.5% under quad-norm, gaming 95/120 attempts). So an
 # infeasible cell contributes a penalty strictly worse than any realistic feasible
 # deficit, incentivizing feasibility everywhere.
-_INFEAS_PENALTY = -1.0
+# -100 (not -1): must strictly dominate ANY realistic feasible deficit so an
+# infeasible cell can never be "bought back" by large feasible gains elsewhere.
+# A -1 cap still let a candidate with several +2% feasible cells net-positive while
+# one cell is infeasible; -100 makes any infeasibility disqualifying in the mean.
+_INFEAS_PENALTY = -100.0
 
 
 def _eff_score(cd):
@@ -307,7 +311,20 @@ def main():
                 "n_feas_cells": len(cells), "per": per}
 
     if args.resume and os.path.exists(ckpt_path):
-        prev = json.load(open(ckpt_path))
+        try:
+            with open(ckpt_path) as f:
+                prev = json.load(f)
+        except (json.JSONDecodeError, ValueError) as e:
+            # a truncated/corrupt checkpoint (e.g. crash mid-write on a pre-atomic
+            # run) must not abort resume — fall back to a stale .bak or start fresh.
+            bak = ckpt_path + ".bak"
+            if os.path.exists(bak):
+                print(f"[resume] {ckpt_path} corrupt ({e}); using {bak}", flush=True)
+                with open(bak) as f:
+                    prev = json.load(f)
+            else:
+                print(f"[resume] {ckpt_path} corrupt ({e}) and no .bak; starting fresh", flush=True)
+                prev = {}
         traj = prev.get("trajectory", [])
         feas = sorted([t for t in traj if t.get("feasible") and _iter_src(t["iter"])],
                       key=lambda t: t["pct"], reverse=True)
@@ -343,7 +360,7 @@ def main():
         hist = ", ".join(f"{t['pct']:+.3f}%" for t in recent) or "(none)"
         return (f"SEARCH STATE — beat the current best FARM-BALANCED score.\n"
                 f"Best so far: farm-balanced {best['pct']:+.4f}% (worst farm {best.get('worst',0):+.4f}%), "
-                f"feasible on all farms. Its code:\n```python\n{best['src']}\n```\n"
+                f"feasible on all farms. Its code:\n```python\n{W.sanitize(best['src'])}\n```\n"
                 f"Recent farm-balanced scores: {hist}.\n"
                 f"KEY: this must work across farms of DIFFERENT turbine counts, wind roses, and "
                 f"geometries — use the n_turbines / D / min_spacing / alpha0 inputs to ADAPT, do "
@@ -373,14 +390,24 @@ def main():
                 if pa else "")
 
     def _ckpt():
-        json.dump({"cells": cells, "seeds": seeds, "engine": args.engine,
+        # atomic: write to a temp file then os.replace, so a crash mid-dump cannot
+        # leave a truncated summary.json that kills the next --resume (review 1.4).
+        payload = {"cells": cells, "seeds": seeds, "engine": args.engine,
                    "farm_balanced": True, "trajectory": traj,
                    "best_feasible": ({"pct": best["pct"], "worst": best.get("worst"),
                                       "iter": best["iter"], "per_cell":
                                       {c: round(best["per"][c]["score_c"], 4) for c in cells}}
                                      if best else None),
-                   "pool": [{"pct": p["pct"], "iter": p["iter"]} for p in pool]},
-                  open(ckpt_path, "w"), indent=2)
+                   "pool": [{"pct": p["pct"], "iter": p["iter"]} for p in pool]}
+        tmp = ckpt_path + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(payload, f, indent=2)
+        if os.path.exists(ckpt_path):                      # rotate last-good -> .bak
+            try:
+                os.replace(ckpt_path, ckpt_path + ".bak")
+            except OSError:
+                pass
+        os.replace(tmp, ckpt_path)
 
     it = max((x.get("iter", 0) for x in traj), default=0) + 1
     consec_invalid = 0

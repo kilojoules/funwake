@@ -41,8 +41,9 @@ import shutil
 FORBIDDEN_TOKENS = (
     "results/", "paper/", "specs/", "funwake2/state", "baselines_g2",
     "PREREGISTRATION", "prereg", "EDITS_", "audit", "lr0_paired", "lr0_diameter",
-    "parqo_native_ms", "native_ms", "rowp_n200", "rowp_n300", "rowp_n74_uniform",
-    "problem_rowp", "holdout", "test_set", "deployment",
+    "parqo_native_ms", "native_ms", "rowp",  # bare "rowp" catches EVERY holdout/test
+    "rowp_n74", "rowp_n200", "rowp_n300", "rowp_n74_uniform",  # (rowp is holdout-only,
+    "problem_rowp", "holdout", "test_set", "deployment",       # no training cell uses it)
 )
 
 # files copied into the scope (relative to the funwake2 root)
