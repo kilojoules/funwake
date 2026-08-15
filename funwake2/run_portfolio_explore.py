@@ -55,6 +55,20 @@ DEFAULT_CELLS = ["dei_n50", "dei_n80_omnidir", "dei_n50_uniform",
 OUT = None
 
 
+# An infeasible cell is a NON-DEPLOYABLE layout — its (often inflated) AEP delta must
+# NOT be rewarded in the farm-balanced fitness. Otherwise feas-slack opens a loophole:
+# the search dumps infeasibility onto one cell and games its AEP (observed: parque_n20
+# infeasible layouts scoring +14.5% under quad-norm, gaming 95/120 attempts). So an
+# infeasible cell contributes a penalty strictly worse than any realistic feasible
+# deficit, incentivizing feasibility everywhere.
+_INFEAS_PENALTY = -1.0
+
+
+def _eff_score(cd):
+    """Per-cell fitness contribution: real AEP delta if feasible, else a penalty."""
+    return cd["score_c"] if cd["feas"] else min(cd["score_c"], _INFEAS_PENALTY)
+
+
 def _native(cells, seeds):
     b = json.load(open(os.path.join(_THIS, "controller", "baselines_g2.json")))["cells"]
     return {c: {s: b[c]["seeds"][str(s)] for s in seeds} for c in cells}
@@ -103,8 +117,8 @@ def _score(src, cells, seeds, steps, native, timeout_s=450):
             signal.alarm(0)
             signal.signal(signal.SIGALRM, _old)
     all_feas = all(per[c]["feas"] for c in cells)
-    fb_mean = statistics.fmean(per[c]["score_c"] for c in cells)      # farm-balanced
-    worst = min(per[c]["score_c"] for c in cells)
+    fb_mean = statistics.fmean(_eff_score(per[c]) for c in cells)      # farm-balanced (feasibility-gated)
+    worst = min(_eff_score(per[c]) for c in cells)
     viol = 0.0 if all_feas else sum(per[c]["viol_c"] for c in cells)
     return {"pct": fb_mean, "worst": worst, "feas": all_feas, "viol": viol,
             "n_feas_cells": sum(1 for c in cells if per[c]["feas"]), "per": per}
@@ -142,8 +156,8 @@ def _aggregate(raw_cells, cells, seeds, native):
                   "min_dist": min_dist, "min_spacing": ms,
                   "viol_c": 0.0 if feas else (max_bnd + short)}
     all_feas = all(per[c]["feas"] for c in cells)
-    fb_mean = statistics.fmean(per[c]["score_c"] for c in cells)
-    worst = min(per[c]["score_c"] for c in cells)
+    fb_mean = statistics.fmean(_eff_score(per[c]) for c in cells)      # feasibility-gated
+    worst = min(_eff_score(per[c]) for c in cells)
     viol = 0.0 if all_feas else sum(per[c]["viol_c"] for c in cells)
     return {"pct": fb_mean, "worst": worst, "feas": all_feas, "viol": viol,
             "n_feas_cells": sum(1 for c in cells if per[c]["feas"]), "per": per}
