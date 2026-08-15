@@ -44,6 +44,28 @@ def _held_out_key(cells):
     return None
 
 
+def _gated(r):
+    """Per-cell fitness contribution: real Δ% only if fully feasible, else a penalty.
+    Mirrors run_portfolio_explore._eff_score — an infeasible layout is non-deployable,
+    so its (often inflated) AEP must NOT be rewarded (adversarial review 1.1)."""
+    a, b = _feas(r["cand_feasible"])
+    return r["delta_pct"] if a == b else min(r["delta_pct"], -1.0)
+
+
+def _paired_t(rows):
+    """Paired-difference t-stat (cand-native AEP) over seeds — is the win real? (1.3)"""
+    if not rows or "cand_aep" not in rows[0] or "native_aep" not in rows[0]:
+        return None
+    diffs = [r["cand_aep"] - r["native_aep"] for r in rows]
+    n = len(diffs)
+    if n < 2:
+        return None
+    m = statistics.fmean(diffs)
+    sd = statistics.stdev(diffs)
+    se = sd / (n ** 0.5)
+    return {"mean_diff": m, "se": se, "t": (m / se if se > 0 else float("inf")), "n": n}
+
+
 def summarize(path):
     d = json.load(open(path))
     cells = d["cells"]
@@ -51,19 +73,27 @@ def summarize(path):
     if hk is None:
         return None
     ho = cells[hk]
+    if "cand_feasible" not in ho or "delta_pct" not in ho:
+        return None                            # not a run_validation-format file (skip)
     hf, ht = _feas(ho["cand_feasible"])
-    deltas = {k: r["delta_pct"] for k, r in cells.items()}
+    deltas_raw = {k: r["delta_pct"] for k, r in cells.items()}
+    deltas_gated = {k: _gated(r) for k, r in cells.items()}
     feas_cells = sum(1 for r in cells.values() if _feas(r["cand_feasible"])[0] == _feas(r["cand_feasible"])[1])
-    worst = min(deltas.values())
-    worst_cell = min(deltas, key=deltas.get)
+    worst = min(deltas_gated.values())
+    worst_cell = min(deltas_gated, key=deltas_gated.get)
+    tt = _paired_t(ho.get("rows"))
     return {
         "held_out": hk,
         "primary": ho["delta_pct"],            # PRIMARY score (held-out ROWP Δ%)
-        "held_out_feasible": (hf == ht),       # GATE
+        "held_out_feasible": (hf == ht),       # feasibility GATE on the held-out farm
         "held_out_feas_str": ho["cand_feasible"],
-        "fb_mean": statistics.fmean(deltas.values()),   # farm-balanced mean (context)
+        "ho_t": (tt["t"] if tt else None),     # paired-t of the held-out win (>~2 = real)
+        "ho_significant": bool(tt and tt["t"] > 2.0),
+        "fb_mean": statistics.fmean(deltas_gated.values()),      # FEASIBILITY-GATED mean (honest)
+        "fb_mean_raw": statistics.fmean(deltas_raw.values()),    # ungated (gamed) mean — shown to expose the artifact
         "worst": worst, "worst_cell": worst_cell,
         "feas_cells": feas_cells, "n_cells": len(cells),
+        "all_feasible": (feas_cells == len(cells)),
     }
 
 
@@ -77,38 +107,48 @@ def main():
         s["label"] = LABELS.get(name, name)
         rows.append(s)
 
-    # DEPLOYMENT METRIC = feasibility-gated MEAN across the diverse validation set
-    # (wind roses x turbine counts). This is the unbiased estimator of performance on
-    # a random new farm — NOT the score on any single held-out farm (that overfits to
-    # one farm's characteristics) and NOT per-farm routing (that memorises the set).
+    # PRIMARY = held-out ROWP Δ% (the one out-of-portfolio farm), feasibility-gated and
+    # significance-checked. fb_mean is shown FEASIBILITY-GATED (honest) alongside its
+    # ungated value (which rewards infeasible non-deployable layouts — the gamed metric).
     eligible = [r for r in rows if r["held_out_feasible"]]
-    eligible.sort(key=lambda r: r["fb_mean"], reverse=True)
+    eligible.sort(key=lambda r: r["primary"], reverse=True)
     dq = [r for r in rows if not r["held_out_feasible"]]
 
-    print("=" * 82)
-    print("FunWake deployment selection — PRIMARY = held-out ROWP Δ% (feasibility-gated)")
-    print("=" * 82)
-    hdr = f"{'candidate':20s} {'ROWP(test)':>11s} {'gate':>7s} {'fb-mean':>9s} {'worst-cell':>22s} {'feas':>6s}"
+    print("=" * 96)
+    print("FunWake deployment selection — PRIMARY = held-out ROWP Δ% (feasibility-gated + significance)")
+    print("=" * 96)
+    hdr = (f"{'candidate':20s} {'ROWP Δ%':>9s} {'t':>6s} {'sig':>4s} | "
+           f"{'fb(gated)':>10s} {'fb(ungated)':>11s} {'worst':>8s} {'feas':>6s}")
     print(hdr)
-    print("-" * 82)
+    print("-" * 96)
     for r in eligible + dq:
-        gate = "PASS" if r["held_out_feasible"] else "DQ"
-        print(f"{r['label']:20s} {r['primary']:>+10.4f}% {gate:>7s} {r['fb_mean']:>+8.4f}% "
-              f"{r['worst']:>+8.4f}% {r['worst_cell'][:12]:>12s} {r['feas_cells']}/{r['n_cells']:>d}")
-    print("-" * 82)
-    if eligible:
-        w = eligible[0]
-        print(f"\n>>> DEPLOY: {w['label']}  (mean across diverse validation farms "
-              f"{w['fb_mean']:+.4f}%, held-out ROWP {w['primary']:+.4f}%, "
+        gate = "" if r["held_out_feasible"] else " DQ"
+        t = f"{r['ho_t']:+.1f}" if r["ho_t"] is not None else "  n/a"
+        sig = "yes" if r["ho_significant"] else "no"
+        print(f"{r['label']:20s} {r['primary']:>+8.4f}%{gate:>0s} {t:>6s} {sig:>4s} | "
+              f"{r['fb_mean']:>+9.4f}% {r['fb_mean_raw']:>+10.4f}% {r['worst']:>+7.4f}% "
+              f"{r['feas_cells']}/{r['n_cells']:>d}")
+    print("-" * 96)
+    # deploy pick: best held-out ROWP among gate-passers whose held-out win is SIGNIFICANT
+    sig_eligible = [r for r in eligible if r["ho_significant"] and r["primary"] > 0]
+    if sig_eligible:
+        w = sig_eligible[0]
+        print(f"\n>>> DEPLOY (held-out generalization): {w['label']}  "
+              f"(ROWP {w['primary']:+.4f}%, t={w['ho_t']:+.1f} significant, "
               f"feasible-cells {w['feas_cells']}/{w['n_cells']})")
-        print(f"    rationale: best MEAN over wind-roses x turbine-counts — the unbiased")
-        print(f"    estimate for a random new farm. It is the only candidate whose mean")
-        print(f"    beats native c*D; the single-farm specialists are net-negative here.")
-        print(f"    caveat: most validation cells were in it190's TRAINING portfolio; its")
-        print(f"    one clean held-out farm (ROWP) is only {w['primary']:+.4f}% — need more")
-        print(f"    held-out farm types (or leave-one-farm-out) to confirm generalization.")
+        print(f"    rationale: the only clean out-of-portfolio held-out farm, feasibility-gated,")
+        print(f"    with a paired win that excludes zero. Ranking by fb_mean is UNSAFE — it is")
+        print(f"    in-sample (5/6 cells are training farms) and its ungated form rewards")
+        print(f"    infeasible non-deployable layouts (see fb(gated) vs fb(ungated)).")
     else:
-        print("\n>>> DEPLOY: none passed the held-out feasibility gate.")
+        print("\n>>> DEPLOY (held-out generalization): NONE — no gate-passing candidate has a")
+        print("    statistically significant (t>2) positive held-out ROWP win. Deploy native c*D.")
+    # honest fb_mean winner (gated), for contrast
+    ef = sorted([r for r in rows if r["all_feasible"]], key=lambda r: r["fb_mean"], reverse=True)
+    if ef:
+        b = ef[0]
+        print(f"\n    (robustness view — best FEASIBILITY-GATED fb_mean among ALL-feasible candidates: "
+              f"{b['label']} {b['fb_mean']:+.4f}%)")
 
     # A single global champion ignores that farms differ (N, geometry, wind rose,
     # turbine type). The honest deployment decision is a SELECTION FUNCTION over farm
