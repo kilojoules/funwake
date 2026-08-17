@@ -77,7 +77,7 @@ reproducibility and firewall machinery that together turn opportunistic program
 search into a repeatable engineering procedure. Empirically the search is near-null in
 mean AEP --- discovered schedules beat the native scale-aware reference by only
 $\approx\!0.05$--$0.09\%$ on the training cells --- but at the deployment-relevant metric,
-the best of a converged multistart, a discovered schedule beats native by $+0.074\%$
+the best of a converged multistart, a discovered schedule beats native by $+0.075\%$
 (bootstrap $95\%$ confidence interval excluding zero) on a held-out farm that was
 firewalled from the search. The gain is small and farm-specific rather than uniform, and
 a pre-registered test is defined to confirm or refute it.
@@ -144,7 +144,7 @@ ShinkaEvolve \citep{shinka2025} and OpenEvolve \citep{openevolve2025} add sample
 efficiency and open-source island/MAP-Elites scaffolding. We adopt this paradigm but
 target an \emph{optimizer schedule} --- a small, scale-covariant control function ---
 rather than a free-form program, and add the deployment discipline (a scale-aware
-interface, a hard feasibility gate, held-out selection, an information firewall, and
+interface, a hard feasibility gate, held-out out-of-sample evaluation, an information firewall, and
 provenance) that a schedule intended for field use requires.
 
 \paragraph{LLMs for optimization and hyperparameters.} A parallel line uses LLMs to
@@ -260,7 +260,9 @@ with $r_{ij}$ the pairwise turbine distance. We use a quadratic (squared-violati
 spacing penalty normalized by $\Dmin^2$ rather than the linear/exact-penalty form of the
 underlying solver: the quadratic form is smooth and keeps the boundary and spacing terms
 on a common metre$^2$ scale, so a single schedule-controlled multiplier $\alpha_i$
-balances both across farms of different rotor diameter. Feasibility itself
+balances both across farms of different rotor diameter. We treat this as a modeling
+choice motivated by scale-matching rather than a measured improvement; we do not ablate
+the linear and quadratic forms here. Feasibility itself
 (\cref{eq:cons}) is judged geometrically at tolerance $\gm$, independently of the penalty
 that drives the optimization toward it.
 
@@ -327,9 +329,10 @@ runs until a token/cost ceiling is reached (Section~\ref{sec:repro}).
 The population is \emph{seeded} with known-good schedules, logged as generation-0
 ancestors with their port transforms (Section~\ref{sec:provenance}); the search is an
 engineering procedure and seeding is encouraged. The mutation operators are LLM coding
-agents accessed through a subscription/OAuth path (the Claude Agent SDK is the primary
-engine; a command-line Gemini engine and a deterministic mock engine are also
-supported). We adopt two eval-saving mechanisms from ShinkaEvolve
+agents accessed through a subscription/OAuth path: the Claude Agent SDK, a command-line
+Gemini engine, and a command-line OpenAI (``codex'') engine, with a deterministic mock
+engine for testing. The searches shown below use all three; the deployed schedule comes
+from a codex-engine portfolio run (\cref{sec:discovered}). We adopt two eval-saving mechanisms from ShinkaEvolve
 \citep{shinka2025}: code-novelty rejection-sampling and fitness/novelty-aware parent
 sampling; the island/MAP-Elites and cascade scaffolding follow OpenEvolve
 \citep{openevolve2025}.
@@ -417,12 +420,14 @@ schedule is infeasible. These are tracked at the elite tier as qualitative probe
 candidate that reaches strict feasibility there is a qualitatively new result. They
 never gate the per-generation search; off the dedicated compute they are simply marked
 pending and deferred.
-\item[Stage C (holdout \& responsiveness).] Elites are scored on the held-out farm for
-margin-aware selection (Section~\ref{sec:selection}) and are re-scored at a looser
-tolerance to confirm the schedule \emph{responds} to $\gm$ (feasibility and terminal
-behavior must change); a schedule invariant to the tolerance is rejected regardless of
-AEP. The held-out AEP never leaves this stage: only feasibility booleans and a
-margin-over-floor boolean cross the firewall (Section~\ref{sec:firewall}).
+\item[Stage C (holdout \& responsiveness).] Elites are scored on the held-out farm as an
+\emph{out-of-sample generalization check} of the already-selected schedule (selection
+maximizes farm-balanced \emph{training} fitness; the held-out farm is not a selection
+input, \cref{sec:selection}), and are re-scored at a looser tolerance to confirm the
+schedule \emph{responds} to $\gm$ (feasibility and terminal behavior must change); a
+schedule invariant to the tolerance is rejected regardless of AEP. The held-out AEP never
+leaves this stage: only feasibility booleans and a margin-over-floor boolean cross the
+firewall (Section~\ref{sec:firewall}).
 \end{description}
 
 \subsection{Fitness and feasibility}
@@ -548,7 +553,7 @@ tolerance.
         label={[red!60,font=\scriptsize\itshape]above:firewall: only \%-scores + feasibility booleans cross}] {};
 \end{scope}
 
-\node[cbox,below=7mm of ins,xshift=-6mm] (sel) {held-out selection $\rightarrow$ pre-registered paired test $\rightarrow$ stochastic re-validation};
+\node[cbox,below=7mm of ins,xshift=-6mm] (sel) {training selection $\rightarrow$ held-out check $\rightarrow$ pre-registered test $\rightarrow$ stochastic re-validation};
 \draw[ar] (cas.south) |- (sel.east);
 \end{tikzpicture}
 \caption{The discovery loop. Parents are sampled from per-island MAP-Elites archives;
@@ -631,7 +636,7 @@ Parque-10         & Parque & 10  & 80  & omnidirectional & 127.0   & 0.1 \\
 \end{table}
 
 \paragraph{Held-out and test farms.} ROWP is an intermediate scale not present in
-training and is used only for margin-aware selection; its AEP is firewalled from the
+training and is used only as an out-of-sample check (not a selection input); its AEP is firewalled from the
 search. The pre-registered test set --- to be touched exactly once, at the confirmatory
 stage (\cref{sec:limitations}), and not yet executed in this paper --- comprises the
 high-count ROWP cells ($N=200$ and $N=300$), the Parque site's real heterogeneous wind
@@ -754,34 +759,37 @@ picture is a faithful near-null: the interface admits broad exploration, but the
 scale-aware native reference is already close to the best a schedule achieves on these
 cells.
 
-The value of the search is less the marginal AEP than the \emph{diversity of deployable
-schedule shapes} it surfaces. \Cref{fig:schedules} plots four schedules evaluated at the
-held-out ROWP scales: the native reference (constant learning rate then a
-compounding-product decay, penalty coupled as $\alpha\propto1/\eta$, fixed TopFarm
-moment coefficients $\beta_1{=}0.1,\beta_2{=}0.2$); a portfolio-discovered schedule
-(it21) that ramps quickly to the exploration scale, holds, then decays smoothly while
-\emph{raising} the adaptive coefficient $\beta_2$ from $0.2$ to $0.77$ and easing the
-momentum $\beta_1$ down into the tail; and two seeded ancestors that mark the extremes
-the interface admits --- a dual-bump learning rate (it192) and a cyclic warm-restart
-schedule (it118) that repeatedly re-heats the learning rate and both moment
-coefficients. All four decay the learning rate toward the tolerance $\gm$ and restore
-the penalty near the end to drive the final iterate onto the feasible set, but they
-reach it by very different routes. That distinct, hand-inscrutable shapes all attain
-comparable feasible AEP is itself a finding: the objective is forgiving in schedule
-space once the scale-aware exploration and the terminal feasibility restoration are
-right.
+Given the near-null AEP, the more useful observation is the \emph{range of deployable
+schedule shapes the interface admits}. \Cref{fig:schedules} plots four schedules
+evaluated at the held-out ROWP scales: the native reference (constant learning rate then
+a compounding-product decay, penalty coupled as $\alpha\propto1/\eta$, fixed TopFarm
+moment coefficients $\beta_1{=}0.1,\beta_2{=}0.2$); the one new feasible shape the
+portfolio search itself surfaced (it21), which ramps quickly to the exploration scale,
+holds, then decays smoothly while \emph{raising} the adaptive coefficient $\beta_2$ from
+$0.2$ to $0.77$ and easing the momentum $\beta_1$ down into the tail; and two
+\emph{seeded} ancestors --- a dual-bump learning rate (it192) and a cyclic warm-restart
+schedule (it118) --- that were carried in from earlier single-farm runs and mark the
+extremes the interface admits. We are explicit that the two extreme shapes are seeds, not
+discoveries: the search's own contribution here is the single feasible it21 family; the
+value of the exercise is that all these distinct, hand-inscrutable shapes decay the
+learning rate toward $\gm$, restore the penalty terminally, and attain comparable
+feasible AEP --- the objective is forgiving in schedule space once the scale-aware
+exploration and terminal feasibility restoration are right.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{fig_search.pdf}
-\caption{Schedule search on the training farm for two mutation engines (Claude, left;
-Antigravity/Gemini~3, right). Each point is a candidate schedule proposed by the LLM
-and scored by the fixed skeleton; filled points are feasible on every seed, hollow
-points are infeasible; the solid line is the best feasible fitness so far; the dashed
-line is the native reference ($0\%$); the star marks the best (deployed) schedule. The
-best-so-far improves only $\approx\!0.05$--$0.09\%$ over the native reference, and the
-infeasible $+0.7\%$ outliers (in the Claude panel) are non-deployable layouts discarded
-by the feasibility gate.}
+\caption{Schedule search on a single training cell (DEI) for two of the mutation engines
+(Claude, left; Antigravity/Gemini~3, right). Each point is a candidate schedule proposed
+by the LLM and scored by the fixed skeleton; filled points are feasible on every seed,
+hollow points are infeasible; the solid line is the best feasible fitness so far; the
+dashed line is the native reference ($0\%$); the star marks the best feasible schedule
+found by that engine. The deployed schedule it21 is \emph{not} among these points --- it
+comes from a separate farm-balanced codex portfolio run (\cref{sec:selection}) --- so
+these panels illustrate search dynamics, not the deployment decision. The best-so-far
+improves only $\approx\!0.05$--$0.09\%$ over the native reference, and the infeasible
+$+0.7\%$ outliers (in the Claude panel) are non-deployable layouts discarded by the
+feasibility gate.}
 \label{fig:search}
 \end{figure}
 
@@ -807,7 +815,7 @@ on the held-out ROWP farm. \Cref{fig:deployment} bootstraps the best-of-$K$ AEP 
 schedules from independent deep pools ($4096$ native runs, all feasible; $2048$ runs of
 the portfolio-discovered schedule it21, $99.7\%$ feasible). The discovered schedule's
 advantage is stable across the whole budget range; at $K=1024$ its best-of-$K$ layout
-beats the native best-of-$K$ by $+3.2$\,GWh --- $+0.074\%$ of the native best, with a
+beats the native best-of-$K$ by $+3.2$\,GWh --- $+0.075\%$ of the native best, with a
 bootstrap $95\%$ confidence interval of $[+1.3,+4.9]$\,GWh that excludes zero (the
 discovered schedule wins in every one of $4000$ bootstrap replicates). The advantage is a
 distributional shift, not a lucky tail: the discovered schedule's ROWP pool mean exceeds
@@ -872,7 +880,7 @@ bootstrapped from independent deep pools (native $4096$ runs; discovered it21 $2
 runs). \emph{Left:} best-of-$K$ AEP versus multistart budget $K$ (median with $5$--$95$th
 percentile band); the discovered schedule sits above the native reference at every
 budget. \emph{Right:} the best-of-$K$ advantage (discovered $-$ native) with a $95\%$
-bootstrap band; at the calibrated budget $K=1024$ it is $+3.2$\,GWh ($+0.074\%$) and the
+bootstrap band; at the calibrated budget $K=1024$ it is $+3.2$\,GWh ($+0.075\%$) and the
 interval excludes zero.}
 \label{fig:deployment}
 \end{figure}
@@ -919,10 +927,16 @@ result that we retracted; the hard feasibility gate (\cref{sec:fitness}) and the
 feasibility-penalized, significance-aware selection reported here are the fix.
 \emph{(iv)~Scope of the reported evaluation.} The pre-registered test set
 (\cref{sec:application}) and the full-stochastic re-validation are defined but not yet
-executed here; we report the held-out selection farm, and treat the pre-registered test
+executed here; we report the held-out farm, and treat the pre-registered test
 as the confirmatory step for future work. \emph{(v)~Fidelity.} Results are conditional on
 one engineering wake model, one skeleton, and a finite seed budget; per-cell
-generalization figures in particular are four-seed estimates and individually noisy.
+generalization figures in particular are four-seed estimates and individually noisy. The
+reported optimizations use our reimplemented gradient skeleton (which computes real
+wake-model AEP, not a surrogate); agreement with TopFarm's production SGD driver is the
+fidelity step (\cref{sec:selection}) and is not yet reported. \emph{(vi)~Cost reporting.}
+We describe the cost-control mechanism but do not tabulate absolute token, dollar, or
+wall-clock figures for the runs in this paper; per-invocation totals are logged but not
+aggregated here.
 
 \section{Conclusions}
 \label{sec:conclusions}
@@ -940,7 +954,7 @@ Empirically, the search is near-null in mean AEP: discovered schedules improve o
 native scale-aware reference by only $\approx\!0.05$--$0.09\%$, and the diversity of
 feasible schedule shapes the interface admits exceeds the marginal objective gain. The
 deployable value appears at the metric a practitioner actually fields --- the best of a
-converged multistart --- where a discovered schedule beats native by $+0.074\%$ on a
+converged multistart --- where a discovered schedule beats native by $+0.075\%$ on a
 held-out farm firewalled from the search, with a bootstrap interval excluding zero. That
 gain is small, farm-specific, and obtained from a search argmax, so the honest output of
 the procedure is a \emph{candidate} schedule together with a pre-registered protocol to
