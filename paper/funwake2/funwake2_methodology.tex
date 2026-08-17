@@ -512,7 +512,24 @@ inclusion-zone case of \citet{criadorisco2024} with Vestas V80 turbines ($D=80$\
 five disconnected inclusion zones --- the hardest feasibility geometry). Minimum
 spacing is four rotor diameters for DEI and ROWP and two rotor diameters for Parque.
 We consider four wind resources: the measured DEI and ROWP roses, an omnidirectional
-resource, and a unidirectional resource as limiting cases.
+resource, and a unidirectional resource as limiting cases. \Cref{fig:application} gives
+an overview of the geometries and resources and of the train/held-out/test roles.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_application.pdf}
+\caption{Application overview. \emph{Top:} the three farm geometries --- DEI (training,
+$D{=}240$\,m) and ROWP (held out for selection, $D{=}198$\,m) on a shared scale, and the
+multi-zone Parque Ficticio training geometry ($D{=}80$\,m, five inclusion zones, shown
+on its own much smaller scale). \emph{Bottom:} the four wind resources --- the measured
+DEI and ROWP roses, an omnidirectional resource, and a unidirectional limiting case (bar
+length is the sector energy weight, colour the sector mean speed). Unlike a
+one-geometry-per-role split, funwake-2 trains on the DEI \emph{and} Parque geometries
+across turbine counts and roses, selects on the held-out ROWP farm, and reserves a
+pre-registered test set (high-$N$ ROWP, Parque under its real heterogeneous wind, and a
+ROWP unidirectional extreme).}
+\label{fig:application}
+\end{figure}
 
 \paragraph{Training cells.} The search optimizes and sees percentage feedback on the
 training cells of Table~\ref{tab:cells}, which span two rotor diameters, turbine counts
