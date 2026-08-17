@@ -76,7 +76,7 @@ loop and cascade evaluator, the fitness, selection, and deployment rules, and th
 reproducibility and firewall machinery that together turn opportunistic program
 search into a repeatable engineering procedure. Empirically the search is near-null in
 mean AEP --- discovered schedules beat the native scale-aware reference by only
-$\approx\!0.05$--$0.09\%$ on the training farm --- but at the deployment-relevant metric,
+$\approx\!0.05$--$0.09\%$ on the training cells --- but at the deployment-relevant metric,
 the best of a converged multistart, a discovered schedule beats native by $+0.074\%$
 (bootstrap $95\%$ confidence interval excluding zero) on a held-out farm that was
 firewalled from the search. The gain is small and farm-specific rather than uniform, and
@@ -683,19 +683,18 @@ trustworthy; at the deep pools the half-pool rule holds on both farms
 consistently the harder farm: its near-optimum basin is sparser ($0.39\%$ of runs within
 $0.05\%$ of the best against $0.52\%$ for DEI, and $3.5\%$ vs.\ $9.3\%$ within $0.1\%$),
 so it requires $1.3$--$3\times$ more starts than the training farm. At the tenth
-percentile the budget is $\approx\!290$ starts for DEI and $\approx\!550$ for ROWP; for
-first-percentile confidence within $0.05\%$ of the optimum it is $\approx\!520$ and
-$\approx\!1090$ (asymptotically $\approx\!880$ and $\approx\!1180$). The $400$-start
-choice of \citet{quick2026neighbors} for their DEI farm falls between our tenth- and
-first-percentile DEI budgets, consistent with this calibration.
+percentile the budget is $\approx\!410$ starts for DEI and $\approx\!570$ for ROWP; for
+first-percentile confidence within $0.05\%$ of the optimum it is $\approx\!780$ and
+$\approx\!1070$ (asymptotically $\approx\!880$ and $\approx\!1180$). The $400$-start
+choice of \citet{quick2026neighbors} for their DEI farm is close to our tenth-percentile
+DEI budget, consistent with this calibration.
 
 We adopt a reference multistart of $K=1024$ starts. This exceeds the first-percentile
-budget on the training farm and the fifth-percentile budget on the held-out farm
-($K^\star_5\approx730$, from the same shuffle-saturation analysis), and covers the
-held-out first percentile at the $0.1\%$
-tolerance ($\approx\!130$); at the strictest $0.05\%$ tolerance it sits just below the
-held-out first-percentile budget ($\approx\!1086$), a shortfall we regard as immaterial
-at that margin. Deployment comparisons (\cref{sec:selection}) are made against the
+budget on the training farm ($K^\star_1\approx784$) and the fifth-percentile budget on
+the held-out farm ($K^\star_5\approx728$), and covers the held-out first percentile at
+the $0.1\%$ tolerance ($\approx\!121$); at the strictest $0.05\%$ tolerance it sits just
+below the held-out first-percentile budget ($\approx\!1070$), a shortfall we regard as
+immaterial at that margin. Deployment comparisons (\cref{sec:selection}) are made against the
 best-of-$K$ of this multistart at matched start count, not against its mean.
 
 \begin{figure}[t]
@@ -714,21 +713,22 @@ percentile reaches the band well inside $M/2$ on both farms; the held-out ROWP f
 \begin{table}[t]
 \centering
 \small
-\caption{Reference-multistart convergence budget per farm. The feasible pool has
-$M\!\approx\!4000$ runs (DEI budgets resolved on a $2048$-run sub-pool, ROWP on the full
-$4096$-run pool); ``spread'' is the relative AEP range $(\max-\min)/\max$ over the pool;
-$f_\epsilon$ is the fraction of runs within $\epsilon$ of the pool maximum; $K^\star_p$
-is the pool-measured number of starts at which the $p$-th-percentile running maximum
-reaches within $\epsilon$ of the pool maximum. The held-out ROWP farm needs
-$1.3$--$3\times$ more starts than the DEI training farm.}
+\caption{Reference-multistart convergence budget per farm, computed on the full deep
+pools ($M=3844$ for DEI, $M=4096$ for ROWP) that back \cref{fig:convergence}. ``spread''
+is the relative AEP range $(\max-\min)/\max$ over the pool; $f_\epsilon$ is the fraction
+of runs within $\epsilon$ of the pool maximum; $K^\star_p$ is the number of starts at
+which the $p$-th-percentile running maximum reaches within $\epsilon$ of the pool maximum
+(at $\epsilon=0.05\%$ for the $10$th/$5$th/$1$st columns, and $0.1\%$ for the last). The
+held-out ROWP farm needs $1.3$--$3\times$ more starts than the DEI training farm, and
+both satisfy $K^\star_1\le M/2$.}
 \label{tab:convergence}
-\begin{tabular}{@{}lrrrrrr@{}}
+\begin{tabular}{@{}lrrrrrrr@{}}
 \toprule
-& spread & $f_{0.05\%}$ & $f_{0.1\%}$ & $K^\star_{10}$ & $K^\star_{1}$ & $K^\star_{1}$ \\
-Farm & (\%) & (\%) & (\%) & ($0.05\%$) & ($0.05\%$) & ($0.1\%$) \\
+& spread & $f_{0.05\%}$ & $f_{0.1\%}$ & $K^\star_{10}$ & $K^\star_{5}$ & $K^\star_{1}$ & $K^\star_{1}$ \\
+Farm & (\%) & (\%) & (\%) & ($0.05\%$) & ($0.05\%$) & ($0.05\%$) & ($0.1\%$) \\
 \midrule
-DEI-50 (training) & 0.282 & 0.52 & 9.3 & 290 & 520 & 47 \\
-ROWP (held-out)   & 0.456 & 0.39 & 3.5 & 546 & 1086 & 130 \\
+DEI ($M{=}3844$)  & 0.282 & 0.52 & 9.3 & 410 & 509 & 784 & 47 \\
+ROWP ($M{=}4096$) & 0.456 & 0.39 & 3.5 & 567 & 728 & 1070 & 121 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -745,9 +745,14 @@ and $+0.079\%$ (Antigravity), the best-so-far improves by only
 $\approx\!0.05$--$0.09\%$ over hundreds of attempts, and the infeasible outliers near
 $+0.7\%$ in the Claude panel are exactly the non-deployable layouts the feasibility gate
 (\cref{sec:fitness}) discards --- a reminder that raw AEP off the feasible set is not a
-fitness signal (the Antigravity engine's largest infeasible score is only $+0.05\%$). The picture is a faithful near-null: the interface admits broad
-exploration, but the scale-aware native reference is already close to the best a
-schedule achieves on this farm.
+fitness signal (the Antigravity engine's largest infeasible score is only $+0.05\%$). The
+two searches shown are single-farm engine runs that illustrate the search dynamics and the
+diversity of shapes; the deployed schedule it21 comes from a separate farm-balanced
+portfolio search of $\sim\!120$ attempts over the training cells --- the elite that
+maximizes the farm-balanced training fitness of \cref{eq:agg} (\cref{sec:selection}). The
+picture is a faithful near-null: the interface admits broad exploration, but the
+scale-aware native reference is already close to the best a schedule achieves on these
+cells.
 
 The value of the search is less the marginal AEP than the \emph{diversity of deployable
 schedule shapes} it surfaces. \Cref{fig:schedules} plots four schedules evaluated at the
@@ -812,12 +817,12 @@ only on the training farms.
 
 This held-out win does \emph{not} generalize uniformly, and the cross-farm picture is
 noisy. \Cref{tab:generalization} re-scores the discovered schedule across the training
-matrix: the DEI and ROWP single-polygon cells improve by small, consistent margins (about
-$+0.02$ to $+0.05\%$), while the two multi-zone Parque cells are high-variance and
-\emph{mixed} --- a $-0.10\%$ loss on the $20$-turbine cell and a $+0.35\%$ gain on the
+matrix: the DEI and ROWP single-polygon cells improve by small, consistent margins
+(roughly $+0.015$ to $+0.055\%$), while the two multi-zone Parque cells are high-variance
+and \emph{mixed} --- a $-0.10\%$ loss on the $20$-turbine cell and a $+0.35\%$ gain on the
 $10$-turbine cell. At four paired seeds per cell these Parque figures are within noise:
 the ROWP paired-difference standard deviation alone is $\approx0.09\%$, so a $0.05\%$ cell
-effect needs of order $25$ seeds to resolve at $80\%$ power. We therefore read the table
+effect needs of order $27$ seeds to resolve at $80\%$ power. We therefore read the table
 for its qualitative message --- the discovered schedule is a small, \emph{uneven} improver
 over native rather than a uniform replacement, and the farm-balanced mean ($+0.07\%$) is
 small and dominated by the noisy Parque terms --- and treat the deeply-sampled held-out
@@ -896,7 +901,8 @@ deterministic function of its seeds, configuration, and budget on a fixed platfo
 The effects are small and the evidence is deliberately conservative.
 \emph{(i)~Magnitude and selection.} The best-so-far search improves only
 $\approx\!0.05$--$0.09\%$ over the native reference (\cref{fig:search}), and the deployed
-schedule is the argmax of a finite ($\sim\!10^2$-attempt) search; the held-out evaluation
+schedule is the argmax of a finite (farm-balanced portfolio search, $\sim\!120$
+attempts) search; the held-out evaluation
 and the paired, significance-aware selection mitigate but do not remove this selection
 bias. \emph{(ii)~Farm specificity.} The held-out best-of-$K$ win is real, but across the
 training matrix the discovered schedule is a small and \emph{uneven} improver
