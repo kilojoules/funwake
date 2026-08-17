@@ -124,7 +124,8 @@ claim is auditable against what was seeded and what was measured.
 
 The remainder of the paper describes the framework (Section~\ref{sec:framework}),
 the wind farms and evaluation cells it is applied to (Section~\ref{sec:application}),
-and the reproducibility and cost-control machinery (Section~\ref{sec:repro}).
+the schedules the search discovers (Section~\ref{sec:discovered}), and the
+reproducibility and cost-control machinery (Section~\ref{sec:repro}).
 
 \section{Framework}
 \label{sec:framework}
@@ -651,6 +652,64 @@ ROWP (held-out)   & 0.456 & 0.39 & 3.5 & 546 & 1086 & 130 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\section{Discovered schedules}
+\label{sec:discovered}
+\Cref{fig:search} shows a schedule search on the training farm for two mutation engines.
+Each point is one candidate the LLM proposed and ran through the fixed skeleton; filled
+points are feasible on every seed, hollow points are infeasible, and the solid line is
+the best feasible fitness so far. Most candidates land within a few hundredths of a
+percent of the native reference, the best-so-far improves by only
+$\approx\!0.05$--$0.09\%$ over hundreds of attempts, and the infeasible outliers near
+$+0.7\%$ are exactly the non-deployable layouts the feasibility gate
+(\cref{sec:fitness}) discards --- a reminder that raw AEP off the feasible set is not a
+fitness signal. The picture is a faithful near-null: the interface admits broad
+exploration, but the scale-aware native reference is already close to the best a
+schedule achieves on this farm.
+
+The value of the search is less the marginal AEP than the \emph{diversity of deployable
+schedule shapes} it surfaces. \Cref{fig:schedules} plots four schedules evaluated at the
+held-out ROWP scales: the native reference (constant learning rate then a
+compounding-product decay, penalty coupled as $\alpha\propto1/\eta$, fixed TopFarm
+moment coefficients $\beta_1{=}0.1,\beta_2{=}0.2$); a portfolio-discovered schedule
+(it21) that ramps quickly to the exploration scale, holds, then decays smoothly while
+\emph{raising} the adaptive coefficient $\beta_2$ from $0.2$ to $0.77$ and easing the
+momentum $\beta_1$ down into the tail; and two seeded ancestors that mark the extremes
+the interface admits --- a dual-bump learning rate (it192) and a cyclic warm-restart
+schedule (it118) that repeatedly re-heats the learning rate and both moment
+coefficients. All four decay the learning rate toward the tolerance $\gm$ and restore
+the penalty near the end to drive the final iterate onto the feasible set, but they
+reach it by very different routes. That distinct, hand-inscrutable shapes all attain
+comparable feasible AEP is itself a finding: the objective is forgiving in schedule
+space once the scale-aware exploration and the terminal feasibility restoration are
+right.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_search.pdf}
+\caption{Schedule search on the training farm for two mutation engines (Claude, left;
+Antigravity/Gemini~3, right). Each point is a candidate schedule proposed by the LLM
+and scored by the fixed skeleton; filled points are feasible on every seed, hollow
+points are infeasible; the solid line is the best feasible fitness so far; the dashed
+line is the native reference ($0\%$); the star marks the best (deployed) schedule. The
+best-so-far improves only $\approx\!0.05$--$0.09\%$ over the native reference, and the
+infeasible $+0.7\%$ outliers are non-deployable layouts discarded by the feasibility
+gate.}
+\label{fig:search}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_schedules.pdf}
+\caption{Four schedules evaluated at the held-out ROWP scales ($D=198$\,m,
+$\Dmin=792$\,m, $N=74$, $\gm=0.01$, and $\alpha_0$ from the skeleton): learning rate
+$\eta$, penalty weight $\alpha$ (log scale), and the two Adam moment coefficients
+$\beta_1,\beta_2$ over optimization progress $t=i/T$. The native reference (dashed) is
+shown against a portfolio-discovered schedule (it21) and two seeded ancestors
+(dual-bump it192; cyclic warm-restart it118). The interface admits widely different
+shapes; all decay $\eta$ toward $\gm$ and restore the penalty terminally.}
+\label{fig:schedules}
+\end{figure}
 
 \section{Reproducibility and cost control}
 \label{sec:repro}
