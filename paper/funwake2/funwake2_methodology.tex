@@ -566,6 +566,92 @@ and $0.64$\,GWh for the held-out ROWP farm. Selection margins use these per-cell
 rather than a single global threshold; the gross Stage-A filter
 (Section~\ref{sec:cascade}) does not use them.
 
+\subsection{Reference multistart budget and its convergence}
+\label{sec:convergence}
+The score of \cref{eq:score} compares a candidate against a single reference run per
+seed, but the baseline a \emph{deployed} schedule must actually beat is stronger: the
+best feasible layout a practitioner would field from a \emph{multistart} of $K$
+independent random initializations of the reference. The number of starts that defines a
+converged multistart is not arbitrary; we fix it per farm with the shuffle-saturation
+analysis of \citet{quick2026neighbors}. A pool of $M$ feasible reference runs is
+collected on a farm; the pool is randomly reshuffled $10^3$ times, and for each shuffle
+the running maximum AEP is recorded against the number of starts considered. The $p$-th
+percentile of that running maximum across shuffles is a conservative estimate of the best
+AEP obtained with that many starts --- the first percentile is the value beaten $99\%$ of
+the time --- and the convergence budget $K^\star$ is the number of starts at which that
+percentile reaches within a tolerance of the pool maximum (made precise below). The pool
+is large enough to resolve $K^\star$ when $K^\star\le M/2$; otherwise the pool is doubled
+and the analysis repeated.
+
+Because AEP is effectively continuous near the optimum, the single best run of a pool is
+an isolated point, so reaching the \emph{exact} pool maximum saturates only at
+$\approx0.99\,M$ regardless of $M$. We therefore read saturation at a physically
+negligible tolerance $\epsilon$ (reaching within $\epsilon$ of the pool maximum) and
+report $K^\star$ across $\epsilon$. The budget is then a property of the density of the
+near-optimum basin: if a fraction $f_\epsilon$ of runs land within $\epsilon$ of the
+best, the first-percentile budget approaches $\ln(0.01)/\ln(1-f_\epsilon)$ as the pool
+grows.
+
+We calibrate on the DEI training farm and the held-out ROWP farm with pools of
+$M\!\approx\!4000$ feasible reference runs each, collected as HPC array jobs
+(\cref{fig:convergence,tab:convergence}). The per-pool convergence estimate is itself
+noisy at small pools --- on the held-out farm the first-percentile budget is
+$420\pm214$ at $M=1024$ against $\approx\!1086$ at the deep pool --- so it is the deep
+pools with $10^3$-shuffle averaging, not a single half-pool check, that make $K^\star$
+trustworthy; at the deep pools the half-pool rule holds on both farms
+($K^\star_1\le M/2$), confirming the pool is large enough to resolve the budget. ROWP is
+consistently the harder farm: its near-optimum basin is sparser ($0.39\%$ of runs within
+$0.05\%$ of the best against $0.52\%$ for DEI, and $3.5\%$ vs.\ $9.3\%$ within $0.1\%$),
+so it requires $1.3$--$3\times$ more starts than the training farm. At the tenth
+percentile the budget is $\approx\!290$ starts for DEI and $\approx\!550$ for ROWP; for
+first-percentile confidence within $0.05\%$ of the optimum it is $\approx\!520$ and
+$\approx\!1090$ (asymptotically $\approx\!880$ and $\approx\!1180$). The $400$-start
+choice of \citet{quick2026neighbors} for their DEI farm falls between our tenth- and
+first-percentile DEI budgets, consistent with this calibration.
+
+We adopt a reference multistart of $K=1024$ starts. This exceeds the first-percentile
+budget on the training farm and the fifth-percentile budget on the held-out farm
+($K^\star_5\approx730$), and covers the held-out first percentile at the $0.1\%$
+tolerance ($\approx\!130$); at the strictest $0.05\%$ tolerance it sits just below the
+held-out first-percentile budget ($\approx\!1086$), a shortfall we regard as immaterial
+at that margin. Deployment comparisons (\cref{sec:selection}) are made against the
+best-of-$K$ of this multistart at matched start count, not against its mean.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fig_convergence.pdf}
+\caption{Shuffle-saturation convergence of the reference multistart on the DEI training
+farm (left) and the held-out ROWP farm (right), following \citet{quick2026neighbors}.
+Faint lines are individual shuffles of the pool; the black curves are the tenth-, fifth-,
+and first-percentile running maxima; the shaded band is within $\epsilon=0.05\%$ of the
+pool maximum, and the dotted vertical line is the half-pool budget $M/2$. Each
+percentile reaches the band well inside $M/2$ on both farms; the held-out ROWP farm
+(sparser near-optimum basin) requires more starts than the training farm.}
+\label{fig:convergence}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Reference-multistart convergence budget per farm. The feasible pool has
+$M\!\approx\!4000$ runs (DEI budgets resolved on a $T{=}2048$ sub-pool, ROWP on the full
+$T{=}4096$ pool); ``spread'' is the relative AEP range $(\max-\min)/\max$ over the pool;
+$f_\epsilon$ is the fraction of runs within $\epsilon$ of the pool maximum; $K^\star_p$
+is the pool-measured number of starts at which the $p$-th-percentile running maximum
+reaches within $\epsilon$ of the pool maximum. The held-out ROWP farm needs
+$1.3$--$3\times$ more starts than the DEI training farm.}
+\label{tab:convergence}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+& spread & $f_{0.05\%}$ & $f_{0.1\%}$ & $K^\star_{10}$ & $K^\star_{1}$ & $K^\star_{1}$ \\
+Farm & (\%) & (\%) & (\%) & ($0.05\%$) & ($0.05\%$) & ($0.1\%$) \\
+\midrule
+DEI-50 (training) & 0.282 & 0.52 & 9.3 & 290 & 520 & 47 \\
+ROWP (held-out)   & 0.456 & 0.39 & 3.5 & 546 & 1086 & 130 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Reproducibility and cost control}
 \label{sec:repro}
 The framework is engineered to be re-runnable and auditable. A content-addressed cache
@@ -659,6 +745,12 @@ OpenEvolve: an open-source evolutionary coding framework, software, 2025.
 Quick, J., R\'ethor\'e, P.-E., M{\o}lgaard Pedersen, M., and Rodrigues, R.\ V.:
 Stochastic gradient descent for wind farm optimization, \textit{Wind Energy Science
 Discussions}, 1--17, 2022.
+
+\bibitem[Quick et al.(2026)]{quick2026neighbors}
+Quick, J., R\'ethor\'e, P.-E., Maak, L., and Maheshwari, P.: Wind farm design under
+uncertainty: managing unknown neighboring farm effects, in \textit{Proceedings of the
+ASME 2026 45th International Conference on Ocean, Offshore and Arctic Engineering
+(OMAE)}, OMAE2026-176207, 2026.
 
 \bibitem[Romera-Paredes et al.(2024)]{fawzi2024funsearch}
 Romera-Paredes, B., Barekatain, M., Novikov, A., Balog, M., Kumar, M.\ P., Dupont, E.,
