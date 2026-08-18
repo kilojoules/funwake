@@ -125,7 +125,7 @@ multi-farm, multi-scale training suite under a hard feasibility gate, rejecting
 infeasible or dominated schedules cheaply before spending on expensive high-count
 evaluations; and
 \item a \textbf{provenance, firewall, and reproducibility layer}
-(Sections~\ref{sec:provenance}--\ref{sec:repro}) --- full lineage, a behavioral
+(Sections~\ref{sec:provenance},~\ref{sec:firewall},~\ref{sec:repro}) --- full lineage, a behavioral
 archive, content-addressed caching, a scoped mutator workspace, and a pre-registered
 selection and deployment criterion --- so that any ``the system discovered $X$''
 claim is auditable against what was seeded and what was measured.
@@ -744,7 +744,7 @@ ROWP ($M{=}4096$) & 0.456 & 0.39 & 3.5 & 567 & 728 & 1070 & 121 \\
 
 \section{Discovered schedules}
 \label{sec:discovered}
-\Cref{fig:search} shows a schedule search on the training farm for two mutation engines
+\Cref{fig:search} shows a schedule search on a single training cell (DEI-50) for two mutation engines
 --- $557$ scored attempts for the Claude engine and $867$ for the Antigravity/Gemini-3
 engine. Each point is one candidate the LLM proposed and ran through the fixed skeleton;
 filled points are feasible on every seed, hollow points are infeasible, and the solid
@@ -755,12 +755,13 @@ $\approx\!0.05$--$0.09\%$ over hundreds of attempts, and the infeasible outliers
 $+0.7\%$ in the Claude panel are exactly the non-deployable layouts the feasibility gate
 (\cref{sec:fitness}) discards --- a reminder that raw AEP off the feasible set is not a
 fitness signal (the Antigravity engine's largest infeasible score is only $+0.05\%$). The
-two searches shown are single-farm engine runs that illustrate the search dynamics and the
+two searches shown are single-cell (DEI-50) engine runs that illustrate the search dynamics and the
 diversity of shapes; the deployed schedule it21 comes from a separate farm-balanced
 portfolio search of $\sim\!120$ attempts over a five-cell subset of the training suite
-(both DEI single-polygon roses, the DEI omnidirectional and unidirectional cells, and the
-two Parque cells; the high-count DEI-120 cell is an elite-tier probe, not part of this
-portfolio) --- the elite that maximizes the farm-balanced training fitness of
+(the DEI single-polygon rose cell (DEI-50), the DEI omnidirectional and unidirectional
+cells, and the two Parque cells --- five cells; this run does not cover the full training
+suite of \cref{tab:cells}, in particular the high-count DEI-120 and the feasibility-only
+Parque cells) --- the elite that maximizes the farm-balanced training fitness of
 \cref{eq:agg} (\cref{sec:selection}). The
 picture is a faithful near-null: the interface admits broad exploration, but the
 scale-aware native reference is already close to the best a schedule achieves on these
@@ -786,7 +787,7 @@ exploration and terminal feasibility restoration are right.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{fig_search.pdf}
-\caption{Schedule search on a single training cell (DEI) for two of the mutation engines
+\caption{Schedule search on a single training cell (DEI-50) for two of the mutation engines
 (Claude, left; Antigravity/Gemini~3, right). Each point is a candidate schedule proposed
 by the LLM and scored by the fixed skeleton; filled points are feasible on every seed,
 hollow points are infeasible; the solid line is the best feasible fitness so far; the
@@ -843,16 +844,19 @@ over native rather than a uniform replacement, and the farm-balanced mean ($+0.0
 small and dominated by the noisy Parque terms --- and treat the deeply-sampled held-out
 ROWP best-of-$K$ result above as the one clean signal. The search itself is near-null in
 mean terms (\cref{fig:search}); the deployable value comes from selecting the best of a
-converged multistart, where the discovered schedule's distributional edge compounds.
+converged multistart, where the discovered schedule's small but consistent distributional
+edge yields a robust best-of-$K$ gain.
 
 \begin{table}[t]
 \centering
 \small
 \caption{Generalization of the discovered schedule across the five scored portfolio cells
 plus the held-out ROWP cell (percentage change in mean AEP over the native reference, four
-paired seeds per cell, both schedules feasible on every seed; the high-count DEI-120 cell
-of \cref{tab:cells} is an elite-tier probe and is not re-scored here). Gains concentrate on the offshore single-polygon
-cells; the dense onshore multi-zone Parque cells are neutral-to-negative. Per-cell
+paired seeds per cell, both schedules feasible on every seed; the high-count DEI-120
+training cell of \cref{tab:cells} was not in this portfolio run and is omitted here).
+Gains are small and positive on the offshore
+single-polygon cells; the two multi-zone Parque cells are high-variance and mixed (a loss
+on Parque-20, the largest gain in the set on Parque-10). Per-cell
 estimates are noisy (see text); the held-out ROWP row is the clean out-of-sample cell.}
 \label{tab:generalization}
 \begin{tabular}{@{}llr@{}}
