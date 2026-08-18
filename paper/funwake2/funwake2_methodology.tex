@@ -59,9 +59,9 @@ Layout Optimizers with Large Language Models}
 \vspace{-1.2em}
 \begin{abstract}
 \noindent
-We present a framework for the automated discovery of \emph{deployable} learning-rate
-and constraint-penalty schedules for gradient-based wind-farm layout optimization
-using large language models (LLMs). Candidate schedules are expressed in a
+We present a framework for the automated discovery of \emph{deployment-candidate}
+learning-rate and constraint-penalty schedules for gradient-based wind-farm layout
+optimization using large language models (LLMs). Candidate schedules are expressed in a
 \emph{scale-aware} parameterization in which the exploration learning rate is
 constructed from the rotor diameter and the only user-supplied scale is the
 constraint tolerance, so a single schedule is scale-covariant and can be applied across
@@ -76,11 +76,14 @@ loop and cascade evaluator, the fitness, selection, and deployment rules, and th
 reproducibility and firewall machinery that together turn opportunistic program
 search into a repeatable engineering procedure. Empirically the search is near-null in
 mean AEP --- discovered schedules beat the native scale-aware reference by only
-$\approx\!0.05$--$0.09\%$ on the training cells --- but at the deployment-relevant metric,
-the best of a converged multistart, a discovered schedule beats native by $+0.075\%$
-(bootstrap $95\%$ confidence interval excluding zero) on a held-out farm that was
-firewalled from the search. The gain is small and farm-specific rather than uniform, and
-a pre-registered test is defined to confirm or refute it.
+$\approx\!0.05$--$0.09\%$ on the training cells. At the deployment-relevant metric, the
+best of a converged multistart, a discovered schedule beats native by a comparable but
+\emph{statistically robust} $+0.075\%$ (bootstrap $95\%$ confidence interval excluding
+zero) on a held-out farm firewalled from the search; the value added is robustness at the
+deployed metric, not a larger effect. The gain is small and farm-specific rather than
+uniform, is computed on our reimplemented skeleton, and rests on a schedule selected as a
+search argmax, so we report it as a deployment \emph{candidate} and define a pre-registered
+test to confirm or refute it.
 \end{abstract}
 
 \section{Introduction}
@@ -107,8 +110,8 @@ Large language models have recently been used as the mutation operator in
 evolutionary \emph{program search}: FunSearch \citep{fawzi2024funsearch} and
 AlphaEvolve \citep{deepmind2025alphaevolve} evolve populations of programs by
 repeatedly prompting an LLM to improve high-scoring candidates. We adopt this
-paradigm for optimizer-schedule design, and add three ingredients that make the
-discovered artifact \emph{deployable} rather than merely high-scoring on one farm:
+paradigm for optimizer-schedule design, and add three ingredients aimed at making the
+discovered artifact a \emph{deployment candidate} rather than merely high-scoring on one farm:
 
 \begin{enumerate}
 \itemsep0.15em
@@ -161,7 +164,7 @@ TopFarm SGD driver \citep{quick2023sgd} and inclusion/exclusion-zone handling
 the substrate the schedule controls; the multistart-convergence protocol we use to size
 the deployment baseline follows \citet{quick2026neighbors}. To our knowledge this is the
 first work to \emph{discover} the learning-rate and constraint-penalty schedule for this
-class of solver with an LLM and to evaluate the discovery as a deployable artifact across
+class of solver with an LLM and to evaluate the discovery as a deployment candidate across
 farms of different scale.
 
 \section{Framework}
@@ -331,8 +334,9 @@ ancestors with their port transforms (Section~\ref{sec:provenance}); the search 
 engineering procedure and seeding is encouraged. The mutation operators are LLM coding
 agents accessed through a subscription/OAuth path: the Claude Agent SDK, a command-line
 Gemini engine, and a command-line OpenAI (``codex'') engine, with a deterministic mock
-engine for testing. The searches shown below use all three; the deployed schedule comes
-from a codex-engine portfolio run (\cref{sec:discovered}). We adopt two eval-saving mechanisms from ShinkaEvolve
+engine for testing. The two searches shown below (\cref{fig:search}) use the Claude and Gemini engines; the
+deployed schedule comes from a separate codex-engine portfolio run, not plotted
+(\cref{sec:discovered}). We adopt two eval-saving mechanisms from ShinkaEvolve
 \citep{shinka2025}: code-novelty rejection-sampling and fitness/novelty-aware parent
 sampling; the island/MAP-Elites and cascade scaffolding follow OpenEvolve
 \citep{openevolve2025}.
@@ -440,7 +444,7 @@ improvement in mean AEP over a reference schedule,
 \label{eq:score}
 \end{align}
 where the reference is the native TopFarm monotone schedule at a rotor-diameter-scaled
-learning rate, $\eta_{\text{peak}}=c_0 D$ with $c_0=0.833$ ($=200/240$) calibrated once
+learning rate, $\eta_{\text{peak}}=c_0 D$ with $c_0=0.8333$ ($=200/240$) calibrated once
 on the training farm, decaying to $\gm$. Expressing fitness as percent-over-reference makes cells of
 very different magnitude (thousands of GWh for the large offshore farms, hundreds for
 the small onshore multi-zone farm) commensurable. The reference AEP
@@ -572,7 +576,7 @@ We apply the framework across three wind-farm geometries and four wind resources
 farms span a range of rotor diameters and constraint geometries: the Danish Energy
 Island (DEI) cluster with IEA 15\,MW turbines ($D=240$\,m, single polygon); the IEA
 Wind 740-10 Reference Offshore Wind Plant (ROWP), with IEA 10\,MW turbines
-($D=198$\,m, single polygon), held out for selection; and the Parque Ficticio
+($D=198$\,m, single polygon), held out from the search as an out-of-sample check; and the Parque Ficticio
 inclusion-zone case of \citet{criadorisco2024} with Vestas V80 turbines ($D=80$\,m,
 five disconnected inclusion zones --- the hardest feasibility geometry). Minimum
 spacing is four rotor diameters for DEI and ROWP and two rotor diameters for Parque.
@@ -584,13 +588,13 @@ an overview of the geometries and resources and of the train/held-out/test roles
 \centering
 \includegraphics[width=\linewidth]{fig_application.pdf}
 \caption{Application overview. \emph{Top:} the three farm geometries --- DEI (training,
-$D{=}240$\,m) and ROWP (held out for selection, $D{=}198$\,m) on a shared scale, and the
+$D{=}240$\,m) and ROWP (held out as an out-of-sample check, $D{=}198$\,m) on a shared scale, and the
 multi-zone Parque Ficticio training geometry ($D{=}80$\,m, five inclusion zones, shown
 on its own much smaller scale). \emph{Bottom:} the four wind resources --- the measured
 DEI and ROWP roses, an omnidirectional resource, and a unidirectional limiting case (bar
 length is the sector energy weight, colour the sector mean speed). Unlike a
 one-geometry-per-role split, funwake-2 trains on the DEI \emph{and} Parque geometries
-across turbine counts and roses, selects on the held-out ROWP farm, and reserves a
+across turbine counts and roses, selects on the training farms and holds ROWP out as an out-of-sample check, and reserves a
 pre-registered test set (high-$N$ ROWP, Parque under its real heterogeneous wind, and a
 ROWP unidirectional extreme).}
 \label{fig:application}
@@ -681,7 +685,7 @@ We calibrate on the DEI training farm and the held-out ROWP farm with pools of
 $M\!\approx\!4000$ feasible reference runs each, collected as HPC array jobs
 (\cref{fig:convergence,tab:convergence}). The per-pool convergence estimate is itself
 noisy at small pools --- on the held-out farm the first-percentile budget is
-$420\pm214$ at $M=1024$ against $\approx\!1086$ at the deep pool --- so it is the deep
+$420\pm214$ at $M=1024$ against $\approx\!1070$ at the deep pool --- so it is the deep
 pools with $10^3$-shuffle averaging, not a single half-pool check, that make $K^\star$
 trustworthy; at the deep pools the half-pool rule holds on both farms
 ($K^\star_1\le M/2$), confirming the pool is large enough to resolve the budget. ROWP is
@@ -753,8 +757,11 @@ $+0.7\%$ in the Claude panel are exactly the non-deployable layouts the feasibil
 fitness signal (the Antigravity engine's largest infeasible score is only $+0.05\%$). The
 two searches shown are single-farm engine runs that illustrate the search dynamics and the
 diversity of shapes; the deployed schedule it21 comes from a separate farm-balanced
-portfolio search of $\sim\!120$ attempts over the training cells --- the elite that
-maximizes the farm-balanced training fitness of \cref{eq:agg} (\cref{sec:selection}). The
+portfolio search of $\sim\!120$ attempts over a five-cell subset of the training suite
+(both DEI single-polygon roses, the DEI omnidirectional and unidirectional cells, and the
+two Parque cells; the high-count DEI-120 cell is an elite-tier probe, not part of this
+portfolio) --- the elite that maximizes the farm-balanced training fitness of
+\cref{eq:agg} (\cref{sec:selection}). The
 picture is a faithful near-null: the interface admits broad exploration, but the
 scale-aware native reference is already close to the best a schedule achieves on these
 cells.
@@ -841,9 +848,10 @@ converged multistart, where the discovered schedule's distributional edge compou
 \begin{table}[t]
 \centering
 \small
-\caption{Generalization of the discovered schedule across the training matrix
-(percentage change in mean AEP over the native reference, four paired seeds per cell,
-both schedules feasible on every seed). Gains concentrate on the offshore single-polygon
+\caption{Generalization of the discovered schedule across the five scored portfolio cells
+plus the held-out ROWP cell (percentage change in mean AEP over the native reference, four
+paired seeds per cell, both schedules feasible on every seed; the high-count DEI-120 cell
+of \cref{tab:cells} is an elite-tier probe and is not re-scored here). Gains concentrate on the offshore single-polygon
 cells; the dense onshore multi-zone Parque cells are neutral-to-negative. Per-cell
 estimates are noisy (see text); the held-out ROWP row is the clean out-of-sample cell.}
 \label{tab:generalization}

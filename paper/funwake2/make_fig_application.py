@@ -55,7 +55,7 @@ half = max(max(np.ptp(dei_a[:, 0]), np.ptp(dei_a[:, 1])),
            max(np.ptp(rowp_a[:, 0]), np.ptp(rowp_a[:, 1]))) / 2 * 1.18
 for ax, a, prob, color, title, role, turb in [
     (ax_dei, dei_a, dei, C_DEI, "DEI", "training", "IEA 15 MW · $D$=240 m · 4$D$ spacing"),
-    (ax_rowp, rowp_a, rowp, C_ROWP, "ROWP", "held-out (selection)", "IEA 10 MW · $D$=198 m · 4$D$ spacing")]:
+    (ax_rowp, rowp_a, rowp, C_ROWP, "ROWP", "held-out (out-of-sample check)", "IEA 10 MW · $D$=198 m · 4$D$ spacing")]:
     ax.fill(a[:, 0], a[:, 1], facecolor=color, alpha=0.14, edgecolor=color, lw=1.8, zorder=2)
     cx, cy = a[:, 0].mean(), a[:, 1].mean()
     ax.set_xlim(cx - half, cx + half); ax.set_ylim(cy - half, cy + half); ax.set_aspect("equal")
@@ -120,7 +120,7 @@ cb = fig.colorbar(sm, ax=axes_r, orientation="horizontal", fraction=0.05, pad=0.
 cb.set_label("sector mean wind speed (m s$^{-1}$)", fontsize=8, color=INK)
 cb.ax.tick_params(labelsize=7, colors=MUT); cb.outline.set_edgecolor(MUT); cb.outline.set_linewidth(0.5)
 
-fig.suptitle("Training geometries: DEI + Parque  ·  Held-out (selection): ROWP  ·  "
+fig.suptitle("Training geometries: DEI + Parque  ·  Held-out check (out-of-sample): ROWP  ·  "
              "Pre-registered test: high-$N$ ROWP, Parque real wind, ROWP unidirectional",
              fontsize=9, y=0.975, color=INK)
 for ext in ("pdf", "png"):
