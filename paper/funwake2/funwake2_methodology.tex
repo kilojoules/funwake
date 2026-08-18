@@ -77,13 +77,14 @@ reproducibility and firewall machinery that together turn opportunistic program
 search into a repeatable engineering procedure. Empirically the search is near-null in
 mean AEP --- discovered schedules beat the native scale-aware reference by only
 $\approx\!0.05$--$0.09\%$ on the training cells. At the deployment-relevant metric, the
-best of a converged multistart, a discovered schedule beats native by a comparable but
-\emph{statistically robust} $+0.075\%$ (bootstrap $95\%$ confidence interval excluding
-zero) on a held-out farm firewalled from the search; the value added is robustness at the
-deployed metric, not a larger effect. The gain is small and farm-specific rather than
-uniform, is computed on our reimplemented skeleton, and rests on a schedule selected as a
-search argmax, so we report it as a deployment \emph{candidate} and define a pre-registered
-test to confirm or refute it.
+best of a converged multistart, a discovered schedule beats native by a comparable
+$+0.075\%$ on one held-out farm firewalled from the search, with a bootstrap $95\%$
+interval that excludes zero \emph{conditional on the selected schedule and that farm}. The
+value added is the statistical robustness of the best-of-$K$ gain on that held-out farm,
+not a larger or uniform effect: the gain is small and farm-specific, is computed on our
+reimplemented skeleton, and rests on a schedule selected as a search argmax, so we report
+it as a deployment \emph{candidate} and define a pre-registered test to confirm or refute
+it.
 \end{abstract}
 
 \section{Introduction}
@@ -97,7 +98,7 @@ which turbine positions interact through wake losses and must respect spacing an
 boundary (inclusion/exclusion zone) constraints.
 
 Gradient-based solvers have become a de-facto method for this problem. The TopFarm
-stochastic gradient descent (SGD) optimizer \citep{quick2023sgd} adapts the Adam
+stochastic gradient descent (SGD) optimizer \citep{quick2022sgd} adapts the Adam
 algorithm \citep{kingma2015adam} with a scheduled learning rate and a scheduled
 linear constraint penalty. The \emph{schedule} --- how the learning rate, the penalty
 weight, and the two Adam moment-decay coefficients evolve over the course of the
@@ -159,7 +160,7 @@ for control. Our target is adjacent but distinct: a deployable, scale-covariant
 tested behind a firewall rather than optimized in the loop against the target metric.
 
 \paragraph{Wind-farm layout optimization.} Gradient-based layout optimization with the
-TopFarm SGD driver \citep{quick2023sgd} and inclusion/exclusion-zone handling
+TopFarm SGD driver \citep{quick2022sgd} and inclusion/exclusion-zone handling
 \citep{criadorisco2024}, over an engineering wake model \citep{bastankhah2014wake}, is
 the substrate the schedule controls; the multistart-convergence protocol we use to size
 the deployment baseline follows \citet{quick2026neighbors}. To our knowledge this is the
@@ -564,9 +565,9 @@ tolerance.
 an LLM mutation engine, run inside a scoped clean-room workspace, proposes a child
 schedule from the parent source and firewall-safe feedback; a novelty filter rejects
 near-duplicates before evaluation; the cascade evaluator scores survivors; feasible
-elites are archived and every candidate is logged with full provenance. Held-out
-selection, the pre-registered paired test, and stochastic re-validation sit outside
-the loop.}
+elites are archived and every candidate is logged with full provenance. Training
+selection, the held-out out-of-sample check, the pre-registered paired test, and
+stochastic re-validation sit outside the loop.}
 \label{fig:loop}
 \end{figure}
 
@@ -794,7 +795,12 @@ hollow points are infeasible; the solid line is the best feasible fitness so far
 dashed line is the native reference ($0\%$); the star marks the best feasible schedule
 found by that engine. The deployed schedule it21 is \emph{not} among these points --- it
 comes from a separate farm-balanced codex portfolio run (\cref{sec:selection}) --- so
-these panels illustrate search dynamics, not the deployment decision. The best-so-far
+these panels illustrate search dynamics, not the deployment decision. These single-cell
+scores are normalized to their own DEI-50 reference and are not directly comparable
+cell-for-cell to the quad-norm portfolio numbers of \cref{tab:cells,tab:generalization};
+because it21 maximizes farm-balanced fitness rather than DEI-50 in particular, its DEI-50
+entry ($+0.015\%$, \cref{tab:generalization}) is naturally below these single-cell bests.
+The best-so-far
 improves only $\approx\!0.05$--$0.09\%$ over the native reference, and the infeasible
 $+0.7\%$ outliers (in the Claude panel) are non-deployable layouts discarded by the
 feasibility gate.}
@@ -821,13 +827,17 @@ multistart, not its mean (\cref{sec:selection}), so we compare the selected sche
 against the native reference at the calibrated budget $K=1024$ (\cref{sec:convergence})
 on the held-out ROWP farm. \Cref{fig:deployment} bootstraps the best-of-$K$ AEP of both
 schedules from independent deep pools ($4096$ native runs, all feasible; $2048$ runs of
-the portfolio-discovered schedule it21, $99.7\%$ feasible). The discovered schedule's
-advantage is stable across the whole budget range; at $K=1024$ its best-of-$K$ layout
-beats the native best-of-$K$ by $+3.2$\,GWh --- $+0.075\%$ of the native best, with a
-bootstrap $95\%$ confidence interval of $[+1.3,+4.9]$\,GWh that excludes zero (the
-discovered schedule wins in every one of $4000$ bootstrap replicates). The advantage is a
-distributional shift, not a lucky tail: the discovered schedule's ROWP pool mean exceeds
-native's by $+0.065\%$ and its pool maximum by $+3.0$\,GWh. Because ROWP was firewalled
+the portfolio-discovered schedule it21, $99.7\%$ feasible). The median advantage is
+positive across the whole budget range; at $K=1024$ its best-of-$K$ layout beats the
+native best-of-$K$ by $+3.2$\,GWh --- $+0.075\%$ of the native best, with a bootstrap
+$95\%$ confidence interval of $[+1.3,+4.9]$\,GWh that excludes zero (the discovered
+schedule wins in every one of $4000$ bootstrap replicates; at small $K$ the interval is
+wide and includes zero). This interval is \emph{conditional}: it quantifies best-of-$K$
+sampling variability within the two ROWP pools for the \emph{already-selected} it21, and
+does \emph{not} propagate the $\sim\!120$-attempt selection or cross-farm variability
+(\cref{sec:limitations}). The advantage is a distributional shift, not a lucky tail: the
+discovered schedule's ROWP pool mean exceeds native's by $+0.065\%$ and its pool maximum
+by $+2.95$\,GWh. Because ROWP was firewalled
 from the search, this is an honest out-of-sample generalization of a schedule selected
 only on the training farms.
 
@@ -842,7 +852,8 @@ effect needs of order $27$ seeds to resolve at $80\%$ power. We therefore read t
 for its qualitative message --- the discovered schedule is a small, \emph{uneven} improver
 over native rather than a uniform replacement, and the farm-balanced mean ($+0.07\%$) is
 small and dominated by the noisy Parque terms --- and treat the deeply-sampled held-out
-ROWP best-of-$K$ result above as the one clean signal. The search itself is near-null in
+ROWP best-of-$K$ result above as the one deeply-sampled signal (deep sampling buys
+statistical cleanliness on that farm, not generalizability across farms). The search itself is near-null in
 mean terms (\cref{fig:search}); the deployable value comes from selecting the best of a
 converged multistart, where the discovered schedule's small but consistent distributional
 edge yields a robust best-of-$K$ gain.
@@ -890,10 +901,12 @@ is between feasible-only best-of-$K$ layouts at matched tolerance.
 \caption{Best-of-$K$ deployment comparison on the held-out ROWP farm at matched compute,
 bootstrapped from independent deep pools (native $4096$ runs; discovered it21 $2048$
 runs). \emph{Left:} best-of-$K$ AEP versus multistart budget $K$ (median with $5$--$95$th
-percentile band); the discovered schedule sits above the native reference at every
-budget. \emph{Right:} the best-of-$K$ advantage (discovered $-$ native) with a $95\%$
-bootstrap band; at the calibrated budget $K=1024$ it is $+3.2$\,GWh ($+0.075\%$) and the
-interval excludes zero.}
+percentile band); the discovered schedule's median sits above the native reference across
+budgets. \emph{Right:} the best-of-$K$ advantage (discovered $-$ native) with a $95\%$
+bootstrap band; the median advantage is positive throughout, but the band excludes zero
+only near the calibrated budget $K=1024$, where the advantage is $+3.2$\,GWh
+($+0.075\%$). The interval reflects best-of-$K$ sampling variability only, conditional on
+the selected schedule and the ROWP pools.}
 \label{fig:deployment}
 \end{figure}
 
@@ -1032,7 +1045,7 @@ preprint arXiv:1504.04909, 2015.
 \bibitem[OpenEvolve(2025)]{openevolve2025}
 OpenEvolve: an open-source evolutionary coding framework, software, 2025.
 
-\bibitem[Quick et al.(2022)]{quick2023sgd}
+\bibitem[Quick et al.(2022)]{quick2022sgd}
 Quick, J., R\'ethor\'e, P.-E., M{\o}lgaard Pedersen, M., and Rodrigues, R.\ V.:
 Stochastic gradient descent for wind farm optimization, \textit{Wind Energy Science
 Discussions}, 1--17, 2022.
