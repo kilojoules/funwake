@@ -14,17 +14,19 @@ def register(E=None):
         import evaluator as E
     root = E.ROOT
     added = 0
-    for f in sorted(glob.glob(os.path.join(root, "results/matrix/problem_dei_n*_rose*.json"))):
-        m = re.search(r"problem_dei_n(\d+)_rose([a-z]+)\.json$", os.path.basename(f))
-        if not m:
-            continue
-        n, rose = int(m.group(1)), m.group(2)
-        name = f"dei_n{n}_rose{rose}"
-        if name in E.CELLS:
-            continue
-        E.CELLS[name] = {
-            "problem": f"results/matrix/problem_dei_n{n}_rose{rose}.json",
-            "rose": None, "n": n, "multizone": False,
-            "role": "train_matrix", "stage_a": False, "stage_b": False}
-        added += 1
+    for farm in ("dei", "rowp"):
+        pat = os.path.join(root, f"results/matrix/problem_{farm}_n*_rose*.json")
+        for f in sorted(glob.glob(pat)):
+            m = re.search(rf"problem_{farm}_n(\d+)_rose([a-z]+)\.json$", os.path.basename(f))
+            if not m:
+                continue
+            n, rose = int(m.group(1)), m.group(2)
+            name = f"{farm}_n{n}_rose{rose}"
+            if name in E.CELLS:
+                continue
+            E.CELLS[name] = {
+                "problem": f"results/matrix/problem_{farm}_n{n}_rose{rose}.json",
+                "rose": None, "n": n, "multizone": False,
+                "role": "train_matrix", "stage_a": False, "stage_b": False}
+            added += 1
     return added
