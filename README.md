@@ -341,13 +341,79 @@ grow with packing density.*
 
 ---
 
+## FunWake-2: scale-aware follow-up and a rigorous re-evaluation
+
+FunWake-2 (`funwake2/`, paper draft
+[`paper/funwake2/funwake2_methodology.pdf`](paper/funwake2/funwake2_methodology.pdf))
+rebuilds the framework to be **scale-aware** — the schedule now takes the
+rotor diameter, spacing, turbine count, and a metre-valued constraint
+tolerance, `schedule_fn(step, total_steps, D, min_spacing, n_turbines,
+gamma_min, alpha0)`, with **no free learning rate** (the exploration scale
+is built from `D`), so one schedule applies across farms of different size.
+A quality-diversity portfolio search over a multi-farm training suite
+produced the deployed schedule **it21**; ROWP is held out from the search
+as an out-of-sample check.
+
+The point of FunWake-2 is a **more honest, convergence-justified
+evaluation**, and it tempers the single-number headline above. Two
+methodological changes matter:
+
+- **A converged multistart baseline.** How many restarts define "the
+  baseline" is not arbitrary. Using the shuffle-saturation protocol of
+  Quick et al. (OMAE 2026), the *best-of-K* multistart needs **~1000
+  restarts per farm** to converge on the held-out farm (the 1st-percentile
+  reaches within 0.05% of the optimum at K≈1070). We therefore compare at a
+  calibrated **K=1024** best-of-K, matched compute for both schedules.
+- **Feasibility-gated fitness.** Infeasible layouts can post large *phantom*
+  AEP gains (we observed +14.5% from an infeasible Parque layout), so all
+  comparisons are between feasible-only layouts.
+
+**Deployment (held-out ROWP, best-of-1024, matched compute):** it21 beats
+native `c·D` by **+3.2 GWh (+0.075%)**, bootstrap 95% CI `[+1.3, +4.9]`
+excluding zero. Small but statistically robust *on that farm* — the value
+is robustness at the deployed metric, not a large effect.
+
+**Generalization across the farm × N × wind-rose matrix** (it21 vs native,
+30-seed paired mean, DEI + ROWP × N∈{30..80} × 4 roses):
+
+![Generalization: it21 - native across the matrix](results/fig_generalization.png)
+
+it21 is a **small but consistent positive** generalizer on the offshore
+single-polygon matrix: Δ AEP is **+0.01 to +0.10%**, 27 of 48 cells resolve
+positive (>2·se above zero), none resolve negative, and the advantage
+**grows with turbine count** (see the heatmap,
+[`results/fig_gen_heatmap.png`](results/fig_gen_heatmap.png)).
+
+**But the gain is bought with feasibility at scale:**
+
+![Feasibility degrades with farm size](results/fig_feasibility.png)
+
+it21's feasible-restart rate **drops to 67% at ROWP N=80** (native stays
+100%) — a boundary-feasibility trade-off. And the dense multi-zone Parque
+cells are **statistically unresolvable** at 30 seeds (paired sd up to 2.5%,
+needing hundreds to thousands of restarts), with it21 infeasible on some;
+they are excluded rather than trusted.
+
+**Bottom line:** the scale-aware schedule generalizes as a *small,
+consistent* AEP improver on the offshore regime it was trained near, with an
+honest feasibility cost at high turbine counts and no reliable signal on the
+hardest multi-zone geometry. The deployment claim is reported as a
+*candidate* pending a pre-registered confirmatory test.
+
+---
+
 ## Limitations
 
 Held-out transfer was demonstrated across offshore farms with different
 turbines, layouts, and wind resources (DEI to IEA ROWP). Transfer
 degrades on the small multi-zone onshore case (Parque Ficticio): there
-the discovered schedules can underperform the baseline. Reported results
-come from two agent CLIs (Claude Code and Gemini CLI) and are agent-lane
+the discovered schedules can underperform the baseline, and (FunWake-2)
+the multi-zone cells are too high-variance to resolve without very large
+restart counts. In FunWake-2, feasibility itself degrades at high turbine
+count (ROWP N=80: 67% feasible vs the native baseline's 100%), so the
+small AEP gains come with a boundary-feasibility trade-off at scale.
+Reported results come from two agent CLIs (Claude Code and Gemini CLI)
+plus, in FunWake-2, an OpenAI (codex) portfolio lane, and are agent-lane
 results (model plus scaffold), not pure model comparisons.
 
 ## Process
@@ -370,6 +436,7 @@ playground/         LLM workspace: skeleton.py, problem.json, test suite
 dependencies/       vendored pixwake engine (see dependencies/README.md)
 results/            baselines, problem definitions, seed_schedule.py
 runs/               agent runs (iter_NNN.py + attempt logs); runs/archive/ = superseded
+funwake2/           scale-aware follow-up: skeleton_v2, portfolio search, evaluator, state/
 scripts/            helpers (e.g. make_sample_wind.py)
 tests/              ci_smoke_assert.py (CI invariants)
 reports/            investigation notes (aep_cap, DE draft)
